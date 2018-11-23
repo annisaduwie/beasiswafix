@@ -31,7 +31,7 @@ $this->load->view('pencari/header_user');
             <img src="<?php echo base_url('universitas/'.$list_detail->gambar_universitas);?>" style="width:180px; height: 200px; padding-top: 20px; padding-bottom:10px; ">
           </div>
           <div class="col-md-10">
-            <form class="form-wrap mt-4" action="<?php echo base_url('Pencarian_BeasiswaC/scrapping_detail_beasiswa_by_universitas');?>" method="POST">
+            <form class="form-wrap mt-4" action="<?php echo base_url('Pencarian_BeasiswaC/tampil_beasiswa_univ');?>" method="POST">
               <input type="text" value="<?php echo $list_detail->id_universitas?>" name="keyword_universitas">
              <h5 class="title-text" style="color:#fff; padding-top: 30px;"><b><?php echo $list_detail->nama_universitas?></b>
              </h5><input type="hidden" value="<?php echo $list_detail->nama_universitas;?>" name="nama_univ">

@@ -153,7 +153,7 @@ class Pencarian_BeasiswaC extends CI_Controller
 		$id_universitas=$this->input->post('keyword_universitas');
 		$hasil = $this->BeasiswaM->get_url_universitas($id_universitas);
 		$nama_universitas = $hasil->nama_universitas;
-
+		
 		$html_load = file_get_html($hasil->url);
 		$i = 0;
 		if($html_load && is_object($html_load) && isset($html_load->nodes)){
@@ -163,13 +163,7 @@ class Pencarian_BeasiswaC extends CI_Controller
 						
 					foreach ($value->find('article') as $a) {
 
-					$result['judul']= $a->children(0)->children(0)->children(0)->plaintext;
-					$result['deskripsi']=$a->children(2)->plaintext;
-					$result['link']=$a->children(4)->children(0)->href;
-					// $langs['replace'] = array ('Hai Sobat Beasiswa.ID!'=>" ");
-					$i++;
-
-					$search = array(
+						$search = array(
 						'Hai sobat Beasiswa.ID',
 						'Hai Sobat Beasiswa.ID!', 
 						'Hai Sobat Beasiswa.ID !',
@@ -179,20 +173,54 @@ class Pencarian_BeasiswaC extends CI_Controller
 					);
 
 					$newstring = '';
-		
 
-				echo "<pre>";
-				print_r(str_replace($search, $newstring, $result));
-				echo "</pre>";
+					$result[$i] = array (
+						'judul'=> $a->children(0)->children(0)->children(0)->plaintext,
+						'deskripsi'=> str_replace($search, $newstring, $a->children(2)->plaintext),
+						'link'=> $a->children(4)->children(0)->href
+					);
+					// $langs['replace'] = array ('Hai Sobat Beasiswa.ID!'=>" ");
+				
+					$i++;
 
 
 			}
+
+				
 
 			}
 				
 		}		
 	
 	}
+
+	return $result;
+
+
+	}
+
+
+
+	public function tampil_beasiswa_univ(){
+
+		$keyword_universitas = $this->input->post('keyword_universitas');
+
+		$result = $this->scrapping_by_universitas();
+
+
+		$data =  array(
+			
+				'keyword_universitas'=>$this->db->where('id_universitas', $keyword_universitas)->get('universitas')->row()->nama_universitas,
+				'id_pencari'=>$this->session->userdata['id_pencari']
+			);
+				// $this->PencarianM->insertPencarian($data);
+
+			$data['pencarian_beasiswa_by_univ']=$this->BeasiswaM->pencarian_beasiswa_by_univ($keyword_universitas)->result();
+				
+				$data['hasil']=$result;
+			
+			$this->load->view('pencari/detail_pencarian_beasiswa_by_univ', $data);
+
 
 	}
 
@@ -257,6 +285,8 @@ class Pencarian_BeasiswaC extends CI_Controller
 		}		
 	
 	}
+
+
 
 	}
 
@@ -401,6 +431,7 @@ class Pencarian_BeasiswaC extends CI_Controller
 
 
 	public function simpan_pencarian($id = NULL, $page = NULL){
+
 		$keyword_nama_universitas=$this->input->post('nama_univ');
 		$keyword_universitas=$this->input->post('keyword_universitas');
 		$keyword_tingkatan=$this->input->post('keyword_tingkatan');

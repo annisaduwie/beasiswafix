@@ -12,8 +12,8 @@ $this->load->view('pencari/header_user');
   <div class="container" style="padding-top: 20px; ">
     <h5 class="title-text" style="color:#fff; ">Area Beasiswa</h5>
       
-        <h6 class="title-text" style="color:#fff; padding-bottom: 30px;">Temukan berbagai beasiswa sesuai pilihanmu.<br> Kamu dapat mencari beasiswa berdasarkan universitas dan tingkatan yang kamu ingin pilih.</h6><br>
-        <h6 style="color:#fff; ">Berikut adalah daftar beasiswa yang terdapat di <u><?php echo $keyword_universitas;?></u><br><h6>
+        <h6 class="title-text" style="color:#fff; padding-bottom: 30px;">Temukan berbagai beasiswa sesuai pilihanmu.<br> Kamu dapat mencari beasiswa berdasarkan universitas dan tingkatan yang kamu ingin pilih.</h6><br><hr>
+        <center><h3 style="color:#fff; "><?php echo $keyword_universitas;?><br></h3></center>
 
       </h5>
 
@@ -39,13 +39,11 @@ $this->load->view('pencari/header_user');
               <img src="<?php echo $value['gambar']; ?>" alt="" style="width:250px; height:200px;">
         </div>
       <?php } ?>
-        <div class="col-md-8 featured-responsive">
+        <div class="col-md-12 featured-responsive">
           <span class="username">
-            <a href="<?php echo $value['link']; ?>"><?php echo $value['judul']; ?></a>
+            <div style="padding-bottom: 10px;"><a href="<?php echo $value['link']; ?>"><?php echo $value['judul']; ?></a></div>
 
           </span>
-          <span class="description"><i class="fa fa-clock-o"></i> <?php echo $value['tanggal']; ?></span><br>
-
           <p>
          <?php echo $value['deskripsi']; ?>
 
