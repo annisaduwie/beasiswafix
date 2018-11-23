@@ -31,7 +31,16 @@
 
 
    public function get_prodi_dropdown(){
-     $query = $this->db->query("SELECT * from prodi, fak_prodi where prodi.id_fak_prodi=fak_prodi.id_fak_prodi GROUP BY prodi.nama_prodi");
+     $query = $this->db->query("SELECT * from prodi GROUP BY prodi.nama_prodi");
+     return $query;
+   }
+   public function get_prodi_dropdown_pelajar(){
+     $query = $this->db->query("SELECT * from prodi where (prodi.tingkatan ='Sarjana' OR prodi.tingkatan='Diploma') GROUP BY prodi.nama_prodi");
+     return $query;
+   }
+
+   public function get_prodi_dropdown_mahasiswa(){
+     $query = $this->db->query("SELECT * from prodi WHERE (prodi.tingkatan ='Magister' OR prodi.tingkatan='Doktor') GROUP BY prodi.nama_prodi");
      return $query;
    }
 

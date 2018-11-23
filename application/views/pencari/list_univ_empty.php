@@ -5,30 +5,38 @@
 <?php
 $this->load->view('pencari/header_user');
 ?>
+<style>
+.img{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  height: 120px;
+  width: 120px;
+  margin-bottom: 20px;
+}
+</style>
     <section class="section purchase" data-stellar-background-ratio="0.5" style="padding-left:20px;padding-bottom:10px; background-color:#3c8dbc; ; -webkit-background-size: 100% 100%; -moz-background-size: cover; -o-background-size: cover; background-size: cover; height: 300px;">
  
       <div class="container" style="padding-top: 30px; ">
-<h5 class="title-text" style="color:#fff;">
+      <h5 class="title-text" style="color:#fff; ">Area Universitas</h5>
+<h6 class="title-text" style="color:#fff;">
+    
 
    <!--  <?php echo $keyword_prodi;?> -->
 
            
              Berikut adalah daftar universitas yang menawarkan <br> 
-             <?php if ($this->session->userdata('logged_in')){ 
-                echo $keyword['keyword_tingkatan'];
-            }else{ echo $keyword_tingkatan; } ?> program studi 
-            <?php if ($this->session->userdata('logged_in')){ 
-                echo $keyword['keyword_prodi'];
-            }else { echo $keyword_prodi; } ?> di 
-            <?php if ($this->session->userdata('logged_in')){ 
-                echo $keyword['keyword_kategori'];
-            }else{ echo $keyword_kategori;} ?>
+            <?php echo $keyword_tingkatan;  ?> program studi 
+            <?php echo $keyword_prodi;  ?> di 
+            <?php echo $keyword_kategori; ?>
 
-            </h5>
+            </h6>
 
             <!-- <p>Join thousand of employers and earn what you deserve!</p>
             <a href="my-account.html" class="btn btn-common">Get Started Now</a> -->
-           <button type="submit" class="btn-form" style="margin-top: 95px; background-color:#fff; color:black;">Saring berdasarkan</button>
+         <!--   <button type="submit" class="btn-form" style="margin-top: 95px; background-color:#fff; color:black;">Saring berdasarkan</button> -->
+
+
      
       </div>
 
@@ -49,25 +57,9 @@ $this->load->view('pencari/header_user');
             
            
     <div class="add-listing-wrap">
-          <h3>Pencarian tidak ditemukan</h3>
+        <img src="<?php echo base_url('assets/images/searching.png');?>" class="img"><br>
+          <h6>Maaf, Pencarian tidak ditemukan</h6>
         </div>
-
-            
-   
-
-<nav aria-label="Page navigation example">
-  <ul class="pagination justify-content-center">
-    <li class="page-item disabled">
-      <a class="page-link" href="#" tabindex="-1">Previous</a>
-    </li>
-    <li class="page-item"><a class="page-link" href="#">1</a></li>
-    <li class="page-item"><a class="page-link" href="#">2</a></li>
-    <li class="page-item"><a class="page-link" href="#">3</a></li>
-    <li class="page-item">
-      <a class="page-link" href="#">Next</a>
-    </li>
-  </ul>
-</nav>
     </div>
     </section>
     <!--//END FEATURED PLACES -->

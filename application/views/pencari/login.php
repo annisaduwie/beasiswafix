@@ -67,11 +67,11 @@ $this->load->view('pencari/header_user');
             <button type="submit" class="btn btn1 btn-block">Masuk</button>
         </div>
         <div class="clearfix">
-            <label class="pull-left checkbox-inline">Tidak punya akun ?</label>
-            <a href="regispencari" class="pull-left">   Daftar</a>
+            <label class="pull-left checkbox-inline">Tidak punya akun ?  </label>
+            <a href="regispencari" class="pull-left"> Daftar</a>
         </div>       
         <div class="clearfix">
-            <a href="regispencari" class="pull-left">Lupa password</a>
+            <a href="<?php echo base_url('Pencari/halaman_lupa_password');?>" class="pull-left">Lupa password</a>
         </div>  
       </form>
      

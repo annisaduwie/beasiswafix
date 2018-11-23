@@ -16,6 +16,12 @@ $this->load->view('admin/head_admin');
    folder instead of downloading all of them to reduce the load. -->
    <link rel="stylesheet" href="<?php echo base_url();?>AdminLTE/dist/css/skins/_all-skins.min.css">
  </head>
+ <style>
+ .img{
+  height: 240px;
+  width: 290px;
+ }
+</style>
 
  <?php
  $this->load->view('admin/headerAdmin');
@@ -74,16 +80,53 @@ $this->load->view('admin/head_admin');
       </h1>
       <ol class="breadcrumb">
         <li><a href="<?php echo base_url('AdminC/get_universitas');?>">Universitas</a></li>
-        <li class="active">Fakultas</li>
+        <li class="active">Detail Universitas</li>
       </ol>
+
+      <h3>
+        Informasi Umum
+        <!-- <small>Version 2.0</small> -->
+      </h3><hr>
+
+      <div class="row">
+      <div class="col-md-4">
+      
+      <table class="table table-bordered table-striped">
+        <tr>
+          <td colspan="2" style="text-align: center;"><img class="img" src="<?php echo base_url('universitas/'.$nama_univ['gambar_universitas']);?>"></td>
+        </tr>
+        <tr>
+          <td>Alamat  </td>
+          <td><?php echo $nama_univ['alamat_universitas'];?></td>
+        </tr>
+        <tr>
+          <td>Email </td>
+          <td><?php echo $nama_univ['email'];?></td>
+        </tr>
+        <tr>
+          <td>No Telepon </td>
+          <td><?php echo $nama_univ['no_telp'];?></td>
+        </tr>
+      </table>
+    </div>
+      <div class="col-md-8">
+        <p><?php echo $nama_univ['deskripsi_universitas']?></p>
+      </div>
+    </div>
 
 
               </div>
-              <div class="box-body">
 
-                <button type="button" style="background-color: #3C8DBC; color: #fff; padding-right: 15px; margin-bottom: 20px;" class="btn btn-info" data-toggle="modal" data-target="#modal-tambah-<?php echo $id;?>">
-                  Tambah
+
+              <div class="box-body"><hr>
+                <h3>
+       Data Fakultas <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-tambah-<?php echo $id;?>"><span data-toogle="tooltip" title="Tambah Fakultas">
+                  <i class=" fa fa-plus"></i></span>
                 </button>
+        <!-- <small>Version 2.0</small> -->
+      </h3><hr>
+
+                
 
                 <table id="example1" class="table table-bordered table-striped">
 
@@ -122,7 +165,7 @@ $this->load->view('admin/head_admin');
                           <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                               <span aria-hidden="true">&times;</span></button>
-                              <h4 class="modal-title"><center>Ubah Program Studi</center></h4>
+                              <h4 class="modal-title"><center>Ubah Fakultas</center></h4>
                             </div>
                             <div class="modal-body">
 
@@ -154,16 +197,139 @@ $this->load->view('admin/head_admin');
                         <?php echo form_close(); ?> 
                       </div>
                       <!-- /.modal-content -->
-                    </div>
-                    <!-- /.modal-dialog -->
-                  </div>
-                  <!-- /.modal -->
+                  
+
+
+                
                 <?php  endforeach; ?>
+
+
+              
+
+                <table id="example" class="table table-bordered table-striped">
+
+                    <hr>
+                <h3>
+       Data Beasiswa <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-tambah_beasiswa"><span data-toogle="tooltip" title="Tambah Beasiswa">
+                 <i class=" fa fa-plus"></i></span>
+                </button>
+        <!-- <small>Version 2.0</small> -->
+      </h3><hr>
+ 
+
+                  <thead>
+
+                    <tr>
+                      <th>No </th>
+                      <th>URL Beasiswa</th>
+                      <th>Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php $no=0; foreach ($beasiswa as $value): $no++; ?>
+                   <tr>   
+                    <td><?php echo $no; ?></td>
+                      <td ><?php echo $value->url; ?></td>
+                        <td> <a class="btn btn-info btn-xs tooltips" data-toggle="modal" data-target="#modal1-<?php echo $value->id_beasiswa; ?>">
+                        <span data-toogle="tooltip" title="Ubah"><i class="fa fa-pencil" style="color: #fff"></i></span></a>
+
+                        <a class="btn btn-danger btn-xs tooltips"  data-popup="tooltip" data-original-title="Hapus Data" data-placement="top" href="<?php echo site_url('AdminC/hapus_beasiswa/'.$nama_univ['id_universitas'].'/'.$value->id_beasiswa_univ); ?>" onclick="return confirm('Apakah anda yakin ingin menghapus universitas  ?')" ><i class="fa fa-times" ></i></a>
+
+                       
+                        </td>
+                      </tr>
+
+                       <div class="modal fade" id="modal1-<?php echo $value->id_beasiswa; ?>">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title"><center>Ubah Beasiswa</center></h4>
+                              </div>
+
+                              <div class="modal-body">
+                                <?php echo form_open_multipart('AdminC/edit_beasiswa','id ="form" class="form-horizontal"');?>
+
+                                <div class="form-group" style="padding: 10px 0;">
+                                 
+                                  <div class="col-sm-10">
+                                    <input type="hidden" name="id_universitas" class="form-control" value="<?php echo $value->id_universitas; ?>" readonly>
+                                    <input type="hidden" name="id_beasiswa" value="<?php echo $value->id_beasiswa; ?>">
+                                    <input type="hidden" name="id_beasiswa_univ" value="<?php echo $value->id_beasiswa_univ; ?>">
+                                  </div>
+                                </div>
+                                
+                               
+                                <div class="form-group" style="padding: 15px 0;">
+                                  <label for="inputurl" class="col-sm-2 control-label">URL Beasiswa</label>
+                                  <div class="col-sm-10">
+                                    <input type="text" name="url_beasiswa" class="form-control" id="inputurl" value="<?php echo $value->url; ?>" >
+                                  </div>
+                                </div>
+
+                               
+
+                              </div>
+
+
+                              <div class="modal-footer">
+                                <button type="button" style="margin-left: 5px;"class="btn btn-default pull-right" data-dismiss="modal">Batal</button>
+                                <input type="submit" value="Simpan" class="btn btn-primary">
+                              </div>
+                           
+                          <?php echo form_close(); ?> 
+                        </div>
+                        <!-- /.modal-content -->
+                      </div>
+                      <!-- /.modal-dialog -->
+                    </div>
+                    <!-- /.modal -->
+
+
+                    <?php endforeach;?>
+
 
 
               </tbody>
 
             </table>
+
+             <!-- modal untuk tambah manual -->
+  <div class="modal fade" id="modal-tambah_beasiswa">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title"><center>Tambah Beasiswa</center></h4>
+          </div>
+          <div class="modal-body">
+
+           <?php echo form_open_multipart('AdminC/tambah_beasiswa','id ="form" class="form-horizontal"');?> 
+          <input type="text" name="id_universitas" class="form-control" value="<?php echo $value->id_universitas; ?>" readonly>
+          <div class="form-group" style="padding: 5px 0;">
+            <label for="inputurl" class="col-sm-2 control-label">URL Beasiswa</label>
+            <div class="col-sm-10">
+              <input type="text" placeholder="Masukkan URL Beasiswa" name="url_beasiswa" class="form-control" id="inputurl" required oninvalid="this.setCustomValidity('URL tidak boleh kosong')" oninput="setCustomValidity('')">
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Batal</button>
+          <input type="submit" value="Simpan" class="btn btn-primary">
+        </div>
+        <?php echo form_close(); ?> 
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
+
+
+
           </div>
           <!-- /.box-body -->
         </div>
@@ -273,6 +439,21 @@ $data2=$this->session->flashdata('error');
   <script>
     $(function () {
       $('#example1').DataTable()
+      $('#example2').DataTable({
+        'paging'      : true,
+        'lengthChange': false,
+        'searching'   : false,
+        'ordering'    : true,
+        'info'        : true,
+        'autoWidth'   : false
+      })
+    })
+
+ </script>
+
+  <script>
+    $(function () {
+      $('#example').DataTable()
       $('#example2').DataTable({
         'paging'      : true,
         'lengthChange': false,

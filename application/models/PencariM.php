@@ -83,4 +83,32 @@ function  cekEmail($table_name,  $email){
     return $this->db->get('pencari');
   }
 
+  public function lupapassword($data,$email_def){
+
+      if($email_def == md5("ebeasiswa.indonesia@gmail.com")){
+        // $cekUserAdmin = $this->db->query("SELECT * FROM admin WHERE email='$email'")->num_rows();
+
+        // if($cekUserAdmin > 0){
+          $this->db->where('md5(email)',$email_def);
+          $this->db->update('admin',$data);
+          
+          return true;
+
+        }else{
+          $cekUser = $this->db->query("SELECT * FROM pencari WHERE md5(email)='$email_def'")->num_rows();
+
+          if($cekUser > 0){
+            $this->db->where('md5(email)',$email_def);
+            $this->db->update('pencari',$data);
+
+            return true;
+          }else{
+            $this->session->set_flashdata('error',"Email tidak tersedia.");
+            redirect('Pencari/forgot_password_confirm/'.$email_def);
+        }
+      }
+    }
+
+    
+
 }

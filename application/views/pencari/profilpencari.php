@@ -141,7 +141,7 @@ $this->load->view('pencari/header_user');
 
           </a>
           <hr>
-          <a href="<?php echo base_url('PencarianC/tampil_favorit');?>">
+          <a href="<?php echo base_url('Pencari/tampil_favorit');?>">
             <span>Favorit</span>
 
           </a>

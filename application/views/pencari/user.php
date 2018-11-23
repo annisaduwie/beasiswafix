@@ -1,7 +1,7 @@
  <?php
 $this->load->view('pencari/header_user');
 ?>
-<body>
+<body >
 
   <!-- SLIDER -->
   <section class="slider d-flex align-items-center">
@@ -13,7 +13,7 @@ $this->load->view('pencari/header_user');
             <div class="row">
               <div class="col-md-12">
                 <div class="slider-content_wrap">
-                 <h1  style="color:#3c8dbc;;">Temukan Jurusanmu </h1>
+                 <h1  style="color:#fff;">Temukan Jurusanmu </h1>
                  <h5> Website Pencarian Universitas dan Beasiswa Dalam dan Luar Negeri</h5>
                </div>
              </div>
@@ -22,6 +22,60 @@ $this->load->view('pencari/header_user');
             <div class="col-md-10" style="background-color:#d2d6de; padding-bottom: 8px;">
               <form class="form-wrap mt-4" method="POST" action="<?php echo base_url('PencarianC/getPencarian')?>">
                 <div class="btn-group" role="group" aria-label="Basic example">
+
+              
+             
+
+              <?php if ($this->session->userdata('logged_in')){
+
+              $query = $this->db->query("SELECT tingkatan from pencari where id_pencari=".$nama_pencari)->row_array(); 
+
+                if($query['tingkatan'] == "Pelajar"){?>
+                    <select name="keyword_prodi"  class="btn-group2">
+                      <option value="0" disabled selected>Area Jurusan</option>
+
+                      <?php foreach ($prodi_pelajar as $value) {?>
+                      <option value="<?php echo $value->nama_prodi;?>"><?php echo $value->nama_prodi;?></option>
+                      <?php  } ?>
+              
+                    </select>
+                    <select name="keyword_kategori" class="btn-group2">
+                      <option value="0" disabled selected>Tujuan Negara</option>
+                      <option value="Dalam Negeri">Dalam Negeri</option>
+                      <option value="Luar Negeri">Luar Negeri</option>
+
+                    </select>
+
+                    <select name="keyword_tingkatan" class="btn-group2">
+                     <option value="0" disabled selected>Jenjang</option>
+                     <option value="Diploma">Diploma</option>
+                     <option value="Sarjana">Sarjana</option>
+                   </select>
+
+                 <?php }else if($query['tingkatan'] == "Mahasiswa"){?>
+                    <select name="keyword_prodi"  class="btn-group2">
+                      <option value="0" disabled selected>Area Jurusan</option>
+
+                      <?php foreach ($prodi_mahasiswa as $value) {?>
+                      <option value="<?php echo $value->nama_prodi;?>"><?php echo $value->nama_prodi;?></option>
+                      <?php  } ?>
+              
+                    </select>
+                    <select name="keyword_kategori" class="btn-group2">
+                      <option value="0" disabled selected>Tujuan Negara</option>
+                      <option value="Dalam Negeri">Dalam Negeri</option>
+                      <option value="Luar Negeri">Luar Negeri</option>
+
+                    </select>
+
+                    <select name="keyword_tingkatan" class="btn-group2">
+                     <option value="0" disabled selected>Jenjang</option>
+                     <option value="Magister">Magister</option>
+                     <option value="Doktor">Doktor</option>
+                   </select>
+                 <?php }?>
+
+               <?php }else{ ?>
 
               <select name="keyword_prodi"  class="btn-group2">
               <option value="0" disabled selected>Area Jurusan</option>
@@ -47,6 +101,8 @@ $this->load->view('pencari/header_user');
              <option value="Magister">Magister</option>
              <option value="Doktor">Doktor</option>
            </select> 
+
+         <?php }?>
            <button type="submit" class="btn-form btn-primary"><span class="icon-magnifier search-icon"></span>CARI<i class="pe-7s-angle-right"></i></button>
          </div>
        </form>
@@ -74,22 +130,95 @@ $this->load->view('pencari/header_user');
     </div>
     
     <div class="row">
-      <?php $no=0; foreach ($fakultas as $value): $no++; ?>
-      <div class="col-md-4 featured-responsive">
-        <div class="featured-place-wrap">
-          <a href="detail.html">
-           
-            <span class="featured-rating-orange"><?php echo $no; ?></span>
-            <div class="featured-title-box"><br>
-              <h6><?php echo $value->nama_fakultas;?></h6><br><hr>
-              
-              <ul>
-                <?php 
-            $list_prodi = $this->db->query("SELECT distinct nama_prodi from fakultas, univ_fak, fak_prodi, prodi  where fakultas.id_univ_fak = univ_fak.id_univ_fak AND univ_fak.id_univ_fak=fak_prodi.id_univ_fak AND fak_prodi.id_fak_prodi=prodi.id_fak_prodi AND nama_fakultas='$value->nama_fakultas' limit 4;");
-            foreach ($list_prodi->result() as $value){?>
-              <li><p><?php echo $value->nama_prodi;?></p>
-              </li><hr>
-            <?php }?>
+
+
+   
+              <?php if ($this->session->userdata('logged_in')){?>
+
+                <?php if($query['tingkatan']=='Pelajar'){?>
+
+                <?php $no=0; foreach ($fakultas_pelajar as $value): $no++; ?>
+                <div class="col-md-4 featured-responsive">
+                  <div class="featured-place-wrap">
+                    <a href="detail.html">
+
+                      <span class="featured-rating-orange"><?php echo $no; ?></span>
+                      <div class="featured-title-box"><br>
+                        <h6><?php echo $value->nama_fakultas;?></h6><br><hr>
+
+                        <ul>
+
+                          <?php 
+                          $list_prodi = $this->db->query("SELECT distinct nama_prodi from fakultas, univ_fak, fak_prodi, prodi  where fakultas.id_univ_fak = univ_fak.id_univ_fak AND univ_fak.id_univ_fak=fak_prodi.id_univ_fak AND fak_prodi.id_fak_prodi=prodi.id_fak_prodi AND nama_fakultas='".$value->nama_fakultas."' AND (prodi.tingkatan='Sarjana' OR prodi.tingkatan='Diploma') limit 4;");
+                          foreach ($list_prodi->result() as $value){?>
+                            <li><p><?php echo $value->nama_prodi;?></p>
+                            </li><hr>
+                          <?php }?>
+
+                        </ul>
+
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              <?php  endforeach; ?>
+  
+
+
+
+
+                <?php }else if($query['tingkatan']=='Mahasiswa'){?>
+
+                <?php $no=0; foreach ($fakultas_mahasiswa as $value): $no++; ?>
+                <div class="col-md-4 featured-responsive">
+                  <div class="featured-place-wrap">
+                    <a href="detail.html">
+
+                      <span class="featured-rating-orange"><?php echo $no; ?></span>
+                      <div class="featured-title-box"><br>
+                        <h6><?php echo $value->nama_fakultas;?></h6><br><hr>
+
+                        <ul>
+
+
+                  <?php 
+                     $list_prodi = $this->db->query("SELECT distinct nama_prodi from fakultas, univ_fak, fak_prodi, prodi  where fakultas.id_univ_fak = univ_fak.id_univ_fak AND univ_fak.id_univ_fak=fak_prodi.id_univ_fak AND fak_prodi.id_fak_prodi=prodi.id_fak_prodi AND nama_fakultas='".$value->nama_fakultas."' AND (prodi.tingkatan='Magister' OR prodi.tingkatan='Doktor') limit 4;");
+                        foreach ($list_prodi->result() as $value){?>
+                          <li><p><?php echo $value->nama_prodi;?></p>
+                          </li><hr>
+                        <?php }?>
+
+                        </ul>
+
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              <?php  endforeach; ?>
+              <?php } ?>
+
+              <?php }else{?>
+
+                   <?php $no=0; foreach ($fakultas as $value): $no++; ?>
+                   <div class="col-md-4 featured-responsive">
+                    <div class="featured-place-wrap">
+                      <a href="detail.html">
+
+                        <span class="featured-rating-orange"><?php echo $no; ?></span>
+                        <div class="featured-title-box"><br>
+                          <h6><?php echo $value->nama_fakultas;?></h6><br><hr>
+
+                          <ul>
+
+
+                       <?php 
+                        $list_prodi = $this->db->query("SELECT distinct nama_prodi from fakultas, univ_fak, fak_prodi, prodi  where fakultas.id_univ_fak = univ_fak.id_univ_fak AND univ_fak.id_univ_fak=fak_prodi.id_univ_fak AND fak_prodi.id_fak_prodi=prodi.id_fak_prodi AND nama_fakultas='".$value->nama_fakultas."' limit 4;");
+                      foreach ($list_prodi->result() as $value){?>
+                        <li><p><?php echo $value->nama_prodi;?></p>
+                        </li><hr>
+                <?php }?>
+
+             
               
 
               </ul>
@@ -99,7 +228,7 @@ $this->load->view('pencari/header_user');
         </div>
       </div>
       <?php  endforeach; ?>
-  
+   <?php }?>
       
 </div>
 
@@ -118,13 +247,14 @@ $this->load->view('pencari/header_user');
 
 </section>
 <!--//END FEATURED PLACES -->
-<!--============================= CATEGORIES =============================-->
+
+
 <section class="main-block">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-5">
         <div class="styled-heading">
-          <h3>Di Negara manakah yang kamu ingin kuliah ?</h3>
+          <h3>Keuntungan</h3>
         </div>
       </div>
     </div>
@@ -132,43 +262,36 @@ $this->load->view('pencari/header_user');
       <div class="col-md-4">
         <div class="find-place-img_wrap">
           <div class="grid">
-            <figure class="effect-ruby">
-              <img src="assets/images/find-place3.jpg" class="img-fluid" alt="img13" />
-              <figcaption>
-                <h5>AMERIKA</h5>
-                <p>114 Listings</p>
-              </figcaption>
-            </figure>
+              <img src="assets/images/university.png" class="img-fluid" alt="img13" />           
           </div>
         </div>
+        <div class="add-listing-wrap">
+            <p>Memudahkan pencarian Universitas sesuai dengan pilihanmu dalam dan luar negeri</p>
+        </div> 
       </div>
       
       <div class="col-md-4">
         <div class="find-place-img_wrap">
-          <div class="grid">
-            <figure class="effect-ruby">
-              <img src="assets/images/find-place3.jpg" class="img-fluid" alt="img13" />
-              <figcaption>
-                <h5>AUSTRALIA</h5>
-                <p>114 Listings</p>
-              </figcaption>
-            </figure>
+          <div class="grid">      
+              <img src="assets/images/diploma.png" class="img-fluid" alt="img13" />
+     
           </div>
         </div>
+          <div class="add-listing-wrap">
+            <p>Memudahkan pencarian Beasiswa sesuai dengan pilihanmu dalam dan luar negeri</p>
+          </div>
       </div>
+
       
 
       <div class="col-md-4">
         <div class="find-place-img_wrap">
           <div class="grid">
-            <figure class="effect-ruby">
-              <img src="assets/images/find-place3.jpg" class="img-fluid" />
-              <figcaption>
-                <h5>EROPA</h5>
-                <p>114 Listings</p>
-              </figcaption>
-            </figure>
-          </div>
+              <img src="assets/images/information.png" class="img-fluid" />
+        </div>
+        </div>
+        <div class="add-listing-wrap">
+          <p>Menyediakan informasi mengenai Universitas dan Beasiswa dalam dan luar negeri</p>
         </div>
       </div>
 

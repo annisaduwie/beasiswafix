@@ -21,6 +21,22 @@ $this->load->view('pencari/profilpencari');?>
             </div>
 
             <div class="form-group">
+              <label for="exampleInputEmail1">Nama</label>
+              <input type="text" class="form-control" name="nama" id="email" value="<?php echo $nama_pencari['nama']; ?>" readonly>
+            </div>
+
+            <div class="form-group">
+              <label for="exampleInputEmail1">Email</label>
+              <input type="text" class="form-control" name="email" id="email" value="<?php echo $nama_pencari['email']; ?>" readonly>
+            </div>
+
+             <div class="form-group">
+              <label for="exampleInputEmail1">No HP</label>
+              <input type="text" class="form-control" name="no_hp" id="nama" value=" "required ><?php echo form_error('no_hp');?>
+
+            </div>
+
+            <div class="form-group">
               <label for="exampleInputEmail1">Program yang dicari</label>
               <input type="text" class="form-control" name="nama_pencari" id="nama" value=" "required ><?php echo form_error('nama_pencari');?>
 
@@ -35,17 +51,12 @@ $this->load->view('pencari/profilpencari');?>
               </div>
 
             <div class="form-group">
-              <label for="exampleInputEmail1">Email</label>
-              <input type="text" class="form-control" name="email" id="email" value="<?php echo $nama_pencari['email']; ?>" readonly>
-            </div>
-
-            <div class="form-group">
-                  <label>Textarea</label>
+                  <label>Deskripsi</label>
                   <textarea class="form-control" rows="3" placeholder="Enter ..."></textarea>
                 </div>
             
               <div class="box-tools pull-right">
-                <input type="submit" value="Simpan" class="btn btn-primary">
+                <input type="submit" value="Kirim" class="btn btn-primary">
               </div>
             </div>
             <!-- /.box-body -->

@@ -98,7 +98,7 @@ return $query;
 
 public function tampil_histori_pencarian($id_pencari){
 
-  $query= $this->db->query("SELECT distinct waktu_pencarian, url_universitas from pencari, pencarian, detail_pencarian, universitas, univ_fak, fakultas, fak_prodi, prodi WHERE pencari.id_pencari=pencarian.id_pencari AND pencarian.id_pencarian=detail_pencarian.id_pencarian AND detail_pencarian.id_universitas=universitas.id_universitas AND universitas.id_universitas=univ_fak.id_universitas AND univ_fak.id_univ_fak=fakultas.id_univ_fak AND univ_fak.id_univ_fak=fak_prodi.id_univ_fak AND fak_prodi.id_fak_prodi=prodi.id_fak_prodi AND pencarian.id_pencari='$id_pencari' order by waktu_pencarian DESC;");
+  $query= $this->db->query("SELECT distinct * from pencari, pencarian WHERE pencari.id_pencari=pencarian.id_pencari AND pencarian.id_pencari='$id_pencari' GROUP BY pencarian.id_pencarian order by waktu_pencarian DESC;");
 
 return $query;
 
@@ -106,13 +106,13 @@ return $query;
 
 public function tampil_favorit($id_pencari){
 
-  $query = $this->db->query("SELECT * from universitas, pencarian_favorit where universitas.id_universitas=pencarian_favorit.id_universitas AND id_pencari='$id_pencari' ");
+  $query = $this->db->query("SELECT * from universitas, pencarian_favorit where universitas.id_universitas=pencarian_favorit.id_universitas AND id_pencari='$id_pencari'");
  return $query;
 
 }
 
-public function hapus_favorit($id){
-  $query = $this->db->delete('pencarian_favorit',"id_pencarian_favorit = '$id'");
+public function hapus_favorit($id_pencarian_favorit, $id_pencari){
+  $query = $this->db->query("DELETE FROM pencarian_favorit WHERE id_pencarian_favorit = '$id_pencarian_favorit' AND id_pencari ='$id_pencari'");
     return $query;
 }
 
@@ -126,6 +126,9 @@ public function pencarian_univ_berdasar_fakultas_pages($limit, $start, $nama_fak
   return $query;
 }
 
-
+public function hapus_histori_pencarian($id_pencarian, $id_pencari){
+    $query = $this->db->query("DELETE FROM pencarian WHERE id_pencarian='$id_pencarian' AND id_pencari='$id_pencari'");
+    return $query;
+}
 
 }

@@ -1,25 +1,40 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-
+ini_set('max_execution_time', 0);
+ini_set("memory_limit", "1024M");
 class Awal extends CI_Controller  {
 
 	function __construct() {
         parent::__construct();
         $this->load->model('ProdiM');
         $this->load->model('FakultasM');
+        $this->load->model('PencariM');
 	 	 $this->load->helper('url','form');
 	 	 $this->model = $this->ProdiM;
 	 	 $this->model = $this->FakultasM;
+	 	 $this->model = $this->PencariM;
     }
 
 	public function index()
 	{
-		
+		if($this->session->userdata('logged_in')){
+
+		$data['prodi_pelajar']= $this->ProdiM->get_prodi_dropdown_pelajar()->result();
+		$data['prodi_mahasiswa']= $this->ProdiM->get_prodi_dropdown_mahasiswa()->result();
+		// $data['list_prodi']= $this->ProdiM->tampil_prodi()->result();
+		$data['fakultas_pelajar'] = $this->FakultasM->tampil_fakultas_pelajar_limit()->result();
+
+		$data['fakultas_mahasiswa'] = $this->FakultasM->tampil_fakultas_mahasiswa_limit()->result();
+
+		}else{
 		$data['prodi']= $this->ProdiM->get_prodi_dropdown()->result();
-		$data['list_prodi']= $this->ProdiM->tampil_prodi()->result();
 		$data['fakultas'] = $this->FakultasM->tampil_fakultas_limit()->result();
 
+		}
+		
+		$data['nama_pencari']= $this->session->userdata('id_pencari');
+	
 		$this->load->view('pencari/user', $data);
 		
 	}
@@ -38,13 +53,6 @@ class Awal extends CI_Controller  {
 	$this->load->view('pencari/user', $data);
 
 }
-
-
-
-
-
-
-
 
 
 	public function regispencari(){
@@ -81,7 +89,6 @@ class Awal extends CI_Controller  {
 	{
 		$this->load->view('admin/kelola_pencari');
 }
-
-
+	
 
 }

@@ -49,10 +49,10 @@ $this->load->view('pencari/header_user');
 
 
       </h5>
-      <form class="form-wrap mt-4" method="POST" id="form" action="<?php echo base_url('PencarianC/tampil_pencarian_prodi')?>">
+      <form class="form-wrap mt-4" method="POST" id="form" action="<?php echo base_url('PencarianC/tampil_pencarian_prodi_by_universitas')?>">
         <div class="row" style="background-color: #d2d6de; padding-top: 15px;">
 
-          <div class="col-md-4">
+          <div class="col-md-5">
             <!-- select -->
             <div class="form-group">
               <!-- <label>Select</label> -->
@@ -60,12 +60,12 @@ $this->load->view('pencari/header_user');
 
                <option disabled selected value='0' >-- Saring Berdasarkan Universitas --</option>
                <?php foreach ($universitas as $list_nama) {?>
-                <option id ="univ" <?php if($list_nama->nama_universitas == "<?php echo $list_nama->nama_universitas;?>") { echo "selected=selected";}?>  value="<?php echo $list_nama->nama_universitas;?>"><?php echo $list_nama->nama_universitas;?></option>
+                <option id ="univ" value="<?php echo $list_nama->id_universitas;?>"><?php echo $list_nama->nama_universitas;?></option>
               <?php  } ?>
             </select>
           </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-5">
          <div class="form-group">
           <!-- <label>Select</label> -->
           <select class="form-control" name="filter_negara" style="height: 50px;">
@@ -76,8 +76,8 @@ $this->load->view('pencari/header_user');
           </select>
         </div>
       </div>
-      <div class="col-md-4">
-        <button type="submit" style="width:100%; height: 50px; background-color: white"><span class="icon-magnifier search-icon" style="color: black;"></span><h7 style="color:black">CARI</h7></button>
+      <div class="col-md-2">
+        <button type="submit" class="btn btn-danger " style="width:100%; height: 50px;"><i class="fa fa-search"></i></button>
       </div>
     </div>
   </form>
@@ -91,7 +91,7 @@ $this->load->view('pencari/header_user');
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-6">
-       
+
       </div>
     </div>
 
@@ -99,382 +99,248 @@ $this->load->view('pencari/header_user');
 
     if ( $this->input->post('filter_universitas') == '' && $this->input->post('filter_negara') == '' )
       { ?>
-         <div class="styled-heading">
-          <h3>Daftar program studi</h3>
-        </div>
-       <!-- /.box-header -->
-       <div class="box-body" style="padding-bottom: 5px; ">
-         <?php foreach ($fakultas as $key) {?>
-
-          <form action="<?php echo base_url('PencarianC/pencarian_univ_berdasar_fakultas');?>" method="POST">
-
-          <ul class="products-list product-list-in-box" style="padding:5px;">
-
-            <li class="item" style=" background-color: #252a33; height: 200px; padding: 50px; ">
-
-             
-              <div class="product-info" >
-
-                <div href="javascript:void(0)" class="product-title" style="color:#fff;">
-
-                  <?php echo $key->nama_fakultas;?>
-                   <input type="hidden" value="<?php echo $key->nama_fakultas;?>" name="nama_fakultas">
-                  
-                </div>
-
-                <span class="product-description" ><br>
-
-                  <p>Memiliki
-                   <?php 
-                   $list_jumlah = $this->db->query("SELECT count(distinct nama_prodi) as jumlah_prodi from fakultas, univ_fak, fak_prodi, prodi  where fakultas.id_univ_fak = univ_fak.id_univ_fak AND univ_fak.id_univ_fak = fak_prodi.id_univ_fak AND fak_prodi.id_fak_prodi=prodi.id_fak_prodi AND nama_fakultas='$key->nama_fakultas'");
-
-                   foreach ($list_jumlah->result() as $value){?>
-
-
-                    <?php echo $value->jumlah_prodi;?> Program Studi
-
-                    <?php }?></p>
-
-                  </span>
-                  <a class="btn btn-primary" data-toggle="modal" data-target="#myModal-<?php echo $key->id_fakultas;?>" style="color:#fff; margin-top: 5px;"><b>Lihat Program Studi</b></a>
-                  <button type="submit" class="btn btn-danger" style="color:#fff; margin-top: 5px;"><b>Cari</b></button>
-                </center>
-                
-                
-
-                <!-- The Modal -->
-                <div id="myModal-<?php echo $key->id_fakultas;?>" class="modal">
-
-                 <div class="modal-content">
-                  <div class="modal-header" style="float:center;">
-                    <h6><?php echo $key->nama_fakultas;?></h6>
-                   
-                  </div>
-                  <div class="modal-body">
-                   <form action="<?php echo base_url('PencarianC/tampil_pencarian_prodi');?>" method="POST" >
-                     
-                    <div class="form-group">
-                      <?php 
-                      $list_prodi = $this->db->query("SELECT distinct nama_prodi from fakultas, univ_fak, fak_prodi, prodi  where fakultas.id_univ_fak = univ_fak.id_univ_fak AND univ_fak.id_univ_fak = fak_prodi.id_univ_fak AND fak_prodi.id_fak_prodi=prodi.id_fak_prodi AND nama_fakultas='$key->nama_fakultas'");?>
-
-                      <?php foreach ($list_prodi->result() as $value){?>
-                        <ul>
-                          <li><?php echo $value->nama_prodi;?></li>
-                        </ul>
-                      <?php }?>
-                    </div>
-
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Kembali</button>
-                    
-                  </div>
-                </form> 
-                <!-- </form> -->
-              </div>
-            </div>
-
-
-
-          </div></center>
-        </li>
-
-        
-
-      </ul> 
-  </form>
-    <?php }?>
-</div>
-
-
-
-<?php } else if($this->input->post('filter_universitas') != '' && $this->input->post('filter_negara') == '')
-    { ?>
        <div class="styled-heading">
-          <h3>Daftar Program Studi <?php echo $this->input->post('filter_universitas')?></h3>
-        </div>
+        <h3>Daftar Fakultas</h3>
       </div>
-       <!-- /.box-header -->
-       <div class="box-body" style="padding-bottom: 5px; ">
-         <?php foreach ($fakultas_univ as $key) {?>
+      <!-- /.box-header -->
+      <div class="box-body" style="padding-bottom: 5px; ">
 
-          <form action="<?php echo base_url('PencarianC/pencarian_univ_berdasar_fakultas');?>" method="POST">
+        <?php if ($this->session->userdata('logged_in')){
 
-          <ul class="products-list product-list-in-box" style="padding:5px;">
+        $id_pencari = $nama_pencari['id_pencari'];
+        $query = $this->db->query("SELECT tingkatan from pencari where id_pencari='$id_pencari'")->row_array(); 
 
-            <li class="item" style=" background-color: #252a33; height: 200px; padding: 50px; ">
+          if($query['tingkatan'] == "Pelajar"){?>
+            
+            <?php foreach ($fakultas_pelajar as $key) {?>
+              <form action="<?php echo base_url('PencarianC/pencarian_univ_berdasar_fakultas');?>" method="POST">
+                <ul class="products-list product-list-in-box" style="padding:5px;">
+                  <li class="item" style=" background-color: #252a33; height: 200px; padding: 50px; ">
+                    <div class="product-info" >
+                      <div href="javascript:void(0)" class="product-title" style="color:#fff;">
+                        <?php echo $key->nama_fakultas;?>
+                        <input type="hidden" value="<?php echo $key->nama_fakultas;?>" name="nama_fakultas">
+                      </div>
+                      <span class="product-description" ><br>
+                       <p>Memiliki
+                         <?php 
+                         $list_jumlah = $this->db->query("SELECT count(distinct nama_prodi) as jumlah_prodi from fakultas, univ_fak, fak_prodi, prodi  where fakultas.id_univ_fak = univ_fak.id_univ_fak AND univ_fak.id_univ_fak = fak_prodi.id_univ_fak AND fak_prodi.id_fak_prodi=prodi.id_fak_prodi AND nama_fakultas='$key->nama_fakultas' AND (prodi.tingkatan='Sarjana' OR prodi.tingkatan='Diploma')");
+                         foreach ($list_jumlah->result() as $value){?>
+                          <?php echo $value->jumlah_prodi;?> Program Studi
+                          <?php }?></p>
+                        </span>
+                        <a class="btn btn-primary" data-toggle="modal" data-target="#myModal-<?php echo $key->id_fakultas;?>" style="color:#fff; margin-top: 5px;"><b>Lihat Program Studi</b></a>
+                        <button type="submit" class="btn btn-danger" style="color:#fff; margin-top: 5px;"><b>Cari</b></button>
+                      </center>
 
-             
-              <div class="product-info" >
-
-                <div href="javascript:void(0)" class="product-title" style="color:#fff;">
-
-                  <?php echo $key->nama_fakultas;?>
-                   <input type="hidden" value="<?php echo $key->nama_fakultas;?>" name="nama_fakultas">
-                  
-                </div>
-
-                <span class="product-description" ><br>
-
-                  <p>Memiliki
-                   <?php 
-                   $list_jumlah = $this->db->query("SELECT count(distinct nama_prodi) as jumlah_prodi from fakultas, univ_fak, fak_prodi, prodi  where fakultas.id_univ_fak = univ_fak.id_univ_fak AND univ_fak.id_univ_fak = fak_prodi.id_univ_fak AND fak_prodi.id_fak_prodi=prodi.id_fak_prodi AND nama_fakultas='$key->nama_fakultas'");
-
-                   foreach ($list_jumlah->result() as $value){?>
 
 
-                    <?php echo $value->jumlah_prodi;?> Program Studi
+                      <!-- The Modal -->
+                      <div id="myModal-<?php echo $key->id_fakultas;?>" class="modal">
+                       <div class="modal-content">
+                        <div class="modal-header" style="float:center;">
+                          <h6><?php echo $key->nama_fakultas;?></h6>
+                        </div>
+                        <div class="modal-body">
+                         <form action="<?php echo base_url('PencarianC/tampil_pencarian_prodi');?>" method="POST" >
 
-                    <?php }?></p>
+                          <div class="form-group">
+                            <?php 
+                            $list_prodi = $this->db->query("SELECT distinct nama_prodi from fakultas, univ_fak, fak_prodi, prodi  where fakultas.id_univ_fak = univ_fak.id_univ_fak AND univ_fak.id_univ_fak = fak_prodi.id_univ_fak AND fak_prodi.id_fak_prodi=prodi.id_fak_prodi AND nama_fakultas='$key->nama_fakultas' AND (prodi.tingkatan='Sarjana' OR prodi.tingkatan='Diploma')");?>
 
-                  </span>
-                  <a class="btn btn-primary" data-toggle="modal" data-target="#myModal-<?php echo $key->id_fakultas;?>" style="color:#fff; margin-top: 5px;"><b>Lihat Program Studi</b></a>
-                  <button type="submit" class="btn btn-danger" style="color:#fff; margin-top: 5px;"><b>Cari</b></button>
-                </center>
-                
-                
+                            <?php foreach ($list_prodi->result() as $value){?>
+                              <ul>
+                                <li><?php echo $value->nama_prodi;?></li>
+                              </ul>
+                            <?php }?>
+                          </div>
 
-                <!-- The Modal -->
-                <div id="myModal-<?php echo $key->id_fakultas;?>" class="modal">
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Kembali</button>
 
-                 <div class="modal-content">
-                  <div class="modal-header" style="float:center;">
-                    <h6><?php echo $key->nama_fakultas;?></h6>
-                   
-                  </div>
-                  <div class="modal-body">
-                   <form action="<?php echo base_url('PencarianC/tampil_pencarian_prodi');?>" method="POST" >
-                     
-                    <div class="form-group">
-                      <?php 
-                      $list_prodi = $this->db->query("SELECT distinct nama_prodi from fakultas, univ_fak, fak_prodi, prodi  where fakultas.id_univ_fak = univ_fak.id_univ_fak AND univ_fak.id_univ_fak = fak_prodi.id_univ_fak AND fak_prodi.id_fak_prodi=prodi.id_fak_prodi AND nama_fakultas='$key->nama_fakultas'");?>
-
-                      <?php foreach ($list_prodi->result() as $value){?>
-                        <ul>
-                          <li><?php echo $value->nama_prodi;?></li>
-                        </ul>
-                      <?php }?>
+                        </div>
+                      </form> 
+                      <!-- </form> -->
                     </div>
-
                   </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Kembali</button>
-                    
-                  </div>
-                </form> 
-                <!-- </form> -->
-              </div>
-            </div>
+                </div></center>
+              </li>
 
 
 
-          </div></center>
-        </li>
+            </ul> 
+          </form>
+        <?php }?>
 
-        
-
-      </ul> 
-  </form>
-    <?php }?>
+        <div class="row">
+          <div class="col">
+            <!-- <nav aria-label="Page navigation example"> -->
+              <!-- <ul class="pagination justify-content-center"> -->
+               <?php echo $pagination_pelajar; ?>
+<!--          </ul>
+</nav> -->
+</div>
 </div>
 
-        
-<?php }else if($this->input->post('filter_universitas') == '' && $this->input->post('filter_negara') != '')
-
-{ ?>
-
-   <!-- /.box-header -->
-       <div class="box-body" style="padding-bottom: 5px; ">
-         <?php foreach ($fakultas_negara as $key) {?>
-
-          <form action="<?php echo base_url('PencarianC/pencarian_univ_berdasar_fakultas');?>" method="POST">
-
-          <ul class="products-list product-list-in-box" style="padding:5px;">
-
-            <li class="item" style=" background-color: #252a33; height: 200px; padding: 50px; ">
-
-             
-              <div class="product-info" >
-
-                <div href="javascript:void(0)" class="product-title" style="color:#fff;">
-
-                  <?php echo $key->nama_fakultas;?>
-                   <input type="hidden" value="<?php echo $key->nama_fakultas;?>" name="nama_fakultas">
-                  
-                </div>
-
-                <span class="product-description" ><br>
-
-                  <p>Memiliki
-                   <?php 
-                   $list_jumlah = $this->db->query("SELECT count(distinct nama_prodi) as jumlah_prodi from fakultas, univ_fak, fak_prodi, prodi  where fakultas.id_univ_fak = univ_fak.id_univ_fak AND univ_fak.id_univ_fak = fak_prodi.id_univ_fak AND fak_prodi.id_fak_prodi=prodi.id_fak_prodi AND nama_fakultas='$key->nama_fakultas'");
-
-                   foreach ($list_jumlah->result() as $value){?>
-
-
-                    <?php echo $value->jumlah_prodi;?> Program Studi
-
-                    <?php }?></p>
-
-                  </span>
-                  <a class="btn btn-primary" data-toggle="modal" data-target="#myModal-<?php echo $key->id_fakultas;?>" style="color:#fff; margin-top: 5px;"><b>Lihat Program Studi</b></a>
-                  <button type="submit" class="btn btn-danger" style="color:#fff; margin-top: 5px;"><b>Cari</b></button>
-                </center>
-                
-                
-
-                <!-- The Modal -->
-                <div id="myModal-<?php echo $key->id_fakultas;?>" class="modal">
-
-                 <div class="modal-content">
-                  <div class="modal-header" style="float:center;">
-                    <h6><?php echo $key->nama_fakultas;?></h6>
-                   
-                  </div>
-                  <div class="modal-body">
-                   <form action="<?php echo base_url('PencarianC/tampil_pencarian_prodi');?>" method="POST" >
-                     
-                    <div class="form-group">
-                      <?php 
-                      $list_prodi = $this->db->query("SELECT distinct nama_prodi from fakultas, univ_fak, fak_prodi, prodi  where fakultas.id_univ_fak = univ_fak.id_univ_fak AND univ_fak.id_univ_fak = fak_prodi.id_univ_fak AND fak_prodi.id_fak_prodi=prodi.id_fak_prodi AND nama_fakultas='$key->nama_fakultas'");?>
-
-                      <?php foreach ($list_prodi->result() as $value){?>
-                        <ul>
-                          <li><?php echo $value->nama_prodi;?></li>
-                        </ul>
-                      <?php }?>
-                    </div>
-
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Kembali</button>
-                    
-                  </div>
-                </form> 
-                <!-- </form> -->
+<?php }else if($query['tingkatan'] == "Mahasiswa"){?>
+  <?php foreach ($fakultas_mahasiswa as $key) {?>
+    <form action="<?php echo base_url('PencarianC/pencarian_univ_berdasar_fakultas');?>" method="POST">
+      <ul class="products-list product-list-in-box" style="padding:5px;">
+        <li class="item" style=" background-color: #252a33; height: 200px; padding: 50px; ">
+          <div class="product-info" >
+            <div href="javascript:void(0)" class="product-title" style="color:#fff;">
+              <?php echo $key->nama_fakultas;?>
+              <input type="hidden" value="<?php echo $key->nama_fakultas;?>" name="nama_fakultas">
+            </div>
+            <span class="product-description" ><br>
+              <p>Memiliki
+               <?php 
+               $list_jumlah = $this->db->query("SELECT count(distinct nama_prodi) as jumlah_prodi from fakultas, univ_fak, fak_prodi, prodi  where fakultas.id_univ_fak = univ_fak.id_univ_fak AND univ_fak.id_univ_fak = fak_prodi.id_univ_fak AND fak_prodi.id_fak_prodi=prodi.id_fak_prodi AND nama_fakultas='$key->nama_fakultas' AND (prodi.tingkatan='Magister' OR prodi.tingkatan='Doktor')");
+               foreach ($list_jumlah->result() as $value){?>
+                <?php echo $value->jumlah_prodi;?> Program Studi
+                <?php }?></p>
+              </span>
+              <a class="btn btn-primary" data-toggle="modal" data-target="#myModal-<?php echo $key->id_fakultas;?>" style="color:#fff; margin-top: 5px;"><b>Lihat Program Studi</b></a>
+              <button type="submit" class="btn btn-danger" style="color:#fff; margin-top: 5px;"><b>Cari</b></button>
+            </center>
+            <!-- The Modal -->
+            <div id="myModal-<?php echo $key->id_fakultas;?>" class="modal">
+             <div class="modal-content">
+              <div class="modal-header" style="float:center;">
+                <h6><?php echo $key->nama_fakultas;?></h6>
               </div>
+              <div class="modal-body">
+               <form action="<?php echo base_url('PencarianC/tampil_pencarian_prodi');?>" method="POST" >
+                <div class="form-group">
+                  <?php 
+                  $list_prodi = $this->db->query("SELECT distinct nama_prodi from fakultas, univ_fak, fak_prodi, prodi  where fakultas.id_univ_fak = univ_fak.id_univ_fak AND univ_fak.id_univ_fak = fak_prodi.id_univ_fak AND fak_prodi.id_fak_prodi=prodi.id_fak_prodi AND nama_fakultas='$key->nama_fakultas' AND (prodi.tingkatan='Magister' OR prodi.tingkatan='Doktor')");?>
+                  <?php foreach ($list_prodi->result() as $value){?>
+                    <ul>
+                      <li><?php echo $value->nama_prodi;?></li>
+                    </ul>
+                  <?php }?>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Kembali</button>
+              </div>
+            </form> 
+            <!-- </form> -->
+          </div>
+        </div>
+      </div></center>
+    </li>
+
+  </ul> 
+</form>
+<?php }?>
+<div class="row">
+  <div class="col">
+    <!-- <nav aria-label="Page navigation example"> -->
+      <!-- <ul class="pagination justify-content-center"> -->
+       <?php echo $pagination_mahasiswa; ?>
+<!--          </ul>
+</nav> -->
+</div>
+</div>
+<?php } ?>
+<?php } else{?>
+  <?php foreach ($fakultas as $key) {?>
+
+    <form action="<?php echo base_url('PencarianC/pencarian_univ_berdasar_fakultas');?>" method="POST">
+
+      <ul class="products-list product-list-in-box" style="padding:5px;">
+
+        <li class="item" style=" background-color: #252a33; height: 200px; padding: 50px; ">
+
+
+          <div class="product-info" >
+
+            <div href="javascript:void(0)" class="product-title" style="color:#fff;">
+
+              <?php echo $key->nama_fakultas;?>
+              <input type="hidden" value="<?php echo $key->nama_fakultas;?>" name="nama_fakultas">
+
             </div>
 
+            <span class="product-description" ><br>
+
+              <p>Memiliki
+               <?php 
+               $list_jumlah = $this->db->query("SELECT count(distinct nama_prodi) as jumlah_prodi from fakultas, univ_fak, fak_prodi, prodi  where fakultas.id_univ_fak = univ_fak.id_univ_fak AND univ_fak.id_univ_fak = fak_prodi.id_univ_fak AND fak_prodi.id_fak_prodi=prodi.id_fak_prodi AND nama_fakultas='$key->nama_fakultas'");
+
+               foreach ($list_jumlah->result() as $value){?>
 
 
-          </div></center>
-        </li>
+                <?php echo $value->jumlah_prodi;?> Program Studi
 
-        
+                <?php }?></p>
 
-      </ul> 
-  </form>
-    <?php }?>
-</div>
-
-
-<?php }else if($this->input->post('filter_universitas') != '' && $this->input->post('filter_negara') != '')?>
-
-<?php {?>
+              </span>
+              <a class="btn btn-primary" data-toggle="modal" data-target="#myModal-<?php echo $key->id_fakultas;?>" style="color:#fff; margin-top: 5px;"><b>Lihat Program Studi</b></a>
+              <button type="submit" class="btn btn-danger" style="color:#fff; margin-top: 5px;"><b>Cari</b></button>
+            </center>
 
 
-   <!-- /.box-header -->
-       <div class="box-body" style="padding-bottom: 5px; ">
-         <?php foreach ($filter_all as $key) {?>
 
-          <form action="<?php echo base_url('PencarianC/pencarian_univ_berdasar_fakultas');?>" method="POST">
+            <!-- The Modal -->
+            <div id="myModal-<?php echo $key->id_fakultas;?>" class="modal">
 
-          <ul class="products-list product-list-in-box" style="padding:5px;">
+             <div class="modal-content">
+              <div class="modal-header" style="float:center;">
+                <h6><?php echo $key->nama_fakultas;?></h6>
 
-            <li class="item" style=" background-color: #252a33; height: 200px; padding: 50px; ">
+              </div>
+              <div class="modal-body">
+               <form action="<?php echo base_url('PencarianC/tampil_pencarian_prodi');?>" method="POST" >
 
-             
-              <div class="product-info" >
+                <div class="form-group">
+                  <?php 
+                  $list_prodi = $this->db->query("SELECT distinct nama_prodi from fakultas, univ_fak, fak_prodi, prodi  where fakultas.id_univ_fak = univ_fak.id_univ_fak AND univ_fak.id_univ_fak = fak_prodi.id_univ_fak AND fak_prodi.id_fak_prodi=prodi.id_fak_prodi AND nama_fakultas='$key->nama_fakultas'");?>
 
-                <div href="javascript:void(0)" class="product-title" style="color:#fff;">
-
-                  <?php echo $key->nama_fakultas;?>
-                   <input type="hidden" value="<?php echo $key->nama_fakultas;?>" name="nama_fakultas">
-                  
+                  <?php foreach ($list_prodi->result() as $value){?>
+                    <ul>
+                      <li><?php echo $value->nama_prodi;?></li>
+                    </ul>
+                  <?php }?>
                 </div>
 
-                <span class="product-description" ><br>
-
-                  <p>Memiliki
-                   <?php 
-                   $list_jumlah = $this->db->query("SELECT count(distinct nama_prodi) as jumlah_prodi from fakultas, univ_fak, fak_prodi, prodi  where fakultas.id_univ_fak = univ_fak.id_univ_fak AND univ_fak.id_univ_fak = fak_prodi.id_univ_fak AND fak_prodi.id_fak_prodi=prodi.id_fak_prodi AND nama_fakultas='$key->nama_fakultas'");
-
-                   foreach ($list_jumlah->result() as $value){?>
-
-
-                    <?php echo $value->jumlah_prodi;?> Program Studi
-
-                    <?php }?></p>
-
-                  </span>
-                  <a class="btn btn-primary" data-toggle="modal" data-target="#myModal-<?php echo $key->id_fakultas;?>" style="color:#fff; margin-top: 5px;"><b>Lihat Program Studi</b></a>
-                  <button type="submit" class="btn btn-danger" style="color:#fff; margin-top: 5px;"><b>Cari</b></button>
-                </center>
-                
-                
-
-                <!-- The Modal -->
-                <div id="myModal-<?php echo $key->id_fakultas;?>" class="modal">
-
-                 <div class="modal-content">
-                  <div class="modal-header" style="float:center;">
-                    <h6><?php echo $key->nama_fakultas;?></h6>
-                   
-                  </div>
-                  <div class="modal-body">
-                   <form action="<?php echo base_url('PencarianC/tampil_pencarian_prodi');?>" method="POST" >
-                     
-                    <div class="form-group">
-                      <?php 
-                      $list_prodi = $this->db->query("SELECT distinct nama_prodi from fakultas, univ_fak, fak_prodi, prodi  where fakultas.id_univ_fak = univ_fak.id_univ_fak AND univ_fak.id_univ_fak = fak_prodi.id_univ_fak AND fak_prodi.id_fak_prodi=prodi.id_fak_prodi AND nama_fakultas='$key->nama_fakultas'");?>
-
-                      <?php foreach ($list_prodi->result() as $value){?>
-                        <ul>
-                          <li><?php echo $value->nama_prodi;?></li>
-                        </ul>
-                      <?php }?>
-                    </div>
-
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Kembali</button>
-                    
-                  </div>
-                </form> 
-                <!-- </form> -->
               </div>
-            </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Kembali</button>
+
+              </div>
+            </form> 
+            <!-- </form> -->
+          </div>
+        </div>
 
 
 
-          </div></center>
-        </li>
-
-        
-
-      </ul> 
-  </form>
-    <?php }?>
-</div>
+      </div></center>
+    </li>
 
 
 
-
-
-
+  </ul> 
+</form>
 <?php }?>
 
- <div class="row">
-            <div class="col">
-        <!-- <nav aria-label="Page navigation example"> -->
-          <!-- <ul class="pagination justify-content-center"> -->
-             <?php echo $pagination; ?>
+<div class="row">
+  <div class="col">
+    <!-- <nav aria-label="Page navigation example"> -->
+      <!-- <ul class="pagination justify-content-center"> -->
+       <?php echo $pagination; ?>
 <!--          </ul>
-     </nav> -->
-     </div>
-     </div>
-    </div>
-  </section>
+</nav> -->
+</div>
+</div>
+
+<?php }?>
+<?php }?>
+</div>
+</section>
 
 
 <!--//END FEATURED PLACES -->

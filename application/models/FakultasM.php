@@ -5,6 +5,11 @@ class FakultasM extends CI_Model{
 		$this->load->database();
 	}
 
+  public function cek_tingkatan($id_pencari){
+    $query = $this->db->query("SELECT tingkatan from pencari where id_pencari='$id_pencari'")->row_array();
+    return $query;
+  }
+
 	public function get_fakultas($id_universitas){
    $query = $this->db->query("SELECT * from universitas, univ_fak, fakultas where universitas.id_universitas=univ_fak.id_universitas AND univ_fak.id_univ_fak = fakultas.id_univ_fak AND universitas.id_universitas='$id_universitas'");
    return $query;
@@ -19,9 +24,49 @@ class FakultasM extends CI_Model{
    $query = $this->db->query("SELECT distinct  nama_fakultas, id_fakultas from universitas, univ_fak, fakultas, fak_prodi, prodi  where universitas.id_universitas=univ_fak.id_universitas AND univ_fak.id_univ_fak=fakultas.id_univ_fak AND fakultas.id_univ_fak = univ_fak.id_univ_fak AND univ_fak.id_univ_fak = fak_prodi.id_univ_fak AND fak_prodi.id_fak_prodi=prodi.id_fak_prodi GROUP BY nama_fakultas LIMIT $start,$limit");
    return $query;
   }
+ public function tampil_fakultas_list_univ($id_universitas){
+   $query = $this->db->query("SELECT distinct  nama_fakultas, id_fakultas from universitas, univ_fak, fakultas, fak_prodi, prodi  where universitas.id_universitas=univ_fak.id_universitas AND univ_fak.id_univ_fak=fakultas.id_univ_fak AND fakultas.id_univ_fak = univ_fak.id_univ_fak AND univ_fak.id_univ_fak = fak_prodi.id_univ_fak AND fak_prodi.id_fak_prodi=prodi.id_fak_prodi AND universitas.id_universitas='$id_universitas' GROUP BY nama_fakultas");
+   return $query;
+  }
+ public function tampil_fakultas_list_univ_page($limit, $start,$universitas){
+   $query = $this->db->query("SELECT distinct  nama_fakultas, id_fakultas from universitas, univ_fak, fakultas, fak_prodi, prodi  where universitas.id_universitas=univ_fak.id_universitas AND univ_fak.id_univ_fak=fakultas.id_univ_fak AND fakultas.id_univ_fak = univ_fak.id_univ_fak AND univ_fak.id_univ_fak = fak_prodi.id_univ_fak AND fak_prodi.id_fak_prodi=prodi.id_fak_prodi AND nama_universitas='$universitas' GROUP BY nama_fakultas  LIMIT $start,$limit");
+   return $query;
+  }
+   public function tampil_fakultas_mahasiswa($limit, $start){
+   $query = $this->db->query("SELECT distinct  nama_fakultas, id_fakultas from universitas, univ_fak, fakultas, fak_prodi, prodi  where universitas.id_universitas=univ_fak.id_universitas AND univ_fak.id_univ_fak=fakultas.id_univ_fak AND fakultas.id_univ_fak = univ_fak.id_univ_fak AND univ_fak.id_univ_fak = fak_prodi.id_univ_fak AND fak_prodi.id_fak_prodi=prodi.id_fak_prodi AND (prodi.tingkatan='Magister' OR prodi.tingkatan='Doktor') GROUP BY nama_fakultas LIMIT $start,$limit");
+   return $query;
+  }
 
+  public function tampil_fakultas_pelajar($limit, $start){
+   $query = $this->db->query("SELECT distinct  nama_fakultas, id_fakultas from universitas, univ_fak, fakultas, fak_prodi, prodi  where universitas.id_universitas=univ_fak.id_universitas AND univ_fak.id_univ_fak=fakultas.id_univ_fak AND fakultas.id_univ_fak = univ_fak.id_univ_fak AND univ_fak.id_univ_fak = fak_prodi.id_univ_fak AND fak_prodi.id_fak_prodi=prodi.id_fak_prodi AND (prodi.tingkatan='Diploma' OR prodi.tingkatan='Sarjana') GROUP BY nama_fakultas LIMIT $start,$limit");
+   return $query;
+  }
+ public function tampil_fakultas_pelajar_universitas($id_universitas, $limit, $start){
+   $query = $this->db->query("SELECT distinct  nama_fakultas, id_fakultas from universitas, univ_fak, fakultas, fak_prodi, prodi  where universitas.id_universitas=univ_fak.id_universitas AND univ_fak.id_univ_fak=fakultas.id_univ_fak AND fakultas.id_univ_fak = univ_fak.id_univ_fak AND univ_fak.id_univ_fak = fak_prodi.id_univ_fak AND fak_prodi.id_fak_prodi=prodi.id_fak_prodi AND universitas.id_universitas='$id_universitas' AND (prodi.tingkatan='Diploma' OR prodi.tingkatan='Sarjana') GROUP BY nama_fakultas LIMIT $start,$limit");
+   return $query;
+  }
+   public function tampil_fakultas_mahasiswa_universitas($id_universitas, $limit, $start){
+   $query = $this->db->query("SELECT distinct  nama_fakultas, id_fakultas from universitas, univ_fak, fakultas, fak_prodi, prodi  where universitas.id_universitas=univ_fak.id_universitas AND univ_fak.id_univ_fak=fakultas.id_univ_fak AND fakultas.id_univ_fak = univ_fak.id_univ_fak AND univ_fak.id_univ_fak = fak_prodi.id_univ_fak AND fak_prodi.id_fak_prodi=prodi.id_fak_prodi AND universitas.id_universitas='$id_universitas' AND (prodi.tingkatan='Magister' OR prodi.tingkatan='Doktor') GROUP BY nama_fakultas LIMIT $start,$limit");
+   return $query;
+  }
   public function tampil_fakultas_rows(){
    $query = $this->db->query("SELECT distinct  nama_fakultas, id_fakultas from universitas, univ_fak, fakultas, fak_prodi, prodi  where universitas.id_universitas=univ_fak.id_universitas AND univ_fak.id_univ_fak=fakultas.id_univ_fak AND fakultas.id_univ_fak = univ_fak.id_univ_fak AND univ_fak.id_univ_fak = fak_prodi.id_univ_fak AND fak_prodi.id_fak_prodi=prodi.id_fak_prodi GROUP BY nama_fakultas");
+   return $query;
+  }
+  public function tampil_fakultas_rows_pelajar(){
+   $query = $this->db->query("SELECT distinct  nama_fakultas, id_fakultas from universitas, univ_fak, fakultas, fak_prodi, prodi  where universitas.id_universitas=univ_fak.id_universitas AND univ_fak.id_univ_fak=fakultas.id_univ_fak AND fakultas.id_univ_fak = univ_fak.id_univ_fak AND univ_fak.id_univ_fak = fak_prodi.id_univ_fak AND fak_prodi.id_fak_prodi=prodi.id_fak_prodi AND (prodi.tingkatan='Diploma' OR prodi.tingkatan='Sarjana') GROUP BY nama_fakultas");
+   return $query;
+  }
+  public function tampil_fakultas_rows_mahasiswa(){
+   $query = $this->db->query("SELECT distinct  nama_fakultas, id_fakultas from universitas, univ_fak, fakultas, fak_prodi, prodi  where universitas.id_universitas=univ_fak.id_universitas AND univ_fak.id_univ_fak=fakultas.id_univ_fak AND fakultas.id_univ_fak = univ_fak.id_univ_fak AND univ_fak.id_univ_fak = fak_prodi.id_univ_fak AND fak_prodi.id_fak_prodi=prodi.id_fak_prodi AND (prodi.tingkatan='Magister' OR prodi.tingkatan='Doktor') GROUP BY nama_fakultas");
+   return $query;
+  }
+  public function tampil_fakultas_rows_mahasiswa_universitas($id_universitas){
+   $query = $this->db->query("SELECT distinct  nama_fakultas, id_fakultas from universitas, univ_fak, fakultas, fak_prodi, prodi  where universitas.id_universitas=univ_fak.id_universitas AND univ_fak.id_univ_fak=fakultas.id_univ_fak AND fakultas.id_univ_fak = univ_fak.id_univ_fak AND univ_fak.id_univ_fak = fak_prodi.id_univ_fak AND fak_prodi.id_fak_prodi=prodi.id_fak_prodi AND universitas.id_universitas='$id_universitas' AND (prodi.tingkatan='Magister' OR prodi.tingkatan='Doktor') GROUP BY nama_fakultas");
+   return $query;
+  }
+   public function tampil_fakultas_rows_pelajar_universitas($id_universitas){
+   $query = $this->db->query("SELECT distinct  nama_fakultas, id_fakultas from universitas, univ_fak, fakultas, fak_prodi, prodi  where universitas.id_universitas=univ_fak.id_universitas AND univ_fak.id_univ_fak=fakultas.id_univ_fak AND fakultas.id_univ_fak = univ_fak.id_univ_fak AND univ_fak.id_univ_fak = fak_prodi.id_univ_fak AND fak_prodi.id_fak_prodi=prodi.id_fak_prodi AND universitas.id_universitas='$id_universitas' AND (prodi.tingkatan='Diploma' OR prodi.tingkatan='Sarjana') GROUP BY nama_fakultas");
    return $query;
   }
 
@@ -36,8 +81,8 @@ class FakultasM extends CI_Model{
    return $query;
   }
 
-   public function tampil_fakultas_list_univ($universitas){
-   $query = $this->db->query("SELECT distinct  nama_fakultas, id_fakultas from universitas, univ_fak, fakultas, fak_prodi, prodi  where universitas.id_universitas=univ_fak.id_universitas AND univ_fak.id_univ_fak=fakultas.id_univ_fak AND fakultas.id_univ_fak = univ_fak.id_univ_fak AND univ_fak.id_univ_fak = fak_prodi.id_univ_fak AND fak_prodi.id_fak_prodi=prodi.id_fak_prodi AND nama_universitas='$universitas' GROUP BY nama_fakultas");
+   public function tampil_fakultas_list_univ_rows($id_universitas){
+   $query = $this->db->query("SELECT distinct  nama_fakultas, id_fakultas from universitas, univ_fak, fakultas, fak_prodi, prodi  where universitas.id_universitas=univ_fak.id_universitas AND univ_fak.id_univ_fak=fakultas.id_univ_fak AND fakultas.id_univ_fak = univ_fak.id_univ_fak AND univ_fak.id_univ_fak = fak_prodi.id_univ_fak AND fak_prodi.id_fak_prodi=prodi.id_fak_prodi AND id_universitas='$id_universitas' GROUP BY nama_fakultas");
    return $query;
   }
 
@@ -52,15 +97,17 @@ class FakultasM extends CI_Model{
 }
 
 
-
-
-
-
-
-
-
    public function tampil_fakultas_limit(){
-   $query = $this->db->query("SELECT distinct nama_fakultas from fakultas LIMIT 6");
+   $query = $this->db->query("SELECT distinct nama_fakultas from fakultas Order by id_fakultas Desc LIMIT 6");
+   return $query;
+  }
+   public function tampil_fakultas_pelajar_limit(){
+   $query = $this->db->query("SELECT distinct nama_fakultas from fakultas,univ_fak,fak_prodi,prodi WHERE fakultas.id_univ_fak=univ_fak.id_univ_fak AND univ_fak.id_univ_fak=fak_prodi.id_univ_fak AND fak_prodi.id_fak_prodi=prodi.id_fak_prodi AND (prodi.tingkatan='Sarjana' OR prodi.tingkatan='Diploma') Order by id_fakultas Desc LIMIT 6");
+   return $query;
+  }
+
+  public function tampil_fakultas_mahasiswa_limit(){
+   $query = $this->db->query("SELECT distinct nama_fakultas from fakultas,univ_fak,fak_prodi,prodi WHERE fakultas.id_univ_fak=univ_fak.id_univ_fak AND univ_fak.id_univ_fak=fak_prodi.id_univ_fak AND fak_prodi.id_fak_prodi=prodi.id_fak_prodi AND (prodi.tingkatan='Magister' OR prodi.tingkatan='Doktor') Order by id_fakultas Desc LIMIT 6");
    return $query;
   }
 

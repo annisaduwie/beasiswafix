@@ -1,57 +1,81 @@
 <?php
 $this->load->view('pencari/profilpencari');?>
+<style>
+.img{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  height: 120px;
+  width: 120px;
+  margin-bottom: 20px;
+}
+</style>
+
 
 <div class="col-md-9">
+ <div class="box box-primary">
+    <div class="box-header with-border">
+      <h3 class="box-title">Halaman Pencarian</h3>
+    </div>
 
-
-          <div class="box">
-            <div class="box-header">
-              <h1 class="box-title">Data Pencari</h1>
-            </div>
+    <div class="callout callout-info">
+      <p>Berikut adalah list pencarian yang sudah dilakukan. Anda dapat mengahapus data pencarian jika sidah tidak di butuhkan lagi. Anda juga bisa melihat kembali pencarian yang sudah anda lakukan dengan mengeklik tombol "Tampilkan Pencarian".</p>
+    </div>
             
             <div class="box-body">
-              
-              <table id="univ" class="table table-bordered table-striped">
-                <thead>
-                <tr><center>
-                  <th><center>No </center></th>
-                  <th><center>Waktu Pencarian</center></th>
-                  <th><center>Link</center></th>
-                
-                 
-                </tr>
-                </thead>
-                  <tbody>
-                 <?php $no=0; foreach ($pencarian as $value):  $no++; ?>
-                      <tr>   
-                        <td><?php echo $no; ?></td>
-                        <td ><?php echo $value->waktu_pencarian;?></td>
-                        <td ><?php echo $value->url_universitas;?></td>
-                      </tr>
-                       <?php  endforeach; ?>
-                        
+              <input type="hidden" id="id_pencari" name="id_pencari" value="<?php echo $nama_pencari['id_pencari']; ?>">
 
-                     
-                  </tbody>
-               
-              </table>
+              <?php
+              $id_pencari = $nama_pencari['id_pencari'];
+              $query= $this->db->query("SELECT distinct * from pencari, pencarian WHERE pencari.id_pencari=pencarian.id_pencari AND pencarian.id_pencari='$id_pencari' GROUP BY pencarian.id_pencarian order by waktu_pencarian")->num_rows();
+              ?>
+
+              <?php if ($query < 1){ ?>
+              <img src="<?php echo base_url('assets/images/searching.png');?>" class="img">
+
+                <div class="text-center" style="font-size: 18px;">Anda belum melakukan pencarian</div><br>
+
+              <?php } else{ ?>
+
+              <?php foreach($pencarian as $value){?>
+                
+              <!-- Post -->
+                <div class="post">
+                <form action="<?php echo base_url('PencarianC/getPencarian')?>" method="POST">
+
+                  <div class="user-block">
+              
+                        <span class="username">
+                          <a class="pull-right btn-box-tool" title="Hapus dari Favorit" data-placement="top" href="<?php echo site_url('Pencari/hapus_pencarian_tersimpan/'.$value->id_pencarian.'/'.$id_pencari);?>" onclick="return confirm('Apakah anda yakin ingin menghapus pencarian ?')"><i class="fa fa-times"></i></a>
+                        <?php echo tgl_indo(date("Y-m-d",strtotime($value->waktu_pencarian))); ?> - <?php echo date("H:i",strtotime($value->waktu_pencarian)); ?>
+                        </span>
+
+                  </div>
+                  <!-- /.user-block -->
+                  <p>
+                    Jurusan <?php echo $value->keyword_prodi;?> <?php echo $value->tingkatan ;?> di <?php echo $value->keyword_kategori;?><br>
+                   
+                  </p>
+                  <input type="hidden" value="<?php echo $value->keyword_prodi;?>" name="keyword_prodi">
+                  <input type="hidden" value="<?php echo $value->keyword_kategori;?>" name="keyword_kategori">
+                  <input type="hidden" value="<?php echo $value->keyword_tingkatan ;?>" name="keyword_tingkatan">
+                  <button type="submit" name="tampil_pencarian" class="btn btn-sm btn-primary btn-flat pull-left">tampilkan pencarian</button><br>
+                  </form>
+                </div>
+              
+                <!-- /.post -->
+              <?php } ?>
+
+              <?php } ?>
+
+
+
+
+              
             </div>
             <!-- /.box-body -->
           </div>
           <!-- /.box -->
-              <nav aria-label="Page navigation example">
-  <ul class="pagination justify-content-center">
-    <li class="page-item disabled">
-      <a class="page-link" href="#" tabindex="-1">Previous</a>
-    </li>
-    <li class="page-item"><a class="page-link" href="#">1</a></li>
-    <li class="page-item"><a class="page-link" href="#">2</a></li>
-    <li class="page-item"><a class="page-link" href="#">3</a></li>
-    <li class="page-item">
-      <a class="page-link" href="#">Next</a>
-    </li>
-  </ul>
-</nav>
 
             </div>
             <!-- /.box-body -->
@@ -68,9 +92,8 @@ $this->load->view('pencari/profilpencari');?>
 
   <footer class="main-footer">
   <div class="pull-right hidden-xs">
-    <b>Version</b> 2.4.0
+
   </div>
-  <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
-  reserved.
+  
 </footer>
 

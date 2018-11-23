@@ -1,27 +1,17 @@
 <?php
 $this->load->view('pencari/profilpencari');?>
+  
+  <div class="col-md-9">
+ <div class="box box-primary">
+    <div class="box-header with-border">
+      <h3 class="box-title">Data Profil</h3>
+    </div>
 
-    <div class="col-md-9">
-      <div class="box box-primary">
-        <div class="box-header with-border">
-           <div class="box-header">
-                <h3>Data Profil</h3>
-        <!-- <small>Version 2.0</small> -->
-      </h3>
-  </div>
-
-          <div class="callout callout-info">
-
-                <p>Anda dapat melakukan edit pada akun anda dengan mengisi form dibawah ini. 
-                Email tidak bisa diubah</p>
-              </div>
-
-          <div class="box-tools pull-right">
-
-          </div>
-          <!-- /.box-tools -->
-        </div>
-
+    <div class="callout callout-info">
+      <p>Anda dapat melakukan edit pada akun anda dengan mengisi form dibawah ini. 
+        Email tidak bisa diubah</p>
+    </div>
+            
         <form role="form" method="POST" action="<?php echo base_url()."Pencari/edit_pencari/"?>">
           <div class="box-body">
 
@@ -85,8 +75,6 @@ $this->load->view('pencari/profilpencari');?>
 
   <footer class="main-footer">
   <div class="pull-right hidden-xs">
-    <b>Version</b> 2.4.0
+  
   </div>
-  <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
-  reserved.
 </footer>

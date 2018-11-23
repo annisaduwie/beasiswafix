@@ -1,6 +1,11 @@
 <?php
 $this->load->view('pencari/header_user');
+// echo '<pre>';
+// var_dump($hasil);
+// echo '</pre>';
+// exit;
 ?>
+
 
 <section class="section purchase" data-stellar-background-ratio="0.5" style="padding-left:20px;padding-bottom:5px; background-color:#3c8dbc; ; -webkit-background-size: 100% 100%; -moz-background-size: cover; -o-background-size: cover; background-size: cover; height: 300px;">
 
@@ -20,23 +25,30 @@ $this->load->view('pencari/header_user');
 
      <!-- Post -->
     
-     <?php foreach ($pencarian_beasiswa_by_univ as $value){?> 
-      <div class="post">
+     <?php foreach ($hasil as $value): ?>
+      <?php if (!empty($value['judul'])): ?>
+        
+
+       <div class="post">
 
         <div class="user-block">
            <div class="row">
+            <?php if(!empty($value['gambar'])){ ?>
            <div class="col-md-3">
-              <img src="<?php echo $value->image;?>" alt="" style="width:250px; height:200px;">
+
+              <img src="<?php echo $value['gambar']; ?>" alt="" style="width:250px; height:200px;">
         </div>
+      <?php } ?>
         <div class="col-md-8 featured-responsive">
           <span class="username">
-            <a href="#"><?php echo $value->judul; ?></a>
+            <a href="<?php echo $value['link']; ?>"><?php echo $value['judul']; ?></a>
 
           </span>
-          <span class="description"><i class="fa fa-clock-o"></i> <?php echo $value->tgl_upload; ?></span><br>
+          <span class="description"><i class="fa fa-clock-o"></i> <?php echo $value['tanggal']; ?></span><br>
 
           <p>
-          <?php echo $value->deskripsi; ?>
+         <?php echo $value['deskripsi']; ?>
+
         </p>
         </div>
         <!-- /.user-block -->
@@ -46,29 +58,26 @@ $this->load->view('pencari/header_user');
     </div>
 </div>
       <!-- /.post -->
-    <?php }?>
-    
-
-
-
-
-
-
-
-
+       
+      <?php endif ?>
+     <?php endforeach ?>
+     
   </div>
 
   <nav aria-label="Page navigation example">
   <ul class="pagination justify-content-center">
-    <li class="page-item disabled">
-      <a class="page-link" href="#" tabindex="-1">Previous</a>
-    </li>
-    <li class="page-item"><a class="page-link" href="#">1</a></li>
-    <li class="page-item"><a class="page-link" href="#">2</a></li>
-    <li class="page-item"><a class="page-link" href="#">3</a></li>
-    <li class="page-item">
-      <a class="page-link" href="#">Next</a>
-    </li>
+    <?php if (!empty($hasil['prev'])): ?>
+      <li class="page-item">
+        <a class="page-link" href="<?php echo $hasil['prev']; ?>">Halaman Sebelumnya</a>
+      </li>
+      
+    <?php endif ?>
+    <?php if (!empty($hasil['next'])): ?>
+      <li class="page-item">
+        <a class="page-link" href="<?php echo $hasil['next'] ?>">Halaman Selanjutnya</a>
+      </li>
+      
+    <?php endif ?>
   </ul>
 </nav>
 </section>

@@ -156,7 +156,7 @@ p {
   padding: 0 8px 0 0; }
 
 .slider {
-  background-color: #fff;
+  background: url(../images/collage.jpg) no-repeat;
   background-size: cover;
   min-height: 500px;
    }
@@ -363,7 +363,7 @@ p {
       .featured-title-box p {
         font-size: 13px; } }
     .featured-title-box p span {
-      color: #ffb006;
+      /*color: #ffb006;*/
       padding: 0; }
   .featured-title-box span {
     color: #9fa9b9;

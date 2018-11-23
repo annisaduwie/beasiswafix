@@ -198,8 +198,7 @@ p {
 
 // slider
 .slider {
-    background-color: #fff;
-    
+    background: url(assets/images/collage.jpg) no-repeat;
     background-size: cover;
    min-height: 500px;
     @media (max-width: 992px) {
@@ -431,7 +430,7 @@ p {
             font-size: 13px;
         }
         span {
-            color: #ffb006;
+           
             padding: 0;
         }
     }

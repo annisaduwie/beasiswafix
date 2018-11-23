@@ -15,7 +15,6 @@ class LoginM extends CI_Model{
 	public function ceknumAdmin($username, $password){
 		$this->db->where('username', $username);
 		$this->db->where('password', md5($password));
-
 		// $this->db->where('peran', 'analis');
 		return $this->db->get('admin');
 	}

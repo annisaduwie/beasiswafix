@@ -27,23 +27,25 @@ $this->load->view('pencari/header_user');
 
 
         <?php foreach ($list_detail as  $list_detail){ ?>
-          <div class="col-md-3">
-
-
+          <div>
             <img src="<?php echo base_url('universitas/'.$list_detail->gambar_universitas);?>" style="width:180px; height: 200px; padding-top: 20px; padding-bottom:10px; ">
           </div>
-          <div class="col-md-9">
-            <form class="form-wrap mt-4" action="<?php echo base_url('Pencarian_BeasiswaC/pencarian_beasiswa_by_univ');?>" method="POST">
+          <div class="col-md-10">
+            <form class="form-wrap mt-4" action="<?php echo base_url('Pencarian_BeasiswaC/scrapping_detail_beasiswa_by_universitas');?>" method="POST">
+              <input type="text" value="<?php echo $list_detail->id_universitas?>" name="keyword_universitas">
              <h5 class="title-text" style="color:#fff; padding-top: 30px;"><b><?php echo $list_detail->nama_universitas?></b>
              </h5><input type="hidden" value="<?php echo $list_detail->nama_universitas;?>" name="nama_univ">
-             <p style="color:#fff; font-size: 16px;" ><span class="icon-location-pin"></span> <?php echo $list_detail->negara;?></p>
+             <p style="color:#fff; font-size: 16px;" ><span class="icon-location-pin"></span> <?php echo $list_detail->negara;?></p><hr>
 
-             <button type="submit" class="btn-form" style="float: right; border-radius: 5px;background-color:#fff; color:black;"><center>Cari Beasiswa</center></button>
+             <button type="submit" class="btn-form" style="float: right; margin-bottom: 15px; border-radius: 5px;background-color:#fff; color:black;"><center>Cari Beasiswa</center></button>
            </div>
 
-
-
          </div>
+
+
+
+
+
        </div>
 
 

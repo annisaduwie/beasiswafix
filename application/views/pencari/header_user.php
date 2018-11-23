@@ -17,7 +17,7 @@ $this->load->view('pencari/head');
     <div class="row">
       <div class="col-md-12">
         <nav class="navbar navbar-expand-lg navbar-light">
-          <a class="navbar-brand" href="<?php echo base_url('Pencarian_BeasiswaC/get_beasiswa');?>">E - Beasiswa</a>
+          <a class="navbar-brand" href="<?php echo base_url('Awal')?>">E - Beasiswa</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="icon-menu"></span>
             
@@ -27,7 +27,7 @@ $this->load->view('pencari/head');
 
             <ul class="navbar-nav navbar-right">
                <li class="nav-item">
-              <a class="nav-link" href="<?php echo base_url('Awal')?>">Beranda</a>
+              <a class="nav-link" href="<?php echo base_url('Pencarian_BeasiswaC/get_beasiswa');?>">Cari Beasiswa</a>
             </li>
               <li class="nav-item dropdown">
                 <a class="nav-link" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -36,7 +36,6 @@ $this->load->view('pencari/head');
                </a>
                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                  <a class="dropdown-item" href="<?php echo base_url('PencarianC/tampil_pencarian_prodi');?>"  >Berdasarkan fakultas</a>
-                 <a href="#" class="dropdown-item" >Berdasarkan asal tujuan</a>
                </div>
              </li>
             <?php if ($this->session->userdata('logged_in')){ ?>

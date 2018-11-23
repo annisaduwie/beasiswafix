@@ -74,7 +74,7 @@ $this->load->view('admin/head_admin');
       </h1>
       <ol class="breadcrumb">
         <li><a href="<?php echo base_url('AdminC/get_universitas');?>">Universitas</a></li>
-        <li><a href="<?php echo base_url('AdminC/tampil_admin_fakultas/'.$id_univ['id_universitas']);?>">Fakultas</a></li>
+        <li><a href="<?php echo base_url('AdminC/tampil_admin_fakultas/'.$id_univ['id_universitas']);?>">Detail Universitas</a></li>
 
         <li class="active">Program Studi</li>
       </ol>

@@ -42,7 +42,9 @@ class AdminC extends CI_Controller
 			'id_fakultas' => $this->FakultasM->get_fakultas($id_universitas)->row_array()
 		);
 
+		$data['universitas']= $this->UniversitasM->get_universitas()->result();
 		$data['fakultas']= $this->FakultasM->get_fakultas($id_universitas)->result();
+		$data['beasiswa']= $this->BeasiswaM->get_beasiswa($id_universitas)->result();
 
 		
 		$this->load->view('admin/kelola_fakultas', $data);
@@ -82,7 +84,6 @@ class AdminC extends CI_Controller
 		$this->load->library('form_validation');
 	
 		$this->form_validation->set_rules('url_beasiswa','URL Universitas','trim|required');
-		$this->form_validation->set_rules('nama_universitas','Nama Universitas','required');
 
 
 		if($this->form_validation->run() == FALSE)
@@ -90,24 +91,20 @@ class AdminC extends CI_Controller
 
 			//jika form tidak lengkap maka akan dikembalikan ke halaman beasiswa
 			$this->session->set_flashdata('error','Data yang diisi belum lengkap');
-			redirect('AdminC/get_beasiswa');
+			redirect('AdminC/tampil_admin_fakultas/'.$id_universitas);
 
 		}else{
 			$url_beasiswa=$this->input->post('url_beasiswa');
-			$nama_univ = $this->input->post('nama_universitas');
+			$id_universitas =$this->input->post('id_universitas');
 
-			$id_univ= $this->UniversitasM->get_id_by_name($nama_univ)->result();
 
-			
-
-			foreach ($id_univ as $univ) {
 
 				$dataDetailBeasiswa =  array(
-					"id_universitas"=>$univ->id_universitas
+					"id_universitas"=>$id_universitas
 				);
 
 				$result = $this->db->insert('beasiswa_universitas', $dataDetailBeasiswa);
-			}
+			
 
 				$id_detail_beasiswa_fk = $this->db->query("SELECT MAX(id_beasiswa_univ) AS id_beasiswa_univ FROM beasiswa_universitas");
 
@@ -136,7 +133,7 @@ class AdminC extends CI_Controller
 			$this->session->set_flashdata('error', 'Data gagal ditambah');
 			} 
 
-			redirect('AdminC/get_beasiswa');
+			redirect('AdminC/tampil_admin_fakultas/'.$id_universitas);
 			// echo $nama_beasiswa;
 			// echo $url_beasiswa;
 			// echo $kategori_beasiswa;
@@ -154,28 +151,26 @@ class AdminC extends CI_Controller
 	public function edit_beasiswa(){
 		$this->load->library('form_validation');
 		$this->form_validation->set_rules('url_beasiswa','URL Universitas','trim|required');
-		$this->form_validation->set_rules('nama_universitas','Nama Universitas','required');
+
+		$id_universitas  = $this->input->post('id_universitas');
 
 		if($this->form_validation->run() == FALSE)
 		{
 
 			//jika form tidak lengkap maka akan dikembalikan ke halaman beasiswa
 			$this->session->set_flashdata('error','Data yang diisi belum lengkap');
-			redirect('AdminC/get_beasiswa');
+			redirect('AdminC/tampil_admin_fakultas/'.$id_universitas);
 
 		}else{
 
 			$id_detail_beasiswa=$this->input->post('id_beasiswa_univ');
 			$id_beasiswa=$this->input->post('id_beasiswa');
 			$url_beasiswa=$this->input->post('url_beasiswa');
-			$nama_univ = $this->input->post('nama_universitas');
-			// print_r($nama_univ);
-			$id_univ= $this->UniversitasM->get_id_by_name($nama_univ);
 
 			// foreach ($id_univ->result_array() as $univ) {
 			// 	print_r($univ['id_universitas']);
 			$dataDetail = array(
-					"id_universitas"=> $nama_univ
+					"id_universitas"=> $id_universitas
 				);
 				
 
@@ -197,7 +192,7 @@ class AdminC extends CI_Controller
 			$this->session->set_flashdata('error', 'Data gagal diubah');
 			} 
 
-			redirect('AdminC/get_beasiswa');
+			redirect('AdminC/tampil_admin_fakultas/'.$id_universitas);
 			// echo $nama_beasiswa;
 			// echo $url_beasiswa;
 			// echo $kategori_beasiswa;
@@ -213,7 +208,8 @@ class AdminC extends CI_Controller
 
 
 	}
-	public function hapus_beasiswa($id_detail){
+	public function hapus_beasiswa($id_universitas, $id_detail){
+		
 		if($this->BeasiswaM->hapus_beasiswa($id_detail)){
 			$this->session->set_flashdata('success', 'Data berhasil dihapus');
 			}
@@ -221,7 +217,7 @@ class AdminC extends CI_Controller
 			{
 			$this->session->set_flashdata('error', 'Data gagal dihapus');
 			} 
-			redirect('AdminC/get_beasiswa');
+			redirect('AdminC/tampil_admin_fakultas/'.$id_universitas);
 	}
 
 	public function tambah_universitas(){

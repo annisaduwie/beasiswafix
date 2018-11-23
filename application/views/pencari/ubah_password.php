@@ -4,11 +4,10 @@ $this->load->view('pencari/profilpencari');?>
 <div class="col-md-9">
       <div class="box box-primary">
         <div class="box-header with-border">
-         <div class="box-header">
-                <h3>Ubah Password
-        <!-- <small>Version 2.0</small> -->
-      </h3>
-  </div>
+      
+      <h3 class="box-title">Ubah Password</h3>
+    </div>
+
 <div class="callout callout-info">
 
                 <p>Anda dapat mengganti password lama</p>
@@ -19,8 +18,18 @@ $this->load->view('pencari/profilpencari');?>
           <!-- /.box-tools -->
         </div>
 
-        <form role="form" method="POST" action="">
+        <form role="form" method="POST" action="<?php echo base_url("Pencari/ubah_password");?>">
           <div class="box-body">
+            <?php 
+        $data=$this->session->flashdata('sukses');
+        if($data!=""){ ?>
+                            <div class="alert alert-success"><strong>Sukses! </strong> <?=$data;?></div>
+                            <?php } ?>
+                            <?php 
+                            $data2=$this->session->flashdata('error');
+                            if($data2!=""){ ?>
+                            <div class="alert alert-danger"><strong> Error! </strong> <?=$data2;?></div>
+                            <?php } ?>
 
 
 

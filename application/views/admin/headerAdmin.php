@@ -90,11 +90,7 @@ $this->load->view('admin/headAdmin');
             <span>Universitas</span>
           </a>
         </li>
-        <li >
-             <a href="<?php echo base_url('AdminC/get_beasiswa');?>">
-            <span>Beasiswa</span>
-          </a>
-        </li>
+
        
       </ul>
     </section>
