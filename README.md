@@ -1,4 +1,4 @@
-# CodeIgniter Rest Server
+# CodeIgniter Rest Server Nisa
 
 [![Gitter chat](https://badges.gitter.im/chriskacerguis/codeigniter-restserver.png)](https://gitter.im/codeigniter-restserver/Lobby)
 
