@@ -263,6 +263,7 @@ class Pencarian_BeasiswaC extends CI_Controller
 
 				foreach ($html_load->find('div#primary') as $a ) {
 					foreach ($a->find('main#main') as $b ) {
+						foreach ($b->find('article') as $c ) {
 							foreach ($b->find('div.entry-content') as $hasil ) {
 				
 				$result[$i]= $hasil->plaintext;
@@ -271,7 +272,7 @@ class Pencarian_BeasiswaC extends CI_Controller
 		}
 	}
 				   
-			
+			}
 
 			
 
