@@ -79,6 +79,12 @@ class AdminC extends CI_Controller
 		$this->load->view('admin/kelola_beasiswa', $data);
 	}
 
+	public function get_beasiswa_umum(){
+		// $data['universitas']= $this->UniversitasM->get_universitas()->result();
+		// $data['beasiswa']= $this->BeasiswaM->get_beasiswa_umum()->result();
+		$this->load->view('admin/kelola_beasiswa', $data);
+	}
+
 	public function tambah_beasiswa(){
 
 		$this->load->library('form_validation');

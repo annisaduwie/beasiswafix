@@ -8,8 +8,8 @@ $this->load->view('pencari/header_user');
     <h5 class="title-text" style="color:#fff; ">Area Beasiswa</h5>
       
         <h6 class="title-text" style="color:#fff; padding-bottom: 30px;">Temukan berbagai beasiswa sesuai pilihanmu.<br> Kamu dapat mencari beasiswa berdasarkan universitas dan tingkatan yang kamu ingin pilih.</h6><br>
-        <h6 style="color:#fff; ">Berikut adalah daftar beasiswa yang terdapat di <u><?php echo $keyword_universitas;?></u><br>
-         untuk jenjang <u><?php echo $keyword_tingkatan;?></u><br><h6>
+        <h6 style="color:#fff; ">Berikut adalah daftar beasiswa yang terdapat untuk jenjang <u><?php echo $keyword_jenjang;?></u> <?php echo $keyword_kategori;?> <?php echo $keyword_negara;?><br>
+        <br><h6>
         
 
 

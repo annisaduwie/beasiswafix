@@ -9,6 +9,10 @@ class BeasiswaM extends CI_Model{
    $query = $this->db->query("SELECT * from universitas, beasiswa_universitas, beasiswa where universitas.id_universitas=beasiswa_universitas.id_universitas AND beasiswa_universitas.id_beasiswa_univ=beasiswa.id_beasiswa_univ AND universitas.id_universitas='$id_universitas'");
    return $query;
   } 
+  // public function get_beasiswa($id_universitas){
+  //  $query = $this->db->query("SELECT * from universitas, beasiswa_universitas, beasiswa where universitas.id_universitas=beasiswa_universitas.id_universitas AND beasiswa_universitas.id_beasiswa_univ=beasiswa.id_beasiswa_univ AND universitas.id_universitas='$id_universitas'");
+  //  return $query;
+  // } 
     public function get_beasiswa_by_id($id_beasiswa){
    $query = $this->db->query("SELECT * from universitas, beasiswa_universitas, beasiswa where universitas.id_universitas=beasiswa_universitas.id_universitas AND beasiswa_universitas.id_beasiswa_univ=beasiswa.id_beasiswa_univ AND id_beasiswa='$id_beasiswa'");
    return $query;

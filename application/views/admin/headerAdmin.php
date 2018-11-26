@@ -91,6 +91,12 @@ $this->load->view('admin/headAdmin');
           </a>
         </li>
 
+         <li >
+            <a href="<?php echo base_url('AdminC/get_beasiswa_umum');?>">
+            <span>Beasiswa</span>
+          </a>
+        </li>
+
        
       </ul>
     </section>

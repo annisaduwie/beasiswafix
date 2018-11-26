@@ -59,7 +59,7 @@ $this->load->view('pencari/header_user');
            </div>
            <center> <div class="row d-flex justify-content-center">
             <div class="col-md-10" style="background-color:#d2d6de; padding-bottom: 8px;">
-              <form class="form-wrap mt-4" method="POST" action="<?php echo base_url('PencarianC/getPencarian')?>">
+              <form class="form-wrap mt-4" method="POST" action="<?php echo base_url('Pencarian_BeasiswaC/pencarian_beasiswa')?>">
                 <div class="btn-group" role="group" aria-label="Basic example">
 
               <?php if ($this->session->userdata('logged_in')){
@@ -68,7 +68,7 @@ $this->load->view('pencari/header_user');
 
                 if($query['tingkatan'] == "Pelajar"){?>
 
-                    <select name="keyword_tingkatan" class="btn-group2">
+                    <select name="keyword_jenjang" class="btn-group2">
                      <option value="0" disabled selected>Jenjang</option>
                      <option value="Diploma">Diploma</option>
                      <option value="Sarjana">Sarjana</option>
@@ -76,22 +76,22 @@ $this->load->view('pencari/header_user');
 
                  <?php }else if($query['tingkatan'] == "Mahasiswa"){?>
                     
-                    <select name="keyword_tingkatan" class="btn-group2">
+                    <select name="keyword_jenjang" class="btn-group2">
                      <option value="0" disabled selected>Jenjang</option>
                      <option value="Magister">Magister</option>
                      <option value="Doktor">Doktor</option>
                    </select>
                  <?php }?>
-                 <select name="keyword_tingkatan" class="btn-group2">
+                 <select name="keyword_kategori_beasiswa" class="btn-group2">
                      <option value="0" disabled selected>Kategori Beasiswa</option>
-                     <option value="Diploma">Beasiswa Penuh</option>
-                     <option value="Sarjana">Beasiswa Sebagian</option>
+                     <option value="Beasiswa Penuh">Beasiswa Penuh</option>
+                     <option value="Beasiswa Sebagian">Beasiswa Sebagian</option>
                    </select>
                    
-                  <select name="keyword_tingkatan" class="btn-group2">
+                  <select name="keyword_negara" class="btn-group2">
                      <option value="0" disabled selected>Negara</option>
-                     <option value="Diploma">Beasiswa Penuh</option>
-                     <option value="Sarjana">Beasiswa Sebagian</option>
+                     <option value="Negara">Beasiswa Penuh</option>
+                     <option value="Negara">Beasiswa Sebagian</option>
                    </select>
          <?php }?>
            <button type="submit" class="btn-form btn-primary"><span class="icon-magnifier search-icon"></span>CARI<i class="pe-7s-angle-right"></i></button>
@@ -155,7 +155,7 @@ $this->load->view('pencari/header_user');
             <!-- select -->
             <div class="form-group">
               <!-- <label>Select</label> -->
-              <select class="form-control"  name="jenjang" style="height: 50px;" id="filterUniv">
+              <select class="form-control"  name="keyword_jenjang" style="height: 50px;" id="jenjang">
 
                <option disabled selected value='0' >Pilih Jenjang</option>
               
@@ -173,7 +173,7 @@ $this->load->view('pencari/header_user');
             <!-- select -->
             <div class="form-group">
               <!-- <label>Select</label> -->
-              <select class="form-control"  name="kategori_beasiswa" style="height: 50px;" id="filterUniv">
+              <select class="form-control"  name="keyword_kategori_beasiswa" style="height: 50px;" id="filterUniv">
                <option disabled selected value='0' >Kategori Beasiswa</option>
                 <option value="1">Beasiswa Penuh</option>
                 <option value="2">Beasiswa Sebagian</option>

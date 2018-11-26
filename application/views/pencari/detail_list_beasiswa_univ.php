@@ -10,14 +10,11 @@ $this->load->view('pencari/header_user');
 <section class="section purchase" data-stellar-background-ratio="0.5" style="padding-left:20px;padding-bottom:5px; background-color:#3c8dbc; ; -webkit-background-size: 100% 100%; -moz-background-size: cover; -o-background-size: cover; background-size: cover; height: 300px;">
 
   <div class="container" style="padding-top: 20px; ">
-    <h5 class="title-text" style="color:#fff; ">Area Beasiswa</h5>
-      
-        <h6 class="title-text" style="color:#fff; padding-bottom: 30px;">Temukan berbagai beasiswa sesuai pilihanmu.<br> Kamu dapat mencari beasiswa berdasarkan universitas dan tingkatan yang kamu ingin pilih.</h6><hr>
+  
 
-        <br>
-        <h3 style="color:#fff; ">Beasiswa di <?php echo $keyword_universitas;?><br></h3>
-      
-
+       <
+        
+     
 
     </div>
   </section>
@@ -34,7 +31,6 @@ $this->load->view('pencari/header_user');
      <span class="username"><p>Menampilkan 1500 hasil</p></span></div></div>
     
      <?php foreach ($hasil as $value): ?>
-      <form id="form" action="<?php echo base_url().'Pencarian_BeasiswaC/scrapping_detail_beasiswa_by_universitas'?>" method="POST">
       <?php if (!empty($value['judul'])): ?>
         
 
@@ -48,17 +44,13 @@ $this->load->view('pencari/header_user');
       <?php } ?>
         <div class="col-md-12 featured-responsive">
           <span class="username">
-            <input type="hidden" name="link" value="<?php echo $value['link']; ?>">
-            <div style="padding-bottom: 10px;"><?php echo $value['judul']; ?>
-            </div>
-            
+            <div style="padding-bottom: 10px;"><a href="<?php echo $value['link']; ?>"><?php echo $value['judul']; ?></a></div>
+
           </span>
           <p>
          <?php echo $value['deskripsi']; ?>
 
         </p>
-
-        <button class="btn btn-primary">Info Selengkapnya</button><hr>
         </div>
         <!-- /.user-block -->
         
@@ -68,7 +60,6 @@ $this->load->view('pencari/header_user');
       <!-- /.post -->
        
       <?php endif ?>
-    </form>
      <?php endforeach ?>
 
      </div>
