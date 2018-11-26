@@ -242,82 +242,43 @@ class Pencarian_BeasiswaC extends CI_Controller
 		$html_load = file_get_html($url_detail);
 		$result=array();
 		$i = 0;
-		
 
 		if($html_load && is_object($html_load) && isset($html_load->nodes)){
 		
 			
-		foreach ($html_load->find('div#ht-page #ht-content') as $data ) {
-			$sub = array();	
-			foreach ($data->find('div.ht-container h1') as $value ) {
-
-				$sub = $value->plaintext;
-			}
-
-			$result[$i]=$sub;
-			$i++;
-	
+		foreach ($html_load->find('div#ht-page #ht-content .ht-container h1') as $data ) {
+				$result[$i]['title'] = $data->plaintext;
 		}
-		$i = 0; 				
-			
 
-				foreach ($html_load->find('div#primary') as $a ) {
-					foreach ($a->find('main#main') as $b ) {
-							foreach ($b->find('div.entry-content') as $hasil ) {
-				
-				$result[$i]= $hasil->plaintext;
-				$i++;
+		$i = 0;
+			
+		$counter = 0;
+
+		foreach ($html_load->find('div#primary') as $a ) {
+			foreach ($a->find('main#main') as $b ) {
+				foreach ($b->find('div.entry-content') as $hasil ) {
+					if ($counter == 0) {
+						$hasil->find('div.apss-social-share', 0)->outertext = '';
+						$hasil->find('div.entry-meta', 0)->outertext = '';
+						$hasil->find('center', 0)->outertext = '';
+						$hasil->find('p', 0)->outertext = '';
+						$hasil->find('div.post-views', 0)->outertext = '';
+						$hasil->find('div#jp-relatedposts', 0)->outertext = '';
+						$hasil->find('div.fb-comments', 0)->outertext = '';
+						$hasil->find('h3', -1)->outertext = '';
+						// $hasil->find('iframe', 0)->outertext = '';
+						$counter++;
+					}
+
+					$result[$i]['description'] = $hasil->outertext;
+					$i++;
+				}
 			}
 		}
-	}
-				   
 			
-
-			
-
-
-
-		
-
-			
-			echo "<pre>";
-				print_r($result);
-				print_r($sub);
-				echo "</pre>";
-
-
-			
-
-		
-			
-
-			
-
-			
-
-				
-
-			
-
-
-					// $search = array(
-					// 	'Hai sobat Beasiswa.ID',
-					// 	'Hai Sobat Beasiswa.ID!', 
-					// 	'Hai Sobat Beasiswa.ID !',
-					// 	'Hai sobat Beasiswa.ID!',
-					// 	'Hai, Sobat Beasiswa.ID',
-					// 	'!'
-					// );
-
-					// $newstring = '';
-
-
-	
-
-				
-
-
-
+		echo "<pre>";
+		print_r($result);
+		echo "</pre>";
 }
 
 				
