@@ -34,7 +34,7 @@ $this->load->view('pencari/header_user');
      <span class="username"><p>Menampilkan 1500 hasil</p></span></div></div>
     
      <?php foreach ($hasil as $value): ?>
-      <form id="form" action="<?php echo base_url().'Pencarian_BeasiswaC/scrapping_detail_beasiswa_by_universitas'?>" method="POST">
+      <form id="form" action="<?php echo base_url().'Pencarian_BeasiswaC/tampil_detail_beasiswa_univ'?>" method="POST">
       <?php if (!empty($value['judul'])): ?>
         
 
