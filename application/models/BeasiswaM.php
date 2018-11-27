@@ -9,11 +9,29 @@ class BeasiswaM extends CI_Model{
    $query = $this->db->query("SELECT * from universitas, beasiswa_universitas, beasiswa where universitas.id_universitas=beasiswa_universitas.id_universitas AND beasiswa_universitas.id_beasiswa_univ=beasiswa.id_beasiswa_univ AND universitas.id_universitas='$id_universitas'");
    return $query;
   } 
-  // public function get_beasiswa($id_universitas){
-  //  $query = $this->db->query("SELECT * from universitas, beasiswa_universitas, beasiswa where universitas.id_universitas=beasiswa_universitas.id_universitas AND beasiswa_universitas.id_beasiswa_univ=beasiswa.id_beasiswa_univ AND universitas.id_universitas='$id_universitas'");
-  //  return $query;
-  // } 
-    public function get_beasiswa_by_id($id_beasiswa){
+  public function get_beasiswa_umum(){
+   $query = $this->db->query("SELECT * from beasiswa_umum");
+   return $query;
+  } 
+  public function get_list_negara(){
+   $query = $this->db->query("SELECT negara from beasiswa_umum WHERE negara is not null");
+   return $query;
+  }
+  public function tambah_beasiswa_umum($data){
+    $this->db->trans_start(); 
+      $this->db->insert('beasiswa_umum', $data);
+      $insert_id = $this->db->insert_id();
+      
+      $this->db->trans_complete();
+      return $insert_id;
+  }
+  public function edit_beasiswa_umum($id_beasiswa_umum, $data){
+    $this->db->where('id_beasiswa_umum',$id_beasiswa_umum);
+    $this->db->update('beasiswa_umum', $data);
+    return true;
+  }
+
+  public function get_beasiswa_by_id($id_beasiswa){
    $query = $this->db->query("SELECT * from universitas, beasiswa_universitas, beasiswa where universitas.id_universitas=beasiswa_universitas.id_universitas AND beasiswa_universitas.id_beasiswa_univ=beasiswa.id_beasiswa_univ AND id_beasiswa='$id_beasiswa'");
    return $query;
   } 
@@ -47,6 +65,10 @@ class BeasiswaM extends CI_Model{
     $this->db->where("id_beasiswa_univ",$id_detail_beasiswa);
     $this->db->update("beasiswa_universitas", $dataDetail);
     return true;
+  }
+  public function hapus_beasiswa_umum($id){
+     $query = $this->db->delete('beasiswa_umum',"id_beasiswa_umum = '$id'");
+    return $query;
   }
   public function hapus_beasiswa($id){
      $query = $this->db->delete('beasiswa_universitas',"id_beasiswa_univ = '$id'");

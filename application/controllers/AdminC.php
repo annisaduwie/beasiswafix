@@ -81,9 +81,127 @@ class AdminC extends CI_Controller
 
 	public function get_beasiswa_umum(){
 		// $data['universitas']= $this->UniversitasM->get_universitas()->result();
-		// $data['beasiswa']= $this->BeasiswaM->get_beasiswa_umum()->result();
+		$data['beasiswa']= $this->BeasiswaM->get_beasiswa_umum()->result();
 		$this->load->view('admin/kelola_beasiswa', $data);
 	}
+
+	public function tambah_beasiswa_umum(){
+
+		$this->load->library('form_validation');
+	
+		$this->form_validation->set_rules('nama_beasiswa_umum','nama_beasiswa_umum','trim|required');
+		$this->form_validation->set_rules('url_beasiswa_umum','url_beasiswa_umum','trim|required');
+
+		if($this->form_validation->run() == FALSE)
+		{
+			$this->session->set_flashdata('error','Data yang diisi belum lengkap');
+			redirect('AdminC/get_beasiswa_umum');
+		}
+		else{
+			$nama_beasiswa_umum = $this->input->post('nama_beasiswa_umum');
+			$jenjang = $this->input->post('jenjang');
+			$kategori_beasiswa_umum = $this->input->post('kategori_beasiswa_umum');
+			$negara = $this->input->post('negara');
+			$url_beasiswa_umum = $this->input->post('url_beasiswa_umum');
+
+			if($negara == ""){
+				$negara = NULL;
+			}
+			$dataBeasiswaUmum =  array(
+					'nama_beasiswa_umum' =>$nama_beasiswa_umum,
+					'jenjang' =>$jenjang,
+					'kategori_beasiswa_umum' =>$kategori_beasiswa_umum,
+					'negara' =>$negara,
+					'url_beasiswa_umum' =>$url_beasiswa_umum
+				);
+
+
+
+
+
+			$result = $this->BeasiswaM->tambah_beasiswa_umum($dataBeasiswaUmum);
+
+			if($result > 0)
+			{
+			$this->session->set_flashdata('success', 'Data berhasil ditambah');
+			}
+			else
+			{
+			$this->session->set_flashdata('error', 'Data gagal ditambah');
+			}
+
+
+
+		}
+
+		redirect('AdminC/get_beasiswa_umum');
+
+	}
+
+	public function edit_beasiswa_umum(){
+
+		$this->load->library('form_validation');
+	
+		$this->form_validation->set_rules('nama_beasiswa_umum','nama_beasiswa_umum','trim|required');
+		
+		$this->form_validation->set_rules('url_beasiswa_umum','url_beasiswa_umum','trim|required');
+
+		if($this->form_validation->run() == FALSE)
+		{
+			$this->session->set_flashdata('error','Data yang diisi belum lengkap');
+			redirect('AdminC/get_beasiswa_umum');
+		}
+		else{
+			$id_beasiswa_umum = $this->input->post('id_beasiswa_umum');
+			$nama_beasiswa_umum = $this->input->post('nama_beasiswa_umum');
+			$jenjang = $this->input->post('jenjang');
+			$kategori_beasiswa_umum = $this->input->post('kategori_beasiswa_umum');
+			$negara = $this->input->post('negara');
+			$url_beasiswa_umum = $this->input->post('url_beasiswa_umum');
+
+			if($negara == ""){
+				$negara = NULL;
+			}
+
+			$dataEditBeasiswaUmum =  array(
+					'nama_beasiswa_umum' =>$nama_beasiswa_umum,
+					'jenjang' =>$jenjang,
+					'kategori_beasiswa_umum' =>$kategori_beasiswa_umum,
+					'negara' =>$negara,
+					'url_beasiswa_umum' =>$url_beasiswa_umum
+				);
+
+
+
+			$result = $this->BeasiswaM->edit_beasiswa_umum($id_beasiswa_umum, $dataEditBeasiswaUmum );
+
+
+		}
+		if($result > 0)
+			{
+			$this->session->set_flashdata('success', 'Data berhasil diubah');
+			}
+			else
+			{
+			$this->session->set_flashdata('error', 'Data gagal diubah');
+			}
+
+		redirect('AdminC/get_beasiswa_umum');
+
+
+	}
+	public function hapus_beasiswa_umum($id_beasiswa_umum){
+		
+		if($this->BeasiswaM->hapus_beasiswa_umum($id_beasiswa_umum)){
+			$this->session->set_flashdata('success', 'Data berhasil dihapus');
+			}
+			else
+			{
+			$this->session->set_flashdata('error', 'Data gagal dihapus');
+			} 
+			redirect('AdminC/get_beasiswa_umum');
+	}
+
 
 	public function tambah_beasiswa(){
 

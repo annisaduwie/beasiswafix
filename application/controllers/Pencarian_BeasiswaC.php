@@ -36,6 +36,7 @@ class Pencarian_BeasiswaC extends CI_Controller
 	public function get_beasiswa(){
 		if ($this->session->userdata('logged_in')){
 			$username = $this->session->userdata('username');
+			$data['list_beasiswa']=$this->BeasiswaM->get_list_negara()->result();
 			$data['beasiswa_univ']=$this->BeasiswaM->beasiswa_univ()->result();
 			$data['nama_pencari']= $this->PencariM->get_nama_pencari($username)->row_array();
 			$this->load->view('pencari/pencarian_beasiswa', $data);
