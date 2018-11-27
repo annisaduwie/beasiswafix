@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 23, 2018 at 10:12 AM
+-- Generation Time: Nov 27, 2018 at 04:30 PM
 -- Server version: 10.1.26-MariaDB
 -- PHP Version: 7.1.8
 
@@ -62,9 +62,48 @@ CREATE TABLE `beasiswa` (
 --
 
 INSERT INTO `beasiswa` (`id_beasiswa`, `url`, `id_beasiswa_univ`, `create_dtm`, `update_dtm`) VALUES
-(1, 'http://kemahasiswaan.itb.ac.id/beasiswa/beasiswa', 2, '2018-11-20 19:14:33', '2018-11-20 19:14:33'),
+(1, 'http://beasiswa.id/?s=Institut+Teknologi+Bandung', 2, '2018-11-26 14:01:48', '2018-11-26 14:01:48'),
 (3, 'http://beasiswa.id/?s=universitas+sebelas+maret', 4, '2018-11-19 19:05:30', '2018-11-19 19:05:30'),
 (6, 'http://beasiswa.id/?s=universitas+gadjah+mada', 7, '2018-11-19 19:06:57', '2018-11-19 19:06:57');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `beasiswa_umum`
+--
+
+CREATE TABLE `beasiswa_umum` (
+  `id_beasiswa_umum` int(225) NOT NULL,
+  `nama_beasiswa_umum` varchar(50) NOT NULL,
+  `jenjang` varchar(20) DEFAULT NULL,
+  `kategori_beasiswa_umum` varchar(20) DEFAULT NULL,
+  `negara` varchar(50) DEFAULT NULL,
+  `url_beasiswa_umum` varchar(225) NOT NULL,
+  `create_dtm` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `update_dtm` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `beasiswa_umum`
+--
+
+INSERT INTO `beasiswa_umum` (`id_beasiswa_umum`, `nama_beasiswa_umum`, `jenjang`, `kategori_beasiswa_umum`, `negara`, `url_beasiswa_umum`, `create_dtm`, `update_dtm`) VALUES
+(2, 'Beasiswa Diploma', 'Diploma', NULL, NULL, 'http://beasiswa.id/category/beasiswa-diploma/', '2018-11-27 13:38:46', '2018-11-27 13:38:46'),
+(3, 'Beasiswa Sarjana', 'Sarjana', NULL, NULL, 'http://beasiswa.id/category/beasiswa-sarjana/', '2018-11-27 13:38:33', '2018-11-27 13:38:33'),
+(4, 'Beasiswa Pascasarjana', 'Magister', NULL, NULL, 'http://beasiswa.id/category/beasiswa-magister/', '2018-11-27 13:38:25', '2018-11-27 13:38:25'),
+(5, 'Beasiswa Doktor', 'Doktor', NULL, NULL, 'http://beasiswa.id/category/beasiswa-doktor/', '2018-11-27 13:38:15', '2018-11-27 13:38:15'),
+(7, 'Beasiswa Penuh', NULL, 'Beasiswa Penuh', NULL, 'http://beasiswa.id/?s=beasiswa+penuh', '2018-11-27 13:37:06', '2018-11-27 13:37:06'),
+(8, 'Beasiswa di Australia', NULL, NULL, 'Australia', 'http://beasiswa.id/tag/beasiswa-australia/', '2018-11-27 12:28:52', '2018-11-27 12:28:52'),
+(9, 'Beasiswa di Indonesia', NULL, NULL, 'Indonesia', 'http://beasiswa.id/tag/beasiswa-indonesia/', '2018-11-27 12:29:41', '2018-11-27 12:29:41'),
+(10, 'Beasiswa di Amerika', NULL, NULL, 'Amerika', 'http://beasiswa.id/tag/beasiswa-amerika/', '2018-11-27 12:31:10', '2018-11-27 12:31:10'),
+(11, 'Beasiswa di Belanda', NULL, NULL, 'Belanda', 'http://beasiswa.id/tag/beasiswa-belanda/', '2018-11-27 12:31:53', '2018-11-27 12:31:53'),
+(12, 'Beasiswa di Jepang', NULL, NULL, 'Jepang', 'beasiswa.id/tag/beasiswa-jepang/', '2018-11-27 12:32:46', '2018-11-27 12:32:46'),
+(13, 'Beasiswa di Arab Saudi', NULL, NULL, 'Arab Saudi', 'http://beasiswa.id/tag/beasiswa-arab-saudi/', '2018-11-27 12:33:53', '2018-11-27 12:33:53'),
+(14, 'Beasiswa di Perancis', NULL, NULL, 'Perancis', 'http://beasiswa.id/tag/beasiswa-perancis/', '2018-11-27 12:34:42', '2018-11-27 12:34:42'),
+(15, 'Beasiswa di Korea', NULL, NULL, 'Korea', 'http://beasiswa.id/tag/beasiswa-korea/', '2018-11-27 12:36:35', '2018-11-27 12:36:35'),
+(16, 'Beasiswa di Singapura', NULL, NULL, 'Singapura', 'http://beasiswa.id/tag/beasiswa-singapura/', '2018-11-27 12:36:23', '2018-11-27 12:36:23'),
+(17, 'Beasiswa di Malaysia', NULL, NULL, 'Malaysia', 'http://beasiswa.id/tag/beasiswa-malaysia/', '2018-11-27 12:37:19', '2018-11-27 12:37:19'),
+(20, 'Beasiswa Biasa', NULL, 'Beasiswa Sebagian', NULL, 'http://beasiswa.id/?s=beasiswa+bagian', '2018-11-27 15:25:42', '2018-11-27 15:25:42');
 
 -- --------------------------------------------------------
 
@@ -2269,27 +2308,12 @@ CREATE TABLE `detail_pencarian` (
 --
 
 INSERT INTO `detail_pencarian` (`id_detail_pencarian`, `id_universitas`, `id_pencarian`, `create_dtm`, `update_dtm`) VALUES
-(20, 3, 44, '2018-11-16 10:20:34', '2018-11-16 10:20:34'),
-(21, 1, 44, '2018-11-16 10:20:48', '2018-11-16 10:20:48'),
-(22, 1, 45, '2018-11-18 15:21:33', '2018-11-18 15:21:33'),
-(23, 1, 46, '2018-11-18 16:37:30', '2018-11-18 16:37:30'),
-(24, 3, 48, '2018-11-19 05:00:56', '2018-11-19 05:00:56'),
-(25, 1, 49, '2018-11-19 05:01:36', '2018-11-19 05:01:36'),
-(26, 1, 50, '2018-11-19 10:59:31', '2018-11-19 10:59:31'),
-(27, 3, 54, '2018-11-19 11:00:02', '2018-11-19 11:00:02'),
-(28, 1, 54, '2018-11-19 11:00:24', '2018-11-19 11:00:24'),
-(29, 1, 55, '2018-11-19 11:53:42', '2018-11-19 11:53:42'),
-(30, 1, 56, '2018-11-19 12:12:09', '2018-11-19 12:12:09'),
-(31, 1, 56, '2018-11-19 13:02:36', '2018-11-19 13:02:36'),
-(32, 1, 57, '2018-11-20 10:43:32', '2018-11-20 10:43:32'),
-(33, 1, 58, '2018-11-20 18:12:28', '2018-11-20 18:12:28'),
-(34, 1, 58, '2018-11-20 18:19:03', '2018-11-20 18:19:03'),
-(35, 2, 59, '2018-11-20 19:15:01', '2018-11-20 19:15:01'),
-(36, 1, 59, '2018-11-20 19:22:03', '2018-11-20 19:22:03'),
-(37, 1, 60, '2018-11-22 07:52:22', '2018-11-22 07:52:22'),
-(38, 1, 60, '2018-11-22 07:53:15', '2018-11-22 07:53:15'),
-(39, 1, 60, '2018-11-22 08:13:43', '2018-11-22 08:13:43'),
-(40, 1, 61, '2018-11-23 09:09:05', '2018-11-23 09:09:05');
+(48, 1, 72, '2018-11-25 12:16:35', '2018-11-25 12:16:35'),
+(55, 2, 79, '2018-11-26 13:55:53', '2018-11-26 13:55:53'),
+(56, 1, 80, '2018-11-26 14:29:13', '2018-11-26 14:29:13'),
+(57, 1, 81, '2018-11-26 15:53:41', '2018-11-26 15:53:41'),
+(58, 1, 82, '2018-11-26 16:30:44', '2018-11-26 16:30:44'),
+(59, 2, 82, '2018-11-26 16:32:46', '2018-11-26 16:32:46');
 
 -- --------------------------------------------------------
 
@@ -2548,24 +2572,13 @@ CREATE TABLE `pencarian` (
 
 INSERT INTO `pencarian` (`id_pencarian`, `keyword_prodi`, `keyword_kategori`, `keyword_tingkatan`, `keyword_universitas`, `waktu_pencarian`, `id_pencari`, `create_dtm`, `update_dtm`) VALUES
 (32, 'Biologi', 'Dalam Negeri', 'Sarjana', '', '2018-11-13 09:30:27', 122, '2018-11-13 09:30:27', '2018-11-13 09:30:27'),
-(44, 'Akuntansi', 'Dalam Negeri', 'Sarjana', '', '2018-11-16 10:16:09', 118, '2018-11-16 10:16:09', '2018-11-16 10:16:09'),
-(45, 'Arkeologi', 'Dalam Negeri', 'Sarjana', '', '2018-11-18 15:21:28', 118, '2018-11-18 15:21:28', '2018-11-18 15:21:28'),
-(46, 'Biologi', 'Dalam Negeri', 'Sarjana', '', '2018-11-18 16:35:48', 118, '2018-11-18 16:35:48', '2018-11-18 16:35:48'),
-(47, 'Agribisnis', 'Dalam Negeri', 'Sarjana', '', '2018-11-19 05:00:43', 118, '2018-11-19 05:00:43', '2018-11-19 05:00:43'),
-(48, 'Agribisnis', 'Dalam Negeri', 'Sarjana', '', '2018-11-19 05:00:52', 118, '2018-11-19 05:00:52', '2018-11-19 05:00:52'),
-(49, 'Biologi', 'Dalam Negeri', 'Sarjana', '', '2018-11-19 05:01:32', 118, '2018-11-19 05:01:32', '2018-11-19 05:01:32'),
-(50, 'Biologi', 'Dalam Negeri', 'Sarjana', '', '2018-11-19 10:59:26', 118, '2018-11-19 10:59:26', '2018-11-19 10:59:26'),
-(51, 'Biologi', 'Dalam Negeri', 'Sarjana', '', '2018-11-19 10:59:52', 118, '2018-11-19 10:59:52', '2018-11-19 10:59:52'),
-(52, 'Biologi', 'Dalam Negeri', 'Sarjana', '', '2018-11-19 10:59:58', 118, '2018-11-19 10:59:58', '2018-11-19 10:59:58'),
-(53, 'Biologi', 'Dalam Negeri', 'Sarjana', '', '2018-11-19 10:59:58', 118, '2018-11-19 10:59:58', '2018-11-19 10:59:58'),
-(54, 'Biologi', 'Dalam Negeri', 'Sarjana', '', '2018-11-19 10:59:58', 118, '2018-11-19 10:59:58', '2018-11-19 10:59:58'),
-(55, 'Biologi', 'Dalam Negeri', 'Sarjana', '', '2018-11-19 11:53:32', 118, '2018-11-19 11:53:32', '2018-11-19 11:53:32'),
-(56, 'Biologi', 'Dalam Negeri', 'Sarjana', '', '2018-11-19 12:12:06', 118, '2018-11-19 12:12:06', '2018-11-19 12:12:06'),
-(57, 'Biologi', 'Dalam Negeri', 'Sarjana', '', '2018-11-20 10:43:25', 118, '2018-11-20 10:43:25', '2018-11-20 10:43:25'),
-(58, 'Arkeologi', 'Dalam Negeri', 'Sarjana', '', '2018-11-20 18:12:20', 118, '2018-11-20 18:12:20', '2018-11-20 18:12:20'),
-(59, 'Biologi', 'Dalam Negeri', 'Sarjana', '', '2018-11-20 19:14:55', 118, '2018-11-20 19:14:55', '2018-11-20 19:14:55'),
-(60, 'Biologi', 'Dalam Negeri', 'Sarjana', '', '2018-11-22 07:52:16', 118, '2018-11-22 07:52:16', '2018-11-22 07:52:16'),
-(61, 'Biologi', 'Dalam Negeri', 'Sarjana', '', '2018-11-23 09:09:00', 118, '2018-11-23 09:09:00', '2018-11-23 09:09:00');
+(72, 'Biologi', 'Dalam Negeri', 'Sarjana', '', '2018-11-25 12:16:33', 118, '2018-11-25 12:16:33', '2018-11-25 12:16:33'),
+(77, 'Arkeologi', 'Dalam Negeri', 'Sarjana', '', '2018-11-26 13:54:25', 118, '2018-11-26 13:54:25', '2018-11-26 13:54:25'),
+(78, 'Arkeologi', 'Dalam Negeri', 'Sarjana', '', '2018-11-26 13:54:31', 118, '2018-11-26 13:54:31', '2018-11-26 13:54:31'),
+(79, 'Astronomi', 'Dalam Negeri', 'Sarjana', '', '2018-11-26 13:55:49', 118, '2018-11-26 13:55:49', '2018-11-26 13:55:49'),
+(80, 'Biologi', 'Dalam Negeri', 'Sarjana', '', '2018-11-26 14:29:09', 118, '2018-11-26 14:29:09', '2018-11-26 14:29:09'),
+(81, 'Biologi', 'Dalam Negeri', 'Sarjana', '', '2018-11-26 15:53:34', 118, '2018-11-26 15:53:34', '2018-11-26 15:53:34'),
+(82, 'Biologi', 'Dalam Negeri', 'Sarjana', '', '2018-11-26 16:30:39', 118, '2018-11-26 16:30:39', '2018-11-26 16:30:39');
 
 -- --------------------------------------------------------
 
@@ -2586,8 +2599,7 @@ CREATE TABLE `pencarian_favorit` (
 --
 
 INSERT INTO `pencarian_favorit` (`id_pencarian_favorit`, `id_universitas`, `id_pencari`, `create_dtm`, `update_dtm`) VALUES
-(19, 1, 122, '2018-11-13 09:44:56', '2018-11-13 09:44:56'),
-(20, 1, 118, '2018-11-14 04:53:44', '2018-11-14 04:53:44');
+(19, 1, 122, '2018-11-13 09:44:56', '2018-11-13 09:44:56');
 
 -- --------------------------------------------------------
 
@@ -2982,6 +2994,12 @@ ALTER TABLE `beasiswa`
   ADD KEY `beasiswa_univ_cons` (`id_beasiswa_univ`);
 
 --
+-- Indexes for table `beasiswa_umum`
+--
+ALTER TABLE `beasiswa_umum`
+  ADD PRIMARY KEY (`id_beasiswa_umum`);
+
+--
 -- Indexes for table `beasiswa_universitas`
 --
 ALTER TABLE `beasiswa_universitas`
@@ -3095,6 +3113,11 @@ ALTER TABLE `admin`
 ALTER TABLE `beasiswa`
   MODIFY `id_beasiswa` int(225) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
+-- AUTO_INCREMENT for table `beasiswa_umum`
+--
+ALTER TABLE `beasiswa_umum`
+  MODIFY `id_beasiswa_umum` int(225) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+--
 -- AUTO_INCREMENT for table `beasiswa_universitas`
 --
 ALTER TABLE `beasiswa_universitas`
@@ -3113,7 +3136,7 @@ ALTER TABLE `detail_kategori`
 -- AUTO_INCREMENT for table `detail_pencarian`
 --
 ALTER TABLE `detail_pencarian`
-  MODIFY `id_detail_pencarian` int(225) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id_detail_pencarian` int(225) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 --
 -- AUTO_INCREMENT for table `detail_universitas`
 --
@@ -3143,12 +3166,12 @@ ALTER TABLE `pencari`
 -- AUTO_INCREMENT for table `pencarian`
 --
 ALTER TABLE `pencarian`
-  MODIFY `id_pencarian` int(225) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+  MODIFY `id_pencarian` int(225) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
 --
 -- AUTO_INCREMENT for table `pencarian_favorit`
 --
 ALTER TABLE `pencarian_favorit`
-  MODIFY `id_pencarian_favorit` int(225) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id_pencarian_favorit` int(225) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 --
 -- AUTO_INCREMENT for table `prodi`
 --
