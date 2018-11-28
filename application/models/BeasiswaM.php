@@ -87,7 +87,7 @@ class BeasiswaM extends CI_Model{
     return $query;
   }
 
-    public function get_url_universitas($id_universitas) {
+  public function get_url_beasiswa($id_universitas) {
     $result = $this->db->select('url, nama_universitas')
     ->from('beasiswa')
     ->join('beasiswa_universitas', 'beasiswa.id_beasiswa_univ = beasiswa_universitas.id_beasiswa_univ')
@@ -97,5 +97,35 @@ class BeasiswaM extends CI_Model{
 
     return $result;
   }
+
+  public function get_url_beasiswa_umum_all($jenjang, $kategori_beasiswa, $negara) {
+    $query = $this->db->query("SELECT url_beasiswa_umum FROM beasiswa_umum WHERE jenjang ='$jenjang' AND kategori_beasiswa_umum = '$kategori_beasiswa' AND negara = '$negara'");
+    return $query;
+  }
+  public function get_url_beasiswa_umum_key_jenjang($jenjang) {
+    $query = $this->db->query("SELECT url_beasiswa_umum FROM beasiswa_umum WHERE jenjang ='$jenjang'");
+    return $query;
+  }
+  public function get_url_beasiswa_umum_key_kategori_beasiswa($kategori_beasiswa) {
+    $query = $this->db->query("SELECT url_beasiswa_umum FROM beasiswa_umum WHERE kategori_beasiswa_umum ='$kategori_beasiswa'");
+    return $query;
+  }
+  public function get_url_beasiswa_umum_key_negara($negara) {
+    $query = $this->db->query("SELECT url_beasiswa_umum FROM beasiswa_umum WHERE negara ='$negara'");
+    return $query;
+  }
+  public function get_url_beasiswa_umum_key_jenjang_kategori_beasiswa($jenjang, $kategori_beasiswa) {
+    $query = $this->db->query("SELECT url_beasiswa_umum FROM beasiswa_umum WHERE jenjang ='$jenjang' AND kategori_beasiswa_umum='$kategori_beasiswa'");
+    return $query;
+  }
+  public function get_url_beasiswa_umum_key_jenjang_negara($jenjang, $negara) {
+    $query = $this->db->query("SELECT url_beasiswa_umum FROM beasiswa_umum WHERE jenjang ='$jenjang' AND negara='$negara'");
+    return $query;
+  }
+  public function get_url_beasiswa_umum_key_jenjang_kategori($kategori_beasiswa, $negara) {
+    $query = $this->db->query("SELECT url_beasiswa_umum FROM beasiswa_umum WHERE kategori_beasiswa_umum='$kategori_beasiswa' AND negara='$negara'");
+    return $query;
+  }
+
 
 }

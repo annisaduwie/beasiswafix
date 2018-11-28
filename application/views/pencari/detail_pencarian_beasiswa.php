@@ -8,42 +8,91 @@ $this->load->view('pencari/header_user');
     <h5 class="title-text" style="color:#fff; ">Area Beasiswa</h5>
       
         <h6 class="title-text" style="color:#fff; padding-bottom: 30px;">Temukan berbagai beasiswa sesuai pilihanmu.<br> Kamu dapat mencari beasiswa berdasarkan universitas dan tingkatan yang kamu ingin pilih.</h6><br>
-        <h6 style="color:#fff; ">Berikut adalah daftar beasiswa yang terdapat untuk jenjang <u><?php echo $keyword_jenjang;?></u> <?php echo $keyword_kategori;?> <?php echo $keyword_negara;?><br>
-        <br><h6>
-        
 
+        <h5 style="color:#fff; ">Hasil Pencarian :
 
-      </h5>
+        <?php if($keyword_jenjang == '' AND $keyword_kategori == ''){?> 
 
+            Beasiswa di Negara <?php echo $keyword_negara;?>
 
+        <?php }elseif($keyword_kategori == '' AND $keyword_negara == ''){?>
+
+            Beasiswa untuk Jenjang <?php echo $keyword_jenjang;?>
+
+        <?php }elseif($keyword_jenjang == '' AND $keyword_negara == ''){?>
+
+            <?php echo $keyword_jenjang;?>
+
+        <?php }elseif($keyword_jenjang != '' AND $keyword_kategori != '' AND $keyword_negara == ''){?>
+            <?php echo $keyword_kategori;?> untuk Jenjang <?php echo $keyword_jenjang;?>
+        <?php }elseif($keyword_jenjang != '' AND $keyword_kategori == '' AND $keyword_negara != ''){?>
+            Beasiswa <?php echo $keyword_jenjang;?> di Negara <?php echo $keyword_negara;?>
+        <?php }elseif($keyword_jenjang == '' AND $keyword_kategori != '' AND $keyword_negara != ''){?>
+           <?php echo $keyword_kategori;?> di Negara <?php echo $keyword_negara;?>
+        <?php }elseif($keyword_jenjang != '' AND $keyword_kategori != '' AND $keyword_negara != ''){?>
+            <?php echo $keyword_kategori;?> untuk Jenjang di Negara <?php echo $keyword_negara;?>
+        <?php }else{?>
+
+            Pencarian tidak ditemukan, silahkan lakukan pencarian kembali
+          <?php }?>
+
+</h5>
     </div>
   </section>
 
   <section class="main-block light-bg" id="section">
     <div class="container" style="padding-bottom: 50px;">
 
-     <!-- Post -->
-     <?php foreach ($pencarian_beasiswa as $value){?> 
-      <div class="post">
-        <div class="user-block">
-          <span class="username">
-            <a href="#"><?php echo $value->nama_beasiswa; ?></a>
+      <!-- Post -->
+  <div class="post">
 
+        <div class="user-block">
+          <div class="row">
+          <div class="col-md-12 featured-responsive">
+     <span class="username"><p>Menampilkan 1500 hasil</p></span></div></div>
+    
+     <?php foreach ($hasil as $value): ?>
+      <form id="form" action="<?php echo base_url().'Pencarian_BeasiswaC/tampil_detail_beasiswa_univ'?>" method="POST">
+      <?php if (!empty($value['judul'])): ?>
+        
+
+       
+           <div class="row">
+            <?php if(!empty($value['gambar'])){ ?>
+           <div class="col-md-3">
+
+              <img src="<?php echo $value['gambar']; ?>" alt="" style="width:250px; height:200px;">
+        </div>
+      <?php } ?>
+        <div class="col-md-12 featured-responsive">
+          <span class="username">
+            <input type="text" name="link" value="<?php echo $value['link']; ?>">
+            <div style="padding-bottom: 10px;"><?php echo $value['judul']; ?>
+            </div>
+            
           </span>
-          <span class="description"><?php echo $value->url; ?></span>
+          <p>
+         <?php echo $value['deskripsi']; ?>
+
+        </p>
+
+        <button class="btn btn-primary">Info Selengkapnya</button><hr>
         </div>
         <!-- /.user-block -->
-        <p>
-          Lorem ipsum represents a long-held tradition for designers,
-          typographers and the like. Some people hate it and argue for
-          its demise, but others ignore the hate as they create awesome
-          tools to help create filler text for everyone from bacon lovers
-          to Charlie Sheen fans.
-        </p>
+        
       </div>
+      
+    
       <!-- /.post -->
-    <?php }?>
+       
+      <?php endif ?>
+    </form>
+     <?php endforeach ?>
 
+     </div>
+</div>
+     
+  </div>
 
 
 
