@@ -244,7 +244,7 @@ class Pencarian_BeasiswaC extends CI_Controller
 						$result[$i] = array (
 							'judul'=> $a->find('h1.entry-title', 0)->plaintext,
 							'deskripsi'=> str_replace($search, $newstring, $a->children(2)->plaintext),
-							'link'=> $a->children(0)->children(0)->children(0)->href
+							'link'=> $a->find('h1.entry-title', 0)->children(0)->href
 						);
 					// $langs['replace'] = array ('Hai Sobat Beasiswa.ID!'=>" ");
 

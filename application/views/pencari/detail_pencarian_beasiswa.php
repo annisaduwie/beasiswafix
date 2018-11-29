@@ -21,7 +21,7 @@ $this->load->view('pencari/header_user');
 
         <?php }elseif($keyword_jenjang == '' AND $keyword_negara == ''){?>
 
-            <?php echo $keyword_jenjang;?>
+            <?php echo $keyword_kategori;?>
 
         <?php }elseif($keyword_jenjang != '' AND $keyword_kategori != '' AND $keyword_negara == ''){?>
             <?php echo $keyword_kategori;?> untuk Jenjang <?php echo $keyword_jenjang;?>
