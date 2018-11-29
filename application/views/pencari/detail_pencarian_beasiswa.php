@@ -104,17 +104,22 @@ $this->load->view('pencari/header_user');
 
   <nav aria-label="Page navigation example">
   <ul class="pagination justify-content-center">
-    <li class="page-item disabled">
-      <a class="page-link" href="#" tabindex="-1">Previous</a>
-    </li>
-    <li class="page-item"><a class="page-link" href="#">1</a></li>
-    <li class="page-item"><a class="page-link" href="#">2</a></li>
-    <li class="page-item"><a class="page-link" href="#">3</a></li>
-    <li class="page-item">
-      <a class="page-link" href="#">Next</a>
-    </li>
+    <?php if (!empty($hasil['prev'])): ?>
+      <li class="page-item">
+        <a class="page-link" href="<?php echo $hasil['prev']; ?>">Halaman Sebelumnya</a>
+      </li>
+      
+    <?php endif ?>
+    <?php if (!empty($hasil['next'])): ?>
+      <li class="page-item">
+        <a class="page-link" href="<?php echo $hasil['next'] ?>">Halaman Selanjutnya</a>
+      </li>
+      
+    <?php endif ?>
   </ul>
 </nav>
+
+ 
 </section>
 
     <!--============================= FOOTER =============================-->

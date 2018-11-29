@@ -122,7 +122,7 @@ class BeasiswaM extends CI_Model{
     $query = $this->db->query("SELECT url_beasiswa_umum FROM beasiswa_umum WHERE jenjang ='$jenjang' AND negara='$negara'");
     return $query;
   }
-  public function get_url_beasiswa_umum_key_jenjang_kategori($kategori_beasiswa, $negara) {
+  public function get_url_beasiswa_umum_key_kategori_beasiswa_negara($kategori_beasiswa, $negara) {
     $query = $this->db->query("SELECT url_beasiswa_umum FROM beasiswa_umum WHERE kategori_beasiswa_umum='$kategori_beasiswa' AND negara='$negara'");
     return $query;
   }
