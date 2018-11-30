@@ -193,15 +193,15 @@ function initMap() {
   <div class="contact-info">
     <div class="address">
       <span class="icon-location-pin"></span>
-      <p style="font-size: 14px;"> <?php echo $list_detail->alamat_universitas;?></p>
+      <p style="font-size: 14px;"><?php echo $list_detail->alamat_universitas;?></p>
     </div>
     <div class="address">
       <span class="icon-screen-smartphone"></span>
-      <p style="font-size: 14px;"> <?php echo $list_detail->no_telp;?></p>
+      <p style="font-size: 14px;"><?php echo $list_detail->no_telp;?></p>
     </div>
     <div class="address">
       <span class="icon-link"></span>
-      <p style="font-size: 14px;">https://burgerandlobster.com</p>
+      <p style="font-size: 14px;"><?php echo $list_detail->url_universitas;?></p>
     </div>
     <!--  <a href="#" class="btn btn-outline-danger btn-contact">SEND A MESSAGE</a> -->
   </div>

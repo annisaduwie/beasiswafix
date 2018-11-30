@@ -494,7 +494,7 @@ class Pencarian_BeasiswaC extends CI_Controller
 				
 //Menampilkan list beasiswa berdasarkan keyword
 
-	public function pencarian_beasiswa($page = NULL){
+	public function pencarian_beasiswa($id = NULL, $page = NULL){
 
 		$keyword_jenjang=$this->input->post('keyword_jenjang');
 		$keyword_kategori=$this->input->post('keyword_kategori_beasiswa');

@@ -524,7 +524,7 @@ class AdminC extends CI_Controller
 			}else{
 
 				$dataUniversitas =  array(
-					"deskripsi_universitas"=>$deskripsi,
+					"nama_universitas"=>$deskripsi,
 					"url_universitas"=>$url,
 					"kategori_universitas"=>$kategori,
 					"negara"=>$negara,

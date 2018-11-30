@@ -714,7 +714,7 @@ public function tampil_pencarian_prodi_by_universitas(){
 
         $data['page'] = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 
-        $data['fakultas_universitas'] = $this->FakultasM->tampil_fakultas_list_univ_page( $id_universitas, $config["per_page"], $data['page'])->result();
+        $data['fakultas_universitas'] = $this->FakultasM->tampil_fakultas_list_univ_page( $config["per_page"], $data['page'], $id_universitas)->result();
         $data['pagination_universitas'] = $this->pagination->create_links();
 
 	}

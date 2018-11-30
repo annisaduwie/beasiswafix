@@ -28,8 +28,8 @@ class FakultasM extends CI_Model{
    $query = $this->db->query("SELECT distinct  nama_fakultas, id_fakultas from universitas, univ_fak, fakultas, fak_prodi, prodi  where universitas.id_universitas=univ_fak.id_universitas AND univ_fak.id_univ_fak=fakultas.id_univ_fak AND fakultas.id_univ_fak = univ_fak.id_univ_fak AND univ_fak.id_univ_fak = fak_prodi.id_univ_fak AND fak_prodi.id_fak_prodi=prodi.id_fak_prodi AND universitas.id_universitas='$id_universitas' GROUP BY nama_fakultas");
    return $query;
   }
- public function tampil_fakultas_list_univ_page($limit, $start,$universitas){
-   $query = $this->db->query("SELECT distinct  nama_fakultas, id_fakultas from universitas, univ_fak, fakultas, fak_prodi, prodi  where universitas.id_universitas=univ_fak.id_universitas AND univ_fak.id_univ_fak=fakultas.id_univ_fak AND fakultas.id_univ_fak = univ_fak.id_univ_fak AND univ_fak.id_univ_fak = fak_prodi.id_univ_fak AND fak_prodi.id_fak_prodi=prodi.id_fak_prodi AND nama_universitas='$universitas' GROUP BY nama_fakultas  LIMIT $start,$limit");
+ public function tampil_fakultas_list_univ_page($limit, $start,$id_universitas){
+   $query = $this->db->query("SELECT distinct  nama_fakultas, id_fakultas from universitas, univ_fak, fakultas, fak_prodi, prodi  where universitas.id_universitas=univ_fak.id_universitas AND univ_fak.id_univ_fak=fakultas.id_univ_fak AND fakultas.id_univ_fak = univ_fak.id_univ_fak AND univ_fak.id_univ_fak = fak_prodi.id_univ_fak AND fak_prodi.id_fak_prodi=prodi.id_fak_prodi AND universitas.id_universitas='$id_universitas' GROUP BY nama_fakultas  LIMIT $start,$limit");
    return $query;
   }
    public function tampil_fakultas_mahasiswa($limit, $start){
@@ -82,7 +82,7 @@ class FakultasM extends CI_Model{
   }
 
    public function tampil_fakultas_list_univ_rows($id_universitas){
-   $query = $this->db->query("SELECT distinct  nama_fakultas, id_fakultas from universitas, univ_fak, fakultas, fak_prodi, prodi  where universitas.id_universitas=univ_fak.id_universitas AND univ_fak.id_univ_fak=fakultas.id_univ_fak AND fakultas.id_univ_fak = univ_fak.id_univ_fak AND univ_fak.id_univ_fak = fak_prodi.id_univ_fak AND fak_prodi.id_fak_prodi=prodi.id_fak_prodi AND id_universitas='$id_universitas' GROUP BY nama_fakultas");
+   $query = $this->db->query("SELECT distinct  nama_fakultas, id_fakultas from universitas, univ_fak, fakultas, fak_prodi, prodi  where universitas.id_universitas=univ_fak.id_universitas AND univ_fak.id_univ_fak=fakultas.id_univ_fak AND fakultas.id_univ_fak = univ_fak.id_univ_fak AND univ_fak.id_univ_fak = fak_prodi.id_univ_fak AND fak_prodi.id_fak_prodi=prodi.id_fak_prodi AND universitas.id_universitas='$id_universitas' GROUP BY nama_fakultas");
    return $query;
   }
 
