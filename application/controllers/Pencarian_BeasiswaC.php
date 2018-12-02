@@ -556,6 +556,16 @@ class Pencarian_BeasiswaC extends CI_Controller
 
 		);
 
+		$dataPencarianBeasiswaUmum =  array(
+
+        			"keyword_jenjang"=>$keyword_jenjang,
+        			"keyword_kategori_beasiswa"=>$keyword_kategori,
+        			"keyword_negara"=>$keyword_negara,
+        			"waktu_pencarian"=>date('Y-m-d H-s-i'),
+        			"id_pencari"=>$this->session->userdata['id_pencari']
+        		);
+		$this->PencarianM->insertPencarianBeasiswa($dataPencarianBeasiswaUmum);
+
 		$data['hasil']=$result;
 
 	

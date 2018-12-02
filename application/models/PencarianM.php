@@ -33,6 +33,17 @@ class PencarianM extends CI_Model{
       return $insert_id;
     }
 
+    public function insertPencarianBeasiswa($dataPencarianBeasiswa){
+
+        
+      return $this->db->insert('pencarian_beasiswa', $dataPencarianBeasiswa);
+     
+      $insert_id = $this->db->insert_id();
+      
+      $this->db->trans_complete();
+      return $insert_id;
+    }
+
   public function pencarian($keyword_prodi, $keyword_kategori, $keyword_tingkatan){
 
     $query = $this->db->query("SELECT nama_universitas, negara, gambar_universitas from universitas, univ_fak, fakultas, fak_prodi, prodi where universitas.id_universitas=univ_fak.id_universitas AND univ_fak.id_univ_fak=fakultas.id_univ_fak AND univ_fak.id_univ_fak=fak_prodi.id_univ_fak AND fak_prodi.id_fak_prodi=prodi.id_fak_prodi AND prodi.nama_prodi='$keyword_prodi' AND universitas.kategori_universitas='$keyword_kategori' AND prodi.tingkatan='$keyword_tingkatan'");
@@ -99,6 +110,14 @@ return $query;
 public function tampil_histori_pencarian($id_pencari){
 
   $query= $this->db->query("SELECT distinct * from pencari, pencarian WHERE pencari.id_pencari=pencarian.id_pencari AND pencarian.id_pencari='$id_pencari' GROUP BY pencarian.id_pencarian order by waktu_pencarian DESC;");
+
+return $query;
+
+} 
+
+public function tampil_histori_pencarian_beasiswa($id_pencari){
+
+  $query= $this->db->query("SELECT distinct * from pencari, pencarian_beasiswa WHERE pencari.id_pencari=pencarian_beasiswa.id_pencari AND pencarian_beasiswa.id_pencari='$id_pencari' GROUP BY pencarian_beasiswa.id_pencarian order by pencarian_beasiswa.create_dtm DESC;");
 
 return $query;
 
