@@ -216,72 +216,76 @@ class Pencarian_BeasiswaC extends CI_Controller
 	}
 
 	//Scraping buat keyword negara
-
-	public function scrapping_by_keyword_negara($page){
+	public function scrapping_by_keyword_negara($jenjang, $negara, $page){
 		$result=array();
-		$negara = $this->input->post('keyword_negara');
-		$hasil = $this->BeasiswaM->get_url_beasiswa_umum_key_negara($negara)->row();
-		$html_load = file_get_html($hasil->url_beasiswa_umum .'page/'. $page);
-		$i = 0;
+
+		$hasil = $this->BeasiswaM->get_url_beasiswa_umum_key_negara($negara);
+		$html_load = file_get_html($hasil .'page/'. $page);
+
+		$i = 0; // index of array result
+		$go = false; // counter for continue scraping
+		$total = 0; // total content
+
+		if ($jenjang == 'D3') {
+			$keyword_jenjang = 'Beasiswa D3';
+		} elseif ($jenjang == 'S1') {
+			$keyword_jenjang = 'Beasiswa S1';
+		} elseif ($jenjang == 'S2') {
+			$keyword_jenjang = 'Beasiswa S2';
+		} elseif ($jenjang == 'S3') {
+			$keyword_jenjang = 'Beasiswa S3';
+		}
+
 		if($html_load && is_object($html_load) && isset($html_load->nodes)){
-			foreach ($html_load->find('div#ht-content .ht-container') as $data ) {
-
-				foreach ($data->find('main#main') as $value) {
-
-					foreach ($value->find('article') as $a) {
-
-						$search = array(
-							'Hai sobat Beasiswa.ID',
-							'Hai Sobat Beasiswa.ID!', 
-							'Hai Sobat Beasiswa.ID !',
-							'Hai sobat Beasiswa.ID!',
-							'Hai, Sobat Beasiswa.ID',
-							'!'
-						);
-
-						$newstring = '';
-
-						$result[$i] = array (
-							'judul'=> $a->find('h1.entry-title', 0)->plaintext,
-							'deskripsi'=> str_replace($search, $newstring, $a->children(2)->plaintext),
-							'link'=> $a->find('h1.entry-title', 0)->children(0)->href
-						);
-					// $langs['replace'] = array ('Hai Sobat Beasiswa.ID!'=>" ");
-
-						$i++;
-
-
+			
+			foreach ($html_load->find('main#main article') as $data ) {
+				foreach ($data->find('.entry-categories > a') as $tag) {
+					if ($tag->plaintext == $keyword_jenjang) {
+						$go = true;
 					}
-
-
-
 				}
-				
-			}		
 
-		
-		foreach ($html_load->find('div.pgntn-page-pagination-block') as $data ) 
+				if ($go) {
+					$search = array(
+						'Hai sobat Beasiswa.ID',
+						'Hai Sobat Beasiswa.ID!', 
+						'Hai Sobat Beasiswa.ID !',
+						'Hai sobat Beasiswa.ID!',
+						'Hai, Sobat Beasiswa.ID',
+						'!'
+					);
+					$newstring = '';
+					$deskripsi = $data->find('.entry-content', 0)->plaintext;
 
-
-				
-
-				//yang page terakhir gimana nentuinnya, karena klo diupdate kan berubah ubah hehe
-				if($data->find('.prev page-numbers')){
-					$result['prev']= base_url('Pencarian_BeasiswaC/pencarian_beasiswa/' . $page3);
+					$result[$i] = array (
+						'judul'=> $data->find('h1.entry-title', 0)->plaintext,
+						'deskripsi'=> trim(str_replace($search, $newstring, $deskripsi)),
+						'link'=> $data->find('h1.entry-title', 0)->children(0)->href
+					);
+					$i++;
+					$total++;
 				}
+				$go = false;
+			}
+
+			// start pagination
+			foreach ($html_load->find('div.pgntn-page-pagination-block') as $data ) {
 				if($page == 1){
-					$page2 = $page + 1;
-					$page3 = $page - 1;
-					$result['next']= base_url('Pencarian_BeasiswaC/pencarian_beasiswa/' . $page2);
+					$result['next']= base_url('Pencarian_BeasiswaC/pencarian_beasiswa/' . $jenjang . '/' . $negara . '/2');
 				}else{
 					$page2 = $page + 1;
 					$page3 = $page - 1;
+					$result['prev']= base_url('Pencarian_BeasiswaC/pencarian_beasiswa/' . $jenjang . '/' . $negara . '/' . $page3);
 
-					$result['prev']= base_url('Pencarian_BeasiswaC/pencarian_beasiswa/' . $page3);
-					$result['next']= base_url('Pencarian_BeasiswaC/pencarian_beasiswa/' . $page2);
-
+					if($data->find('.next')){
+						$result['next']= base_url('Pencarian_BeasiswaC/pencarian_beasiswa/' . $jenjang . '/' . $negara . '/' . $page2);
+					}
 				}
 			}
+			// end pagination
+
+			$result['total'] = $total; // save total data count
+		}
 		return $result;
 	}
 
@@ -494,60 +498,60 @@ class Pencarian_BeasiswaC extends CI_Controller
 				
 //Menampilkan list beasiswa berdasarkan keyword
 
-	public function pencarian_beasiswa($id = NULL, $page = NULL){
-
-		$keyword_jenjang=$this->input->post('keyword_jenjang');
+	public function pencarian_beasiswa($keyword_jenjang = NULL, $keyword_negara = NULL, $page = NULL){
 		$keyword_kategori=$this->input->post('keyword_kategori_beasiswa');
-		$keyword_negara= $this->input->post('keyword_negara');
 
-		if($keyword_jenjang != '' AND $keyword_kategori == '' AND $keyword_negara == ''){
+		// if($keyword_jenjang != '' AND $keyword_kategori == '' AND $keyword_negara == ''){
 
-			if (!empty($id)) {
-				$result = $this->scrapping_by_keyword_jenjang($page);
-			}else{
-				$result = $this->scrapping_by_keyword_jenjang(1);
-			}
-		}else if($keyword_jenjang == '' AND $keyword_kategori != '' AND $keyword_negara == ''){
-			if (!empty($id)) {
-				$result = $this->scrapping_by_keyword_kategori_beasiswa($page);
-			}else{
-				$result = $this->scrapping_by_keyword_kategori_beasiswa(1);
-			}
-		}else if($keyword_jenjang == '' AND $keyword_kategori == '' AND $keyword_negara != ''){
-			if (!empty($id)) {
-				$result = $this->scrapping_by_keyword_negara($page);
-			}else{
-				$result = $this->scrapping_by_keyword_negara(1);
-			}
+		// 	if (!empty($id)) {
+		// 		$result = $this->scrapping_by_keyword_jenjang($page);
+		// 	}else{
+		// 		$result = $this->scrapping_by_keyword_jenjang(1);
+		// 	}
+		// }else if($keyword_jenjang == '' AND $keyword_kategori != '' AND $keyword_negara == ''){
+		// 	if (!empty($id)) {
+		// 		$result = $this->scrapping_by_keyword_kategori_beasiswa($page);
+		// 	}else{
+		// 		$result = $this->scrapping_by_keyword_kategori_beasiswa(1);
+		// 	}
+		// }else if($keyword_jenjang == '' AND $keyword_kategori == '' AND $keyword_negara != ''){
+		// 	if (!empty($id)) {
+		// 		$result = $this->scrapping_by_keyword_negara($page);
+		// 	}else{
+		// 		$result = $this->scrapping_by_keyword_negara(1);
+		// 	}
 
-		}else if($keyword_jenjang != '' AND $keyword_kategori != '' AND $keyword_negara == ''){
-			if (!empty($id)) {
-				$result = $this->scrapping_by_keyword_jenjang_kategori($page);
-			}else{
-				$result = $this->scrapping_by_keyword_jenjang_kategori(1);
-			}
-		}else if($keyword_jenjang != '' AND $keyword_kategori == '' AND $keyword_negara != ''){
-			if (!empty($id)) {
-				$result = $this->scrapping_by_keyword_jenjang_negara($page);
-			}else{
-				$result = $this->scrapping_by_keyword_jenjang_negara(1);
-			}
+		// }else if($keyword_jenjang != '' AND $keyword_kategori != '' AND $keyword_negara == ''){
+		// 	if (!empty($id)) {
+		// 		$result = $this->scrapping_by_keyword_jenjang_kategori($page);
+		// 	}else{
+		// 		$result = $this->scrapping_by_keyword_jenjang_kategori(1);
+		// 	}
+		// }else if($keyword_jenjang != '' AND $keyword_kategori == '' AND $keyword_negara != ''){
+		// 	if (!empty($id)) {
+		// 		$result = $this->scrapping_by_keyword_jenjang_negara($page);
+		// 	}else{
+		// 		$result = $this->scrapping_by_keyword_jenjang_negara(1);
+		// 	}
 
-		}else if($keyword_jenjang == '' AND $keyword_kategori != '' AND $keyword_negara != ''){
-			if (!empty($id)) {
-				$result = $this->scrapping_by_keyword_kategori_negara($page);
-			}else{
-				$result = $this->scrapping_by_keyword_kategori_negara(1);
-			}
-		}else if($keyword_jenjang != '' AND $keyword_kategori != '' AND $keyword_negara != ''){
-			if (!empty($id)) {
-				$result = $this->scrapping_by_keyword_jenjang_kategori_negara($page);
-			}else{
-				$result = $this->scrapping_by_keyword_jenjang_kategori_negara(1);
-			}
+		// }else if($keyword_jenjang == '' AND $keyword_kategori != '' AND $keyword_negara != ''){
+		// 	if (!empty($id)) {
+		// 		$result = $this->scrapping_by_keyword_kategori_negara($page);
+		// 	}else{
+		// 		$result = $this->scrapping_by_keyword_kategori_negara(1);
+		// 	}
+		// }else if($keyword_jenjang != '' AND $keyword_kategori != '' AND $keyword_negara != ''){
+		// 	if (!empty($id)) {
+		// 		$result = $this->scrapping_by_keyword_jenjang_kategori_negara($page);
+		// 	}else{
+		// 		$result = $this->scrapping_by_keyword_jenjang_kategori_negara(1);
+		// 	}
 
-		}
+		// }
 
+		$filter = $this->BeasiswaM->get_url_beasiswa_umum_key_negara($keyword_negara);
+
+		$result = $this->scrapping_by_keyword_negara($keyword_jenjang, $keyword_negara, $page);
 
 		$data =  array(
 			"keyword_jenjang"=>$keyword_jenjang,
@@ -558,10 +562,7 @@ class Pencarian_BeasiswaC extends CI_Controller
 
 		$data['hasil']=$result;
 
-	
 		$this->load->view('pencari/detail_pencarian_beasiswa', $data);
-	
-		
 	}
 
 //Menampilkan list beasiswa untuk universitas
