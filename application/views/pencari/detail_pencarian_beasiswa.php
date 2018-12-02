@@ -49,7 +49,7 @@ $this->load->view('pencari/header_user');
         <div class="user-block">
           <div class="row">
           <div class="col-md-12 featured-responsive">
-     <span class="username"><p>Menampilkan 1500 hasil</p></span></div></div>
+     <span class="username"><p>Menampilkan <?php echo !empty($hasil['total']) ? $hasil['total'] : '0' ?> hasil</p></span></div></div>
     
      <?php foreach ($hasil as $value): ?>
       <form id="form" action="<?php echo base_url().'Pencarian_BeasiswaC/tampil_detail_beasiswa_univ'?>" method="POST">
@@ -101,7 +101,8 @@ $this->load->view('pencari/header_user');
 
 
   </div>
-
+  <?php if (count($hasil) != 1): ?>
+    
   <nav aria-label="Page navigation example">
   <ul class="pagination justify-content-center">
     <?php if (!empty($hasil['prev'])): ?>
@@ -118,6 +119,7 @@ $this->load->view('pencari/header_user');
     <?php endif ?>
   </ul>
 </nav>
+  <?php endif ?>
 
  
 </section>

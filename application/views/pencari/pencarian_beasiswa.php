@@ -68,10 +68,12 @@ $this->load->view('pencari/header_user');
 
                 if($query['tingkatan'] == "Pelajar"){?>
 
-                    <select name="keyword_jenjang" class="btn-group2">
+                    <select name="keyword_jenjang" class="btn-group2" required="">
                      <option value="0" disabled selected>Jenjang</option>
-                     <option value="Diploma">Diploma</option>
-                     <option value="Sarjana">Sarjana</option>
+                     <option value="D3">Diploma</option>
+                     <option value="S1">S1</option>
+                     <option value="S2">S2</option>
+                     <option value="S3">S3</option>
                    </select>
 
                  <?php }else if($query['tingkatan'] == "Mahasiswa"){?>
@@ -88,7 +90,7 @@ $this->load->view('pencari/header_user');
                      <option value="Beasiswa Sebagian">Beasiswa Sebagian</option>
                    </select>
                    
-                  <select name="keyword_negara" class="btn-group2">
+                  <select name="keyword_negara" class="btn-group2" required="">
                      <option value="0" disabled selected>Negara</option>
                     <?php foreach ($list_beasiswa as $list) {?>
 
@@ -96,9 +98,8 @@ $this->load->view('pencari/header_user');
             <?php  } ?>
                    </select>
          <?php }?>
-           <button type="submit" class="btn-form btn-primary"><span class="icon-magnifier search-icon"></span>CARI<i class="pe-7s-angle-right"></i></button>
+           <button type="button" onclick="submit_form()" class="btn-form btn-primary"><span class="icon-magnifier search-icon"></span>CARI<i class="pe-7s-angle-right"></i></button>
          </div>
-       </form>
        
      </div>
    </div>
@@ -107,6 +108,21 @@ $this->load->view('pencari/header_user');
 </div>
 </div>
 </section>
+
+<script type="text/javascript">
+  function submit_form () {
+    var jenjang = $('select[name="keyword_jenjang"] option:selected').val()
+    var negara = $('select[name="keyword_negara"] option:selected').val()
+    var page = 1
+
+    if (jenjang != 0 && negara != 0) {
+      window.location = '<?php echo base_url('Pencarian_BeasiswaC/pencarian_beasiswa/') ?>' + jenjang + '/' + negara + '/' + page;
+    } else {
+      alert('Silahkan pilih Jenjang dan Negara terlebih dahulu!')
+    }
+
+  }
+</script>
 
 <!--// SLIDER -->
 <!--//END HEADER -->
