@@ -39,8 +39,8 @@
      return $query;
    }
 
-   public function get_prodi_dropdown_mahasiswa(){
-     $query = $this->db->query("SELECT * from prodi WHERE (prodi.tingkatan ='Magister' OR prodi.tingkatan='Doktor') GROUP BY prodi.nama_prodi");
+   public function get_prodi_dropdown_mahasiswa($kategori_univ){
+     $query = $this->db->query("SELECT * from universitas, univ_fak, fak_prodi, prodi WHERE universitas.id_universitas=univ_fak.id_universitas AND univ_fak.id_univ_fak=fak_prodi.id_univ_fak AND fak_prodi.id_fak_prodi=prodi.id_fak_prodi AND (prodi.tingkatan ='Magister' OR prodi.tingkatan='Doktor') AND universitas.kategori_universitas='$kategori_univ' GROUP BY prodi.nama_prodi;");
      return $query;
    }
 
