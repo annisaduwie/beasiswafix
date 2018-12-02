@@ -18,14 +18,16 @@ class Awal extends CI_Controller  {
 
 	public function index()
 	{
+		$keyword_kategori = 'Dalam Negeri';
 		if($this->session->userdata('logged_in')){
 
 		$data['prodi_pelajar']= $this->ProdiM->get_prodi_dropdown_pelajar()->result();
-		$data['prodi_mahasiswa']= $this->ProdiM->get_prodi_dropdown_mahasiswa()->result();
+		$data['prodi_mahasiswa']= $this->ProdiM->get_prodi_dropdown_mahasiswa($keyword_kategori)->result();
 		// $data['list_prodi']= $this->ProdiM->tampil_prodi()->result();
 		$data['fakultas_pelajar'] = $this->FakultasM->tampil_fakultas_pelajar_limit()->result();
 
 		$data['fakultas_mahasiswa'] = $this->FakultasM->tampil_fakultas_mahasiswa_limit()->result();
+
 
 		}else{
 		$data['prodi']= $this->ProdiM->get_prodi_dropdown()->result();
@@ -37,6 +39,42 @@ class Awal extends CI_Controller  {
 	
 		$this->load->view('pencari/user', $data);
 		
+	}
+
+	public function keyword_prodi($keyword_kategori){
+
+		$keyword_kategori = 'Dalam Negeri';
+
+		// if($this->session->userdata('logged_in')){
+		var_dump($this->session->userdata('logged_in'));
+		exit;
+
+		$data['prodi_pelajar']= $this->ProdiM->get_prodi_dropdown_pelajar()->result();
+		$data['prodi_mahasiswa']= $this->ProdiM->get_prodi_dropdown_mahasiswa($keyword_kategori);
+		// $data['list_prodi']= $this->ProdiM->tampil_prodi()->result();
+		$data['fakultas_pelajar'] = $this->FakultasM->tampil_fakultas_pelajar_limit()->result();
+
+		$data['fakultas_mahasiswa'] = $this->FakultasM->tampil_fakultas_mahasiswa_limit()->result();
+
+		 $output   = '<option value=""></option>';
+
+   			 if(! empty($data['prodi_mahasiswa'])){
+      			foreach ($data['prodi_mahasiswa']->result() as $row) {
+        			$output .='<option value="'.$row->id_prodi.'">'.$row->nama_prodi.'</option>';
+      			}
+    		 } 
+    			echo $output;
+  
+		// }else{
+		$data['prodi']= $this->ProdiM->get_prodi_dropdown()->result();
+		$data['fakultas'] = $this->FakultasM->tampil_fakultas_limit()->result();
+
+		// }
+		
+		$data['nama_pencari']= $this->session->userdata('id_pencari');
+	
+		$this->load->view('pencari/user', $data);
+
 	}
 	public function user()
 	{

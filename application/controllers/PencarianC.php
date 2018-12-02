@@ -729,6 +729,7 @@ public function detail_pencarian(){
 	$keyword_prodi=$this->input->post('keyword_prodi');
 	$keyword_kategori=$this->input->post('keyword_kategori');
 	$keyword_tingkatan=$this->input->post('keyword_tingkatan');
+
 	$cek = $this->PencarianM->pencarian($keyword_prodi, $keyword_kategori, $keyword_tingkatan)->num_rows();
 
 	$id_univ = $this->input->post('id_universitas');
@@ -749,6 +750,7 @@ public function detail_pencarian(){
 	// }
 
 	if ($this->session->userdata('logged_in')){
+         $id_pencari = $this->session->userdata['id_pencari'];
 
 
 		$getidkey=get_idpencarian();
@@ -762,7 +764,7 @@ public function detail_pencarian(){
 		// 	// print_r($nama_univ);
 		$id_univ= $this->UniversitasM->get_id_by_name($nama_univ)->result();
 		foreach ($id_univ as $univ) {
-			$max_id = $this->db->query("SELECT MAX(id_pencarian) as id_pencarian FROM pencarian");
+			$max_id = $this->db->query("SELECT MAX(id_pencarian) as id_pencarian FROM pencarian WHERE id_pencari='$id_pencari'");
 
 			foreach ($max_id->result_array() as $max) {
 				// print_r($max['id_pencarian']); 

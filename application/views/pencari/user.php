@@ -31,6 +31,13 @@ $this->load->view('pencari/header_user');
               $query = $this->db->query("SELECT tingkatan from pencari where id_pencari=".$nama_pencari)->row_array(); 
 
                 if($query['tingkatan'] == "Pelajar"){?>
+
+                  <select name="keyword_kategori" class="btn-group2">
+                      <option value="0" disabled selected>Tujuan Negara</option>
+                      <option value="Dalam Negeri">Dalam Negeri</option>
+                      <option value="Luar Negeri">Luar Negeri</option>
+
+                    </select>
                     <select name="keyword_prodi"  class="btn-group2">
                       <option value="0" disabled selected>Area Jurusan</option>
 
@@ -39,12 +46,7 @@ $this->load->view('pencari/header_user');
                       <?php  } ?>
               
                     </select>
-                    <select name="keyword_kategori" class="btn-group2">
-                      <option value="0" disabled selected>Tujuan Negara</option>
-                      <option value="Dalam Negeri">Dalam Negeri</option>
-                      <option value="Luar Negeri">Luar Negeri</option>
-
-                    </select>
+                    
 
                     <select name="keyword_tingkatan" class="btn-group2">
                      <option value="0" disabled selected>Jenjang</option>
@@ -53,6 +55,12 @@ $this->load->view('pencari/header_user');
                    </select>
 
                  <?php }else if($query['tingkatan'] == "Mahasiswa"){?>
+                  <select name="keyword_kategori" id="keyword_kategori" class="btn-group2">
+                    <option value="0" disabled selected>Tujuan Negara</option>
+                    <option value="Dalam Negeri">Dalam Negeri</option>
+                    <option value="Luar Negeri">Luar Negeri</option>
+                    
+                  </select>
                     <select name="keyword_prodi"  class="btn-group2">
                       <option value="0" disabled selected>Area Jurusan</option>
 
@@ -61,13 +69,6 @@ $this->load->view('pencari/header_user');
                       <?php  } ?>
               
                     </select>
-                    <select name="keyword_kategori" class="btn-group2">
-                      <option value="0" disabled selected>Tujuan Negara</option>
-                      <option value="Dalam Negeri">Dalam Negeri</option>
-                      <option value="Luar Negeri">Luar Negeri</option>
-
-                    </select>
-
                     <select name="keyword_tingkatan" class="btn-group2">
                      <option value="0" disabled selected>Jenjang</option>
                      <option value="Magister">Magister</option>
@@ -76,6 +77,13 @@ $this->load->view('pencari/header_user');
                  <?php }?>
 
                <?php }else{ ?>
+                </select>
+                    <select name="keyword_kategori" class="btn-group2">
+                      <option value="0" disabled selected>Tujuan Negara</option>
+                      <option value="Dalam Negeri">Dalam Negeri</option>
+                      <option value="Luar Negeri">Luar Negeri</option>
+
+                    </select>
 
               <select name="keyword_prodi"  class="btn-group2">
               <option value="0" disabled selected>Area Jurusan</option>
@@ -83,14 +91,6 @@ $this->load->view('pencari/header_user');
                     <?php foreach ($prodi as $value) {?>
                       <option value="<?php echo $value->nama_prodi;?>"><?php echo $value->nama_prodi;?></option>
                     <?php  } ?>
-              
-            </select>
-           
-
-            <select name="keyword_kategori" class="btn-group2">
-              <option value="0" disabled selected>Tujuan Negara</option>
-              <option value="Dalam Negeri">Dalam Negeri</option>
-              <option value="Luar Negeri">Luar Negeri</option>
               
             </select>
 
@@ -330,7 +330,16 @@ $this->load->view('pencari/header_user');
 <!-- jQuery, Bootstrap JS. -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 
-
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('#keyword_kategori').change(function(){
+      var keyword_kategori=$('#keyword_kategori').val();
+      $.get('<?php echo site_url('Awal/keyword_prodi/') ?>'+keyword_kategori, function(resp){
+        $('#keyword_prodi').html(resp);
+      });
+    });
+  });
+</script>
 <script>
   $(window).scroll(function() {
             // 100 = The point you would like to fade the nav in.
