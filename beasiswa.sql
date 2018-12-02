@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 15 Okt 2018 pada 20.02
+-- Generation Time: 02 Des 2018 pada 07.53
 -- Versi Server: 10.1.26-MariaDB
 -- PHP Version: 7.1.8
 
@@ -31,15 +31,17 @@ SET time_zone = "+00:00";
 CREATE TABLE `admin` (
   `id_admin` int(225) NOT NULL,
   `username` varchar(20) NOT NULL,
-  `password` varchar(225) NOT NULL
+  `password` varchar(225) NOT NULL,
+  `create_dtm` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `update_dtm` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `admin`
 --
 
-INSERT INTO `admin` (`id_admin`, `username`, `password`) VALUES
-(1, 'admin', '21232f297a57a5a743894a0e4a801fc3');
+INSERT INTO `admin` (`id_admin`, `username`, `password`, `create_dtm`, `update_dtm`) VALUES
+(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -50,15 +52,62 @@ INSERT INTO `admin` (`id_admin`, `username`, `password`) VALUES
 CREATE TABLE `beasiswa` (
   `id_beasiswa` int(225) NOT NULL,
   `url` varchar(255) NOT NULL,
-  `id_beasiswa_univ` int(225) NOT NULL
+  `id_beasiswa_univ` int(225) NOT NULL,
+  `create_dtm` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_dtm` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `beasiswa`
 --
 
-INSERT INTO `beasiswa` (`id_beasiswa`, `url`, `id_beasiswa_univ`) VALUES
-(2, 'https://ditmawa.ugm.ac.id/category/info-beasiswa/', 1);
+INSERT INTO `beasiswa` (`id_beasiswa`, `url`, `id_beasiswa_univ`, `create_dtm`, `update_dtm`) VALUES
+(1, 'http://beasiswa.id/?s=Institut+Teknologi+Bandung', 2, '2018-11-26 14:01:48', '2018-11-26 14:01:48'),
+(3, 'http://beasiswa.id/?s=universitas+sebelas+maret', 4, '2018-11-19 19:05:30', '2018-11-19 19:05:30'),
+(6, 'http://beasiswa.id/?s=universitas+gadjah+mada', 7, '2018-11-19 19:06:57', '2018-11-19 19:06:57'),
+(7, 'http://beasiswa.id/?s=harvard+university', 8, '2018-11-30 11:35:16', '2018-11-30 11:35:16');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `beasiswa_umum`
+--
+
+CREATE TABLE `beasiswa_umum` (
+  `id_beasiswa_umum` int(225) NOT NULL,
+  `nama_beasiswa_umum` varchar(50) NOT NULL,
+  `jenjang` varchar(20) DEFAULT NULL,
+  `kategori_beasiswa_umum` varchar(20) DEFAULT NULL,
+  `negara` varchar(50) DEFAULT NULL,
+  `url_beasiswa_umum` varchar(225) NOT NULL,
+  `create_dtm` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `update_dtm` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `beasiswa_umum`
+--
+
+INSERT INTO `beasiswa_umum` (`id_beasiswa_umum`, `nama_beasiswa_umum`, `jenjang`, `kategori_beasiswa_umum`, `negara`, `url_beasiswa_umum`, `create_dtm`, `update_dtm`) VALUES
+(2, 'Beasiswa Diploma', 'Diploma', NULL, NULL, 'http://beasiswa.id/category/beasiswa-diploma/', '2018-11-27 13:38:46', '2018-11-27 13:38:46'),
+(3, 'Beasiswa Sarjana', 'Sarjana', NULL, NULL, 'http://beasiswa.id/category/beasiswa-sarjana/', '2018-11-27 13:38:33', '2018-11-27 13:38:33'),
+(4, 'Beasiswa Pascasarjana', 'Magister', NULL, NULL, 'http://beasiswa.id/category/beasiswa-magister/', '2018-11-27 13:38:25', '2018-11-27 13:38:25'),
+(5, 'Beasiswa Doktor', 'Doktor', NULL, NULL, 'http://beasiswa.id/category/beasiswa-doktor/', '2018-11-27 13:38:15', '2018-11-27 13:38:15'),
+(7, 'Beasiswa Penuh', NULL, 'Beasiswa Penuh', NULL, 'http://beasiswa.id/?s=beasiswa+penuh', '2018-11-27 13:37:06', '2018-11-27 13:37:06'),
+(8, 'Beasiswa di Australia', NULL, NULL, 'Australia', 'http://beasiswa.id/tag/beasiswa-australia/', '2018-11-27 12:28:52', '2018-11-27 12:28:52'),
+(9, 'Beasiswa di Indonesia', NULL, NULL, 'Indonesia', 'http://beasiswa.id/tag/beasiswa-indonesia/', '2018-11-27 12:29:41', '2018-11-27 12:29:41'),
+(10, 'Beasiswa di Amerika', NULL, NULL, 'Amerika', 'http://beasiswa.id/tag/beasiswa-amerika/', '2018-11-27 12:31:10', '2018-11-27 12:31:10'),
+(11, 'Beasiswa di Belanda', NULL, NULL, 'Belanda', 'http://beasiswa.id/tag/beasiswa-belanda/', '2018-11-27 12:31:53', '2018-11-27 12:31:53'),
+(12, 'Beasiswa di Jepang', NULL, NULL, 'Jepang', 'beasiswa.id/tag/beasiswa-jepang/', '2018-11-27 12:32:46', '2018-11-27 12:32:46'),
+(13, 'Beasiswa di Arab Saudi', NULL, NULL, 'Arab Saudi', 'http://beasiswa.id/tag/beasiswa-arab-saudi/', '2018-11-27 12:33:53', '2018-11-27 12:33:53'),
+(14, 'Beasiswa di Perancis', NULL, NULL, 'Perancis', 'http://beasiswa.id/tag/beasiswa-perancis/', '2018-11-27 12:34:42', '2018-11-27 12:34:42'),
+(15, 'Beasiswa di Korea', NULL, NULL, 'Korea', 'http://beasiswa.id/tag/beasiswa-korea/', '2018-11-27 12:36:35', '2018-11-27 12:36:35'),
+(16, 'Beasiswa di Singapura', NULL, NULL, 'Singapura', 'http://beasiswa.id/tag/beasiswa-singapura/', '2018-11-27 12:36:23', '2018-11-27 12:36:23'),
+(17, 'Beasiswa di Malaysia', NULL, NULL, 'Malaysia', 'http://beasiswa.id/tag/beasiswa-malaysia/', '2018-11-27 12:37:19', '2018-11-27 12:37:19'),
+(20, 'Beasiswa Biasa', NULL, 'Beasiswa Sebagian', NULL, 'http://beasiswa.id/?s=beasiswa+bagian', '2018-11-27 15:25:42', '2018-11-27 15:25:42'),
+(21, 'ABC', 'Sarjana', 'Beasiswa Penuh', NULL, 'dsd', '2018-11-28 10:04:41', '2018-11-28 10:04:41'),
+(22, 'Beasiswa di Inggris', NULL, NULL, 'Inggris', 'http://beasiswa.id/tag/beasiswa-inggris/', '2018-11-30 12:06:38', '2018-11-30 12:06:38'),
+(23, 'Beasiswa di Thailand', NULL, NULL, 'Thailand', 'http://beasiswa.id/tag/beasiswa-thailand/', '2018-11-30 16:51:44', '2018-11-30 16:51:44');
 
 -- --------------------------------------------------------
 
@@ -68,15 +117,21 @@ INSERT INTO `beasiswa` (`id_beasiswa`, `url`, `id_beasiswa_univ`) VALUES
 
 CREATE TABLE `beasiswa_universitas` (
   `id_beasiswa_univ` int(225) NOT NULL,
-  `id_universitas` int(225) NOT NULL
+  `id_universitas` int(225) NOT NULL,
+  `create_dtm` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_dtm` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `beasiswa_universitas`
 --
 
-INSERT INTO `beasiswa_universitas` (`id_beasiswa_univ`, `id_universitas`) VALUES
-(1, 1);
+INSERT INTO `beasiswa_universitas` (`id_beasiswa_univ`, `id_universitas`, `create_dtm`, `update_dtm`) VALUES
+(1, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(2, 2, '2018-11-01 08:56:10', '2018-11-01 08:56:10'),
+(4, 3, '2018-11-04 12:29:56', '2018-11-04 12:29:56'),
+(7, 1, '2018-11-18 15:09:26', '2018-11-18 15:09:26'),
+(8, 4, '2018-11-30 11:35:16', '2018-11-30 11:35:16');
 
 -- --------------------------------------------------------
 
@@ -92,7 +147,7 @@ CREATE TABLE `detail_beasiswa` (
   `deskripsi` mediumtext,
   `tgl_upload` varchar(100) DEFAULT NULL,
   `url_detail` varchar(255) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -101,11 +156,7 @@ CREATE TABLE `detail_beasiswa` (
 --
 
 INSERT INTO `detail_beasiswa` (`id_detail_beasiswa`, `id_beasiswa`, `image`, `judul`, `deskripsi`, `tgl_upload`, `url_detail`, `created_at`, `updated_at`) VALUES
-(1, 2, '', 'Mahasiswa Penerima Beasiswa Afirmasi DIKTI Mengikuti Pembinaan Motivasi dan Peningkatan Kompetensi', 'Universitas Gadjah Mada menyelenggarakan pembinaan motivasi dan peningkatan kompetensi bagi mahasiswa penerima beasiswa Afirmasi DIKTI pada 14-15 September 2018 di Puri Asri, Magelang. Acara ini diselenggarakan dengan tema “Penguatan Karakter untuk Peningkatan Kompetensi Mahasiswa”. Materi kegiatan yang dilaksanakan selama dua hari tersebut meliputi pembinaan, outbound, dan pendampingan.\n\nDirektur kemahasiwaan UGM, Dr.R. Suharyadi, M.Sc mengatakan bahwa melalui pembinaan ini diharapkan mahasiswa Afirmasi dapat meningkatkan kompetensi akademik dan aktif di organisasi atau UKM yang ada di UGM. Mahasiswa Afirmasi yang berasal dari Papua dan daerah 3T(terdepan, tertinggal dan terluar) membawa harapan besar bagi daerah asal untuk memajukan daerahnya setelah lulus dari UGM. Untuk itu, selama menjalani pendidikan di UGM diharapkan mahasiswa ini dapat semaksimal mungkin mengembangkan kompetensi mereka.  read more', 'Friday, 21 September 2018', 'https://ditmawa.ugm.ac.id/2018/09/mahasiswa-penerima-beasiswa-afirmasi-dikti-mengikuti-pembinaan-motivasi-dan-peningkatan-kompetensi/', '2018-10-09 05:54:43', '2018-10-09 05:54:43'),
-(2, 2, 'https://ditmawa.ugm.ac.id/wp-content/uploads/2018/09/ext.jpg', 'DAFTAR NAMA PESERTA SELEKSI WAWANCARA BEASISWA SARJANA SEA 2018', 'Berikut kami lampirkan daftar nama peserta seleksi wawancara Beasiswa Sarjana SEA 2018. Jadwal seleksi akan diberitahukan secara langsung oleh PT SEA INDONESIA\n\n\n\nNO\nNAMA\nNIM\nFAKULTAS/PRODI\n\n\n1\nZhafira Elham Fawnia\n18/423121/PA/18204\nMipa / S1 Ilmu Komputer\n\n\n2\nAnugrah Wishnumurti\n18/429258/HK/21705\nHukum / S1 Hukum\n\n\n3\nBenaya Caesario Perdana\n18/429061/TK/47563\nTeknik / S1 Teknologi Informasi\n\n\n4\nKeiko Audrey Demitria\n18/423739/HK/21503\nHukum / S1 Hukum\n\n\n5\nMuhammad Raka Arya Isyana\n18/429013/TK/47515\nTeknik / S1 Teknik Sipil\n\n\n6\nMuhammad Verdy Rizaldi Noorghifari\n18/427585/PA/18545\nMipa / S1 Ilmu Komputer\n\n\n7\nNadine Aurelie\n18/430351/PA/18864\nMipa / S1 Matematika\n\n\n8\nNisrina Khoirunnisa\n18/429434/EK/22043\nEkonomika Dan Bisnis / S1 Akuntansi\n\n\n9\nRahmat Hidayat\n18/429510/EK/22119\nEkonomika Dan Bisnis / S1 Manajemen\n\n\n10\nRiadi\n18/429440/EK/22049\nEkonomika Dan Bisnis / S1 Akuntansi\n\n\n11\nYacinta Imas Setya Larasati\n18/428841/TK/47343\nTeknik / S1 Teknik Industri\n\n\n12\nAditya Rizky Agung Wibowo\n18/423381/EK/21705\nEkonomika Dan Bisnis / S1 Akuntansi\n\n\n13\nLabriyantoko Kurniawan\n18/431063/TK/47656\nTeknik / S1 Teknik Elektro\n\n\n14\nNikita Mayllenia Soebagio\n18/428950/TK/47452\nTeknik / S1 Teknik Mesin\n\n\n15\nSyafaatul Khayati\n18/429087/TK/47589\nTeknik / S1 Teknologi Informasi\n\n\n16\nChrystian\n18/430257/PA/18770\nMipa / S1 Ilmu Komputer\n\n\n17\nDaniel Jean Tito Purba\n18/428922/TK/47424\nTeknik/Teknik Mesin\n\n\n18\nFaruq Atho’ Mafaza\n18/427577/PA/18537\nMipa / S1 Ilmu Komputer\n\n\n19\nHabib Fathurohim\n18/424965/TK/46660\nTeknik / S1 Teknik Elektro\n\n\n20\nMuhammad Ardiansyah Arifin\n18/423051/HK/21443\nHukum / S1 Hukum\n\n\n21\nRaja Daffa Abdullah\n18/427011/HK/21668\nHukum / S1 Hukum\n\n\n22\nRatna Sari\n18/423416/EK/21740\nEkonomika Dan Bisnis / S1 Akuntansi\n\n\n23\nReza Fernandes\n15/382041/EK/20622\nEkonomika Dan Bisnis / S1 Ilmu Ekonomi\n\n\n24\nAhmad Zakki Idham\n18/425184/TK/46879\nTeknik / S1 Teknik Mesin\n\n\n25\nAndre\n18/430252/PA/18765\nMipa / S1 Ilmu Komputer\n\n\n26\nAndreas Gilang Pramana\n18/424383/PN/15423\nPertanian / S1 Manajemen Sumberdaya Akuatik\n\n\n27\nErick Wisnu Kuncoro Baroto\n18/425190/TK/46885\nTeknik / S1 Teknik Mesin\n\n\n28\nFadhil Maulana\n18/428144/SP/28353\nIsipol / S1 Ilmu Hubungan Internasional\n\n\n29\nFelice Valeria Thessalonica\n18/429311/SP/28536\nIsipol / S1 Ilmu Hubungan Internasional\n\n\n30\nI Komang Sadhu Gunawan\n18/427669/PA/18629\nMipa / S1 Matematika\n\n\n31\nNurul Islami Putri\n18/422979/EK/21657\nEkonomika Dan Bisnis / S1 Ilmu Ekonomi\n\n\n32\nRia Verensia\n18/429034/TK/47536\nTeknik / S1 Teknik Sipil\n\n\n33\nSherine Devi Sutomo\n18/427595/PA/18555\nMipa / S1 Ilmu Komputer\n\n\n34\nStephanus Arintaka C. Pratama\n18/429516/EK/22125\nEkonomika Dan Bisnis / S1 Manajemen\n\n\n35\nBrilliana Mutiara Sabri\n18/425628/SV/14770\nSekolah Vokasi / D4 Teknik Pengelolaan Dan Pemeliharaan Infrastruktur Sipil\n\n\n36\nNabilah Ajeng Safitri\n15/382035/EK/20616\nEkonomika Dan Bisnis / S1 Ilmu Ekonomi', 'Thursday, 20 September 2018', 'https://ditmawa.ugm.ac.id/2018/09/daftar-nama-peserta-seleksi-wawancara-beasiswa-sarjana-sea-2018/', '2018-10-09 06:16:18', '2018-10-09 06:16:18'),
 (3, NULL, 'https://ditmawa.ugm.ac.id/wp-content/uploads/2018/09/CIMB-3D-Conquest-2.jpg', 'CIMB 3D Conquest', '', 'Thursday, 20 September 2018', 'https://ditmawa.ugm.ac.id/2018/09/cimb-3d-conquest/', '2018-09-24 06:23:11', '2018-09-24 06:23:11'),
-(4, 2, 'https://ditmawa.ugm.ac.id/wp-content/uploads/2018/09/WhatsApp-Image-2018-09-19-at-09.09.29.jpeg', 'Pembinaan Motivasi dan Peningkatan Kompetensi Penerima Beasiswa 2018', 'Dalam rangka meningkatkan wawasan, kompetensi dan motivasi mahasiswa penerima beasiswa Universitas Gadjah Mada Tahun 2018. Direktorat Kemahasiswaan berencana menyelenggarakan kegiatan tersebut pada 28-29 September bertempat di Sambi Kaliurang. Sehubungan hal tersebut dimohon kepada mahasiswa penerima beasiswa untuk mendaftarkan diri di Kantor Direktorat Kemahasiswaan atau mendaftara online di https://ditmawa.simaster.ugm.ac.id/ konfirmasi paling lambat 3 hari sebelum kegiatan dilaksanakan  kuota terbatas 100 orang dan kegiatan tidak di pungut biaya. Fasilitas: transportasi, akomodasi dan kaos kegiatan.  read more', 'Wednesday, 19 September 2018', 'https://ditmawa.ugm.ac.id/2018/09/pembinaan-motivasi-penerima-beasiswa-2018/', '2018-10-09 06:42:11', '2018-10-09 06:42:11'),
-(5, 2, 'https://ditmawa.ugm.ac.id/wp-content/uploads/2018/09/Poster-Perpanjangan-Beasiswa-2.jpg', 'Perpanjangan Pendaftaran Beasiswa Paragon', 'syarat pendaftaran bisa lihat di sini\nPendaftaran maksimal hari Rabu, 19 September 2018', 'Monday, 17 September 2018', 'https://ditmawa.ugm.ac.id/2018/09/perpanjangan-pendaftaran-beasiswa-paragon/', '2018-10-09 06:42:30', '2018-10-09 06:42:30'),
 (6, NULL, 'https://ditmawa.ugm.ac.id/wp-content/uploads/2018/09/yayasan8.png', 'Pengumpulan Hasil Studi Penerima Beasiswa YTA 2018/2019', 'Diberitahukan kepada para penerima beasiswa Yayasan Toyota Astra bahwa untuk kelancaran pengiriman beasiswa YTA diminta untuk segera mengumpulkan laporan hasil studi (KHS/Transkirp) nilai semester genap 2017/2018 di Direktorat Kemahasiswaan paling lambat tanggal 25 September 2018. Dan dimohon kepada para penerima saling mengingatkan kepada mahasiswa yang lain agar diperlukan untuk pembuatan lapaoran studi.', 'Monday, 17 September 2018', 'https://ditmawa.ugm.ac.id/2018/09/pengumpulan-hasil-studi-penerima-beasiswa-yta-2018-2019/', '2018-09-24 06:24:03', '2018-09-24 06:24:03'),
 (7, NULL, 'https://ditmawa.ugm.ac.id/wp-content/uploads/2018/09/IMG-20180910-WA0010.jpg', 'Sosialisasi Program Kepemimpinan Teladan oleh Tanoto Foundation', '', 'Monday, 10 September 2018', 'https://ditmawa.ugm.ac.id/2018/09/sosialisasi-program-kepemimpinan-teladan-oleh-tanoto-foundation/', '2018-09-24 06:24:03', '2018-09-24 06:24:03'),
 (8, NULL, 'https://ditmawa.ugm.ac.id/wp-content/uploads/2015/10/logobidikmisi.jpg', 'Bidikmisi Pengganti Semester Gasal 2018/2019', 'Dengan hormat, kami beritahukan bahwa pada semester genap 2017/2018 terdapat sejumlah mahasiswa penerima Bidikmisi yang mengundurkan diri/tidak aktif sebagai berikut\n\n\n\n\nAngkatan\n\n\nJenjang\n\n\nTotal\n\n\n\n\nD3\n\n\nD4\n\n\nS1\n\n\n\nTahun 2015\n\n\n6\n6\n\n\nTahun 2016\n3\n\n10\n13\n\n\nTahun 2017\n6\n1\n21\n28\n\n\n\nSehubungan dengan hal tersebut, Direktorat Kemahasiswaan membuka penawaran seleksi Bidikmisi Pengganti.  Perlu kami sampaikan bahwa kriteria Bidikmisi Pengganti yaitu:\n\nMahasiswa aktif/terdaftar pada semester Gasal 2018/2019\nIPK minimal 2.75\nPenghasilan orangtua gabungan maksimal Rp4.000.000,00\nPenghasilan perkapita maksimal Rp750.000,00\nPendidikan orangtua maksimal S1 atau D4\nLulus PPSMB.\n\nMahasiswa dapat melakukan pendaftaran secara online melalui menu beasiswa pada laman ditmawa.simaster.ugm.ac.id. dengan mengunggah berkas sebagai berikut:\n\nFormulir pengajuan beasiswa\nSurat Rekomendasi Wakil Dekan Bidang Akademik dan Kemahasiswaan\nTranskrip nilai hingga semester genap 2018/2019\nKTM (Kartu Tanda Mahasiswa)\nKTP (Kartu Tanda Penduduk) atau kartu identitas resmi lainnya\nKartu Keluarga\nSlip gaji atau surat keterangan penghasilan orangtua\nSurat keterangan tidak mampu atau sejenisnya\nSertifikat PPSMB.\n\nPendaftaran paling lambat 3 September 2018. Surat Rekomendasi Wakil Dekan Bidang Akademik dan Kemahasiswaan mohon dapat dikumpulkan ke Direktorat Kemahasiswaan secara kolektif.  read more', 'Tuesday, 28 August 2018', 'https://ditmawa.ugm.ac.id/2018/08/bidikmisi-pengganti-semester-gasal-2018-2019/', '2018-09-24 06:24:03', '2018-09-24 06:24:03'),
@@ -685,6 +736,20 @@ INSERT INTO `detail_beasiswa` (`id_detail_beasiswa`, `id_beasiswa`, `image`, `ju
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `detail_beasiswa_umum`
+--
+
+CREATE TABLE `detail_beasiswa_umum` (
+  `id_detail_pencarian_beasiswa_umum` int(11) NOT NULL,
+  `judul` varchar(50) NOT NULL,
+  `deskripsi` longtext NOT NULL,
+  `create_dtm` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_dtm` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `detail_kategori`
 --
 
@@ -693,7 +758,7 @@ CREATE TABLE `detail_kategori` (
   `id_detail_beasiswa` int(11) DEFAULT NULL,
   `id_kategori` int(11) DEFAULT NULL,
   `url_kategori` varchar(255) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -702,20 +767,6 @@ CREATE TABLE `detail_kategori` (
 --
 
 INSERT INTO `detail_kategori` (`id_detail_kategori`, `id_detail_beasiswa`, `id_kategori`, `url_kategori`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 'https://ditmawa.ugm.ac.id/category/beasiswa', '2018-09-24 07:06:45', '2018-09-24 07:06:45'),
-(2, 1, 2, 'https://ditmawa.ugm.ac.id/category/berita', '2018-09-24 07:06:45', '2018-09-24 07:06:45'),
-(3, 1, 3, 'https://ditmawa.ugm.ac.id/category/berita-slider-km', '2018-09-24 07:06:45', '2018-09-24 07:06:45'),
-(4, 1, 4, 'https://ditmawa.ugm.ac.id/category/info-beasiswa', '2018-09-24 07:06:45', '2018-09-24 07:06:45'),
-(5, 1, 5, 'https://ditmawa.ugm.ac.id/category/kegiatan', '2018-09-24 07:06:45', '2018-09-24 07:06:45'),
-(6, 1, 6, 'https://ditmawa.ugm.ac.id/category/kesejahteraan', '2018-09-24 07:06:45', '2018-09-24 07:06:45'),
-(7, 2, 1, 'https://ditmawa.ugm.ac.id/category/beasiswa', '2018-09-24 07:06:45', '2018-09-24 07:06:45'),
-(8, 2, 2, 'https://ditmawa.ugm.ac.id/category/berita', '2018-09-24 07:06:45', '2018-09-24 07:06:45'),
-(9, 2, 3, 'https://ditmawa.ugm.ac.id/category/berita-slider-km', '2018-09-24 07:06:45', '2018-09-24 07:06:45'),
-(10, 2, 7, 'https://ditmawa.ugm.ac.id/category/donatur-beasiswa', '2018-09-24 07:06:45', '2018-09-24 07:06:45'),
-(11, 2, 4, 'https://ditmawa.ugm.ac.id/category/info-beasiswa', '2018-09-24 07:06:45', '2018-09-24 07:06:45'),
-(12, 2, 6, 'https://ditmawa.ugm.ac.id/category/kesejahteraan', '2018-09-24 07:06:45', '2018-09-24 07:06:45'),
-(13, 2, 8, 'https://ditmawa.ugm.ac.id/category/penawaran-beasiswa', '2018-09-24 07:06:45', '2018-09-24 07:06:45'),
-(14, 2, 9, 'https://ditmawa.ugm.ac.id/category/pengumuman', '2018-09-24 07:06:45', '2018-09-24 07:06:45'),
 (15, 3, 1, 'https://ditmawa.ugm.ac.id/category/beasiswa', '2018-09-24 07:06:45', '2018-09-24 07:06:45'),
 (16, 3, 2, 'https://ditmawa.ugm.ac.id/category/berita', '2018-09-24 07:06:45', '2018-09-24 07:06:45'),
 (17, 3, 3, 'https://ditmawa.ugm.ac.id/category/berita-slider-km', '2018-09-24 07:06:45', '2018-09-24 07:06:45'),
@@ -724,20 +775,6 @@ INSERT INTO `detail_kategori` (`id_detail_kategori`, `id_detail_beasiswa`, `id_k
 (20, 3, 11, 'https://ditmawa.ugm.ac.id/category/informasi', '2018-09-24 07:06:45', '2018-09-24 07:06:45'),
 (21, 3, 6, 'https://ditmawa.ugm.ac.id/category/kesejahteraan', '2018-09-24 07:06:45', '2018-09-24 07:06:45'),
 (22, 3, 9, 'https://ditmawa.ugm.ac.id/category/pengumuman', '2018-09-24 07:06:45', '2018-09-24 07:06:45'),
-(23, 4, 12, 'https://ditmawa.ugm.ac.id/category/agenda-kegiatan', '2018-09-24 07:06:45', '2018-09-24 07:06:45'),
-(24, 4, 1, 'https://ditmawa.ugm.ac.id/category/beasiswa', '2018-09-24 07:06:45', '2018-09-24 07:06:45'),
-(25, 4, 2, 'https://ditmawa.ugm.ac.id/category/berita', '2018-09-24 07:06:45', '2018-09-24 07:06:45'),
-(26, 4, 4, 'https://ditmawa.ugm.ac.id/category/info-beasiswa', '2018-09-24 07:06:45', '2018-09-24 07:06:45'),
-(27, 4, 5, 'https://ditmawa.ugm.ac.id/category/kegiatan', '2018-09-24 07:06:45', '2018-09-24 07:06:45'),
-(28, 4, 6, 'https://ditmawa.ugm.ac.id/category/kesejahteraan', '2018-09-24 07:06:45', '2018-09-24 07:06:45'),
-(29, 4, 9, 'https://ditmawa.ugm.ac.id/category/pengumuman', '2018-09-24 07:06:45', '2018-09-24 07:06:45'),
-(30, 5, 1, 'https://ditmawa.ugm.ac.id/category/beasiswa', '2018-09-24 07:07:53', '2018-09-24 07:07:53'),
-(31, 5, 2, 'https://ditmawa.ugm.ac.id/category/berita', '2018-09-24 07:07:53', '2018-09-24 07:07:53'),
-(32, 5, 3, 'https://ditmawa.ugm.ac.id/category/berita-slider-km', '2018-09-24 07:07:53', '2018-09-24 07:07:53'),
-(33, 5, 7, 'https://ditmawa.ugm.ac.id/category/donatur-beasiswa', '2018-09-24 07:07:53', '2018-09-24 07:07:53'),
-(34, 5, 4, 'https://ditmawa.ugm.ac.id/category/info-beasiswa', '2018-09-24 07:07:53', '2018-09-24 07:07:53'),
-(35, 5, 6, 'https://ditmawa.ugm.ac.id/category/kesejahteraan', '2018-09-24 07:07:53', '2018-09-24 07:07:53'),
-(36, 5, 8, 'https://ditmawa.ugm.ac.id/category/penawaran-beasiswa', '2018-09-24 07:07:53', '2018-09-24 07:07:53'),
 (37, 6, 1, 'https://ditmawa.ugm.ac.id/category/beasiswa', '2018-09-24 07:07:54', '2018-09-24 07:07:54'),
 (38, 6, 13, 'https://ditmawa.ugm.ac.id/category/berita-slider', '2018-09-24 07:07:54', '2018-09-24 07:07:54'),
 (39, 6, 3, 'https://ditmawa.ugm.ac.id/category/berita-slider-km', '2018-09-24 07:07:54', '2018-09-24 07:07:54'),
@@ -1160,8 +1197,7 @@ INSERT INTO `detail_kategori` (`id_detail_kategori`, `id_detail_beasiswa`, `id_k
 (456, 76, 9, 'https://ditmawa.ugm.ac.id/category/pengumuman', '2018-09-24 07:08:10', '2018-09-24 07:08:10'),
 (457, 77, 1, 'https://ditmawa.ugm.ac.id/category/beasiswa', '2018-09-24 07:08:10', '2018-09-24 07:08:10'),
 (458, 77, 2, 'https://ditmawa.ugm.ac.id/category/berita', '2018-09-24 07:08:10', '2018-09-24 07:08:10'),
-(459, 77, 4, 'https://ditmawa.ugm.ac.id/category/info-beasiswa', '2018-09-24 07:08:10', '2018-09-24 07:08:10');
-INSERT INTO `detail_kategori` (`id_detail_kategori`, `id_detail_beasiswa`, `id_kategori`, `url_kategori`, `created_at`, `updated_at`) VALUES
+(459, 77, 4, 'https://ditmawa.ugm.ac.id/category/info-beasiswa', '2018-09-24 07:08:10', '2018-09-24 07:08:10'),
 (460, 77, 6, 'https://ditmawa.ugm.ac.id/category/kesejahteraan', '2018-09-24 07:08:10', '2018-09-24 07:08:10'),
 (461, 77, 8, 'https://ditmawa.ugm.ac.id/category/penawaran-beasiswa', '2018-09-24 07:08:10', '2018-09-24 07:08:10'),
 (462, 78, 1, 'https://ditmawa.ugm.ac.id/category/beasiswa', '2018-09-24 07:08:11', '2018-09-24 07:08:11'),
@@ -1188,7 +1224,8 @@ INSERT INTO `detail_kategori` (`id_detail_kategori`, `id_detail_beasiswa`, `id_k
 (483, 81, 1, 'https://ditmawa.ugm.ac.id/category/beasiswa', '2018-09-24 07:08:11', '2018-09-24 07:08:11'),
 (484, 81, 2, 'https://ditmawa.ugm.ac.id/category/berita', '2018-09-24 07:08:11', '2018-09-24 07:08:11'),
 (485, 81, 3, 'https://ditmawa.ugm.ac.id/category/berita-slider-km', '2018-09-24 07:08:11', '2018-09-24 07:08:11'),
-(486, 81, 7, 'https://ditmawa.ugm.ac.id/category/donatur-beasiswa', '2018-09-24 07:08:11', '2018-09-24 07:08:11'),
+(486, 81, 7, 'https://ditmawa.ugm.ac.id/category/donatur-beasiswa', '2018-09-24 07:08:11', '2018-09-24 07:08:11');
+INSERT INTO `detail_kategori` (`id_detail_kategori`, `id_detail_beasiswa`, `id_kategori`, `url_kategori`, `created_at`, `updated_at`) VALUES
 (487, 81, 4, 'https://ditmawa.ugm.ac.id/category/info-beasiswa', '2018-09-24 07:08:11', '2018-09-24 07:08:11'),
 (488, 82, 1, 'https://ditmawa.ugm.ac.id/category/beasiswa', '2018-09-24 07:08:12', '2018-09-24 07:08:12'),
 (489, 82, 2, 'https://ditmawa.ugm.ac.id/category/berita', '2018-09-24 07:08:12', '2018-09-24 07:08:12'),
@@ -1621,8 +1658,7 @@ INSERT INTO `detail_kategori` (`id_detail_kategori`, `id_detail_beasiswa`, `id_k
 (916, 201, 2, 'https://ditmawa.ugm.ac.id/category/berita', '2018-09-24 07:08:39', '2018-09-24 07:08:39'),
 (917, 201, 4, 'https://ditmawa.ugm.ac.id/category/info-beasiswa', '2018-09-24 07:08:39', '2018-09-24 07:08:39'),
 (918, 201, 9, 'https://ditmawa.ugm.ac.id/category/pengumuman', '2018-09-24 07:08:39', '2018-09-24 07:08:39'),
-(919, 202, 1, 'https://ditmawa.ugm.ac.id/category/beasiswa', '2018-09-24 07:08:40', '2018-09-24 07:08:40');
-INSERT INTO `detail_kategori` (`id_detail_kategori`, `id_detail_beasiswa`, `id_kategori`, `url_kategori`, `created_at`, `updated_at`) VALUES
+(919, 202, 1, 'https://ditmawa.ugm.ac.id/category/beasiswa', '2018-09-24 07:08:40', '2018-09-24 07:08:40'),
 (920, 202, 2, 'https://ditmawa.ugm.ac.id/category/berita', '2018-09-24 07:08:40', '2018-09-24 07:08:40'),
 (921, 202, 4, 'https://ditmawa.ugm.ac.id/category/info-beasiswa', '2018-09-24 07:08:40', '2018-09-24 07:08:40'),
 (922, 203, 1, 'https://ditmawa.ugm.ac.id/category/beasiswa', '2018-09-24 07:08:40', '2018-09-24 07:08:40'),
@@ -1650,7 +1686,8 @@ INSERT INTO `detail_kategori` (`id_detail_kategori`, `id_detail_beasiswa`, `id_k
 (944, 210, 4, 'https://ditmawa.ugm.ac.id/category/info-beasiswa', '2018-09-24 07:08:42', '2018-09-24 07:08:42'),
 (945, 211, 2, 'https://ditmawa.ugm.ac.id/category/berita', '2018-09-24 07:08:42', '2018-09-24 07:08:42'),
 (946, 211, 4, 'https://ditmawa.ugm.ac.id/category/info-beasiswa', '2018-09-24 07:08:42', '2018-09-24 07:08:42'),
-(947, 212, 1, 'https://ditmawa.ugm.ac.id/category/beasiswa', '2018-09-24 07:08:42', '2018-09-24 07:08:42'),
+(947, 212, 1, 'https://ditmawa.ugm.ac.id/category/beasiswa', '2018-09-24 07:08:42', '2018-09-24 07:08:42');
+INSERT INTO `detail_kategori` (`id_detail_kategori`, `id_detail_beasiswa`, `id_kategori`, `url_kategori`, `created_at`, `updated_at`) VALUES
 (948, 212, 2, 'https://ditmawa.ugm.ac.id/category/berita', '2018-09-24 07:08:42', '2018-09-24 07:08:42'),
 (949, 212, 4, 'https://ditmawa.ugm.ac.id/category/info-beasiswa', '2018-09-24 07:08:42', '2018-09-24 07:08:42'),
 (950, 213, 1, 'https://ditmawa.ugm.ac.id/category/beasiswa', '2018-09-24 07:08:42', '2018-09-24 07:08:42'),
@@ -2076,8 +2113,7 @@ INSERT INTO `detail_kategori` (`id_detail_kategori`, `id_detail_beasiswa`, `id_k
 (1370, 411, 4, 'https://ditmawa.ugm.ac.id/category/info-beasiswa', '2018-09-24 07:09:26', '2018-09-24 07:09:26'),
 (1371, 412, 4, 'https://ditmawa.ugm.ac.id/category/info-beasiswa', '2018-09-24 07:09:26', '2018-09-24 07:09:26'),
 (1372, 413, 4, 'https://ditmawa.ugm.ac.id/category/info-beasiswa', '2018-09-24 07:09:26', '2018-09-24 07:09:26'),
-(1373, 414, 4, 'https://ditmawa.ugm.ac.id/category/info-beasiswa', '2018-09-24 07:09:26', '2018-09-24 07:09:26');
-INSERT INTO `detail_kategori` (`id_detail_kategori`, `id_detail_beasiswa`, `id_kategori`, `url_kategori`, `created_at`, `updated_at`) VALUES
+(1373, 414, 4, 'https://ditmawa.ugm.ac.id/category/info-beasiswa', '2018-09-24 07:09:26', '2018-09-24 07:09:26'),
 (1374, 415, 4, 'https://ditmawa.ugm.ac.id/category/info-beasiswa', '2018-09-24 07:09:26', '2018-09-24 07:09:26'),
 (1375, 416, 1, 'https://ditmawa.ugm.ac.id/category/beasiswa', '2018-09-24 07:09:26', '2018-09-24 07:09:26'),
 (1376, 416, 4, 'https://ditmawa.ugm.ac.id/category/info-beasiswa', '2018-09-24 07:09:26', '2018-09-24 07:09:26'),
@@ -2105,7 +2141,8 @@ INSERT INTO `detail_kategori` (`id_detail_kategori`, `id_detail_beasiswa`, `id_k
 (1398, 435, 1, 'https://ditmawa.ugm.ac.id/category/beasiswa', '2018-09-24 07:09:31', '2018-09-24 07:09:31'),
 (1399, 435, 4, 'https://ditmawa.ugm.ac.id/category/info-beasiswa', '2018-09-24 07:09:31', '2018-09-24 07:09:31'),
 (1400, 436, 4, 'https://ditmawa.ugm.ac.id/category/info-beasiswa', '2018-09-24 07:09:31', '2018-09-24 07:09:31'),
-(1401, 437, 4, 'https://ditmawa.ugm.ac.id/category/info-beasiswa', '2018-09-24 07:09:31', '2018-09-24 07:09:31'),
+(1401, 437, 4, 'https://ditmawa.ugm.ac.id/category/info-beasiswa', '2018-09-24 07:09:31', '2018-09-24 07:09:31');
+INSERT INTO `detail_kategori` (`id_detail_kategori`, `id_detail_beasiswa`, `id_kategori`, `url_kategori`, `created_at`, `updated_at`) VALUES
 (1402, 438, 4, 'https://ditmawa.ugm.ac.id/category/info-beasiswa', '2018-09-24 07:09:31', '2018-09-24 07:09:31'),
 (1403, 439, 4, 'https://ditmawa.ugm.ac.id/category/info-beasiswa', '2018-09-24 07:09:31', '2018-09-24 07:09:31'),
 (1404, 440, 4, 'https://ditmawa.ugm.ac.id/category/info-beasiswa', '2018-09-24 07:09:31', '2018-09-24 07:09:31'),
@@ -2281,34 +2318,39 @@ CREATE TABLE `detail_pencarian` (
   `id_detail_pencarian` int(225) NOT NULL,
   `id_universitas` int(225) NOT NULL,
   `id_pencarian` int(225) NOT NULL,
-  `isFavorite` varchar(1) NOT NULL DEFAULT '0'
+  `create_dtm` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_dtm` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `detail_pencarian`
 --
 
-INSERT INTO `detail_pencarian` (`id_detail_pencarian`, `id_universitas`, `id_pencarian`, `isFavorite`) VALUES
-(5, 5, 6, '0'),
-(6, 5, 9, '0'),
-(7, 1, 11, '0'),
-(8, 1, 12, '0'),
-(9, 1, 13, '0'),
-(10, 1, 14, '0'),
-(11, 1, 15, '0'),
-(12, 1, 16, '0'),
-(13, 1, 17, '0'),
-(14, 1, 18, '0'),
-(15, 1, 21, '0'),
-(16, 2, 23, '0'),
-(17, 2, 23, '0'),
-(18, 2, 23, '0'),
-(19, 1, 24, '0'),
-(20, 1, 25, '0'),
-(21, 1, 26, '0'),
-(22, 1, 33, '0'),
-(23, 2, 94, '0'),
-(24, 1, 94, '0');
+INSERT INTO `detail_pencarian` (`id_detail_pencarian`, `id_universitas`, `id_pencarian`, `create_dtm`, `update_dtm`) VALUES
+(48, 1, 72, '2018-11-25 12:16:35', '2018-11-25 12:16:35'),
+(55, 2, 79, '2018-11-26 13:55:53', '2018-11-26 13:55:53'),
+(56, 1, 80, '2018-11-26 14:29:13', '2018-11-26 14:29:13'),
+(57, 1, 81, '2018-11-26 15:53:41', '2018-11-26 15:53:41'),
+(58, 1, 82, '2018-11-26 16:30:44', '2018-11-26 16:30:44'),
+(59, 2, 82, '2018-11-26 16:32:46', '2018-11-26 16:32:46'),
+(60, 1, 83, '2018-11-28 15:44:36', '2018-11-28 15:44:36'),
+(61, 4, 84, '2018-11-30 11:36:56', '2018-11-30 11:36:56'),
+(62, 1, 85, '2018-11-30 11:57:21', '2018-11-30 11:57:21'),
+(63, 1, 86, '2018-11-30 16:44:08', '2018-11-30 16:44:08');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `detail_pencarian_beasiswa`
+--
+
+CREATE TABLE `detail_pencarian_beasiswa` (
+  `id_detail_pencarian_beasiswa` int(11) NOT NULL,
+  `id_beasiswa_umum` int(11) NOT NULL,
+  `id_pencarian_beasiswa` int(11) NOT NULL,
+  `create_dtm` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_dtm` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -2324,16 +2366,20 @@ CREATE TABLE `detail_universitas` (
   `latitude` varchar(50) NOT NULL,
   `longitude` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
-  `no_telp` varchar(15) NOT NULL
+  `no_telp` varchar(15) NOT NULL,
+  `create_dtm` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_dtm` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `detail_universitas`
 --
 
-INSERT INTO `detail_universitas` (`id_detail_universitas`, `id_universitas`, `deskripsi_universitas`, `alamat_universitas`, `latitude`, `longitude`, `email`, `no_telp`) VALUES
-(3, 1, 'Universitas Gadjah Mada resmi didirikan pada tanggal 19 Desember 1949 sebagai Universitas yang bersifat nasional. Universitas Gadjah Mada termasuk sebagai universitas yang tertua di Indonesia yang juga berperan sebagai pengemban Pancasila dan sebagai universitas pembina di Indonesia.\r\n\r\nKantor Pusat UGM berlokasi di Kampus Bulaksumur Daerah Istimewa Yogyakarta. Saat ini Universitas Gadjah Mada memiliki 18 Fakultas, 1 Sekolah Vokasi, dan 1 Sekolah Pascasarjana, dengan jumlah program studi mencapai 251 program studi. Seluruh kegiatan Universitas dituangkan dalam bentuk Tri Dharma Perguruan Tinggi yang terdiri atas kegiatan Pendidikan dan Pengajaran, Penelitian, serta Pengabdian kepada Masyarakat. Lebih dari 56.000 mahasiswa dari dalam dan luar negeri menjalankan studi di Universitas Gadjah Mada pada jenjang pendidikan Diploma, Sarjana, dan Pascasarjana (S2 dan S3).\r\n\r\nDi universitas ini, mahasiswa mendapatkan kesempatan yang luas untuk mengembangkan kreativitas dan inovasi di bidangnya masing-masing dengan kegiatan perkuliahan yang didukung dengan peralatan modern dan teknologi informasi. Sebagai universitas riset, Universitas Gadjah Mada memberikan perhatian yang sangat besar terhadap kegiatan-kegiatan penelitian yang diwujudkan dengan upaya mendorong dosen dan mahasiswa untuk melakukan dan mengembangkan berbagai penelitian serta dengan mendirikan 25 pusat studi terkait beragam bidang keilmuan.\r\n\r\nKomitmen kerakyatan pun diwujudkan dalam kegiatan pengabdian kepada masyarakat baik dengan penerjunan mahasiswa KKN ke seluruh penjuru Indonesia maupun melalui kegiatan-kegiatan pemberdayaan masyarakat. Dalam penyelenggaraan Tri Dharma Perguruan Tinggi, Universitas Gadjah Mada dimotori oleh 3.608 dosen dan 4.324 karyawan yang berkomitmen untuk menjadikan UGM sebagai universitas terbesar yang menjadi rujukan bangsa Indonesia.\r\n\r\nAgar seluruh kegiatan kampus berlangsung dengan baik dan membahagiakan, Universitas Gadjah Mada mengarahkan penataan dan pengembangan infrastruktur fisik di lingkungan kampus pada prinsip perwujudan kampus “educopolis”. Prinsip ini tertuang dalam Rencana Induk Pengembangan Kampus yang mengamanatkan sebuah lingkungan yang kondusif untuk proses pembelajaran dalam konteks pengembangan kolaborasi multidisiplin dan tanggap terhadap isu ekologis.', 'Bulaksumur Yogyakarta 55281', '-7.7713847', '110.3774998', 'info@ugm.ac.id', '+62 (274) 64925'),
-(4, 2, 'Institut Teknologi Bandung (ITB), didirikan pada tanggal 2 Maret 1959. Kampus utama ITB saat ini merupakan lokasi dari sekolah tinggi teknik pertama di Indonesia. Walaupun masing-masing institusi pendidikan tinggi yang mengawali ITB memiliki karakteristik dan misi masing-masing, semuanya memberikan pengaruh dalam perkembangan yang menuju pada pendirian ITB.', 'Jl. Tamansari 64\r\nBandung 40116 \r\nJawa Barat\r\nIndonesia', '-7.7668', '107° 36\' 35.88', '', ' +62-22-2500935');
+INSERT INTO `detail_universitas` (`id_detail_universitas`, `id_universitas`, `deskripsi_universitas`, `alamat_universitas`, `latitude`, `longitude`, `email`, `no_telp`, `create_dtm`, `update_dtm`) VALUES
+(3, 1, 'Universitas Gadjah Mada resmi didirikan pada tanggal 19 Desember 1949 sebagai Universitas yang bersifat nasional. Universitas Gadjah Mada termasuk sebagai universitas yang tertua di Indonesia yang juga berperan sebagai pengemban Pancasila dan sebagai universitas pembina di Indonesia.\r\n\r\nKantor Pusat UGM berlokasi di Kampus Bulaksumur Daerah Istimewa Yogyakarta. Saat ini Universitas Gadjah Mada memiliki 18 Fakultas, 1 Sekolah Vokasi, dan 1 Sekolah Pascasarjana, dengan jumlah program studi mencapai 251 program studi. Seluruh kegiatan Universitas dituangkan dalam bentuk Tri Dharma Perguruan Tinggi yang terdiri atas kegiatan Pendidikan dan Pengajaran, Penelitian, serta Pengabdian kepada Masyarakat. Lebih dari 56.000 mahasiswa dari dalam dan luar negeri menjalankan studi di Universitas Gadjah Mada pada jenjang pendidikan Diploma, Sarjana, dan Pascasarjana (S2 dan S3).\r\n\r\nDi universitas ini, mahasiswa mendapatkan kesempatan yang luas untuk mengembangkan kreativitas dan inovasi di bidangnya masing-masing dengan kegiatan perkuliahan yang didukung dengan peralatan modern dan teknologi informasi. Sebagai universitas riset, Universitas Gadjah Mada memberikan perhatian yang sangat besar terhadap kegiatan-kegiatan penelitian yang diwujudkan dengan upaya mendorong dosen dan mahasiswa untuk melakukan dan mengembangkan berbagai penelitian serta dengan mendirikan 25 pusat studi terkait beragam bidang keilmuan.\r\n\r\nKomitmen kerakyatan pun diwujudkan dalam kegiatan pengabdian kepada masyarakat baik dengan penerjunan mahasiswa KKN ke seluruh penjuru Indonesia maupun melalui kegiatan-kegiatan pemberdayaan masyarakat. Dalam penyelenggaraan Tri Dharma Perguruan Tinggi, Universitas Gadjah Mada dimotori oleh 3.608 dosen dan 4.324 karyawan yang berkomitmen untuk menjadikan UGM sebagai universitas terbesar yang menjadi rujukan bangsa Indonesia.\r\n\r\nAgar seluruh kegiatan kampus berlangsung dengan baik dan membahagiakan, Universitas Gadjah Mada mengarahkan penataan dan pengembangan infrastruktur fisik di lingkungan kampus pada prinsip perwujudan kampus “educopolis”. Prinsip ini tertuang dalam Rencana Induk Pengembangan Kampus yang mengamanatkan sebuah lingkungan yang kondusif untuk proses pembelajaran dalam konteks pengembangan kolaborasi multidisiplin dan tanggap terhadap isu ekologis.', 'Bulaksumur Yogyakarta 55281', '-7.7713847', '110.3774998', 'info@ugm.ac.id', '+62 (274) 64925', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(4, 2, 'Institut Teknologi Bandung (ITB), didirikan pada tanggal 2 Maret 1959. Kampus utama ITB saat ini merupakan lokasi dari sekolah tinggi teknik pertama di Indonesia. Walaupun masing-masing institusi pendidikan tinggi yang mengawali ITB memiliki karakteristik dan misi masing-masing, semuanya memberikan pengaruh dalam perkembangan yang menuju pada pendirian ITB.', 'Jl. Tamansari 64\r\nBandung 40116 \r\nJawa Barat\r\nIndonesia', '-7.7668', '107° 36\' 35.88', '', ' +62-22-2500935', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(5, 3, 'Universitas Sebelas Maret atau yang biasa dikenal UNS merupakan salah satu perguruan tinggi yang berada di kota Solo, The Spirit of Java. Terletak di sisi timur kota Solo, UNS memiliki kampus dengan suasana kondusif, teduh, rimbun pepohonan, asri, dan nyaman untuk mendukung kesuksesan pembelajaran para mahasiswanya. Dengan kondisi itu, tak sedikit pihak yang lantas mengenal UNS sebagai green campus, dan telah mendapatkan apresiasi dari Kementerian Lingkungan Hidup dan Kehutanan RI sebagai Perintis Kampus Berwawasan Lingkungan.\r\n\r\nUNS telah mengabdi dan berkontribusi dalam proses pembangunan bangsa dan negara Indonesia melalui Tri Dharma Perguruan Tinggi. Perkembangan IPTEK merupakan salah satu aspek yang esensial dari perkembangan dan aktualisasi potensi insani yang hakiki mewujudkan peradaban manusia. Pentingnya keberadaan perguruan tinggi di tengah-tengah masyarakat berkaitan erat dengan kapasitas perguruan tinggi dalam pengembangan dan penyebarluasan IPTEK tersebut. Perguruan tinggi pada dasarnya adalah sebuah institusi pengetahuan dan sekaligus institusi sosial. Sebagai institusi pengetahuan, perguruan tinggi mempunyai tugas berkenaan dengan pengayaan, pengembangan dan penyebarluasan IPTEK, serta penyiapan sumberdaya IPTEK. Sedangkan sebagai institusi sosial, perguruan tinggi merupakan bagian dari dinamika masyarakat di mana perguruan tinggi berdiri, berkembang dan berperan.\r\n\r\nUNS secara bertahap memiliki peran penting dan strategis dalam pembangunan pendidikan tinggi di dunia. Sudah saatnya perguruan tinggi termasuk di dalamnya UNS, harus tampil sebagai leader dalam pengembangan kemajuan dan peradaban bangsa, sehingga menjadi andalan seluruh bangsa. Globalisasi telah mengundang peran yang khusus bagi pendidikan. Globalisasi juga menyampaikan pesan khusus bahwa pendidikan harus mampu menciptakan knowledge society, yaitu masyarakat yang berkeyakinan bahwa pengetahuan dan keterampilan manusia jauh lebih penting daripada sumber alam, material yang melimpah, dan bahkan modal sekalipun. Kiprah ini meletakkan perguruan tinggi sebagai titik strategis pembangunan nasional dan sebagai aset nasional yang harus tumbuh dan berkembang terus.\r\n\r\nGejala bergesernya supremasi penguasaan IPTEK dunia dari Barat ke Asia menunjukkan bahwa negara-negara di Asia yang dimotori antara lain oleh: Jepang, Korea, China, Hongkong telah mampu mensejajarkan diri dengan ‘dunia Barat’, bahkan telah diakui menjadi kekuatan dan raksasa baru di bidang pengembangan IPTEK. Era sekarang dan yang akan datang sangat pantas disebut sebagai “kebangkitan Asia”. Demikian juga arah pengembangan UNS yang tertuang sebagai “VISI UNS 2030” yang dijabarkan dalam tahapan pengembangan strategis jangka menengah dan jangka panjang sampai tahun 2030 telah berada pada jalur yang tepat (on the right track) paralel dengan kebangkitan Asia tersebut. Penguasaan IPTEK, perubahan mindset, kesehatan institusi, keunggulan sumberdaya manusia yang kompetitif, dan kerjasama/ networking yang luas merupakan indikator atau komponen penting yang harus dimiliki oleh warga UNS berkarya untuk Indonesia disamping tujuan kedepan untuk memenangkan persaingan global di ‘Era Asia’.', 'Jalan Ir. Sutami 36 Kentingan, Jebres, Surakarta,\r\nJawa Tengah, Indonesia', '-7.5576139', '110.8557427,17', 'campus@mail.uns.ac.id', '(+62)271-646994', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(6, 4, 'Sistem perpustakaan yang luas Harvard merumahkan koleksi tertua di Amerika Serikat dan koleksi pribadi terbesar di dunia. Ada lebih ke sekolah dari tumpukan tak berujung, meskipun: tim atletik Harvard bersaing di Liga Ivy, dan setiap musim sepak bola berakhir dengan “Permainan,” sebuah pertarungan tahunan antar rival bertingkat Harvard dan Yale. di Harvard, di kampus perumahan merupakan bagian integral dari kehidupan mahasiswa. Mahasiswa baru tinggal di sekitar Harvard Yard, di tengah kampus, setelah itu mereka ditempatkan di salah satu 12 rumah sarjana karena mereka tiga tahun yang tersisa. Meskipun mereka tidak lagi diakui oleh universitas sebagai kelompok-kelompok mahasiswa resmi, delapan semua laki-laki “klub akhir” melayani organisasi sebagai sosial bagi beberapa mahasiswa; Harvard juga memiliki lima klub perempuan.\r\n\r\nSelain College, Harvard terdiri dari 13 sekolah dan lembaga lainnya, termasuk top-peringkat Business School dan Sekolah Kedokteran dan Sekolah Pascasarjana Pendidikan yang sangat peringkat, Sekolah Teknik dan Ilmu Pengetahuan Terapan, Law School dan John F. Kennedy School of Government. delapan luar AS. presiden lulus dari Harvard College, termasuk Franklin Delano Roosevelt dan John F. kennedy. alumni terkenal lainnya termasuk Henry David Thoreau, Helen Keller, Yo-Yo Ma dan Tommy Lee Jones. Di 1977, Harvard menandatangani perjanjian dengan adik lembaga Perguruan Tinggi Radcliffe, menyatukan mereka dalam sebuah kemitraan pendidikan yang melayani siswa laki-laki dan perempuan, meskipun mereka tidak secara resmi menggabungkan sampai 1999. Harvard juga memiliki endowment terbesar sekolah manapun di dunia.\r\n\r\nHarvard University dikhususkan untuk keunggulan dalam pengajaran, pengetahuan, dan penelitian, dan untuk mengembangkan pemimpin di banyak disiplin ilmu yang membuat perbedaan global. Universitas, yang berbasis di Cambridge dan Boston, Massachusetts, memiliki pendaftaran lebih dari 20,000 kandidat derajat, termasuk sarjana, lulus, dan siswa profesional. Harvard memiliki lebih dari 360,000 alumni di seluruh dunia.\r\n\r\nHarvard dikenal karena kepemimpinan global dalam pendidikan, dan fakultas Harvard terdiri dari laki-laki dan perempuan yang sarjana kelas dunia. Fakultas anggota adalah individu bergairah dan penasaran yang melanjutkan penelitian mereka sendiri ketika mengajar di Harvard. Mereka datang dari seluruh negeri dan di seluruh dunia, dengan membawa kekayaan beragam pengetahuan.', 'Harvard College\r\n86 Brattle Street\r\nCambridge, MA 02138', '42.3770', '71.1167', 'president@harvard.edu', '(617) 495-1502', '2018-11-30 10:56:48', '2018-11-30 10:56:48');
 
 -- --------------------------------------------------------
 
@@ -2343,45 +2389,60 @@ INSERT INTO `detail_universitas` (`id_detail_universitas`, `id_universitas`, `de
 
 CREATE TABLE `fakultas` (
   `id_fakultas` int(255) NOT NULL,
-  `nama_fakultas` varchar(50) NOT NULL,
-  `id_univ_fak` int(225) NOT NULL
+  `nama_fakultas` varchar(225) NOT NULL,
+  `id_univ_fak` int(225) NOT NULL,
+  `create_dtm` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_dtm` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `fakultas`
 --
 
-INSERT INTO `fakultas` (`id_fakultas`, `nama_fakultas`, `id_univ_fak`) VALUES
-(3, 'Fakultas Biologi', 3),
-(4, 'Fakultas Ekonomi dan Bisnis', 4),
-(5, 'Fakultas Farmasi', 5),
-(6, 'Fakultas Filsafat', 6),
-(7, 'Fakultas Geografi', 7),
-(8, 'Fakultas Hukum', 8),
-(9, 'Fakultas Ilmu Budaya', 9),
-(10, 'Fakultas Ilmu Politik dan Ilmu Sosial', 10),
-(11, 'Fakultas Kedokteran Gigi', 11),
-(12, 'Fakultas Kedokteran Hewan', 12),
-(13, 'Fakultas Kedokteran, Kesehatan Masyarakat dan Kepe', 13),
-(14, 'Fakultas Kehutanan', 14),
-(15, 'Fakultas Matematika dan Ilmu Pengetahuan Alam', 15),
-(16, 'Fakultas Pertanian', 16),
-(17, 'Fakultas Peternakan', 17),
-(18, 'Fakultas Psikologi', 18),
-(19, 'Fakultas Teknik', 19),
-(20, 'Fakultas Teknologi Pertanian', 20),
-(21, 'Fakultas Ilmu dan Teknologi Kebumian', 21),
-(22, 'Fakultas Matematika dan Ilmu Pengetahuan Alam', 22),
-(23, 'Fakultas Seni Rupa dan Desain', 23),
-(24, 'Fakultas Teknologi Industri', 24),
-(25, 'Fakultas Teknik Mesin dan Dirgantara', 25),
-(26, 'Fakultas Teknik Pertambangan  dan Perminyakan', 26),
-(27, 'Fakultas Teknik Sipil dan Lingkungan', 27),
-(28, 'Sekolah Arsitektur, Perencanaan dan Pengembangan K', 28),
-(29, 'Sekolah Bisnis dan Manajemen ', 29),
-(30, 'Sekolah Farmasi', 30),
-(31, 'Sekolah Ilmu dan Teknologi Hayati', 31),
-(32, 'Sekolah Teknik Elektro dan Informatika', 32);
+INSERT INTO `fakultas` (`id_fakultas`, `nama_fakultas`, `id_univ_fak`, `create_dtm`, `update_dtm`) VALUES
+(3, 'Fakultas Biologi', 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(4, 'Fakultas Ekonomi dan Bisnis', 4, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(5, 'Fakultas Farmasi', 5, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(6, 'Fakultas Filsafat', 6, '2018-11-19 05:25:00', '2018-11-19 05:25:00'),
+(7, 'Fakultas Geografi', 7, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(8, 'Fakultas Hukum', 8, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(9, 'Fakultas Ilmu Budaya', 9, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(10, 'Fakultas Ilmu Sosial dan Ilmu Politik', 10, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(11, 'Fakultas Kedokteran Gigi', 11, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(12, 'Fakultas Kedokteran Hewan', 12, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(13, 'Fakultas Kedokteran, Kesehatan Masyarakat dan Keperawatan', 13, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(14, 'Fakultas Kehutanan', 14, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(15, 'Fakultas Matematika dan Ilmu Pengetahuan Alam', 15, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(16, 'Fakultas Pertanian', 16, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(17, 'Fakultas Peternakan', 17, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(18, 'Fakultas Psikologi', 18, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(19, 'Fakultas Teknik', 19, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(20, 'Fakultas Teknologi Pertanian', 20, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(21, 'Fakultas Ilmu dan Teknologi Kebumian', 21, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(22, 'Fakultas Matematika dan Ilmu Pengetahuan Alam', 22, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(23, 'Fakultas Seni Rupa dan Desain', 23, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(24, 'Fakultas Teknologi Industri', 24, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(25, 'Fakultas Teknik Mesin dan Dirgantara', 25, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(26, 'Fakultas Teknik Pertambangan  dan Perminyakan', 26, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(27, 'Fakultas Teknik Sipil dan Lingkungan', 27, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(28, 'Sekolah Arsitektur, Perencanaan dan Pengembangan K', 28, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(29, 'Sekolah Bisnis dan Manajemen ', 29, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(30, 'Sekolah Farmasi', 30, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(31, 'Sekolah Ilmu dan Teknologi Hayati', 31, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(32, 'Sekolah Teknik Elektro dan Informatika', 32, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(33, 'Fakultas Ilmu Budaya', 34, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(34, 'Fakultas Hukum', 35, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(35, 'Fakultas Ekonomi dan Bisnis', 36, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(36, 'Fakultas Ilmu Sosial dan Politik', 37, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(37, 'Fakultas Kedokteran', 38, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(38, 'Fakultas Pertanian', 39, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(39, 'Fakultas Teknik', 40, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(40, 'Fakultas Keguruan dan Ilmu Pendidikan', 41, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(41, 'Fakultas Matematika dan Ilmu Pengetahuan Alam', 42, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(42, 'Fakultas Seni Rupa dan Desain', 43, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(43, 'Fakultas Keolahragaan', 44, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(44, 'Sekolah Pascasarjana', 45, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(45, 'Graduate School of Design', 47, '2018-11-30 10:42:35', '2018-11-30 10:42:35');
 
 -- --------------------------------------------------------
 
@@ -2391,44 +2452,59 @@ INSERT INTO `fakultas` (`id_fakultas`, `nama_fakultas`, `id_univ_fak`) VALUES
 
 CREATE TABLE `fak_prodi` (
   `id_fak_prodi` int(255) NOT NULL,
-  `id_univ_fak` int(255) NOT NULL
+  `id_univ_fak` int(255) NOT NULL,
+  `create_dtm` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_dtm` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `fak_prodi`
 --
 
-INSERT INTO `fak_prodi` (`id_fak_prodi`, `id_univ_fak`) VALUES
-(3, 3),
-(4, 4),
-(5, 5),
-(6, 6),
-(7, 7),
-(8, 8),
-(9, 9),
-(10, 10),
-(11, 11),
-(12, 12),
-(13, 13),
-(14, 14),
-(15, 15),
-(16, 16),
-(17, 17),
-(18, 18),
-(19, 19),
-(20, 20),
-(21, 21),
-(22, 22),
-(23, 23),
-(24, 24),
-(25, 25),
-(26, 26),
-(27, 27),
-(28, 28),
-(29, 29),
-(30, 30),
-(31, 31),
-(32, 32);
+INSERT INTO `fak_prodi` (`id_fak_prodi`, `id_univ_fak`, `create_dtm`, `update_dtm`) VALUES
+(3, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(4, 4, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(5, 5, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(6, 6, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(7, 7, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(8, 8, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(9, 9, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(10, 10, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(11, 11, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(12, 12, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(13, 13, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(14, 14, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(15, 15, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(16, 16, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(17, 17, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(18, 18, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(19, 19, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(20, 20, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(21, 21, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(22, 22, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(23, 23, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(24, 24, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(25, 25, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(26, 26, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(27, 27, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(28, 28, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(29, 29, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(30, 30, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(31, 31, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(32, 32, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(33, 34, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(34, 35, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(35, 36, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(36, 37, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(37, 38, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(38, 39, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(39, 40, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(40, 41, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(41, 42, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(42, 43, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(43, 44, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(44, 45, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(45, 47, '2018-11-30 10:42:35', '2018-11-30 10:42:35');
 
 -- --------------------------------------------------------
 
@@ -2439,7 +2515,7 @@ INSERT INTO `fak_prodi` (`id_fak_prodi`, `id_univ_fak`) VALUES
 CREATE TABLE `kategori` (
   `id_kategori` int(11) NOT NULL,
   `nama_kategori` varchar(100) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -2487,6 +2563,19 @@ CREATE TABLE `konten` (
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `konten_beasiswa_umum`
+--
+
+CREATE TABLE `konten_beasiswa_umum` (
+  `id_konten_beasiswa_umum` int(11) NOT NULL,
+  `konten` longtext NOT NULL,
+  `create_dtm` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_dtm` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `pencari`
 --
 
@@ -2501,7 +2590,7 @@ CREATE TABLE `pencari` (
   `isDelete` varchar(1) NOT NULL DEFAULT '0',
   `profil_pic` varchar(100) DEFAULT NULL,
   `create_dtm` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `update_dtm` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `update_dtm` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -2509,10 +2598,8 @@ CREATE TABLE `pencari` (
 --
 
 INSERT INTO `pencari` (`id_pencari`, `nama`, `username`, `password`, `email`, `tingkatan`, `status`, `isDelete`, `profil_pic`, `create_dtm`, `update_dtm`) VALUES
-(116, 'rina', 'rina', '3aea9516d222934e35dd30f142fda18c', 'Annisaduwie@gmail.com', 'Mahasiswa', 'belum aktif', '1', '', '2018-09-24 01:42:32', '2018-09-24 01:41:55'),
-(118, 'Annisa dwi', 'nisa', '6351bf9dce654515bf1ddbd6426dfa97', 'Annisaduwie@gmail.com', 'Mahasiswa', 'aktif', '0', 'user.png', '2018-09-24 01:42:32', '2018-09-24 10:49:42'),
-(119, 'Annisa Dwi Noviyanti', 'annisaduwie', '1f191d8125e30434f6dec60608dc6c03', 'Annisaduwie@gmail.com', 'Mahasiswa', 'aktif', '1', '', '2018-09-24 01:42:32', '2018-09-24 01:41:55'),
-(121, 'Natalia', 'Lia', '8d84dd7c18bdcb39fbb17ceeea1218cd', 'Annisaduwie@gmail.com', 'Pelajar', 'aktif', '1', 'avatar3.png', '2018-09-24 01:42:32', '2018-09-24 01:41:55');
+(118, 'Annisa dwi', 'nisa', '1f191d8125e30434f6dec60608dc6c03', 'Annisaduwie@gmail.com', 'Mahasiswa', 'aktif', '0', 'C360_2014-06-25-12-31-14-311.jpg', '2018-09-24 01:42:32', '2018-11-30 12:39:36'),
+(122, 'Hida Nur Fatimah', 'hida', 'cfd6572c9a7c12d8331916b5f3570f84', 'hida@yopmail.com', 'Pelajar', 'aktif', '0', NULL, '2018-10-26 12:12:09', '2018-10-27 20:32:16');
 
 -- --------------------------------------------------------
 
@@ -2526,109 +2613,46 @@ CREATE TABLE `pencarian` (
   `keyword_kategori` varchar(20) NOT NULL,
   `keyword_tingkatan` varchar(50) NOT NULL,
   `keyword_universitas` varchar(20) NOT NULL,
-  `waktu_pencarian` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
-  `id_pencari` int(225) NOT NULL
+  `waktu_pencarian` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `id_pencari` int(225) NOT NULL,
+  `create_dtm` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_dtm` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `pencarian`
 --
 
-INSERT INTO `pencarian` (`id_pencarian`, `keyword_prodi`, `keyword_kategori`, `keyword_tingkatan`, `keyword_universitas`, `waktu_pencarian`, `id_pencari`) VALUES
-(1, 'Akuntansi', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(2, 'Akuntansi', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(3, '', '', 'Sarjana', 'Universitas Gadjah M', '0000-00-00 00:00:00', 118),
-(4, 'Astronomi', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(5, 'Akuntansi', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(6, 'Fisika', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(7, 'Manajemen', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(8, 'Matematika', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(9, 'Matematika', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(10, 'Astronomi', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(11, 'Ilmu Ekonomi', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(12, 'Sastra Arab', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(13, 'Pariwisata', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(14, 'Ekonomi', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(15, 'Ekonomi', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(16, 'Bahasa dan Kebudayaan Korea', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(17, 'Pariwisata', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(18, 'Sastra Jepang', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(19, 'Sastra Arab', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(20, 'Ekonomi', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(21, 'Manajemen', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(22, 'Manajemen', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(23, 'Meteorologi', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(24, 'Ekonomi', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(25, 'Ekonomi', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(26, 'Sastra Arab', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(27, '', '', '', 'Universitas Gadjah M', '0000-00-00 00:00:00', 118),
-(28, '', '', '', 'Universitas Gadjah M', '0000-00-00 00:00:00', 118),
-(29, '', '', '', 'Universitas Gadjah M', '0000-00-00 00:00:00', 118),
-(30, '', '', '', 'Universitas Gadjah M', '0000-00-00 00:00:00', 118),
-(31, '', '', '', 'Universitas Gadjah M', '0000-00-00 00:00:00', 118),
-(32, '', '', '', 'Universitas Gadjah M', '0000-00-00 00:00:00', 118),
-(33, 'Manajemen', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(34, '', '', '', 'Universitas Gadjah M', '0000-00-00 00:00:00', 118),
-(35, 'Sastra Arab', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(36, 'Sastra Arab', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(37, 'Sastra Arab', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(38, 'Sastra Arab', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(39, 'Sastra Arab', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(40, 'Sastra Arab', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(41, 'Sastra Arab', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(42, 'Sastra Arab', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(43, 'Sastra Arab', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(44, 'Sastra Arab', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(45, 'Sastra Arab', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(46, 'Sastra Arab', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(47, 'Sastra Arab', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(48, 'Sastra Arab', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(49, 'Sastra Arab', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(50, 'Sastra Arab', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(51, 'Sastra Arab', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(52, 'Sastra Arab', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(53, 'Sastra Arab', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(54, 'Sastra Arab', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(55, 'Sastra Arab', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(56, 'Sastra Arab', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(57, 'Sastra Arab', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(58, 'Sastra Arab', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(59, 'Sastra Arab', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(60, 'Sastra Arab', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(61, 'Sastra Arab', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(62, 'Sastra Arab', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(63, 'Sastra Arab', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(64, 'Sastra Arab', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(65, 'Sastra Arab', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(66, 'Sastra Arab', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(67, 'Sastra Arab', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(68, 'Sastra Arab', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(69, 'Sastra Arab', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(70, 'Sastra Arab', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(71, 'Sastra Arab', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(72, 'Sastra Arab', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(73, 'Sastra Arab', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(74, 'Sastra Arab', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(75, 'Sastra Arab', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(76, 'Sastra Arab', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(77, 'Sastra Arab', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(78, 'Sastra Arab', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(79, 'Sastra Arab', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(80, 'Sastra Arab', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(81, 'Sastra Arab', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(82, 'Sastra Arab', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(83, 'Sastra Arab', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(84, 'Sastra Arab', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(85, 'Sastra Arab', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(86, 'Sastra Arab', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(87, 'Sastra Arab', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(88, 'Sastra Arab', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(89, 'Sastra Arab', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(90, 'Sastra Arab', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(91, 'Fisika', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(92, 'Fisika', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(93, 'Matematika', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118),
-(94, 'Matematika', 'Dalam Negeri', 'Sarjana', '', '0000-00-00 00:00:00', 118);
+INSERT INTO `pencarian` (`id_pencarian`, `keyword_prodi`, `keyword_kategori`, `keyword_tingkatan`, `keyword_universitas`, `waktu_pencarian`, `id_pencari`, `create_dtm`, `update_dtm`) VALUES
+(32, 'Biologi', 'Dalam Negeri', 'Sarjana', '', '2018-11-13 09:30:27', 122, '2018-11-13 09:30:27', '2018-11-13 09:30:27'),
+(72, 'Biologi', 'Dalam Negeri', 'Sarjana', '', '2018-11-25 12:16:33', 118, '2018-11-25 12:16:33', '2018-11-25 12:16:33'),
+(77, 'Arkeologi', 'Dalam Negeri', 'Sarjana', '', '2018-11-26 13:54:25', 118, '2018-11-26 13:54:25', '2018-11-26 13:54:25'),
+(78, 'Arkeologi', 'Dalam Negeri', 'Sarjana', '', '2018-11-26 13:54:31', 118, '2018-11-26 13:54:31', '2018-11-26 13:54:31'),
+(79, 'Astronomi', 'Dalam Negeri', 'Sarjana', '', '2018-11-26 13:55:49', 118, '2018-11-26 13:55:49', '2018-11-26 13:55:49'),
+(80, 'Biologi', 'Dalam Negeri', 'Sarjana', '', '2018-11-26 14:29:09', 118, '2018-11-26 14:29:09', '2018-11-26 14:29:09'),
+(81, 'Biologi', 'Dalam Negeri', 'Sarjana', '', '2018-11-26 15:53:34', 118, '2018-11-26 15:53:34', '2018-11-26 15:53:34'),
+(82, 'Biologi', 'Dalam Negeri', 'Sarjana', '', '2018-11-26 16:30:39', 118, '2018-11-26 16:30:39', '2018-11-26 16:30:39'),
+(83, 'Biologi', 'Dalam Negeri', 'Sarjana', '', '2018-11-28 15:44:32', 118, '2018-11-28 15:44:32', '2018-11-28 15:44:32'),
+(84, 'Arsitektur', 'Luar Negeri', 'Magister', '', '2018-11-30 11:36:53', 118, '2018-11-30 11:36:53', '2018-11-30 11:36:53'),
+(85, 'Biologi', 'Dalam Negeri', 'Magister', '', '2018-11-30 11:57:15', 118, '2018-11-30 11:57:15', '2018-11-30 11:57:15'),
+(86, 'Fisika', 'Dalam Negeri', 'Magister', '', '2018-11-30 16:43:50', 118, '2018-11-30 16:43:50', '2018-11-30 16:43:50');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `pencarian_beasiswa`
+--
+
+CREATE TABLE `pencarian_beasiswa` (
+  `id_pencarian_beasiswa` int(11) NOT NULL,
+  `keyword_jenjang` varchar(20) NOT NULL,
+  `keyword_kategori_beasiswa` varchar(20) DEFAULT NULL,
+  `keyword_negara` varchar(20) DEFAULT NULL,
+  `waktu_pencarian` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `create_dtm` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_dtm` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `id_pencari` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -2639,8 +2663,17 @@ INSERT INTO `pencarian` (`id_pencarian`, `keyword_prodi`, `keyword_kategori`, `k
 CREATE TABLE `pencarian_favorit` (
   `id_pencarian_favorit` int(225) NOT NULL,
   `id_universitas` int(225) NOT NULL,
-  `id_pencari` int(225) NOT NULL
+  `id_pencari` int(225) NOT NULL,
+  `create_dtm` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `update_dtm` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `pencarian_favorit`
+--
+
+INSERT INTO `pencarian_favorit` (`id_pencarian_favorit`, `id_universitas`, `id_pencari`, `create_dtm`, `update_dtm`) VALUES
+(19, 1, 122, '2018-11-13 09:44:56', '2018-11-13 09:44:56');
 
 -- --------------------------------------------------------
 
@@ -2652,130 +2685,283 @@ CREATE TABLE `prodi` (
   `id_prodi` int(255) NOT NULL,
   `nama_prodi` varchar(100) NOT NULL,
   `tingkatan` varchar(10) NOT NULL,
-  `id_fak_prodi` int(255) NOT NULL
+  `id_fak_prodi` int(255) NOT NULL,
+  `create_dtm` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_dtm` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `prodi`
 --
 
-INSERT INTO `prodi` (`id_prodi`, `nama_prodi`, `tingkatan`, `id_fak_prodi`) VALUES
-(3, 'Biologi', 'Sarjana', 3),
-(4, 'Akuntansi', 'Sarjana', 4),
-(5, 'Farmasi', 'Sarjana', 5),
-(6, 'Filsafat', 'Sarjana', 6),
-(7, 'Geografi Lingkungan', 'Sarjana', 7),
-(8, 'Hukum', 'Sarjana', 8),
-(9, 'Antropologi Budaya', 'Sarjana', 9),
-(10, 'Ilmu Hubungan Internasional', 'Sarjana', 10),
-(11, 'Hiegene Gigi', 'Sarjana', 11),
-(12, 'Kedokteran Hewan', 'Sarjana', 12),
-(13, 'Gizi Kesehatan', 'Sarjana', 13),
-(14, 'Kehutanan', 'Sarjana', 14),
-(15, 'Elektronika dan Instrumentasi', 'Sarjana', 15),
-(16, 'Agronomi', 'Sarjana', 16),
-(17, 'Ilmu dan Industri Peternakan', 'Sarjana', 17),
-(18, 'Psikologi', 'Sarjana', 18),
-(19, 'Arsitektur', 'Sarjana', 19),
-(20, 'Teknik Pertanian', 'Sarjana', 20),
-(22, 'Ilmu Ekonomi', 'Sarjana', 20),
-(23, 'Ilmu Ekonomi', 'Sarjana', 20),
-(24, 'Ilmu Ekonomi', 'Sarjana', 4),
-(25, 'Manajemen', 'Sarjana', 4),
-(26, 'Kartografi dan Penginderaan Jauh', 'Sarjana', 7),
-(27, 'Pembangunan Wilayah', 'Sarjana', 7),
-(28, 'Arkeologi', 'Sarjana', 9),
-(29, 'Bahasa dan Kebudayaan Korea', 'Sarjana', 9),
-(30, 'Bahasa dan Sastra Indonesia', 'Sarjana', 9),
-(31, 'Pariwisata', 'Sarjana', 9),
-(32, 'Sastra Inggris', 'Sarjana', 9),
-(33, 'Sastra Arab', 'Sarjana', 9),
-(34, 'Sastra Jawa', 'Sarjana', 9),
-(35, 'Sastra Jepang', 'Sarjana', 9),
-(36, 'Sastra Prancis', 'Sarjana', 9),
-(37, 'Sejarah', 'Sarjana', 9),
-(38, 'Ilmu Komunikasi', 'Sarjana', 10),
-(39, 'Manajemen dan Kebijakan Publik', 'Sarjana', 10),
-(40, 'Pembangunan Sosial dan Kesejahteraan', 'Sarjana', 10),
-(41, 'Politik dan Pemerintahan', 'Sarjana', 10),
-(42, 'Sosiologi', 'Sarjana', 10),
-(43, 'Kedokteran Gigi', 'Sarjana', 11),
-(44, 'Ilmu Keperawatan', 'Sarjana', 13),
-(45, 'Kedokteran', 'Sarjana', 13),
-(46, 'Fisika', 'Sarjana', 15),
-(47, 'Geofisika', 'Sarjana', 15),
-(48, 'Ilmu Komputer', 'Sarjana', 15),
-(49, 'Kimia', 'Sarjana', 15),
-(50, 'Matematika', 'Sarjana', 15),
-(51, 'Statistika', 'Sarjana', 15),
-(52, 'Akuakultur', 'Sarjana', 16),
-(53, 'Ekonomi Pertanian dan Agribisnis', 'Sarjana', 16),
-(54, 'Manajemen Sumberdaya Akuatik', 'Sarjana', 16),
-(55, 'Mikrobiologi Pertanian', 'Sarjana', 16),
-(56, 'Penyuluhan dan Komunikasi Pertanian', 'Sarjana', 16),
-(57, 'Proteksi Tanaman', 'Sarjana', 16),
-(58, 'Teknologi Hasil Perikanan', 'Sarjana', 16),
-(61, 'Perencanaan Wilayah dan Kota', 'Sarjana', 19),
-(62, 'Teknik Elektro', 'Sarjana', 19),
-(63, 'Teknik Fisika', 'Sarjana', 19),
-(64, 'Teknik Geodesi', 'Sarjana', 19),
-(65, 'Teknik Industri', 'Sarjana', 19),
-(66, 'Teknik Kimia', 'Sarjana', 19),
-(67, 'Teknik Mesin', 'Sarjana', 19),
-(68, 'Teknik Nuklir', 'Sarjana', 19),
-(69, 'Teknik Sipil', 'Sarjana', 19),
-(70, 'Teknologi Informasi', 'Sarjana', 19),
-(71, 'Teknologi Industri Pertanian', 'Sarjana', 20),
-(72, 'Teknologi Pangan dan Hasil Pertanian', 'Sarjana', 20),
-(73, 'Meteorologi', 'Sarjana', 21),
-(74, 'Astronomi', 'Sarjana', 22),
-(75, 'Desain Interior', 'Sarjana', 23),
-(76, 'Manajemen Rekayasa Industri', 'Sarjana', 24),
-(77, 'Aeronotika dan Astronotika', 'Sarjana', 25),
-(78, 'Teknik Geofisika', 'Sarjana', 26),
-(79, 'Rekayasa Infrastruktur Lingkungan', 'Sarjana', 27),
-(80, 'Arsitektur', 'Sarjana', 28),
-(81, 'Manajemen', 'Sarjana', 29),
-(82, 'Farmasi Klinik dan Komunitas', 'Sarjana', 30),
-(83, 'Biologi', 'Sarjana', 31),
-(84, 'Sistem dan Teknologi Informasi', 'Sarjana', 32),
-(85, 'Oseanografi', 'Sarjana', 21),
-(86, 'Teknik Geodesi dan Geomatika', 'Sarjana', 21),
-(87, 'Teknik Geologi', 'Sarjana', 21),
-(89, 'Fisika', 'Sarjana', 22),
-(90, 'Kimia', 'Sarjana', 22),
-(91, 'Matematika', 'Sarjana', 22),
-(92, 'Desain Komunikasi visual', 'Sarjana', 23),
-(93, 'Desain Produk', 'Sarjana', 23),
-(94, 'Kria', 'Sarjana', 23),
-(95, 'Seni Rupa', 'Sarjana', 23),
-(96, 'Teknik Bioenergi dan Kemurgi', 'Sarjana', 24),
-(97, 'Teknik Fisika', 'Sarjana', 24),
-(98, 'Teknik Industri', 'Sarjana', 24),
-(99, 'Teknik Kimia', 'Sarjana', 24),
-(100, 'Teknik Pangan', 'Sarjana', 24),
-(101, 'Teknik Material', 'Sarjana', 25),
-(102, 'Teknik Mesin', 'Sarjana', 25),
-(103, 'Teknik Metalurgi', 'Sarjana', 26),
-(104, 'Teknik Perminyakan', 'Sarjana', 26),
-(105, 'Teknik Pertambangan', 'Sarjana', 26),
-(106, 'Teknik dan Pengelolaan Sumber Daya Air', 'Sarjana', 27),
-(107, 'Teknik Kelautan', 'Sarjana', 27),
-(108, 'Teknik Lingkungan', 'Sarjana', 27),
-(109, 'Teknik Sipil', 'Sarjana', 27),
-(110, 'Perencanaan Wilayah dan Kota', 'Sarjana', 28),
-(111, 'Kewirausahaan', 'Sarjana', 29),
-(112, 'Sains dan Teknologi Farmasi', 'Sarjana', 30),
-(113, 'Mikrobiologi', 'Sarjana', 31),
-(114, 'Rekayasa Hayati', 'Sarjana', 31),
-(115, 'Rekayasa Pertanian', 'Sarjana', 31),
-(116, 'Rekayasa Kehutanan', 'Sarjana', 31),
-(117, 'Teknologi Pasca Panen', 'Sarjana', 31),
-(118, 'Teknik Biomedis', 'Sarjana', 32),
-(119, 'Teknik Elektro', 'Sarjana', 32),
-(120, 'Teknik Informatika', 'Sarjana', 32),
-(121, 'Teknik Telekomunikasi', 'Sarjana', 32),
-(122, 'Teknik Tenaga Listrik', 'Sarjana', 32);
+INSERT INTO `prodi` (`id_prodi`, `nama_prodi`, `tingkatan`, `id_fak_prodi`, `create_dtm`, `update_dtm`) VALUES
+(3, 'Biologi', 'Sarjana', 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(4, 'Akuntansi', 'Sarjana', 4, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(5, 'Farmasi', 'Sarjana', 5, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(6, 'Filsafat', 'Sarjana', 6, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(7, 'Geografi Lingkungan', 'Sarjana', 7, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(8, 'Hukum', 'Sarjana', 8, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(9, 'Antropologi Budaya', 'Sarjana', 9, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(10, 'Ilmu Hubungan Internasional', 'Sarjana', 10, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(11, 'Hiegene Gigi', 'Sarjana', 11, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(12, 'Kedokteran Hewan', 'Sarjana', 12, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(13, 'Gizi Kesehatan', 'Sarjana', 13, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(14, 'Kehutanan', 'Sarjana', 14, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(15, 'Elektronika dan Instrumentasi', 'Sarjana', 15, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(16, 'Agronomi', 'Sarjana', 16, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(17, 'Ilmu dan Industri Peternakan', 'Sarjana', 17, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(18, 'Psikologi', 'Sarjana', 18, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(19, 'Arsitektur', 'Sarjana', 19, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(20, 'Teknik Pertanian', 'Sarjana', 20, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(22, 'Ilmu Ekonomi', 'Sarjana', 20, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(23, 'Ilmu Ekonomi', 'Sarjana', 20, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(24, 'Ilmu Ekonomi', 'Sarjana', 4, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(25, 'Manajemen', 'Sarjana', 4, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(26, 'Kartografi dan Penginderaan Jauh', 'Sarjana', 7, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(27, 'Pembangunan Wilayah', 'Sarjana', 7, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(28, 'Arkeologi', 'Sarjana', 9, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(29, 'Bahasa dan Kebudayaan Korea', 'Sarjana', 9, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(30, 'Bahasa dan Sastra Indonesia', 'Sarjana', 9, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(31, 'Pariwisata', 'Sarjana', 9, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(32, 'Sastra Inggris', 'Sarjana', 9, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(33, 'Sastra Arab', 'Sarjana', 9, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(34, 'Sastra Jawa', 'Sarjana', 9, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(35, 'Sastra Jepang', 'Sarjana', 9, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(36, 'Sastra Prancis', 'Sarjana', 9, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(37, 'Sejarah', 'Sarjana', 9, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(38, 'Ilmu Komunikasi', 'Sarjana', 10, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(39, 'Manajemen dan Kebijakan Publik', 'Sarjana', 10, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(40, 'Pembangunan Sosial dan Kesejahteraan', 'Sarjana', 10, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(41, 'Politik dan Pemerintahan', 'Sarjana', 10, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(42, 'Sosiologi', 'Sarjana', 10, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(43, 'Kedokteran Gigi', 'Sarjana', 11, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(44, 'Ilmu Keperawatan', 'Sarjana', 13, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(45, 'Kedokteran', 'Sarjana', 13, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(46, 'Fisika', 'Sarjana', 15, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(47, 'Geofisika', 'Sarjana', 15, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(48, 'Ilmu Komputer', 'Sarjana', 15, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(49, 'Kimia', 'Sarjana', 15, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(50, 'Matematika', 'Sarjana', 15, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(51, 'Statistika', 'Sarjana', 15, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(52, 'Akuakultur', 'Sarjana', 16, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(53, 'Ekonomi Pertanian dan Agribisnis', 'Sarjana', 16, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(54, 'Manajemen Sumberdaya Akuatik', 'Sarjana', 16, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(55, 'Mikrobiologi Pertanian', 'Sarjana', 16, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(56, 'Penyuluhan dan Komunikasi Pertanian', 'Sarjana', 16, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(57, 'Proteksi Tanaman', 'Sarjana', 16, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(58, 'Teknologi Hasil Perikanan', 'Sarjana', 16, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(61, 'Perencanaan Wilayah dan Kota', 'Sarjana', 19, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(62, 'Teknik Elektro', 'Sarjana', 19, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(63, 'Teknik Fisika', 'Sarjana', 19, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(64, 'Teknik Geodesi', 'Sarjana', 19, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(65, 'Teknik Industri', 'Sarjana', 19, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(66, 'Teknik Kimia', 'Sarjana', 19, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(67, 'Teknik Mesin', 'Sarjana', 19, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(68, 'Teknik Nuklir', 'Sarjana', 19, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(69, 'Teknik Sipil', 'Sarjana', 19, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(70, 'Teknologi Informasi', 'Sarjana', 19, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(71, 'Teknologi Industri Pertanian', 'Sarjana', 20, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(72, 'Teknologi Pangan dan Hasil Pertanian', 'Sarjana', 20, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(73, 'Meteorologi', 'Sarjana', 21, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(74, 'Astronomi', 'Sarjana', 22, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(75, 'Desain Interior', 'Sarjana', 23, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(76, 'Manajemen Rekayasa Industri', 'Sarjana', 24, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(77, 'Aeronotika dan Astronotika', 'Sarjana', 25, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(78, 'Teknik Geofisika', 'Sarjana', 26, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(79, 'Rekayasa Infrastruktur Lingkungan', 'Sarjana', 27, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(80, 'Arsitektur', 'Sarjana', 28, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(81, 'Manajemen', 'Sarjana', 29, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(82, 'Farmasi Klinik dan Komunitas', 'Sarjana', 30, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(83, 'Biologi', 'Sarjana', 31, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(84, 'Sistem dan Teknologi Informasi', 'Sarjana', 32, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(85, 'Oseanografi', 'Sarjana', 21, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(86, 'Teknik Geodesi dan Geomatika', 'Sarjana', 21, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(87, 'Teknik Geologi', 'Sarjana', 21, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(89, 'Fisika', 'Sarjana', 22, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(90, 'Kimia', 'Sarjana', 22, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(91, 'Matematika', 'Sarjana', 22, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(92, 'Desain Komunikasi visual', 'Sarjana', 23, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(93, 'Desain Produk', 'Sarjana', 23, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(94, 'Kria', 'Sarjana', 23, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(95, 'Seni Rupa', 'Sarjana', 23, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(96, 'Teknik Bioenergi dan Kemurgi', 'Sarjana', 24, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(97, 'Teknik Fisika', 'Sarjana', 24, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(98, 'Teknik Industri', 'Sarjana', 24, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(99, 'Teknik Kimia', 'Sarjana', 24, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(100, 'Teknik Pangan', 'Sarjana', 24, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(101, 'Teknik Material', 'Sarjana', 25, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(102, 'Teknik Mesin', 'Sarjana', 25, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(103, 'Teknik Metalurgi', 'Sarjana', 26, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(104, 'Teknik Perminyakan', 'Sarjana', 26, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(105, 'Teknik Pertambangan', 'Sarjana', 26, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(106, 'Teknik dan Pengelolaan Sumber Daya Air', 'Sarjana', 27, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(107, 'Teknik Kelautan', 'Sarjana', 27, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(108, 'Teknik Lingkungan', 'Sarjana', 27, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(109, 'Teknik Sipil', 'Sarjana', 27, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(110, 'Perencanaan Wilayah dan Kota', 'Sarjana', 28, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(111, 'Kewirausahaan', 'Sarjana', 29, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(112, 'Sains dan Teknologi Farmasi', 'Sarjana', 30, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(113, 'Mikrobiologi', 'Sarjana', 31, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(114, 'Rekayasa Hayati', 'Sarjana', 31, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(115, 'Rekayasa Pertanian', 'Sarjana', 31, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(116, 'Rekayasa Kehutanan', 'Sarjana', 31, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(117, 'Teknologi Pasca Panen', 'Sarjana', 31, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(118, 'Teknik Biomedis', 'Sarjana', 32, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(119, 'Teknik Elektro', 'Sarjana', 32, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(120, 'Teknik Informatika', 'Sarjana', 32, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(121, 'Teknik Telekomunikasi', 'Sarjana', 32, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(122, 'Teknik Tenaga Listrik', 'Sarjana', 32, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(123, 'Sastra Daerah', 'Sarjana', 33, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(124, 'Sastra Indonesia', 'Sarjana', 33, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(125, 'Sastra Inggris', 'Sarjana', 33, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(126, 'Ilmu Sejarah', 'Sarjana', 33, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(127, 'Sastra Arab', 'Sarjana', 33, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(129, 'Hukum Keperdataan', 'Sarjana', 34, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(130, 'Hukum Tata Negara', 'Sarjana', 34, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(131, 'Hukum Pidana', 'Sarjana', 34, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(132, 'Administrasi Negara', 'Sarjana', 34, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(133, 'Hukum Internasional', 'Sarjana', 34, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(134, 'Hukum dan Masyarakat', 'Sarjana', 34, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(135, 'Hukum Acara', 'Sarjana', 34, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(136, 'Akuntansi', 'Sarjana', 35, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(137, 'Ekonomi Pembangunan', 'Sarjana', 35, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(138, 'Manajemen', 'Sarjana', 35, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(139, 'Hubungan Internasional', 'Sarjana', 36, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(140, 'Administrasi Negara', 'Sarjana', 36, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(141, 'Ilmu Komunikasi', 'Sarjana', 36, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(142, 'Sosiologi', 'Sarjana', 36, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(143, 'Kedokteran', 'Sarjana', 37, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(144, 'Psikologi', 'Sarjana', 37, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(145, 'Agribisnis', 'Sarjana', 38, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(146, 'Agroteknologi', 'Sarjana', 38, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(147, 'Ilmu Tanah', 'Sarjana', 38, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(148, 'Penyuluhan dan Komunikasi Pertanian', 'Sarjana', 38, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(149, 'Peternakan', 'Sarjana', 38, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(150, 'Teknologi Pangan', 'Sarjana', 38, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(151, 'Arsitektur', 'Sarjana', 39, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(152, 'Perencanaan Wilayah dan Kota', 'Sarjana', 39, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(153, 'Teknik Elektro', 'Sarjana', 39, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(154, 'Teknik Industri', 'Sarjana', 39, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(155, 'Teknik Kimia', 'Sarjana', 39, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(156, 'Teknik Mesin', 'Sarjana', 39, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(157, 'Teknik Sipil', 'Sarjana', 39, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(158, 'Bimbingan dan Konseling', 'Sarjana', 40, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(159, 'Pendidikan Administrasi Perkantoran', 'Sarjana', 40, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(160, 'Pendidikan Akutansi', 'Sarjana', 40, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(161, 'Pendidikan Bahasa dan Sastra Indonesia', 'Sarjana', 40, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(162, 'Pendidikan Bahasa Inggris', 'Sarjana', 40, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(163, 'Pendidikan Bahasa Jawa', 'Sarjana', 40, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(164, 'Pendidikan Biologi', 'Sarjana', 40, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(165, 'Pendidikan Ekonomi', 'Sarjana', 40, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(166, 'Pendidikan Fisika', 'Sarjana', 40, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(167, 'Pendidikan Geografi', 'Sarjana', 40, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(168, 'Pendidikan Guru Pendidikan Anak Usia Dini', 'Sarjana', 40, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(169, 'Pendidikan Ilmu Pengetahuan Alam', 'Sarjana', 40, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(170, 'Pendidikan Kimia', 'Sarjana', 40, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(171, 'Pendidikan Luar Biasa', 'Sarjana', 40, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(172, 'Pendidikan Guru Sekolah Dasar', 'Sarjana', 40, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(173, 'Pendidikan Matematika', 'Sarjana', 40, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(174, ' Pendidikan Pancasila dan Kewarganegaraan', 'Sarjana', 40, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(175, 'Pendidikan Sejarah', 'Sarjana', 40, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(176, 'Pendidikan Seni Rupa', 'Sarjana', 40, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(177, 'Pendidikan Sosiologi Antropologi', 'Sarjana', 40, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(178, 'Pendidikan Teknik Bangunan', 'Sarjana', 40, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(179, 'Pendidikan Teknik Informatika dan Komputer', 'Sarjana', 40, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(180, 'Pendidikan Teknik Mesin', 'Sarjana', 40, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(181, 'Pendidikan Bahasa Indonesia', 'Sarjana', 40, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(182, 'Pendidikan Bahasa Inggris', 'Sarjana', 40, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(183, 'Pendidikan Ekonomi', 'Sarjana', 40, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(184, 'Biologi', 'Sarjana', 41, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(185, 'Farmasi', 'Sarjana', 41, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(186, 'Fisika', 'Sarjana', 41, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(187, 'Informatika', 'Sarjana', 41, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(188, 'Kimia', 'Sarjana', 41, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(189, 'Matematika', 'Sarjana', 41, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(190, 'Statistika', 'Sarjana', 41, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(191, 'Ilmu Lingkungan', 'Sarjana', 41, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(192, 'Desain Interior', 'Sarjana', 42, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(193, 'Desain Komunikasi Visual', 'Sarjana', 42, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(194, 'Kriya Seni', 'Sarjana', 42, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(195, 'Seni Rupa Murni', 'Sarjana', 42, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(196, 'Pendidikan Jasmani Kesehatan dan Rekreasi', 'Sarjana', 43, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(197, 'Pendidikan Kepelatihan Olahraga', 'Sarjana', 43, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(198, 'Biologi', 'Magister', 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(199, 'Sains Akuntansi', 'Magister', 4, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(200, 'Sains Ilmu Ekonomi', 'Magister', 4, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(201, 'Sains Manajemen', 'Magister', 4, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(202, 'Ekonomika Pembangunan', 'Magister', 4, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(203, 'Farmasi Klinik', 'Magister', 5, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(204, 'Ilmu Farmasi', 'Magister', 5, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(205, 'Filsafat', 'Magister', 6, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(206, 'Geografi', 'Magister', 7, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(207, 'Penginderaan Jarak Jauh', 'Magister', 7, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(208, 'Ilmu Hukum', 'Magister', 8, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(209, 'Antropologi', 'Magister', 9, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(210, 'Arkeologi', 'Magister', 9, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(211, 'Linguistik', 'Magister', 9, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(212, 'Sastra', 'Magister', 9, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(213, 'Pengkajian Amerika', 'Magister', 9, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(214, 'Sejarah', 'Magister', 9, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(215, 'Manajemen dan Kebijakan Publik', 'Magister', 10, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(216, 'Politik dan Pemerintahan', 'Magister', 10, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(217, 'Ilmu Hubungan Internasional', 'Magister', 10, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(218, 'Ilmu Komunikasi', 'Magister', 10, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(219, 'Sosiologi', 'Magister', 10, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(220, 'Pembangunan Sosial dan Kesejahteraan', 'Magister', 10, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(221, 'Ilmu Administrasi Publik', 'Magister', 10, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(222, 'Ilmu Biomedik', 'Magister', 13, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(223, 'Ilmu Kedokteran Klinis', 'Magister', 13, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(224, 'Ilmu Kedokteran Tropis', 'Magister', 13, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(225, 'Ilmu Pendidikan Kedokterandan Kesehatan', 'Magister', 13, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(226, 'Keperawatan', 'Magister', 13, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(227, 'Ilmu Kedokteran Gigi', 'Magister', 11, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(228, 'Ilmu Kedokteran Gigi Klinis', 'Magister', 11, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(229, 'Sains Veteriner', 'Magister', 12, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(230, 'Ilmu Kehutanan', 'Magister', 14, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(231, 'Fisika', 'Magister', 15, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(232, 'Kimia', 'Magister', 15, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(233, 'Ilmu Komputer', 'Magister', 15, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(234, 'Matematika', 'Magister', 15, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(235, 'Agronomi', 'Magister', 16, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(236, 'Ekonomi Pertanian', 'Magister', 16, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(237, 'Fitopatologi', 'Magister', 16, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(238, 'Ilmu Hama Tanaman', 'Magister', 16, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(239, 'Pemuliaan Tanaman', 'Magister', 16, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(240, 'Ilmu Tanah', 'Magister', 16, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(241, 'Manajemen Agribisnis', 'Magister', 16, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(242, 'Manajemen Ilmu Perikanan', 'Magister', 16, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(243, 'Ilmu Peternakan', 'Magister', 17, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(244, 'Psikologi', 'Magister', 18, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(245, 'Arsitektur', 'Magister', 19, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(246, 'Teknik Elektro', 'Magister', 19, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(247, 'Teknik Fisika', 'Magister', 19, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(248, 'Teknik Geologi', 'Magister', 19, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(249, 'Teknik Geomatika', 'Magister', 19, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(250, 'Teknik Kimia', 'Magister', 19, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(251, 'Teknik Mesin', 'Magister', 19, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(252, 'Teknik Industri', 'Magister', 19, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(253, 'Teknologi Informasi', 'Magister', 19, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(254, 'Teknik Sistem', 'Magister', 19, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(255, 'Teknik Sipil', 'Magister', 19, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(256, 'Teknik Pengelolaan Bencana Alam', 'Magister', 19, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(257, 'Ilmu dan Teknologi Pangan', 'Magister', 20, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(258, 'Teknik Pertanian', 'Magister', 20, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(259, 'Teknologi Hasil Perkebunan', 'Magister', 20, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(260, 'Teknologi Industri Pertanian', 'Magister', 20, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(261, 'Bioteknologi', 'Magister', 44, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(262, 'Ilmu Lingkungan', 'Magister', 44, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(263, 'Agama dan Lintas Budaya', 'Magister', 44, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(264, 'Kajian Budaya dan Media', 'Magister', 44, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(265, 'Kependudukan', 'Magister', 44, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(266, 'Ketahanan Nasional', 'Magister', 44, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(267, 'Kajian Pariwisata', 'Magister', 44, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(268, 'Pengkajian Seni Pertunjukan dan Seni Rupa', 'Magister', 44, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(269, 'Penyuluhan dan Komunikasi Pembangunan', 'Magister', 44, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(270, 'Manajemen Bencana', 'Magister', 44, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(271, 'Manajemen Pendidikan Tinggi', 'Magister', 44, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(272, 'Bioetika', 'Magister', 44, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(273, 'Studi Kebijakan', 'Magister', 44, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(274, 'Arsitektur', 'Magister', 45, '2018-11-30 10:42:35', '2018-11-30 10:42:35');
 
 -- --------------------------------------------------------
 
@@ -2789,16 +2975,20 @@ CREATE TABLE `universitas` (
   `kategori_universitas` enum('Dalam Negeri','Luar Negeri','','') NOT NULL,
   `negara` varchar(50) NOT NULL,
   `gambar_universitas` varchar(50) NOT NULL,
-  `nama_universitas` varchar(50) NOT NULL
+  `nama_universitas` varchar(50) NOT NULL,
+  `create_dtm` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_dtm` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `universitas`
 --
 
-INSERT INTO `universitas` (`id_universitas`, `url_universitas`, `kategori_universitas`, `negara`, `gambar_universitas`, `nama_universitas`) VALUES
-(1, 'www.ugm.ac.id', 'Dalam Negeri', 'Indonesia', 'ugm1.jpg', 'Universitas Gadjah Mada'),
-(2, 'www.itb.ac.id', 'Dalam Negeri', 'Indonesia', 'itbhome.jpg', 'Institut Teknologi Bandung');
+INSERT INTO `universitas` (`id_universitas`, `url_universitas`, `kategori_universitas`, `negara`, `gambar_universitas`, `nama_universitas`, `create_dtm`, `update_dtm`) VALUES
+(1, 'www.ugm.ac.id', 'Dalam Negeri', 'Indonesia', 'ugm1.jpg', 'Universitas Gadjah Mada', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(2, 'www.itb.ac.id', 'Dalam Negeri', 'Indonesia', 'itbhome.jpg', 'Institut Teknologi Bandung', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(3, 'https://uns.ac.id/id', 'Dalam Negeri', 'Indonesia', 'm4qyjarXFB.jpg', 'Universitas Negeri Sebelas Maret', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(4, 'https://www.harvard.edu/', 'Luar Negeri', 'Amerika Serikat', 'Harvard_university.jpg', 'Harvard University', '2018-11-30 09:25:31', '2018-11-30 09:25:31');
 
 -- --------------------------------------------------------
 
@@ -2808,44 +2998,61 @@ INSERT INTO `universitas` (`id_universitas`, `url_universitas`, `kategori_univer
 
 CREATE TABLE `univ_fak` (
   `id_univ_fak` int(255) NOT NULL,
-  `id_universitas` int(225) NOT NULL
+  `id_universitas` int(225) NOT NULL,
+  `create_dtm` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_dtm` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `univ_fak`
 --
 
-INSERT INTO `univ_fak` (`id_univ_fak`, `id_universitas`) VALUES
-(3, 1),
-(4, 1),
-(5, 1),
-(6, 1),
-(7, 1),
-(8, 1),
-(9, 1),
-(10, 1),
-(11, 1),
-(12, 1),
-(13, 1),
-(14, 1),
-(15, 1),
-(16, 1),
-(17, 1),
-(18, 1),
-(19, 1),
-(20, 1),
-(21, 2),
-(22, 2),
-(23, 2),
-(24, 2),
-(25, 2),
-(26, 2),
-(27, 2),
-(28, 2),
-(29, 2),
-(30, 2),
-(31, 2),
-(32, 2);
+INSERT INTO `univ_fak` (`id_univ_fak`, `id_universitas`, `create_dtm`, `update_dtm`) VALUES
+(3, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(4, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(5, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(6, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(7, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(8, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(9, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(10, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(11, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(12, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(13, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(14, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(15, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(16, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(17, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(18, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(19, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(20, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(21, 2, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(22, 2, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(23, 2, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(24, 2, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(25, 2, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(26, 2, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(27, 2, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(28, 2, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(29, 2, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(30, 2, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(31, 2, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(32, 2, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(33, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(34, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(35, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(36, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(37, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(38, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(39, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(40, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(41, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(42, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(43, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(44, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(45, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(46, 4, '2018-11-30 09:20:12', '2018-11-30 09:20:12'),
+(47, 4, '2018-11-30 10:42:35', '2018-11-30 10:42:35');
 
 --
 -- Indexes for dumped tables
@@ -2865,6 +3072,12 @@ ALTER TABLE `beasiswa`
   ADD KEY `beasiswa_univ_cons` (`id_beasiswa_univ`);
 
 --
+-- Indexes for table `beasiswa_umum`
+--
+ALTER TABLE `beasiswa_umum`
+  ADD PRIMARY KEY (`id_beasiswa_umum`);
+
+--
 -- Indexes for table `beasiswa_universitas`
 --
 ALTER TABLE `beasiswa_universitas`
@@ -2877,6 +3090,12 @@ ALTER TABLE `beasiswa_universitas`
 ALTER TABLE `detail_beasiswa`
   ADD PRIMARY KEY (`id_detail_beasiswa`),
   ADD KEY `beasiswa_constrain` (`id_beasiswa`);
+
+--
+-- Indexes for table `detail_beasiswa_umum`
+--
+ALTER TABLE `detail_beasiswa_umum`
+  ADD PRIMARY KEY (`id_detail_pencarian_beasiswa_umum`);
 
 --
 -- Indexes for table `detail_kategori`
@@ -2893,6 +3112,14 @@ ALTER TABLE `detail_pencarian`
   ADD PRIMARY KEY (`id_detail_pencarian`),
   ADD KEY `universitas_conns` (`id_universitas`),
   ADD KEY `pencarian_cons` (`id_pencarian`);
+
+--
+-- Indexes for table `detail_pencarian_beasiswa`
+--
+ALTER TABLE `detail_pencarian_beasiswa`
+  ADD PRIMARY KEY (`id_detail_pencarian_beasiswa`),
+  ADD KEY `pencarian_beasiswa` (`id_pencarian_beasiswa`),
+  ADD KEY `beasiswa_umum` (`id_beasiswa_umum`);
 
 --
 -- Indexes for table `detail_universitas`
@@ -2922,6 +3149,12 @@ ALTER TABLE `kategori`
   ADD PRIMARY KEY (`id_kategori`);
 
 --
+-- Indexes for table `konten_beasiswa_umum`
+--
+ALTER TABLE `konten_beasiswa_umum`
+  ADD PRIMARY KEY (`id_konten_beasiswa_umum`);
+
+--
 -- Indexes for table `pencari`
 --
 ALTER TABLE `pencari`
@@ -2934,6 +3167,13 @@ ALTER TABLE `pencari`
 ALTER TABLE `pencarian`
   ADD PRIMARY KEY (`id_pencarian`),
   ADD KEY `pencarian_constrain` (`id_pencari`);
+
+--
+-- Indexes for table `pencarian_beasiswa`
+--
+ALTER TABLE `pencarian_beasiswa`
+  ADD PRIMARY KEY (`id_pencarian_beasiswa`),
+  ADD KEY `pencari_constrain` (`id_pencari`);
 
 --
 -- Indexes for table `pencarian_favorit`
@@ -2976,17 +3216,27 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `beasiswa`
 --
 ALTER TABLE `beasiswa`
-  MODIFY `id_beasiswa` int(225) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_beasiswa` int(225) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+--
+-- AUTO_INCREMENT for table `beasiswa_umum`
+--
+ALTER TABLE `beasiswa_umum`
+  MODIFY `id_beasiswa_umum` int(225) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 --
 -- AUTO_INCREMENT for table `beasiswa_universitas`
 --
 ALTER TABLE `beasiswa_universitas`
-  MODIFY `id_beasiswa_univ` int(225) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_beasiswa_univ` int(225) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `detail_beasiswa`
 --
 ALTER TABLE `detail_beasiswa`
   MODIFY `id_detail_beasiswa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=577;
+--
+-- AUTO_INCREMENT for table `detail_beasiswa_umum`
+--
+ALTER TABLE `detail_beasiswa_umum`
+  MODIFY `id_detail_pencarian_beasiswa_umum` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `detail_kategori`
 --
@@ -2996,57 +3246,72 @@ ALTER TABLE `detail_kategori`
 -- AUTO_INCREMENT for table `detail_pencarian`
 --
 ALTER TABLE `detail_pencarian`
-  MODIFY `id_detail_pencarian` int(225) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id_detail_pencarian` int(225) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
+--
+-- AUTO_INCREMENT for table `detail_pencarian_beasiswa`
+--
+ALTER TABLE `detail_pencarian_beasiswa`
+  MODIFY `id_detail_pencarian_beasiswa` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `detail_universitas`
 --
 ALTER TABLE `detail_universitas`
-  MODIFY `id_detail_universitas` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_detail_universitas` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `fakultas`
 --
 ALTER TABLE `fakultas`
-  MODIFY `id_fakultas` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id_fakultas` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 --
 -- AUTO_INCREMENT for table `fak_prodi`
 --
 ALTER TABLE `fak_prodi`
-  MODIFY `id_fak_prodi` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id_fak_prodi` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 --
 -- AUTO_INCREMENT for table `kategori`
 --
 ALTER TABLE `kategori`
   MODIFY `id_kategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 --
+-- AUTO_INCREMENT for table `konten_beasiswa_umum`
+--
+ALTER TABLE `konten_beasiswa_umum`
+  MODIFY `id_konten_beasiswa_umum` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `pencari`
 --
 ALTER TABLE `pencari`
-  MODIFY `id_pencari` int(225) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=122;
+  MODIFY `id_pencari` int(225) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=123;
 --
 -- AUTO_INCREMENT for table `pencarian`
 --
 ALTER TABLE `pencarian`
-  MODIFY `id_pencarian` int(225) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
+  MODIFY `id_pencarian` int(225) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
+--
+-- AUTO_INCREMENT for table `pencarian_beasiswa`
+--
+ALTER TABLE `pencarian_beasiswa`
+  MODIFY `id_pencarian_beasiswa` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `pencarian_favorit`
 --
 ALTER TABLE `pencarian_favorit`
-  MODIFY `id_pencarian_favorit` int(225) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_pencarian_favorit` int(225) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 --
 -- AUTO_INCREMENT for table `prodi`
 --
 ALTER TABLE `prodi`
-  MODIFY `id_prodi` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=123;
+  MODIFY `id_prodi` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=275;
 --
 -- AUTO_INCREMENT for table `universitas`
 --
 ALTER TABLE `universitas`
-  MODIFY `id_universitas` int(225) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_universitas` int(225) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `univ_fak`
 --
 ALTER TABLE `univ_fak`
-  MODIFY `id_univ_fak` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id_univ_fak` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
 --
@@ -3084,6 +3349,13 @@ ALTER TABLE `detail_pencarian`
   ADD CONSTRAINT `universitas_conns` FOREIGN KEY (`id_universitas`) REFERENCES `universitas` (`id_universitas`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Ketidakleluasaan untuk tabel `detail_pencarian_beasiswa`
+--
+ALTER TABLE `detail_pencarian_beasiswa`
+  ADD CONSTRAINT `beasiswa_umum` FOREIGN KEY (`id_beasiswa_umum`) REFERENCES `beasiswa_umum` (`id_beasiswa_umum`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `pencarian_beasiswa` FOREIGN KEY (`id_pencarian_beasiswa`) REFERENCES `pencarian_beasiswa` (`id_pencarian_beasiswa`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Ketidakleluasaan untuk tabel `detail_universitas`
 --
 ALTER TABLE `detail_universitas`
@@ -3106,6 +3378,12 @@ ALTER TABLE `fak_prodi`
 --
 ALTER TABLE `pencarian`
   ADD CONSTRAINT `pencarian_constrain` FOREIGN KEY (`id_pencari`) REFERENCES `pencari` (`id_pencari`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ketidakleluasaan untuk tabel `pencarian_beasiswa`
+--
+ALTER TABLE `pencarian_beasiswa`
+  ADD CONSTRAINT `pencari_constrain` FOREIGN KEY (`id_pencari`) REFERENCES `pencari` (`id_pencari`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ketidakleluasaan untuk tabel `pencarian_favorit`
