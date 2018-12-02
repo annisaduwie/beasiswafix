@@ -71,17 +71,15 @@ $this->load->view('pencari/header_user');
                     <select name="keyword_jenjang" class="btn-group2" required="">
                      <option value="0" disabled selected>Jenjang</option>
                      <option value="D3">Diploma</option>
-                     <option value="S1">S1</option>
-                     <option value="S2">S2</option>
-                     <option value="S3">S3</option>
+                     <option value="S1">Sarjana</option>
                    </select>
 
                  <?php }else if($query['tingkatan'] == "Mahasiswa"){?>
                     
                     <select name="keyword_jenjang" class="btn-group2">
                      <option value="0" disabled selected>Jenjang</option>
-                     <option value="Magister">Magister</option>
-                     <option value="Doktor">Doktor</option>
+                     <option value="S2">Magister</option>
+                     <option value="S3">Doktor</option>
                    </select>
                  <?php }?>
                  <select name="keyword_kategori_beasiswa" class="btn-group2">
