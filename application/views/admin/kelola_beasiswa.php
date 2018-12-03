@@ -74,6 +74,11 @@ $this->load->view('admin/head_admin');
                   <li class="active">Beasiswa</li>
                 </ol>
               </div>
+              <div class="callout callout-warning">
+                <h4>Perhatian !</h4>
+
+                <p>Untuk pengisian pada kolom negara, tidak boleh menggunakan spasi (" "), anda dapat menggantinya dengan strip (-), misalkan Timor-Leste </p>
+              </div>
               <div class="box-body">
 
                 <button type="button" style="background-color: #3C8DBC; color: #fff; padding-right: 15px; margin-bottom: 20px;" class="btn btn-info" data-toggle="modal" data-target="#modal-tambah">

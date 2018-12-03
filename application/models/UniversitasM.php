@@ -53,8 +53,8 @@ class UniversitasM extends CI_Model{
      return $query;
   }
   public function delete_univ($id_univ){
-      $query = $this->db->delete('universitas',"id_universitas = '$id_univ'");
-    return $query;
+      $query = $this->db->query("DELETE universitas, fakultas, prodi from universitas join fak_univ on fak_univ.id_universitas=universitas.id_universitas join fakultas on fakultas.id_fakultas=fak_univ.id_fakultas join prodi_fak on prodi_fak.id_fakultas = fakultas.id_fakultas join prodi on prodi.id_prodi=prodi_fak.id_prodi WHERE universitas.id_universitas='$id_univ'");
+      return $query;
   }
 
   public function insert_detail_univ(){

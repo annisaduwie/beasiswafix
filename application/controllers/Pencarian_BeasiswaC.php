@@ -501,6 +501,8 @@ class Pencarian_BeasiswaC extends CI_Controller
 	public function pencarian_beasiswa($keyword_jenjang = NULL, $keyword_negara = NULL, $page = NULL){
 		$keyword_kategori=$this->input->post('keyword_kategori_beasiswa');
 
+		
+
 		// if($keyword_jenjang != '' AND $keyword_kategori == '' AND $keyword_negara == ''){
 
 		// 	if (!empty($id)) {
@@ -560,6 +562,9 @@ class Pencarian_BeasiswaC extends CI_Controller
 
 		);
 
+		$nama_pencari= $this->session->userdata['username'];
+		$id_pencari= $this->session->userdata['id_pencari'];
+
 		$dataPencarianBeasiswaUmum =  array(
 
         			"keyword_jenjang"=>$keyword_jenjang,
@@ -568,13 +573,14 @@ class Pencarian_BeasiswaC extends CI_Controller
         			"waktu_pencarian"=>date('Y-m-d H-s-i'),
         			"id_pencari"=>$this->session->userdata['id_pencari']
         		);
+		
 		$this->PencarianM->insertPencarianBeasiswa($dataPencarianBeasiswaUmum);
 
 		$data['hasil']=$result;
 
 		$this->load->view('pencari/detail_pencarian_beasiswa', $data);
-	}
-
+	
+}
 //Menampilkan list beasiswa untuk universitas
 
 	public function tampil_beasiswa_univ(){

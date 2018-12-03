@@ -593,52 +593,52 @@ class AdminC extends CI_Controller
 
 		}else {
 
+
+			$dataFakultas =  array(
+					'nama_fakultas'=>$fakultas	
+				);
+			$result = $this->FakultasM->insertFakultas($dataFakultas);
+
+
+			$id_fakultas_db = $this->db->query("SELECT MAX(id_fakultas) AS id_fakultas FROM fakultas");
+			foreach ($id_fakultas_db->result_array() as $id_fakultas) {
 			$dataDetailFakultas =  array(
-				"id_universitas"=> $id_universitas
+				"id_universitas"=> $id_universitas,
+				'id_fakultas' =>$id_fakultas['id_fakultas']
 			);
 			// print_r($prodi['id_prodi']);
+			}
 			
-			$result = $this->db->insert('univ_fak',$dataDetailFakultas);
-			
+			$result = $this->db->insert('fak_univ',$dataDetailFakultas);
 
-			
-
-			
-			$id_fakultas_db = $this->db->query("SELECT MAX(id_univ_fak) AS id_univ_fakultas FROM univ_fak");
-			foreach ($id_fakultas_db->result_array() as $univ_fak) {
-				$dataFakultas =  array(
-					'nama_fakultas'=>$fakultas,
-					'id_univ_fak' =>$univ_fak['id_univ_fakultas']
-				);
-				$result = $this->FakultasM->insertFakultas($dataFakultas);
 
 
 			//$nama_pencari= $this->session->userdata['username'];
 			// $getIdUniversitas=$this->UniversitasM->get_universitas_id($id_universitas);
 
 
-				$id_prodi_fk = $this->db->query("SELECT MAX(id_prodi) AS id_prodi FROM prodi");
-				foreach ($id_prodi_fk->result_array() as $prodi) {
-					$DetailProdi =  array(
-						'id_univ_fak' =>$univ_fak['id_univ_fakultas']
-					);
-			// print_r($prodi['id_prodi']);
-				}
+			// 	$id_prodi_fk = $this->db->query("SELECT MAX(id_prodi) AS id_prodi FROM prodi");
+			// 	foreach ($id_prodi_fk->result_array() as $prodi) {
+			// 		$DetailProdi =  array(
+			// 			'id_univ_fak' =>$univ_fak['id_univ_fakultas']
+			// 		);
+			// // print_r($prodi['id_prodi']);
+			// 	}
 
-			}
-			$result = $this->db->insert('fak_prodi',$DetailProdi);
+			// }
+			// $result = $this->db->insert('fak_prodi',$DetailProdi);
 
 
-			$id_fak_prodi_fk = $this->db->query("SELECT MAX(id_fak_prodi) AS id_fak_prodi FROM fak_prodi");
-				foreach ($id_fak_prodi_fk->result_array() as $fak_prodi) {
-			$dataProdi =  array(
-					"nama_prodi"=>$nama_prodi,
-					"tingkatan"=>$tingkatan,
-					"id_fak_prodi"=>$fak_prodi['id_fak_prodi']
-				);
-		}
+		// 	$id_fak_prodi_fk = $this->db->query("SELECT MAX(id_fak_prodi) AS id_fak_prodi FROM fak_prodi");
+		// 		foreach ($id_fak_prodi_fk->result_array() as $fak_prodi) {
+		// 	$dataProdi =  array(
+		// 			"nama_prodi"=>$nama_prodi,
+		// 			"tingkatan"=>$tingkatan,
+		// 			"id_fak_prodi"=>$fak_prodi['id_fak_prodi']
+		// 		);
+		// }
 
-				$result = $this->ProdiM->insertProdi($dataProdi);
+				// $result = $this->ProdiM->insertProdi($dataProdi);
 
 			if($result > 0)
 			{
@@ -693,9 +693,9 @@ class AdminC extends CI_Controller
 		}	
 	}
 
-	public function hapusFakultas($id_univ_fak, $id_universitas){
+	public function hapusFakultas($id_fakultas, $id_universitas){
 
-		if($this->FakultasM->delete_by_id($id_univ_fak)){
+		if($this->FakultasM->delete_by_id($id_fakultas)){
 			redirect('AdminC/tampil_admin_fakultas/'.$id_universitas);
 		}
 

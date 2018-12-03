@@ -46,7 +46,7 @@ class PencarianM extends CI_Model{
 
   public function pencarian($keyword_prodi, $keyword_kategori, $keyword_tingkatan){
 
-    $query = $this->db->query("SELECT nama_universitas, negara, gambar_universitas from universitas, univ_fak, fakultas, fak_prodi, prodi where universitas.id_universitas=univ_fak.id_universitas AND univ_fak.id_univ_fak=fakultas.id_univ_fak AND univ_fak.id_univ_fak=fak_prodi.id_univ_fak AND fak_prodi.id_fak_prodi=prodi.id_fak_prodi AND prodi.nama_prodi='$keyword_prodi' AND universitas.kategori_universitas='$keyword_kategori' AND prodi.tingkatan='$keyword_tingkatan'");
+    $query = $this->db->query("SELECT nama_universitas, negara, gambar_universitas from universitas, fak_univ, fakultas, prodi_fak, prodi where universitas.id_universitas=fak_univ.id_universitas AND fak_univ.id_fakultas=fakultas.id_fakultas AND fakultas.id_fakultas=prodi_fak.id_fakultas AND prodi_fak.id_prodi=prodi.id_prodi AND prodi.nama_prodi='$keyword_prodi' AND universitas.kategori_universitas='$keyword_kategori' AND prodi.tingkatan='$keyword_tingkatan'");
     
     return $query;
     
@@ -55,7 +55,7 @@ class PencarianM extends CI_Model{
 
    public function pencarianCount($keyword_prodi, $keyword_kategori, $keyword_tingkatan){
 
-    $query = $this->db->query("SELECT count(*) from universitas, univ_fak, fakultas, fak_prodi, prodi where universitas.id_universitas=univ_fak.id_universitas AND univ_fak.id_univ_fak=fakultas.id_univ_fak AND univ_fak.id_univ_fak=fak_prodi.id_univ_fak AND fak_prodi.id_fak_prodi=prodi.id_fak_prodi AND prodi.nama_prodi='$keyword_prodi' AND universitas.kategori_universitas='$keyword_kategori' AND prodi.tingkatan='$keyword_tingkatan'");
+    $query = $this->db->query("SELECT count(*) from universitas, fak_univ, fakultas, prodi_fak, prodi where universitas.id_universitas=fak_univ.id_universitas AND fak_univ.id_fakultas=fakultas.id_fakultas AND fakultas.id_fakultas=prodi_fak.id_fakultas AND prodi_fak.id_prodi=prodi.id__prodi AND prodi.nama_prodi='$keyword_prodi' AND universitas.kategori_universitas='$keyword_kategori' AND prodi.tingkatan='$keyword_tingkatan'");
     
     return $query;
     
@@ -64,7 +64,7 @@ class PencarianM extends CI_Model{
 
     public function pencarianPage($limit, $start, $keyword_prodi, $keyword_kategori, $keyword_tingkatan){
 
-    $query = $this->db->query("SELECT * from universitas, univ_fak, fakultas, fak_prodi, prodi where universitas.id_universitas=univ_fak.id_universitas AND univ_fak.id_univ_fak=fakultas.id_univ_fak AND univ_fak.id_univ_fak=fak_prodi.id_univ_fak AND fak_prodi.id_fak_prodi=prodi.id_fak_prodi AND prodi.nama_prodi='$keyword_prodi' AND universitas.kategori_universitas='$keyword_kategori' AND prodi.tingkatan='$keyword_tingkatan' LIMIT $start,$limit");
+    $query = $this->db->query("SELECT * from universitas, fak_univ, fakultas, prodi_fak, prodi where universitas.id_universitas=fak_univ.id_universitas AND fak_univ.id_fakultas=fakultas.id_fakultas AND fakultas.id_fakultas=prodi_fak.id_fakultas AND prodi_fak.id_prodi=prodi.id_prodi AND prodi.nama_prodi='$keyword_prodi' AND universitas.kategori_universitas='$keyword_kategori' AND prodi.tingkatan='$keyword_tingkatan' LIMIT $start,$limit");
     
     return $query;
     
@@ -80,7 +80,7 @@ class PencarianM extends CI_Model{
   // }
 public function filter_fakultas_by_universitas($universitas){
 
-$query= $this->db->query("SELECT * from universitas, univ_fak, fakultas, fak_prodi, prodi WHERE universitas.id_universitas=univ_fak.id_universitas AND univ_fak.id_univ_fak=fakultas.id_univ_fak AND univ_fak.id_univ_fak=fak_prodi.id_univ_fak AND fak_prodi.id_prodi=prodi.id_prodi AND nama_universitas = '$universitas' ");
+$query= $this->db->query("SELECT * from universitas, fak_univ, fakultas, prodi_fak, prodi WHERE universitas.id_universitas=fak_univ.id_universitas AND fak_univ.id_fakultas=fakultas.id_fakultas AND fakultas.id_fakultas=prodi_fak.id_fakultas AND prodi_fak.id_prodi=prodi.id_prodi AND nama_universitas = '$universitas' ");
 return $query;
   
 
@@ -88,7 +88,7 @@ return $query;
 
 public function filter_fakultas_by_univ_negara($negara){
 
-  $query= $this->db->query("SELECT * from universitas, univ_fak, fakultas, fak_prodi, prodi WHERE universitas.id_universitas=univ_fak.id_universitas AND univ_fak.id_univ_fak=fakultas.id_univ_fak AND univ_fak.id_univ_fak=fak_prodi.id_univ_fak AND fak_prodi.id_prodi=prodi.id_prodi AND negara = '$negara'");
+  $query= $this->db->query("SELECT * from universitas, fak_univ, fakultas, prodi_fak, prodi WHERE universitas.id_universitas=fak_univ.id_universitas AND fak_univ.id_fakultas=fakultas.id_fakultas AND fakultas.id_fakultas=prodi_fak.id_fakultas AND prodi_fak.id_prodi=prodi.id_prodi AND negara = '$negara'");
 return $query;
 
 } 
@@ -117,7 +117,7 @@ return $query;
 
 public function tampil_histori_pencarian_beasiswa($id_pencari){
 
-  $query= $this->db->query("SELECT distinct * from pencari, pencarian_beasiswa WHERE pencari.id_pencari=pencarian_beasiswa.id_pencari AND pencarian_beasiswa.id_pencari='$id_pencari' GROUP BY pencarian_beasiswa.id_pencarian order by pencarian_beasiswa.create_dtm DESC;");
+  $query= $this->db->query("SELECT distinct * from pencari, pencarian_beasiswa WHERE pencari.id_pencari=pencarian_beasiswa.id_pencari AND pencarian_beasiswa.id_pencari='$id_pencari' GROUP BY pencarian_beasiswa.id_pencarian_beasiswa order by pencarian_beasiswa.create_dtm DESC;");
 
 return $query;
 
@@ -136,17 +136,21 @@ public function hapus_favorit($id_pencarian_favorit, $id_pencari){
 }
 
 public function pencarian_univ_berdasar_fakultas($nama_fakultas){
-  $query = $this->db->query("SELECT * from universitas, univ_fak, fakultas, fak_prodi, prodi WHERE universitas.id_universitas=univ_fak.id_universitas AND univ_fak.id_univ_fak=fakultas.id_univ_fak AND univ_fak.id_univ_fak=fak_prodi.id_univ_fak AND fak_prodi.id_fak_prodi=prodi.id_fak_prodi AND nama_fakultas='$nama_fakultas' GROUP BY nama_universitas");
+  $query = $this->db->query("SELECT * from universitas, fak_univ, fakultas, prodi_fak, prodi WHERE universitas.id_universitas=fak_univ.id_universitas AND fak_univ.id_fakultas=fakultas.id_fakultas AND fakultas.id_fakultas=prodi_fak.id_fakultas AND prodi_fak.id_prodi=prodi.id_prodi AND nama_fakultas='$nama_fakultas' GROUP BY nama_universitas");
   return $query;
 }
 
 public function pencarian_univ_berdasar_fakultas_pages($limit, $start, $nama_fakultas){
-  $query = $this->db->query("SELECT * from universitas, univ_fak, fakultas, fak_prodi, prodi WHERE universitas.id_universitas=univ_fak.id_universitas AND univ_fak.id_univ_fak=fakultas.id_univ_fak AND univ_fak.id_univ_fak=fak_prodi.id_univ_fak AND fak_prodi.id_fak_prodi=prodi.id_fak_prodi AND nama_fakultas='$nama_fakultas' GROUP BY nama_universitas LIMIT $start,$limit");
+  $query = $this->db->query("SELECT * from universitas, fak_univ, fakultas, prodi_fak, prodi WHERE universitas.id_universitas=fak_univ.id_universitas AND fak_univ.id_fakultas=fakultas.id_fakultas AND fakultas.id_fakultas=prodi_fak.id_fakultas AND prodi_fak.id_prodi=prodi.id_prodi AND nama_fakultas='$nama_fakultas' GROUP BY nama_universitas LIMIT $start,$limit");
   return $query;
 }
 
 public function hapus_histori_pencarian($id_pencarian, $id_pencari){
     $query = $this->db->query("DELETE FROM pencarian WHERE id_pencarian='$id_pencarian' AND id_pencari='$id_pencari'");
+    return $query;
+}
+public function hapus_histori_pencarian_beasiswa($id_pencarian_beasiswa, $id_pencari){
+    $query = $this->db->query("DELETE FROM pencarian_beasiswa WHERE id_pencarian_beasiswa='$id_pencarian_beasiswa' AND id_pencari='$id_pencari'");
     return $query;
 }
 

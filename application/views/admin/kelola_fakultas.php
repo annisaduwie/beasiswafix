@@ -150,7 +150,7 @@ $this->load->view('admin/head_admin');
                     <td> <a class="btn btn-info btn-xs tooltips" data-toggle="modal" data-target="#modal-<?php echo $value->id_fakultas; ?>">
                       <span data-toogle="tooltip" title="Ubah"><i class="fa fa-pencil" style="color: #fff"></i></span></a>
                       
-                      <a class="btn btn-danger btn-xs tooltips"  data-popup="tooltip" data-original-title="Hapus Data" data-placement="top" href="<?php echo site_url('AdminC/hapusFakultas/'.$value->id_univ_fak.'/'.$id); ?>" onclick="return confirm('Apakah anda yakin ingin menghapus program studi ?')" ><i class="fa fa-times" ></i></a>
+                      <a class="btn btn-danger btn-xs tooltips"  data-popup="tooltip" data-original-title="Hapus Data" data-placement="top" href="<?php echo site_url('AdminC/hapusFakultas/'.$value->id_fakultas.'/'.$id); ?>" onclick="return confirm('Apakah anda yakin ingin menghapus program studi ?')" ><i class="fa fa-times" ></i></a>
 
                       <a class="btn btn-info btn-xs tooltips" href="<?php echo base_url('PencarianC/tampil_admin_prodi/'.$value->id_fakultas);?>">
                           <span data-toogle="tooltip" title="Lihat Prodi"><i class="fa fa-search-plus" style="color: #fff"></i></span>
@@ -382,7 +382,7 @@ $data2=$this->session->flashdata('error');
           </div>
         </div>
 
-        <div class="form-group" style="padding: 5px 0;">
+<!--         <div class="form-group" style="padding: 5px 0;">
                                 <label for="inputurl" class="col-sm-2 control-label">Nama Prodi</label>
                                 <div class="col-sm-10">
                                   <input type="text" name="nama_prodi" class="form-control" id="inputurl" placeholder="Masukkan Nama Prodi">
@@ -400,7 +400,7 @@ $data2=$this->session->flashdata('error');
                 <option value="Doktor">Doktor</option>
                 </select>
               </div>
-              </div>
+              </div> -->
 
         <div class="modal-footer">
           <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Batal</button>

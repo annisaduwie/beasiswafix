@@ -147,11 +147,11 @@ $this->load->view('pencari/header_user');
           </a>
           <hr>
           <a href="<?php echo base_url('Pencari/tampil_pencarian_tersimpan');?>">
-            <span>Riwayat Pencarian</span>
+            <span>Riwayat Pencarian Jurusan</span>
           </a>
           <hr>
-          <a href="#">
-            <span>Kotak masuk</span>
+          <a href="<?php echo base_url('Pencari/tampil_pencarian_beasiswa_tersimpan');?>">
+            <span>Riwayat Pencarian Beasiswa</span>
           </a>
           <hr>
           <a href="<?php echo base_url('Pencari/tampil_konsultasi');?>">

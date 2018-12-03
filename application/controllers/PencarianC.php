@@ -204,7 +204,9 @@ class PencarianC extends CI_Controller
     	$data = array(
     		'id' => $id_fakultas,
     		'nama_fakultas' => $this->FakultasM->get_full_fakultas($id_fakultas)->row_array(),
-    		'id_univ' => $this->ProdiM->get_univ_prodi($id_fakultas)->row_array()
+    		// 'id_univ' => $this->ProdiM->get_univ_prodi($id_fakultas)->row_array(),
+            'id_univ' => $this->ProdiM->get_univ_prodi_kosong($id_fakultas)->row_array()
+            
     	);
     	$data['prodi']= $this->ProdiM->get_prodi($id_fakultas)->result();
 		// $data['prodi_back']= $this->ProdiM->get_univ_prodi($id_fakultas)->row_array();
@@ -237,8 +239,8 @@ class PencarianC extends CI_Controller
 
     	}else {
 
-    		$id_fakultas_db = $this->db->query("SELECT MAX(id_univ_fak) AS id_univ_fakultas FROM univ_fak");
-    		foreach ($id_fakultas_db->result_array() as $univ_fak) {
+    		// $id_fakultas_db = $this->db->query("SELECT MAX(id_univ_fak) AS id_univ_fakultas FROM univ_fak");
+    		// foreach ($id_fakultas_db->result_array() as $univ_fak) {
 
 
 
@@ -254,16 +256,27 @@ class PencarianC extends CI_Controller
 
 		// $result = $this->db->insert('fak_prodi',$DetailProdi);
 
-    			$id_fak_prodi_fk = $this->db->query("SELECT id_fak_prodi from univ_fak, fakultas, fak_prodi WHERE univ_fak.id_univ_fak=fakultas.id_univ_fak AND univ_fak.id_univ_fak=fak_prodi.id_univ_fak AND id_fakultas='$id_fakultas'");
-    			foreach ($id_fak_prodi_fk->result_array() as $fak_prodi) {
-    				$dataProdi =  array(
-    					"nama_prodi"=>$nama_prodi,
-    					"tingkatan"=>$tingkatan,
-    					"id_fak_prodi"=>$fak_prodi['id_fak_prodi']
-    				);
-    			}
+    		
+    			$dataProdi =  array(
+    				"nama_prodi"=>$nama_prodi,
+    				"tingkatan"=>$tingkatan
+    				
+    			);
+                $result = $this->ProdiM->insertProdi($dataProdi);
 
-    			$result = $this->ProdiM->insertProdi($dataProdi);
+                $id_prodi = $this->db->query("SELECT id_prodi from prodi, fakultas WHERE id_fakultas='$id_fakultas'");
+                foreach ($id_prodi->result_array() as $fak_prodi) {
+
+                 $dataDetailFakultas =  array(
+
+                 'id_prodi' =>$fak_prodi['id_prodi'],
+                 'id_fakultas' =>$id_fakultas
+                );
+
+    			}
+                $result = $this->db->insert('prodi_fak',$dataDetailFakultas);
+
+    			
     			if($result > 0)
     			{
     				$this->session->set_flashdata('success', 'Data berhasil ditambah');
@@ -272,7 +285,7 @@ class PencarianC extends CI_Controller
     			}
 
     		}
-    	}
+    	
     	redirect('PencarianC/tampil_admin_prodi/'.$id_fakultas);
     }
 

@@ -396,7 +396,7 @@ class Pencari extends CI_Controller
 
 		$data['nama_pencari']= $this->PencariM->get_nama_pencari($username)->row_array();
 		$data['pencarian']= $this->PencarianM->tampil_histori_pencarian_beasiswa($id_pencari)->result();
-		$this->load->view('pencari/pencarian_tersimpan', $data);
+		$this->load->view('pencari/pencarian_beasiswa_tersimpan', $data);
 
 	}
 
@@ -406,6 +406,14 @@ class Pencari extends CI_Controller
 		if($this->PencarianM->hapus_histori_pencarian($id_pencarian, $id_pencari)){
 
 			redirect('Pencari/tampil_pencarian_tersimpan',$data);
+		}
+	}
+	public function hapus_pencarian_beasiswa_tersimpan($id_pencarian_beasiswa, $id_pencari){
+		$username = $this->session->userdata('username');
+		$data['id_pencari']= $this->session->userdata('id_pencari');
+		if($this->PencarianM->hapus_histori_pencarian_beasiswa($id_pencarian_beasiswa, $id_pencari)){
+
+			redirect('Pencari/tampil_pencarian_beasiswa_tersimpan',$data);
 		}
 	}
 	
