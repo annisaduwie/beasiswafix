@@ -19,11 +19,6 @@ class Pencari extends CI_Controller
 
 	var $data= array();
 
-	public function index(){
-
-		
-
-	}
 	public function get_pencari(){
 	// $data['pencari']= $this->PencariM->get_pencari()->row_array();
 		$data=array(
@@ -33,7 +28,6 @@ class Pencari extends CI_Controller
 		$this->load->view('admin/kelola_pencari', $data);
 
 	}
-
 	public function get_nama_pencari(){
 		$username = $this->session->userdata('username');
 
@@ -342,9 +336,45 @@ class Pencari extends CI_Controller
 
 	public function tampil_konsultasi(){
 		$username = $this->session->userdata('username');
-
+		$id_pencari = $this->session->userdata('id_pencari');
 		$data['nama_pencari']= $this->PencariM->get_nama_pencari($username)->row_array();
+
+
 		$this->load->view('pencari/konsultasi', $data);
+
+	}
+	public function tambah_konsultasi(){
+
+		$username = $this->session->userdata('username');
+		$id_pencari = $this->session->userdata('id_pencari');
+		$no_hp = $this->input->post('no_hp');
+		$nama_prodi = $this->input->post('nama_prodi');
+		$kategori = $this->input->post('kategori');
+		$deskripsi = $this->input->post('deskripsi');
+		$data['nama_pencari']= $this->PencariM->get_nama_pencari($username)->row_array();
+
+		$dataKonsultasi = array(
+			'no_hp'=>$no_hp,
+			'program_studi'=>$nama_prodi,
+			'kategori'=>$kategori,
+			'deskripsi'=>$deskripsi,
+			'status'=>"dikirim",
+			'id_pencari'=>$id_pencari
+
+		);
+
+		$result = $this->PencariM->insert_konsultasi($dataKonsultasi);
+
+		if($result > 0)
+			{
+			$this->session->set_flashdata('success', 'Data berhasil dikirim');
+			}
+			else
+			{
+			$this->session->set_flashdata('error', 'Data gagal dikirim');
+			}
+
+			$this->load->view('pencari/konsultasi', $data);
 
 	}
 

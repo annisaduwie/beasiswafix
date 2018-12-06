@@ -19,7 +19,7 @@ $this->load->view('pencari/profilpencari');?>
     </div>
 
     <div class="callout callout-info">
-      <p>Berikut adalah list pencarian yang sudah dilakukan. Anda dapat mengahapus data pencarian jika sidah tidak di butuhkan lagi. Anda juga bisa melihat kembali pencarian yang sudah anda lakukan dengan mengeklik tombol "Tampilkan Pencarian".</p>
+      <p>Berikut adalah daftar pencarian yang sudah dilakukan. Anda dapat mengahapus data pencarian jika sidah tidak di butuhkan lagi. Anda juga bisa melihat kembali pencarian yang sudah anda lakukan dengan mengeklik tombol "Tampilkan Pencarian".</p>
     </div>
             
             <div class="box-body">
@@ -90,10 +90,4 @@ $this->load->view('pencari/profilpencari');?>
 <!-- /.content-wrapper -->
   </body>
 
-  <footer class="main-footer">
-  <div class="pull-right hidden-xs">
-
-  </div>
-  
-</footer>
 

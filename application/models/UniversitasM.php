@@ -70,7 +70,7 @@ class UniversitasM extends CI_Model{
   }
 
   public function tampil_detail_univ($nama_univ){
-    $query = $this->db->query("SELECT * from universitas, detail_universitas, univ_fak, fakultas, fak_prodi, prodi WHERE universitas.id_universitas=detail_universitas.id_universitas AND universitas.id_universitas=univ_fak.id_universitas AND univ_fak.id_univ_fak=fakultas.id_univ_fak AND univ_fak.id_univ_fak=fak_prodi.id_univ_fak AND fak_prodi.id_fak_prodi=prodi.id_fak_prodi AND nama_universitas='$nama_univ' GROUP BY nama_universitas");
+    $query = $this->db->query("SELECT * from universitas, detail_universitas, fak_univ, fakultas, prodi_fak, prodi WHERE universitas.id_universitas=detail_universitas.id_universitas AND universitas.id_universitas=fak_univ.id_universitas AND fak_univ.id_fakultas=fakultas.id_fakultas AND fakultas.id_fakultas=prodi_fak.id_fakultas AND prodi_fak.id_prodi=prodi.id_prodi AND nama_universitas='$nama_univ' GROUP BY nama_universitas");
     return $query;
   }
 

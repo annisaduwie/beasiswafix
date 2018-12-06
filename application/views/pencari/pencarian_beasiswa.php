@@ -62,6 +62,8 @@ $this->load->view('pencari/header_user');
               <form class="form-wrap mt-4" method="POST" action="<?php echo base_url('Pencarian_BeasiswaC/pencarian_beasiswa')?>">
                 <div class="btn-group" role="group" aria-label="Basic example">
 
+                
+
               <?php if ($this->session->userdata('logged_in')){
 
               $query = $this->db->query("SELECT tingkatan from pencari where id_pencari=".$nama_pencari['id_pencari'])->row_array(); 
@@ -82,22 +84,26 @@ $this->load->view('pencari/header_user');
                      <option value="S3">Doktor</option>
                    </select>
                  <?php }?>
-                 <select name="keyword_kategori_beasiswa" class="btn-group2">
+
+
+                 <!-- <select name="keyword_kategori_beasiswa" class="btn-group2">
                      <option value="0" disabled selected>Kategori Beasiswa</option>
                      <option value="Beasiswa Penuh">Beasiswa Penuh</option>
                      <option value="Beasiswa Sebagian">Beasiswa Sebagian</option>
-                   </select>
+                   </select> -->
                    
                   <select name="keyword_negara" class="btn-group2" required="">
                      <option value="0" disabled selected>Negara</option>
-                    <?php foreach ($list_beasiswa as $list) {?>
-
-                <option value="<?php echo $list->negara;?>"><?php echo $list->negara;?></option>
-            <?php  } ?>
+                      <?php foreach ($list_beasiswa as $list) {?>
+                     <option value="<?php echo $list->negara;?>"><?php echo $list->negara;?></option>
+                    <?php  } ?>
                    </select>
+
          <?php }?>
-           <button type="button" onclick="submit_form()" class="btn-form btn-primary"><span class="icon-magnifier search-icon"></span>CARI<i class="pe-7s-angle-right"></i></button>
-         </div>
+           <button type="button" name="cari" onclick="submit_form()" class="btn-form btn-primary" style="width: 276.11px;"><span class="icon-magnifier search-icon"></span>CARI<i class="pe-7s-angle-right"></i></button>
+     
+       </div>
+     </form>
        
      </div>
    </div>

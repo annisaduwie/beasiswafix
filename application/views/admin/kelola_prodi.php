@@ -243,6 +243,7 @@ $data2=$this->session->flashdata('error');
               <div class="col-sm-10">
               <select name="tingkatan" class="form-control required" required>
                 <option value="" disabled selected>--Pilih Tingkatan--</option>
+                <option value="Diploma">Diploma</option>
                 <option value="Sarjana">Sarjana</option>
                 <option value="Magister">Magister</option>
                 <option value="Doktor">Doktor</option>

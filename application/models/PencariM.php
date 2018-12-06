@@ -8,107 +8,126 @@ class PencariM extends CI_Model{
 	public function get_pencari(){
    $query = $this->db->query("SELECT * from pencari where isDelete=0");
    return $query;
-  }
+ }
 
-  public function get_email($username){
+ public function get_email($username){
    $query = $this->db->query("SELECT email from pencari where username='$username'");
    return $query;
-  }
+ }
+ public function get_konsultasi(){
+   $query = $this->db->query("SELECT * from pencari, konsultasi where pencari.id_pencari=konsultasi.id_pencari");
+   return $query;
+ }
+  public function get_detail_konsultasi($id_konsultasi){
+   $query = $this->db->query("SELECT * from pencari, konsultasi where pencari.id_pencari=konsultasi.id_pencari AND id_konsultasi='$id_konsultasi'");
+   return $query;
+ }
 
-  public function cekEmailPencari($email){
-    $this->db->select('email');
-    $this->db->where('email', $email);
+
+
+ public function cekEmailPencari($email){
+  $this->db->select('email');
+  $this->db->where('email', $email);
 
     // $this->db->where('peran', 'analis');
-    return $this->db->get('pencari');
-  }
-
-
-  public function cekId($id_pencari){
-    $this->db->select('id_pencari');
-    $this->db->where('id_pencari', $id_pencari);
-
-    // $this->db->where('peran', 'analis');
-    return $this->db->get('pencari');
-  }
-
-function  cekEmail($table_name,  $email){ 
-     $this->db->where('email', $email); 
-     $query = $this->db->get($table_name);
-     if ($query->num_rows() > 0)  { 
-       return TRUE; 
-     }  else  { 
-       return FALSE;  
-     }  
-   }
-
-
-  public function getId($email){
-    $this->db->select('id_pencari');
-    $this->db->where('email',$email);
-
-    return $this->db->get('pencari');
-  }
-
-  public function insert($dataAkun){
-      $this->db->trans_start();
-        
-      $this->db->insert('pencari', $dataAkun);
-      $insert_id = $this->db->insert_id();
-      
-      $this->db->trans_complete();
-      return $insert_id;
-  	}
-    public function editPencari($dataPencari, $id_pencari){
-    $this->db->where('id_pencari',$id_pencari);
-    $this->db->update('pencari',$dataPencari);
-    return true;
-  }
-
-  	public function cekStatus($username){
-  		$q = $this->db->query("SELECT status from pencari where username ='$username'");
-        return $q;
+  return $this->db->get('pencari');
 }
 
-  public function get_nama_pencari($username){
-   $query = $this->db->query("SELECT * from pencari WHERE username = '$username'");
-   return $query;
-  } 
 
-    public function getIdPencari($nama_pencari){
-    $this->db->select('id_pencari');
-    $this->db->where('nama', $nama_pencari);
+public function cekId($id_pencari){
+  $this->db->select('id_pencari');
+  $this->db->where('id_pencari', $id_pencari);
 
     // $this->db->where('peran', 'analis');
-    return $this->db->get('pencari');
-  }
+  return $this->db->get('pencari');
+}
 
-  public function lupapassword($data,$email_def){
+function  cekEmail($table_name,  $email){ 
+ $this->db->where('email', $email); 
+ $query = $this->db->get($table_name);
+ if ($query->num_rows() > 0)  { 
+   return TRUE; 
+ }  else  { 
+   return FALSE;  
+ }  
+}
 
-      if($email_def == md5("ebeasiswa.indonesia@gmail.com")){
+
+public function getId($email){
+  $this->db->select('id_pencari');
+  $this->db->where('email',$email);
+
+  return $this->db->get('pencari');
+}
+
+public function insert($dataAkun){
+  $this->db->trans_start();
+
+  $this->db->insert('pencari', $dataAkun);
+  $insert_id = $this->db->insert_id();
+
+  $this->db->trans_complete();
+  return $insert_id;
+}
+public function insert_konsultasi($dataKonsultasi){
+  $this->db->trans_start();
+
+  $this->db->insert('konsultasi', $dataKonsultasi);
+  $insert_id = $this->db->insert_id();
+
+  $this->db->trans_complete();
+  return $insert_id;
+}
+public function editPencari($dataPencari, $id_pencari){
+  $this->db->where('id_pencari',$id_pencari);
+  $this->db->update('pencari',$dataPencari);
+  return true;
+}
+
+public function cekStatus($username){
+  $q = $this->db->query("SELECT status from pencari where username ='$username'");
+  return $q;
+}
+
+public function get_nama_pencari($username){
+ $query = $this->db->query("SELECT * from pencari WHERE username = '$username'");
+ return $query;
+} 
+
+public function getIdPencari($nama_pencari){
+  $this->db->select('id_pencari');
+  $this->db->where('nama', $nama_pencari);
+
+    // $this->db->where('peran', 'analis');
+  return $this->db->get('pencari');
+}
+
+public function lupapassword($data,$email_def){
+
+  if($email_def == md5("ebeasiswa.indonesia@gmail.com")){
         // $cekUserAdmin = $this->db->query("SELECT * FROM admin WHERE email='$email'")->num_rows();
 
         // if($cekUserAdmin > 0){
-          $this->db->where('md5(email)',$email_def);
-          $this->db->update('admin',$data);
-          
-          return true;
+    $this->db->where('md5(email)',$email_def);
+    $this->db->update('admin',$data);
 
-        }else{
-          $cekUser = $this->db->query("SELECT * FROM pencari WHERE md5(email)='$email_def'")->num_rows();
+    return true;
 
-          if($cekUser > 0){
-            $this->db->where('md5(email)',$email_def);
-            $this->db->update('pencari',$data);
+  }else{
+    $cekUser = $this->db->query("SELECT * FROM pencari WHERE md5(email)='$email_def'")->num_rows();
 
-            return true;
-          }else{
-            $this->session->set_flashdata('error',"Email tidak tersedia.");
-            redirect('Pencari/forgot_password_confirm/'.$email_def);
-        }
-      }
+    if($cekUser > 0){
+      $this->db->where('md5(email)',$email_def);
+      $this->db->update('pencari',$data);
+
+      return true;
+    }else{
+      $this->session->set_flashdata('error',"Email tidak tersedia.");
+      redirect('Pencari/forgot_password_confirm/'.$email_def);
     }
+  }
+}
 
-    
+
 
 }

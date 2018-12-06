@@ -70,8 +70,8 @@ $this->load->view('admin/headAdmin');
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>
-        <li class="treeview">
-          <a href="#">
+        <li>
+          <a href="<?php echo site_url('AdminC/get_dashboard');?>">
             <span>Dashboard</span>
           </a>
         </li>
@@ -81,7 +81,7 @@ $this->load->view('admin/headAdmin');
           </a>
         </li>
         <li>
-          <a href="#">
+          <a href="<?php echo site_url('AdminC/get_konsultasi');?>">
             <span>Kotak masuk</span>
           </a>
         </li>

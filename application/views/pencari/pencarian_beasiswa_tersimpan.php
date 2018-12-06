@@ -19,7 +19,7 @@ $this->load->view('pencari/profilpencari');?>
     </div>
 
     <div class="callout callout-info">
-      <p>Berikut adalah list pencarian yang sudah dilakukan. Anda dapat mengahapus data pencarian jika sidah tidak di butuhkan lagi. Anda juga bisa melihat kembali pencarian yang sudah anda lakukan dengan mengeklik tombol "Tampilkan Pencarian".</p>
+      <p>Berikut adalah list pencarian beasiswa yang sudah dilakukan. Anda dapat mengahapus data pencarian jika sidah tidak di butuhkan lagi. Anda juga bisa melihat kembali pencarian yang sudah anda lakukan dengan mengeklik tombol "Tampilkan Pencarian".</p>
     </div>
             
             <div class="box-body">
@@ -53,31 +53,24 @@ $this->load->view('pencari/profilpencari');?>
                   </div>
                   <!-- /.user-block -->
                   <p>
-                    <?php if($value->keyword_jenjang == '' AND $vslue->keyword_kategori == ''){?> 
+                    <?php if($value->keyword_jenjang == '' AND $value->keyword_negara != ''){?> 
 
-            Beasiswa di Negara <?php echo $keyword_negara;?>
+            Beasiswa di Negara <?php echo $value->keyword_negara;?>
 
-        <?php }elseif($value->keyword_kategori_beasiswa == NULL AND $value->keyword_negara == NULL){?>
+        <?php }elseif($value->keyword_jenjang != '' AND $value->keyword_negara == ''){?>
 
             Beasiswa untuk Jenjang <?php echo $keyword_jenjang;?>
 
-        <?php }elseif($value->keyword_jenjang == NULL AND $value->keyword_negara == NULL){?>
+        <?php }elseif($value->keyword_jenjang != '' AND $value->keyword_negara != ''){?>
 
-            <?php echo $value->keyword_kategori_beasiswa;?>
-
-        <?php }elseif($value->keyword_jenjang != NULL AND $value->keyword_kategori_beasiswa != NULL AND $value->keyword_negara == NULL){?>
-            <?php echo $value->keyword_kategori_beasiswa;?> untuk Jenjang <?php echo $value->keyword_jenjang;?>
-        <?php }elseif($value->keyword_jenjang != NULL AND $value->keyword_kategori_beasiswa == NULL AND $value->keyword_negara != NULL){?>
             Beasiswa <?php echo $value->keyword_jenjang;?> di Negara <?php echo $value->keyword_negara;?>
-        <?php }elseif($value->keyword_jenjang == NULL AND $value->keyword_kategori_beasiswa != NULL AND $value->keyword_negara != NULL){?>
-           <?php echo $value->keyword_kategori_beasiswa;?> di Negara <?php echo $value->keyword_negara;?>
-        <?php }elseif($value->keyword_jenjang != NULL AND $value->keyword_kategori_beasiswa != NULL AND $value->keyword_negara != NULL){?>
-            <?php echo $value->keyword_kategori_beasiswa;?> untuk Jenjang di Negara <?php echo $value->keyword_negara;?>
-        <?php }?>
+        <?php }else{?>
+
+            Pencarian tidak ditemukan, silahkan lakukan pencarian kembali
+          <?php }?>
                    
                   </p>
                   <input type="hidden" value="<?php echo $value->keyword_jenjang;?>" name="keyword_prodi">
-                  <input type="hidden" value="<?php echo $value->keyword_kategori_beasiswa;?>" name="keyword_kategori">
                   <input type="hidden" value="<?php echo $value->keyword_negara;?>" name="keyword_negara">
                   <button type="submit" name="tampil_pencarian" class="btn btn-sm btn-primary btn-flat pull-left">tampilkan pencarian</button><br>
                   </form>
@@ -110,10 +103,4 @@ $this->load->view('pencari/profilpencari');?>
 <!-- /.content-wrapper -->
   </body>
 
-  <footer class="main-footer">
-  <div class="pull-right hidden-xs">
-
-  </div>
-  
-</footer>
 

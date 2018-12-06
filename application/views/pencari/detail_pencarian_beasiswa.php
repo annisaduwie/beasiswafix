@@ -11,26 +11,17 @@ $this->load->view('pencari/header_user');
 
         <h5 style="color:#fff; ">Hasil Pencarian :
 
-        <?php if($keyword_jenjang == '' AND $keyword_kategori == ''){?> 
+        <?php if($keyword_jenjang == '' AND $keyword_negara != ''){?> 
 
             Beasiswa di Negara <?php echo $keyword_negara;?>
 
-        <?php }elseif($keyword_kategori == '' AND $keyword_negara == ''){?>
+        <?php }elseif($keyword_jenjang != '' AND $keyword_negara == ''){?>
 
             Beasiswa untuk Jenjang <?php echo $keyword_jenjang;?>
 
-        <?php }elseif($keyword_jenjang == '' AND $keyword_negara == ''){?>
+        <?php }elseif($keyword_jenjang != '' AND $keyword_negara != ''){?>
 
-            <?php echo $keyword_kategori;?>
-
-        <?php }elseif($keyword_jenjang != '' AND $keyword_kategori != '' AND $keyword_negara == ''){?>
-            <?php echo $keyword_kategori;?> untuk Jenjang <?php echo $keyword_jenjang;?>
-        <?php }elseif($keyword_jenjang != '' AND $keyword_kategori == '' AND $keyword_negara != ''){?>
             Beasiswa <?php echo $keyword_jenjang;?> di Negara <?php echo $keyword_negara;?>
-        <?php }elseif($keyword_jenjang == '' AND $keyword_kategori != '' AND $keyword_negara != ''){?>
-           <?php echo $keyword_kategori;?> di Negara <?php echo $keyword_negara;?>
-        <?php }elseif($keyword_jenjang != '' AND $keyword_kategori != '' AND $keyword_negara != ''){?>
-            <?php echo $keyword_kategori;?> untuk Jenjang di Negara <?php echo $keyword_negara;?>
         <?php }else{?>
 
             Pencarian tidak ditemukan, silahkan lakukan pencarian kembali
@@ -66,7 +57,7 @@ $this->load->view('pencari/header_user');
       <?php } ?>
         <div class="col-md-12 featured-responsive">
           <span class="username">
-            <input type="text" name="link" value="<?php echo $value['link']; ?>">
+            <input type="hidden" name="link" value="<?php echo $value['link']; ?>">
             <div style="padding-bottom: 10px;"><?php echo $value['judul']; ?>
             </div>
             
@@ -93,11 +84,6 @@ $this->load->view('pencari/header_user');
 </div>
      
   </div>
-
-
-
-
-
 
 
   </div>

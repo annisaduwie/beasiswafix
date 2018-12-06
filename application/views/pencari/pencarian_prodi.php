@@ -124,7 +124,7 @@ $this->load->view('pencari/header_user');
                       <span class="product-description" ><br>
                        <p>Memiliki
                          <?php 
-                         $list_jumlah = $this->db->query("SELECT count(distinct nama_prodi) as jumlah_prodi from fakultas, univ_fak, fak_prodi, prodi  where fakultas.id_univ_fak = univ_fak.id_univ_fak AND univ_fak.id_univ_fak = fak_prodi.id_univ_fak AND fak_prodi.id_fak_prodi=prodi.id_fak_prodi AND nama_fakultas='$key->nama_fakultas' AND (prodi.tingkatan='Sarjana' OR prodi.tingkatan='Diploma')");
+                         $list_jumlah = $this->db->query("SELECT count(distinct nama_prodi) as jumlah_prodi from fakultas, prodi_fak, prodi  where fakultas.id_fakultas = prodi_fak.id_fakultas AND prodi_fak.id_prodi = prodi.id_prodi AND nama_fakultas='$key->nama_fakultas' AND (prodi.tingkatan='Sarjana' OR prodi.tingkatan='Diploma')");
                          foreach ($list_jumlah->result() as $value){?>
                           <?php echo $value->jumlah_prodi;?> Program Studi
                           <?php }?></p>
@@ -146,7 +146,7 @@ $this->load->view('pencari/header_user');
 
                           <div class="form-group">
                             <?php 
-                            $list_prodi = $this->db->query("SELECT distinct nama_prodi from fakultas, univ_fak, fak_prodi, prodi  where fakultas.id_univ_fak = univ_fak.id_univ_fak AND univ_fak.id_univ_fak = fak_prodi.id_univ_fak AND fak_prodi.id_fak_prodi=prodi.id_fak_prodi AND nama_fakultas='$key->nama_fakultas' AND (prodi.tingkatan='Sarjana' OR prodi.tingkatan='Diploma')");?>
+                            $list_prodi = $this->db->query("SELECT distinct nama_prodi from fakultas, prodi_fak, prodi  where fakultas.id_fakultas = prodi_fak.id_fakultas AND prodi_fak.id_prodi = prodi.id_prodi AND nama_fakultas='$key->nama_fakultas' AND (prodi.tingkatan='Sarjana' OR prodi.tingkatan='Diploma')");?>
 
                             <?php foreach ($list_prodi->result() as $value){?>
                               <ul>
@@ -196,7 +196,7 @@ $this->load->view('pencari/header_user');
             <span class="product-description" ><br>
               <p>Memiliki
                <?php 
-               $list_jumlah = $this->db->query("SELECT count(distinct nama_prodi) as jumlah_prodi from fakultas, univ_fak, fak_prodi, prodi  where fakultas.id_univ_fak = univ_fak.id_univ_fak AND univ_fak.id_univ_fak = fak_prodi.id_univ_fak AND fak_prodi.id_fak_prodi=prodi.id_fak_prodi AND nama_fakultas='$key->nama_fakultas' AND (prodi.tingkatan='Magister' OR prodi.tingkatan='Doktor')");
+               $list_jumlah = $this->db->query("SELECT count(distinct nama_prodi) as jumlah_prodi from fakultas, prodi_fak, prodi  where fakultas.id_fakultas = prodi_fak.id_fakultas AND prodi_fak.id_prodi = prodi.id_prodi AND nama_fakultas='$key->nama_fakultas' AND (prodi.tingkatan='Magister' OR prodi.tingkatan='Doktor')");
                foreach ($list_jumlah->result() as $value){?>
                 <?php echo $value->jumlah_prodi;?> Program Studi
                 <?php }?></p>
@@ -214,7 +214,7 @@ $this->load->view('pencari/header_user');
                <form action="<?php echo base_url('PencarianC/tampil_pencarian_prodi');?>" method="POST" >
                 <div class="form-group">
                   <?php 
-                  $list_prodi = $this->db->query("SELECT distinct nama_prodi from fakultas, univ_fak, fak_prodi, prodi  where fakultas.id_univ_fak = univ_fak.id_univ_fak AND univ_fak.id_univ_fak = fak_prodi.id_univ_fak AND fak_prodi.id_fak_prodi=prodi.id_fak_prodi AND nama_fakultas='$key->nama_fakultas' AND (prodi.tingkatan='Magister' OR prodi.tingkatan='Doktor')");?>
+                  $list_prodi = $this->db->query("SELECT distinct nama_prodi from fakultas, prodi_fak, prodi  where fakultas.id_fakultas = prodi_fak.id_fakultas AND prodi_fak.id_prodi = prodi.id_prodi AND nama_fakultas='$key->nama_fakultas' AND (prodi.tingkatan='Magister' OR prodi.tingkatan='Doktor')");?>
                   <?php foreach ($list_prodi->result() as $value){?>
                     <ul>
                       <li><?php echo $value->nama_prodi;?></li>
@@ -268,7 +268,7 @@ $this->load->view('pencari/header_user');
 
               <p>Memiliki
                <?php 
-               $list_jumlah = $this->db->query("SELECT count(distinct nama_prodi) as jumlah_prodi from fakultas, univ_fak, fak_prodi, prodi  where fakultas.id_univ_fak = univ_fak.id_univ_fak AND univ_fak.id_univ_fak = fak_prodi.id_univ_fak AND fak_prodi.id_fak_prodi=prodi.id_fak_prodi AND nama_fakultas='$key->nama_fakultas'");
+               $list_jumlah = $this->db->query("SELECT count(distinct nama_prodi) as jumlah_prodi from fakultas, prodi_fak, prodi  where fakultas.id_fakultas = prodi_fak.id_fakultas AND prodi_fak.id_prodi = prodi.id_prodi AND nama_fakultas='$key->nama_fakultas'");
 
                foreach ($list_jumlah->result() as $value){?>
 
@@ -297,7 +297,7 @@ $this->load->view('pencari/header_user');
 
                 <div class="form-group">
                   <?php 
-                  $list_prodi = $this->db->query("SELECT distinct nama_prodi from fakultas, univ_fak, fak_prodi, prodi  where fakultas.id_univ_fak = univ_fak.id_univ_fak AND univ_fak.id_univ_fak = fak_prodi.id_univ_fak AND fak_prodi.id_fak_prodi=prodi.id_fak_prodi AND nama_fakultas='$key->nama_fakultas'");?>
+                  $list_prodi = $this->db->query("SELECT distinct nama_prodi from fakultas, prodi_fak, prodi  where fakultas.id_fakultas = prodi_fak.id_fakultas AND prodi_fak.id_prodi = prodi.id_prodi AND nama_fakultas='$key->nama_fakultas'");?>
 
                   <?php foreach ($list_prodi->result() as $value){?>
                     <ul>

@@ -76,7 +76,7 @@ class Login extends CI_Controller
             $this->session->set_userdata('username', $username);
             $this->session->set_userdata('id_pencari', $id_pencari);
 
-            redirect('AdminC');
+            redirect('AdminC/get_dashboard');
         // $this->session->set_userdata($userData);
         //         if ($this->session->userdata('peran') == "admin"){
         //             redirect('Awal');

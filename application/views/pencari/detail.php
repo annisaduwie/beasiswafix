@@ -83,7 +83,7 @@ $this->load->view('pencari/header_user');
                   <p><h6><?php echo $key->nama_fakultas;?></h6></p>
                   <ul>
                     <?php 
-                    $list_prodi = $this->db->query("SELECT distinct nama_prodi from universitas, fakultas, univ_fak, fak_prodi, prodi  where universitas.id_universitas=univ_fak.id_universitas AND fakultas.id_univ_fak = univ_fak.id_univ_fak AND univ_fak.id_univ_fak = fak_prodi.id_univ_fak AND fak_prodi.id_fak_prodi=prodi.id_fak_prodi AND nama_universitas='$list_detail->nama_universitas ' AND nama_fakultas ='$key->nama_fakultas';");
+                    $list_prodi = $this->db->query("SELECT distinct nama_prodi from universitas, fak_univ, fakultas, prodi_fak, prodi  where universitas.id_universitas=fak_univ.id_universitas AND fak_univ.id_fakultas=fakultas.id_fakultas AND fakultas.id_fakultas = prodi_fak.id_fakultas AND prodi_fak.id_prodi = prodi.id_prodi AND nama_universitas='$list_detail->nama_universitas ' AND nama_fakultas ='$key->nama_fakultas';");
                     foreach ($list_prodi->result() as $value){?>
                       <li class="prodi" ><p style="font-size: 14px;"><?php echo $value->nama_prodi;?></p>
                       </li>

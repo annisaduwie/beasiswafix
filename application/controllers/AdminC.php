@@ -12,8 +12,10 @@ class AdminC extends CI_Controller
 		$this->load->model('FakultasM');
 		$this->load->model('ProdiM');
 		$this->load->model('BeasiswaM');
+		$this->load->model('KonsultasiM');
 		$this->load->helper(array('url','form'));
 		$this->model = $this->PencariM;
+		$this->model = $this->KonsultasiM;
 		$this->model = $this->FakultasM;
 		$this->model = $this->ProdiM;
 		$this->model = $this->UniversitasM;
@@ -27,11 +29,7 @@ class AdminC extends CI_Controller
 
 	var $data= array();
 
-	public function index(){
-		cekAdmin();	
-		$this->load->view('admin/homeAdmin');
-	}
-
+		
 	public function tampil_admin_fakultas($id_universitas){
 	// print_r($id_universitas);
 		
@@ -57,7 +55,81 @@ class AdminC extends CI_Controller
 		$this->load->view('admin/kelola_pencari', $data);
 
 	}
+	public function get_dashboard(){
+		cekAdmin();	
+		$this->load->view('admin/homeAdmin');
 
+	}
+	public function get_konsultasi(){
+		$id_pencari = $this->session->userdata('id_pencari');
+
+		$data['konsultasi']=$this->PencariM->get_konsultasi()->result();
+		$this->load->view('admin/kelola_konsultasi', $data);
+
+	}
+	public function get_detail_konsultasi($id_konsultasi){
+		$id_pencari = $this->session->userdata('id_pencari');
+
+		$data['konsultasi']=$this->PencariM->get_detail_konsultasi($id_konsultasi)->result();
+		$this->load->view('admin/detail_konsultasi', $data);
+
+	}
+	public function replyKonsul($id_konsultasi){
+		$id_pencari = $this->session->userdata('id_pencari');
+		$email = $this->input->post('email');
+		$subjek = $this->input->post('subjek');
+		$pesan = $this->input->post('pesan');
+
+		$data = array('status'=> "Sudah Dibalas");
+		$this->db->where('id_konsultasi',$id_konsultasi);
+		$this->db->update('konsultasi',$data);
+
+		$this->load->library('email');
+        $config = array();
+        $config['charset'] = 'utf-8';
+        $config['useragent'] = 'Codeigniter';
+        $config['protocol']= "smtp";
+        $config['mailtype']= "html";
+        $config['smtp_host']= "ssl://smtp.gmail.com";//pengaturan smtp
+        $config['smtp_port']= "465";
+        $config['smtp_timeout']= "400";
+        $config['smtp_user']= "ebeasiswa.indonesia@gmail.com"; // isi dengan email kamu
+        $config['smtp_pass']= "beasiswaindonesia"; // isi dengan password kamu
+        $config['crlf']="\r\n"; 
+        $config['newline']="\r\n"; 
+        $config['wordwrap'] = TRUE;
+        //memanggil library email dan set konfigurasi untuk pengiriman email
+
+        $this->email->initialize($config);
+        //konfigurasi pengiriman
+        $this->email->from($config['smtp_user']);
+        $this->email->to($email);
+        $this->email->subject($subjek);
+        $this->email->message($pesan);
+        
+  //error
+        if($this->email->send()){
+
+
+		$this->session->set_flashdata('success', 'Pesan sudah terkirim');
+		redirect('AdminC/get_detail_konsultasi/'.$id_konsultasi);
+		}else{
+
+		$this->session->set_flashdata('error', 'Pesan gagal terkirim');
+		redirect('AdminC/get_detail_konsultasi/'.$id_konsultasi);
+		}
+
+
+		$data['konsultasi']=$this->PencariM->get_detail_konsultasi($id_konsultasi)->result();
+		$this->load->view('admin/reply_konsul', $data);
+
+	}
+	public function hapusKonsultasi($id_konsultasi){
+		
+		if($this->KonsultasiM->hapus_konsultasi($id_konsultasi)){
+			redirect('AdminC/get_konsultasi');
+		}
+	}
 	public function hapusPencari($id_pencari){
 		$data=array(
 			"isDelete"=>'1',
@@ -100,7 +172,6 @@ class AdminC extends CI_Controller
 		else{
 			$nama_beasiswa_umum = $this->input->post('nama_beasiswa_umum');
 			$jenjang = $this->input->post('jenjang');
-			$kategori_beasiswa_umum = $this->input->post('kategori_beasiswa_umum');
 			$negara = $this->input->post('negara');
 			$url_beasiswa_umum = $this->input->post('url_beasiswa_umum');
 
@@ -110,13 +181,9 @@ class AdminC extends CI_Controller
 			$dataBeasiswaUmum =  array(
 					'nama_beasiswa_umum' =>$nama_beasiswa_umum,
 					'jenjang' =>$jenjang,
-					'kategori_beasiswa_umum' =>$kategori_beasiswa_umum,
 					'negara' =>$negara,
 					'url_beasiswa_umum' =>$url_beasiswa_umum
 				);
-
-
-
 
 
 			$result = $this->BeasiswaM->tambah_beasiswa_umum($dataBeasiswaUmum);
@@ -130,12 +197,8 @@ class AdminC extends CI_Controller
 			$this->session->set_flashdata('error', 'Data gagal ditambah');
 			}
 
-
-
 		}
-
 		redirect('AdminC/get_beasiswa_umum');
-
 	}
 
 	public function edit_beasiswa_umum(){
@@ -155,7 +218,6 @@ class AdminC extends CI_Controller
 			$id_beasiswa_umum = $this->input->post('id_beasiswa_umum');
 			$nama_beasiswa_umum = $this->input->post('nama_beasiswa_umum');
 			$jenjang = $this->input->post('jenjang');
-			$kategori_beasiswa_umum = $this->input->post('kategori_beasiswa_umum');
 			$negara = $this->input->post('negara');
 			$url_beasiswa_umum = $this->input->post('url_beasiswa_umum');
 
@@ -166,7 +228,6 @@ class AdminC extends CI_Controller
 			$dataEditBeasiswaUmum =  array(
 					'nama_beasiswa_umum' =>$nama_beasiswa_umum,
 					'jenjang' =>$jenjang,
-					'kategori_beasiswa_umum' =>$kategori_beasiswa_umum,
 					'negara' =>$negara,
 					'url_beasiswa_umum' =>$url_beasiswa_umum
 				);
@@ -428,7 +489,7 @@ class AdminC extends CI_Controller
 
 				$result = $this->db->insert('detail_universitas', $dataDetailUniv);
 
-				$result = $this->db->insert('univ_fak',$dataIdUniv);
+				$result = $this->db->insert('fak_univ',$dataIdUniv);
 
         //jika id userrole == 2 maka dia juga sekaligus menambahkan pada tabel dosen
 

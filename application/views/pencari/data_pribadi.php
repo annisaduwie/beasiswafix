@@ -72,9 +72,3 @@ $this->load->view('pencari/profilpencari');?>
 </div>
 <!-- /.content-wrapper -->
   </body>
-
-  <footer class="main-footer">
-  <div class="pull-right hidden-xs">
-  
-  </div>
-</footer>

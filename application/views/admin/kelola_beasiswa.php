@@ -94,7 +94,6 @@ $this->load->view('admin/head_admin');
                       <th>No </th>
                       <th>Nama Beasiswa</th>
                       <th>Jenjang</th>
-                      <th>Kategori Beasiswa</th>
                       <th>Negara</th>
                       <th>Link</th>
 
@@ -108,7 +107,6 @@ $this->load->view('admin/head_admin');
                       <td><?php echo $no; ?></td>
                       <td ><?php echo $value->nama_beasiswa_umum; ?></td>
                       <td ><?php echo $value->jenjang; ?></td>
-                      <td ><?php echo $value->kategori_beasiswa_umum; ?></td>
                       <td ><?php echo $value->negara; ?></td>
                       <td ><?php echo $value->url_beasiswa_umum; ?></td>
 
@@ -140,7 +138,7 @@ $this->load->view('admin/head_admin');
 
                                 <div class="col-sm-10">
 
-                                  <input type="text" name="id_beasiswa_umum" value="<?php echo $value->id_beasiswa_umum; ?>">
+                                  <input type="hidden" name="id_beasiswa_umum" value="<?php echo $value->id_beasiswa_umum; ?>">
                                   
                                 </div>
                               </div>
@@ -182,25 +180,7 @@ $this->load->view('admin/head_admin');
                               </div>
                             </div>
 
-                            <div class="form-group" style="padding: 15px 0;">
-                              <label for="kategori_beasiswa" class="col-sm-2 control-label">Kategori Beasiswa</label>
-                              <div class="col-sm-10">
-                                <select name="kategori_beasiswa_umum" class="form-control" >
-                                 <option value="0" disabled selected>---- Kategori Beasiswa ----</option>
-                                 <option <?php if($value->kategori_beasiswa_umum == "Beasiswa Penuh") 
-                                 {
-                                  echo "selected=selected";
-                                } 
-                                ?> value="Beasiswa Penuh">Beasiswa Penuh</option>
-                                <option <?php if($value->kategori_beasiswa_umum == "Beasiswa Sebagian") 
-                                {
-                                  echo "selected=selected";
-                                } 
-                                ?> value="Beasiswa Sebagian">Beasiswa Sebagian</option>
-                              </select>
-                            </div>
-                          </div>
-
+                            
                           <div class="form-group" style="padding: 15px 0;">
                             <label for="inputurl" class="col-sm-2 control-label">Negara</label>
                             <div class="col-sm-10">
@@ -298,16 +278,6 @@ $this->load->view('admin/head_admin');
            </select>
          </div>
        </div>
-       <div class="form-group" style="padding: 5px 0;">
-        <label for="kategori_beasiswa" class="col-sm-2 control-label">Pilih Kategori Beasiswa</label>
-        <div class="col-sm-10">
-          <select name="kategori_beasiswa_umum" class="form-control" >
-           <option value="0" disabled selected>---- Kategori Beasiswa ----</option>
-           <option value="Beasiswa Penuh">Beasiswa Penuh</option>
-           <option value="Beasiswa Sebagian">Beasiswa Sebagian</option>
-         </select>
-       </div>
-     </div>
 
      <div class="form-group" style="padding: 5px 0;">
       <label for="inputurl" class="col-sm-2 control-label">Negara</label>
