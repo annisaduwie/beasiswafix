@@ -61,6 +61,7 @@ $this->load->view('pencari/header_user');
             <div style="padding-bottom: 10px;"><?php echo $value['judul']; ?>
             </div>
             
+            <div class="text-muted small pb-2"><i class="fa fa-calendar"></i> <i><?php echo $value['date'] ?></i></div>
           </span>
           <p>
          <?php echo $value['deskripsi']; ?>

@@ -259,6 +259,7 @@ class Pencarian_BeasiswaC extends CI_Controller
 
 					$result[$i] = array (
 						'judul'=> $data->find('h1.entry-title', 0)->plaintext,
+						'date'=> $data->find('.entry-date',0)->plaintext,
 						'deskripsi'=> trim(str_replace($search, $newstring, $deskripsi)),
 						'link'=> $data->find('h1.entry-title', 0)->children(0)->href
 					);
@@ -551,8 +552,8 @@ class Pencarian_BeasiswaC extends CI_Controller
 
 		// }
 
-		$filter = $this->BeasiswaM->get_url_beasiswa_umum_key_negara($keyword_negara);
-		$filter = $this->BeasiswaM->get_url_beasiswa_umum_key_jenjang($keyword_jenjang);
+		// $filter = $this->BeasiswaM->get_url_beasiswa_umum_key_negara($keyword_negara);
+		// $filter = $this->BeasiswaM->get_url_beasiswa_umum_key_jenjang($keyword_jenjang);
 
 		$result = $this->scrapping_by_keyword_negara($keyword_jenjang, $keyword_negara, $page);
 
