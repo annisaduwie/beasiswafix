@@ -138,5 +138,10 @@ class BeasiswaM extends CI_Model{
     return $query;
   }
 
+  public function tampil_list_beasiswa($jenjang, $negara) {
+    $query = $this->db->query("SELECT * FROM pencarian_beasiswa, konten_beasiswa WHERE pencarian_beasiswa.id_pencarian_beasiswa=konten_beasiswa.id_pencarian_beasiswa AND keyword_jenjang='$jenjang' AND keyword_negara='$negara'");
+    return $query;
+  }
+
 
 }

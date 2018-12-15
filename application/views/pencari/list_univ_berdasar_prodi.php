@@ -14,6 +14,11 @@ $this->load->view('pencari/header_user');
 <section class="section purchase" data-stellar-background-ratio="0.5" style="padding-left:20px;padding-bottom:10px; background-color:#3c8dbc; ; -webkit-background-size: 100% 100%; -moz-background-size: cover; -o-background-size: cover; background-size: cover; height: 300px;">
 
   <div class="container" style="padding-top: 30px; ">
+    <div class="row">
+    <div class="col-md-3">
+    <img src="<?php echo base_url();?>assets/images/university.png" style="height: 200px; width: 200px;" class="img-fluid" alt="img13" /> 
+    </div> 
+    <div class="col-md-9">
    <h5 class="title-text" style="color:#fff;">
     Area Universitas<br></h5>
 
@@ -29,7 +34,9 @@ $this->load->view('pencari/header_user');
 
             <!-- <p>Join thousand of employers and earn what you deserve!</p>
               <a href="my-account.html" class="btn btn-common">Get Started Now</a> -->
-              <a class="btn-form" type="btn" href="<?php echo base_url('Pencarian_BeasiswaC/get_beasiswa');?>" class="btn-form" style="background-color:#fff; color:black;">Cari Beasiswa</a>
+              <a class="btn-form" type="btn" href="<?php echo base_url('Pencarian_BeasiswaC/get_beasiswa');?>" class="btn-form" style="background-color:#fff; color:black;">Lihat Beasiswa</a>
+            </div>
+          </div>
 
             </div>
 

@@ -83,6 +83,12 @@ $this->load->view('admin/headAdmin');
         <li>
           <a href="<?php echo site_url('AdminC/get_konsultasi');?>">
             <span>Kotak masuk</span>
+            <span class="pull-right-container">
+              <?php 
+              $result =  $this->db->query("SELECT count(id_konsultasi) as kotak_masuk from konsultasi WHERE status='dikirim'")->row_array();?>
+
+              <small class="label pull-right bg-yellow"><?php echo $result['kotak_masuk'];?></small>
+            
           </a>
         </li>
         <li >

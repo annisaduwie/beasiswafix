@@ -620,7 +620,7 @@ class AdminC extends CI_Controller
 				$this->session->set_flashdata('error', 'Universitas gagal diubah');
 			}	
 			
-			redirect('AdminC/get_universitas');
+			redirect('AdminC/tampil_admin_fakultas/'.$id_universitas);
 		}
 	}
 

@@ -121,7 +121,10 @@ $this->load->view('pencari/header_user');
 
     if (jenjang != 0 && negara != 0) {
       window.location = '<?php echo base_url('Pencarian_BeasiswaC/pencarian_beasiswa/') ?>' + jenjang + '/' + negara + '/' + page;
-    } else {
+    } else if (jenjang != 0 && negara == 0){
+      window.location = '<?php echo base_url('Pencarian_BeasiswaC/pencarian_beasiswa/') ?>' + jenjang + '/' + page;
+    }
+    else {
       alert('Silahkan pilih Jenjang dan Negara terlebih dahulu!')
     }
 

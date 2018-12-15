@@ -10,16 +10,23 @@ $this->load->view('pencari/header_user');
 <section class="section purchase" data-stellar-background-ratio="0.5" style="padding-left:20px;padding-bottom:5px; background-color:#3c8dbc; ; -webkit-background-size: 100% 100%; -moz-background-size: cover; -o-background-size: cover; background-size: cover; height: 300px;">
 
   <div class="container" style="padding-top: 20px; ">
+    <div class="row">
+    <div class="col-md-3">
+    <img src="<?php echo base_url();?>assets/images/diploma.png" style="height: 200px; width: 200px;" class="img-fluid" alt="img13" /> 
+    </div> 
+    <div class="col-md-9">
     <h5 class="title-text" style="color:#fff; ">Area Beasiswa</h5>
       
-        <h6 class="title-text" style="color:#fff; padding-bottom: 30px;">Temukan berbagai beasiswa sesuai pilihanmu.<br> Kamu dapat mencari beasiswa berdasarkan universitas dan tingkatan yang kamu ingin pilih.</h6><hr>
+        <h6 class="title-text" style="color:#fff; padding-bottom: 30px;">Temukan berbagai beasiswa sesuai pilihanmu.<br> Kamu dapat mencari beasiswa berdasarkan universitas dan tingkatan yang kamu ingin pilih.</h6>
 
         <br>
         <h3 style="color:#fff; ">Beasiswa di <?php echo $keyword_universitas;?><br></h3>
-      
+      </div>
+    </div>
 
 
     </div>
+  </div>
   </section>
 
   <section class="main-block light-bg" id="section">
@@ -31,7 +38,7 @@ $this->load->view('pencari/header_user');
         <div class="user-block">
           <div class="row">
           <div class="col-md-12 featured-responsive">
-     <span class="username"><p>Menampilkan 1500 hasil</p></span></div></div>
+     <span class="username"><p><i class="fa fa-list"> Menampilkan <?php echo !empty($hasil['total']) ? $hasil['total'] : '0' ?> hasil</i></p></span></div></div>
     
      <?php foreach ($hasil as $value): ?>
       <form id="form" action="<?php echo base_url().'Pencarian_BeasiswaC/tampil_detail_beasiswa_univ'?>" method="POST">
@@ -51,6 +58,7 @@ $this->load->view('pencari/header_user');
             <input type="hidden" name="link" value="<?php echo $value['link']; ?>">
             <div style="padding-bottom: 10px;"><?php echo $value['judul']; ?>
             </div>
+            <?php echo $value['id'];?>
             
           </span>
           <p>

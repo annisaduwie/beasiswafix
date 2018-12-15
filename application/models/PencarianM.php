@@ -34,9 +34,18 @@ class PencarianM extends CI_Model{
     }
 
     public function insertPencarianBeasiswa($dataPencarianBeasiswa){
-
         
       return $this->db->insert('pencarian_beasiswa', $dataPencarianBeasiswa);
+     
+      $insert_id = $this->db->insert_id();
+      
+      $this->db->trans_complete();
+      return $insert_id;
+    }
+    public function insertKontenBeasiswa($dataKontenBeasiswa){
+
+        
+      return $this->db->insert('konten_beasiswa', $dataKontenBeasiswa);
      
       $insert_id = $this->db->insert_id();
       

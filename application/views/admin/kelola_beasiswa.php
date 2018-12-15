@@ -1,4 +1,4 @@
-
+ 
 <?php
 $this->load->view('admin/head_admin');
 ?>
@@ -64,21 +64,26 @@ $this->load->view('admin/head_admin');
               </div>
             </div>
 
-
-            <div class="box">
-              <div class="box-header">
+                <div class="box">
+                <div class="box-header">
                 <h1>Data Beasiswa
                   <!-- <small>Version 2.0</small> -->
                 </h1>
                 <ol class="breadcrumb">
                   <li class="active">Beasiswa</li>
                 </ol>
-              </div>
+                   </div>
+              
+              
+              
+
               <div class="callout callout-warning">
                 <h4>Perhatian !</h4>
 
                 <p>Untuk pengisian pada kolom negara, tidak boleh menggunakan spasi (" "), anda dapat menggantinya dengan strip (-), misalkan Timor-Leste </p>
               </div>
+           
+
               <div class="box-body">
 
                 <button type="button" style="background-color: #3C8DBC; color: #fff; padding-right: 15px; margin-bottom: 20px;" class="btn btn-info" data-toggle="modal" data-target="#modal-tambah">

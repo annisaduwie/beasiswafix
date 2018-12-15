@@ -71,8 +71,7 @@ $this->load->view('admin/headerAdmin');
             </div>
 
 
-            <div class="box">
-              <div class="box-header">
+            
 
                 <h1>
                   <?php echo $nama_univ['nama_universitas'];?>
@@ -82,9 +81,14 @@ $this->load->view('admin/headerAdmin');
                   <li><a href="<?php echo base_url('AdminC/get_universitas');?>">Universitas</a></li>
                   <li class="active">Detail Universitas</li>
                 </ol>
-
+                <div class="box">
+              <div class="box-header">
+                 <?php foreach ($universitas as $value){ ?>
                 <h3>
-                  Informasi Umum
+
+                  Informasi Umum <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-<?php echo $value->id_universitas; ?>"><span data-toogle="tooltip" title="Edit Informasi Umum">
+                  <i class="fa fa-pencil"></i></span>
+                </button>
                   <!-- <small>Version 2.0</small> -->
                 </h3><hr>
 
@@ -116,9 +120,135 @@ $this->load->view('admin/headerAdmin');
 
 
               </div>
+            </div>
+
+                <!-- modal untuk ubah manual -->
+                      <div class="modal fade" id="modal-<?php echo $value->id_universitas; ?>">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title"><center>Ubah Universitas</center></h4>
+                              </div>
+                              <div class="modal-body">
+                                <?php echo form_open_multipart('AdminC/edit_universitas','id ="form" class="form-horizontal"');?>
+
+                                <div class="form-group" style="padding: 15px 0;">
+                                
+                                  <div class="col-sm-10">
+                                    <input type="hidden" name="id_universitas" value="<?php echo $value->id_universitas; ?>">
+                                     <input type="hidden" name="id_detail_universitas" value="<?php echo $value->id_detail_universitas; ?>">
+                                  </div>
+                                </div>
+                                <div class="form-group" style="padding: 15px 0;">
+                                  <label for="inputurl" class="col-sm-2 control-label">Nama Universitas </label>
+                                  <div class="col-sm-10">
+                                    <input type="text" name="nama_universitas" class="form-control" id="inputurl" value="<?php echo $value->nama_universitas; ?>" >
+                                  </div>
+                                </div>
+                                <div class="form-group" style="padding: 15px 0;">
+                                  <label for="inputurl" class="col-sm-2 control-label">URL </label>
+                                  <div class="col-sm-10">
+                                    <input type="text" name="url_universitas" class="form-control" id="inputurl" value="<?php echo $value->url_universitas; ?>" >
+                                  </div>
+                                </div>
+                                <div class="form-group" style="padding: 15px 0;">
+                                  <label for="inputurl" class="col-sm-2 control-label">Deskripsi</label>
+                                  <div class="col-sm-10">
+                                    <textarea name="deskripsi_universitas" class="form-control" id="inputnegara"placeholder="Tuliskan Deskripsi" ><?php echo $value->deskripsi_universitas;?></textarea>
+                                  </div>
+                                </div><br>
+
+                                <div class="form-group" style="padding: 15px 0;">
+                                  <label for="inputurl" class="col-sm-2 control-label">Alamat Lengkap</label>
+                                  <div class="col-sm-10">
+                                    <textarea name="alamat_universitas" class="form-control" id="alamat" value="" placeholder="Masukkan alamat"><?php echo $value->alamat_universitas;?></textarea>
+                                  </div>
+                                </div><br>
 
 
-              <div class="box-body"><hr>
+                                <div class="form-group" style="padding: 15px 0;">
+                                  <label for="inputnip" class="col-sm-2 control-label">Latitude</label>
+                                  <div class="col-sm-10">
+                                    <input type="text" class="form-control"  value="<?php echo $value->latitude; ?>" name="latitude" id="latitude" placeholder="Masukkan no telepon">
+                                  </div>
+                                </div>
+
+                       
+
+                                <div class="form-group" style="padding: 15px 0;">
+                                  <label for="inputurl" class="col-sm-2 control-label">Longitude</label>
+                                  <div class="col-sm-10">
+                                    <input name="longitude" class="form-control" id="inputnegara" value="<?php echo $value->longitude;?>" placeholder="Masukkan longitude">
+                                  </div>
+                                </div>
+
+                                <div class="form-group" style="padding: 15px 0;">
+                                  <label for="kategori" class="col-sm-2 control-label">Kategori</label>
+                                  <div class="col-sm-10">
+                                    <select name="kategori_universitas" class="form-control required">
+                                      <option <?php if($value->kategori_universitas == "Dalam Negeri") 
+                                      {
+                                        echo "selected=selected";
+                                      } 
+                                      ?> value="Dalam Negeri">Dalam Negeri</option>
+                                      <option <?php if($value->kategori_universitas == "Luar Negeri") {echo "selected=selected";} ?> value="Luar Negeri">Luar Negeri</option>
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="form-group" style="padding: 15px 0;">
+                                  <label for="inputurl" class="col-sm-2 control-label">Negara</label>
+                                  <div class="col-sm-10">
+                                    <input type="text" name="negara" class="form-control" id="inputnegara" value="<?php echo $value->negara; ?>">
+                                  </div>
+                                </div>
+
+                                <div class="form-group" style="padding: 15px 0;">
+                                  <label for="inputnip" class="col-sm-2 control-label">Email</label>
+                                  <div class="col-sm-10">
+                                    <input type="email" class="form-control"  value="<?php echo $value->email; ?>" name="email" id="email" placeholder="Masukkan email">
+                                  </div>
+                                </div>
+
+                                <div class="form-group" style="padding: 15px 0;">
+                                  <label for="inputnip" class="col-sm-2 control-label">No Telepon</label>
+                                  <div class="col-sm-10">
+                                    <input type="text" class="form-control"  value="<?php echo $value->no_telp; ?>" name="no_telp" id="no_telp" placeholder="Masukkan no telepon">
+                                  </div>
+                                </div>
+
+
+
+                                <div class="form-group" style="padding: 15px 0;">
+
+                                  <label for="inputurl" class="col-sm-2 control-label">Unggah Gambar</label>
+                                  <div class="col-sm-10">
+                                    <input type="file" id="pic" name="pic" value="<?php echo $value->gambar_universitas; ?>">
+                                    <p class="text-red">*Ukuran gambar maksimal 3 mb</p>
+                                  </div>
+                                </div>
+                              </div>
+
+
+                              <div class="modal-footer">
+                                <button type="button" style="margin-left: 5px;"class="btn btn-default pull-right" data-dismiss="modal">Batal</button>
+                                <input type="submit" value="Simpan" class="btn btn-primary">
+                              </div>
+                            </div>
+                          </div>
+                          <?php echo form_close(); ?> 
+                        </div>
+                        <!-- /.modal-content -->
+                      </div>
+                      <!-- /.modal-dialog -->
+                    </div>
+                    <!-- /.modal -->
+            <?php }?>
+
+              <div class="box">
+              <div class="box-header">
+              
                 <h3>
                  Data Fakultas <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-tambah-<?php echo $id;?>"><span data-toogle="tooltip" title="Tambah Fakultas">
                   <i class=" fa fa-plus"></i></span>
@@ -202,13 +332,17 @@ $this->load->view('admin/headerAdmin');
 
                   
                 <?php  endforeach; ?>
+              </tbody>
+            </table>
+          </div>
+        </div>
 
 
-                
+              <div class="box">
+              <div class="box-header">
 
                 <table id="example" class="table table-bordered table-striped">
 
-                  <hr>
                   <h3>
                    Data Beasiswa <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-tambah_beasiswa"><span data-toogle="tooltip" title="Tambah Beasiswa">
                      <i class=" fa fa-plus"></i></span>

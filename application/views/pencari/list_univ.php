@@ -71,15 +71,14 @@ $this->load->view('pencari/header_user');
 <section class="section purchase" data-stellar-background-ratio="0.5" style="padding-left:20px;padding-bottom:10px; background-color:#3c8dbc; ; -webkit-background-size: 100% 100%; -moz-background-size: cover; -o-background-size: cover; background-size: cover; height: 300px;">
 
   <div class="container" style="padding-top: 30px; ">
+    <div class="row">
+    <div class="col-md-3">
+    <img src="<?php echo base_url();?>assets/images/university.png" style="height: 200px; width: 200px;" class="img-fluid" alt="img13" /> 
+    </div> 
+    <div class="col-md-9">
     <h5 class="title-text" style="color:#fff; ">
-      Area Universitas <?php echo $this->session->userdata('session_id_univ') ?><br><h5>
-      <h6 class="title-text" style="color:#fff; ">
-
-
-
-
-        <!--  <?php echo $keyword_prodi;?> -->
-
+      Area Universitas <?php echo $this->session->userdata('session_id_univ') ?><br></h5>
+     
         <?php 
         $list_universitas = $this->db->query("SELECT count(distinct nama_universitas) as jumlah_universitas from universitas, fak_univ, fakultas, prodi_fak, prodi  where universitas.id_universitas=fak_univ.id_universitas AND fak_univ.id_fakultas=fakultas.id_fakultas AND fakultas.id_fakultas=prodi_fak.id_fakultas AND prodi_fak.id_prodi=prodi.id_prodi AND nama_prodi='$keyword_prodi' AND tingkatan='$keyword_tingkatan' AND kategori_universitas='$keyword_kategori'");
 
@@ -96,10 +95,10 @@ $this->load->view('pencari/header_user');
        <?php }?> 
 
      </h6>
+      <a class="btn-form" type="btn" href="<?php echo base_url('Pencarian_BeasiswaC/get_beasiswa');?>" class="btn-form" style="background-color:#fff; color:black;">Lihat Beasiswa</a>
+   </div>
+ </div>
 
-            <!-- <p>Join thousand of employers and earn what you deserve!</p>
-              <a href="my-account.html" class="btn btn-common">Get Started Now</a> -->
-              <a class="btn-form" type="btn" href="<?php echo base_url('Pencarian_BeasiswaC/get_beasiswa');?>" class="btn-form" style="background-color:#fff; color:black;">Cari Beasiswa</a>
 
             </div>
 

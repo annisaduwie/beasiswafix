@@ -21,16 +21,16 @@
 
 
    public function tampil_prodi(){
-     $query = $this->db->query("SELECT nama_prodi from fakultas, univ_fak, fak_prodi, prodi  where fakultas.id_univ_fak = univ_fak.id_univ_fak AND univ_fak.id_univ_fak=fak_prodi.id_univ_fak AND fak_prodi.id_fak_prodi=prodi.id_fak_prodi GROUP BY fakultas.nama_fakultas;");
+     $query = $this->db->query("SELECT nama_prodi from fakultas, prodi_fak, prodi  where fakultas.id_fakultas = prodi_fak.id_fakultas AND prodi_fak.id_prodi=prodi.id_prodi GROUP BY fakultas.nama_fakultas;");
      return $query;
    }
    public function jumlah_prodi(){
-     $query = $this->db->query("SELECT distinct nama_fakultas, count('nama_prodi') as jumlah_prodi from fakultas, univ_fak, fak_prodi, prodi  where fakultas.id_univ_fak = univ_fak.id_univ_fak AND univ_fak.id_univ_fak=fak_prodi.id_univ_fak AND fak_prodi.id_fak_prodi=prodi.id_fak_prodi GROUP BY fakultas.nama_fakultas;");
+     $query = $this->db->query("SELECT distinct nama_fakultas, count('nama_prodi') as jumlah_prodi from fakultas, prodi_fak, prodi  where fakultas.id_fakultas = prodi_fak.id_fakultas AND prodi_fak.id_prodi=prodi.id_prodi GROUP BY fakultas.nama_fakultas;");
      return $query;
    }
 
    public function nama_prodi(){
-     $query = $this->db->query("SELECT distinct nama_fakultas,nama_prodi from fakultas, univ_fak, fak_prodi, prodi  where fakultas.id_univ_fak = univ_fak.id_univ_fak AND univ_fak.id_univ_fak = fak_prodi.id_univ_fak AND fak_prodi.id_fak_prodi=prodi.id_fak_prodi order by fak_prodi.id_fakultas;");
+     $query = $this->db->query("SELECT distinct nama_fakultas,nama_prodi from fakultas, prodi_fak, prodi  where fakultas.id_fakultas = prodi_fak.id_fakultas AND prodi_fak.id_prodi=prodi.id_prodi order by fak_prodi.id_fakultas;");
      return $query;
    }
 

@@ -7,12 +7,19 @@ $this->load->view('pencari/header_user');
 ?>
 
 
-<section class="section purchase" data-stellar-background-ratio="0.5" style="padding-left:20px;padding-bottom:5px; background-color:#3c8dbc; ; -webkit-background-size: 100% 100%; -moz-background-size: cover; -o-background-size: cover; background-size: cover; height: 200px;">
+<section class="section purchase" data-stellar-background-ratio="0.5" style="padding-left:20px;padding-bottom:5px; background-color:#3c8dbc; ; -webkit-background-size: 100% 100%; -moz-background-size: cover; -o-background-size: cover; background-size: cover; height: 300px;">
 
 <?php foreach ($hasil as $value):?>
   <div class="container" style="padding-top: 30px; ">
+     <div class="row">
+    <div class="col-md-3">
+    <img src="<?php echo base_url();?>assets/images/information.png" style="height: 200px; width: 200px;" class="img-fluid" alt="img13" /> 
+    </div> 
+    <div class="col-md-9">
         
    <h3 style="color:#fff; margin-top: 50px;"><?php echo $value['title'];?><br></h3>
+ </div>
+</div>
 
     </div>
   <?php endforeach ?>
@@ -24,9 +31,13 @@ $this->load->view('pencari/header_user');
      <!-- Post -->
   <div class="post">
 
+
         <div class="user-block">
           <div class="row">
+
           <div class="col-md-12 featured-responsive">
+            <h4><i class="fa fa-th-list"> Informasi Persyaratan</h4></i><br>
+      <?php echo $value['id'];?>    
       <?php echo $value['description'];?>
    </div>
  </div>
