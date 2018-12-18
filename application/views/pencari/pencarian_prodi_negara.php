@@ -50,7 +50,7 @@ $this->load->view('pencari/header_user');
    
         <div class="row" style="background-color: #d2d6de; padding-top: 20px; height: 80px;">
           <div class="col-md-12">
-            <h5><i class="fa fa-university"> <?php echo $nama_univ['nama_universitas']?></i></h5>
+            <h5><i class="fa fa-flag"> <?php echo $negara;?></i></h5>
           </div>
         </div>
 </div>
@@ -71,7 +71,7 @@ $this->load->view('pencari/header_user');
                 <h3>Daftar Fakultas</h3>
               </div>
 
-              <?php foreach ($fakultas_pelajar_universitas as $key) {?>
+              <?php foreach ($fakultas_pelajar_negara as $key) {?>
 
               <form action="<?php echo base_url('PencarianC/pencarian_univ_berdasar_fakultas');?>" method="POST">
                   <ul class="products-list product-list-in-box" style="padding:5px;">
@@ -135,7 +135,7 @@ $this->load->view('pencari/header_user');
     <?php }?>
     <div class="row">
       <div class="col">
-       <?php echo $pagination_pelajar_universitas; ?>
+       <?php echo $pagination_pelajar_negara; ?>
      </div>
    </div>
     <?php }?>
@@ -145,7 +145,7 @@ $this->load->view('pencari/header_user');
                 <h3>Daftar Fakultas</h3>
               </div>
 
-              <?php foreach ($fakultas_mahasiswa_universitas as $key) {?>
+              <?php foreach ($fakultas_mahasiswa_negara as $key) {?>
 
               <form action="<?php echo base_url('PencarianC/pencarian_univ_berdasar_fakultas');?>" method="POST">
                   <ul class="products-list product-list-in-box" style="padding:5px;">
@@ -209,18 +209,19 @@ $this->load->view('pencari/header_user');
     <?php }?>
     <div class="row">
       <div class="col">
-       <?php echo $pagination_mahasiswa_universitas; ?>
+       <?php echo $pagination_mahasiswa_negara; ?>
      </div>
    </div>
     <?php }?>
 
-    <?php } else{?>
+
+     <?php } else{?>
 
       <div class="styled-heading">
         <h3>Daftar Fakultas</h3>
       </div>
 
-    <?php foreach ($fakultas_universitas as $key) {?>
+    <?php foreach ($fakultas_negara as $key) {?>
     <form action="<?php echo base_url('PencarianC/pencarian_univ_berdasar_fakultas');?>" method="POST">
       <ul class="products-list product-list-in-box" style="padding:5px;">
         <li class="item" style=" background-color: #252a33; height: 200px; padding: 50px; ">
@@ -295,13 +296,13 @@ $this->load->view('pencari/header_user');
   <div class="col">
     <!-- <nav aria-label="Page navigation example"> -->
       <!-- <ul class="pagination justify-content-center"> -->
-       <?php echo $pagination_universitas; ?>
+       <?php echo $pagination_negara; ?>
 <!--          </ul>
 </nav> -->
 </div>
 </div>
 
-    <?php } ?>
+    <?php }?>
 
      <!--   <div class="row" style="background-color: #d2d6de; padding-top: 20px; height: 80px;">
           <div class="col-md-12">

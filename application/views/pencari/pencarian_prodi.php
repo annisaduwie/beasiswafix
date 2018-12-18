@@ -40,7 +40,7 @@
 <?php
 $this->load->view('pencari/header_user');
 ?>
-<section class="section purchase" data-stellar-background-ratio="0.5" style="padding-left:20px;padding-bottom:5px; background-color:#3c8dbc; ; -webkit-background-size: 100% 100%; -moz-background-size: cover; -o-background-size: cover; background-size: cover; height: 300px;">
+<section class="section purchase" data-stellar-background-ratio="0.5" style="padding-left:20px;padding-bottom:5px; background-color:#3c8dbc; ; -webkit-background-size: 100% 100%; -moz-background-size: cover; -o-background-size: cover; background-size: cover; height: 400px;">
 
   <div class="container" style="padding-top: 20px; ">
     <h5 class="title-text" style="color:#fff; ">
@@ -49,38 +49,60 @@ $this->load->view('pencari/header_user');
 
 
       </h5>
-      <form class="form-wrap mt-4" method="POST" id="form" action="<?php echo base_url('PencarianC/tampil_pencarian_prodi_by_universitas')?>">
+      
         <div class="row" style="background-color: #d2d6de; padding-top: 15px;">
+        <div class="col-md-12">
+        <div class="form-group">
+        <label><i class="fa fa-reorder" > Saring Bedasarkan</i></label><br>
+  
+            <label class="radio-inline">
+                <input type="radio" id="universitas" name="key" value="universitas" onclick="showUniversitas();"> <i class="fa fa-university"> Universitas</i></label>
+                
+                <label  class="radio-inline">        
+                    <input type="radio" id="negara" name="key" value="negara" onclick="showNegara();"> <i class="fa fa-flag"> Negara</i></label>
 
-          <div class="col-md-5">
-            <!-- select -->
-            <div class="form-group">
-              <!-- <label>Select</label> -->
-              <select class="form-control"  name="filter_universitas" style="height: 50px;" id="filterUniv">
+               
+            </div>
+          </div>
+           
+            
+         
+            <form class="col-md-12" id="dropdown_universitas" style="display: none;" method="POST" id="form" action="<?php echo base_url('PencarianC/tampil_pencarian_prodi_by_universitas')?>">
 
-               <option disabled selected value='0' >-- Saring Berdasarkan Universitas --</option>
+            <div class="form-group" >
+              <select class="form-control" id="value_univ" name="filter_universitas" style="height: 50px;" id="filterUniv">
+
+               <option disabled selected value='0' >Pilih Universitas</option>
+
                <?php foreach ($universitas as $list_nama) {?>
-                <option id ="univ" value="<?php echo $list_nama->id_universitas;?>"><?php echo $list_nama->nama_universitas;?></option>
+                <option value="<?php echo $list_nama->id_universitas;?>"><?php echo $list_nama->nama_universitas;?></option>
               <?php  } ?>
             </select>
-          </div>
-        </div>
-        <div class="col-md-5">
-         <div class="form-group">
-          <!-- <label>Select</label> -->
-          <select class="form-control" name="filter_negara" style="height: 50px;">
-            <option disabled selected value='0'>-- Saring Berdasarkan Negara --</option>
+            </div>
+            <div id="btnUniversitas" style="display: none;">
+            <button type="submit" class="btn btn-danger " style="width:100%; height: 50px;" ><i class="fa fa-search"></i></button>
+            </div>
+          
+          </form>
+          <form class="col-md-12" method="POST" id="dropdown_negara" action="<?php echo base_url('PencarianC/tampil_pencarian_prodi_by_negara')?>" id="dropdown_negara" style="display: none;">
+           <div class="form-group" >
+          <select id="value_negara" class="form-control" name="filter_negara" style="height: 50px;">
+            <option disabled selected value='0'>Pilih Negara</option>
             <?php foreach ($negara as $list_nama) {?>
               <option value="<?php echo $list_nama->negara;?>"><?php echo $list_nama->negara;?></option>
             <?php  } ?>
           </select>
         </div>
+          <div id="btnNegara" style="display: none;">
+        <button type="submit" class="btn btn-danger " style="width:100%; height: 50px;" ><i class="fa fa-search"></i></button>
       </div>
-      <div class="col-md-2">
-        <button type="submit" class="btn btn-danger " style="width:100%; height: 50px;"><i class="fa fa-search"></i></button>
+      </form>
       </div>
+      
+       
+
     </div>
-  </form>
+  
 
 </div>
 
@@ -446,11 +468,22 @@ $this->load->view('pencari/header_user');
 
 </script>
 <script type="text/javascript">
-  function tampil(){
-    var nama_form=document.getElementById("form").filteUniv.value;
-    if nama
+  function showUniversitas(){
+  document.getElementById('dropdown_universitas').style.display ='block';
+  document.getElementById('btnUniversitas').style.display ='block';
+  document.getElementById('value_negara').value = 0; 
+  document.getElementById('dropdown_negara').style.display ='none';
   }
+  function showNegara(){
+  document.getElementById('dropdown_universitas').style.display ='none';
+  document.getElementById('btnNegara').style.display ='block';
+  document.getElementById('value_univ').value = 0;
+  document.getElementById('dropdown_negara').style.display ='block';
+  }
+
 </script>
+
+
 
 
 </body>

@@ -34,7 +34,7 @@ $this->load->view('pencari/header_user');
 
             <!-- <p>Join thousand of employers and earn what you deserve!</p>
               <a href="my-account.html" class="btn btn-common">Get Started Now</a> -->
-              <a class="btn-form" type="btn" href="<?php echo base_url('Pencarian_BeasiswaC/get_beasiswa');?>" class="btn-form" style="background-color:#fff; color:black;">Lihat Beasiswa</a>
+              <a class="btn" type="btn" href="<?php echo base_url('Pencarian_BeasiswaC/get_beasiswa');?>" class="btn-form" style="background-color:#fff; color:black;"><i class="fa fa-mortar-board"> Lihat Beasiswa</i></a>
             </div>
           </div>
 
@@ -243,7 +243,6 @@ $this->load->view('pencari/header_user');
 <!--//END FEATURED PLACES -->
 
 
-<!--============================= FOOTER =============================-->
 <footer class="main-block dark-bg">
   <div class="container">
     <div class="row">

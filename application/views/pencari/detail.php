@@ -32,12 +32,13 @@ $this->load->view('pencari/header_user');
           </div>
           <div class="col-md-10">
             <form class="form-wrap mt-4" action="<?php echo base_url('Pencarian_BeasiswaC/tampil_beasiswa_univ');?>" method="POST">
-              <input type="text" value="<?php echo $list_detail->id_universitas?>" name="keyword_universitas">
+              <input type="hidden" value="<?php echo $list_detail->id_universitas?>" name="keyword_universitas">
              <h5 class="title-text" style="color:#fff; padding-top: 30px;"><b><?php echo $list_detail->nama_universitas?></b>
              </h5><input type="hidden" value="<?php echo $list_detail->nama_universitas;?>" name="nama_univ">
              <p style="color:#fff; font-size: 16px;" ><span class="icon-location-pin"></span> <?php echo $list_detail->negara;?></p><hr>
 
-             <button type="submit" class="btn-form" style="float: right; margin-bottom: 15px; border-radius: 5px;background-color:#fff; color:black;"><center>Cari Beasiswa</center></button>
+
+             <a class="btn-form" type="btn" href="<?php echo base_url('Pencarian_BeasiswaC/get_beasiswa');?>" class="btn-form" style="float: right; margin-bottom: 15px; border-radius: 5px;background-color:#fff; color:black;"><center><i class="fa fa-mortar-board"> Lihat Beasiswa</i></center></a>
            </div>
 
          </div>
@@ -96,24 +97,6 @@ $this->load->view('pencari/header_user');
           </section>
 
 
-          <section class="reserve-block" style="padding-top:50px; background-color: #fff; padding-bottom: 50px;">
-            <div class="container">
-             <h6>Biaya kuliah</h6><br><hr>
-             <div class="row">
-
-              <div class="info-text">
-
-
-               <div class="info-text">
-                <br>
-                <p style="font-size: 14px;">Tasty Hand-Pulled Noodles is a 1950s style diner located in Madison, Wisconsin. Opened in 1946 by Mickey Weidman, and located just across the street from Camp Randall Stadium, it has become a popular game day tradition amongst
-                many Badger fans. The diner is well known for its breakfast selections, especially the Scrambler, which is a large mound of potatoes, eggs, cheese, gravy, and a patrons’ choice of other toppings.</p>
-              </div>     
-
-            </div>
-          </div>
-        </div>
-      </section>
 
 
    <!--  <section class="reserve-block" style="padding-top:50px; background-color: #fff; padding-bottom: 50px;">
@@ -139,7 +122,7 @@ $this->load->view('pencari/header_user');
     </section>
   -->
 
-  <section class="reserve-block" style="padding-top:50px; padding-bottom: 50px;background-color: #f3f4f7">
+  <section class="reserve-block" style="padding-top:50px; padding-bottom: 50px;background-color: #fff;">
     <div class="container">
      <h6>Lokasi</h6><br><hr><br>
      <div class="row">

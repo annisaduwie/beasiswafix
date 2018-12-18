@@ -78,8 +78,17 @@ $this->load->view('admin/headerAdmin');
               <form >
                <div class="post">
                   <div class="user-block" ">
+
+                     <?php 
+                          if( $value->profil_pic == NULL ){ ?>
+                <img class="img-circle img-bordered-sm" src="<?php echo base_url('assets/images/user2.png');?>" style="margin-right:20px; margin-top:10px;">
+
+                <?php }else{ ?>
+
                     <img class="img-circle img-bordered-sm" src="<?php echo base_url('fileUpload/'.$value->profil_pic);?>" alt="user image" style="margin-right:20px;">
-                    
+
+                <?php } ?>
+
                         <span class="username">
                           <?php echo $value->nama;?><div class="description" style="font-size: 11px;"><?php echo "(".$value->email.")"?></sup>
                         </span>

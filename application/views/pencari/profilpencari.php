@@ -71,7 +71,7 @@ $this->load->view('pencari/header_user');
             <center>
               <?php
               if( $nama_pencari['profil_pic'] == NULL){ ?>
-                <img class="profile-user-img img-responsive img-circle" style="height:150px; width:150px;"src="<?php echo base_url('assets/images/userimage.png');?>" alt="User profile picture"></center>
+                <img class="profile-user-img img-responsive img-circle" style="height:150px; width:150px;"src="<?php echo base_url('assets/images/user2.png');?>" alt="User profile picture"></center>
               <?php }else 
               { 
                 ?>

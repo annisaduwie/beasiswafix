@@ -74,7 +74,6 @@ $this->load->view('admin/headerAdmin');
                 <tr><center>
                   <th><center>No </center></th>
                   <th><center>ID Pencari</center></th>
-                  <th><center>Foto Profil</center></th>
                   <th><center>Nama</center></th>
                   <th><center>Email</center></th>
                   <th><center>Tingkatan</center></th>
@@ -88,17 +87,7 @@ $this->load->view('admin/headerAdmin');
                       <tr>   
                         <td><?php echo $no; ?></td>
                         <td ><center><?php echo $value->id_pencari; ?></center></td>
-                        <td ><center>
-                          <?php 
-                          if( $value->profil_pic == NULL ){ ?>
-                <img class="profile-user-img img-responsive img-circle" style="height:150px; width:150px;" src="<?php echo base_url('assets/images/userimage.png');?>" alt="User profile picture">
-
-                <?php }else{ ?>
-
-                    <img class="profile-user-img img-responsive img-circle" src="<?php echo base_url('fileUpload/'.$value->profil_pic);?>" alt="User profile picture">
-
-                <?php } ?>
-                          </td>
+                       
                         <td ><center><?php echo $value->nama; ?></center></td>
                         <td colspan=""><center><?php echo $value->email; ?></center></td>
                         <td colspan=""><center><?php echo $value->tingkatan;?></center></td>

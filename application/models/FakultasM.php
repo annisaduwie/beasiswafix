@@ -32,6 +32,10 @@ class FakultasM extends CI_Model{
    $query = $this->db->query("SELECT distinct  nama_fakultas, fakultas.id_fakultas from universitas, fak_univ, fakultas, prodi_fak, prodi  where universitas.id_universitas=fak_univ.id_universitas AND fak_univ.id_fakultas=fakultas.id_fakultas AND fakultas.id_fakultas=prodi_fak.id_fakultas AND prodi_fak.id_prodi=prodi.id_prodi AND universitas.id_universitas='$id_universitas' GROUP BY nama_fakultas  LIMIT $start,$limit");
    return $query;
   }
+   public function tampil_fakultas_list_negara_page($limit, $start,$negara){
+   $query = $this->db->query("SELECT distinct  nama_fakultas, fakultas.id_fakultas from universitas, fak_univ, fakultas, prodi_fak, prodi  where universitas.id_universitas=fak_univ.id_universitas AND fak_univ.id_fakultas=fakultas.id_fakultas AND fakultas.id_fakultas=prodi_fak.id_fakultas AND prodi_fak.id_prodi=prodi.id_prodi AND negara='$negara' GROUP BY nama_fakultas  LIMIT $start,$limit");
+   return $query;
+  }
    public function tampil_fakultas_mahasiswa($limit, $start){
    $query = $this->db->query("SELECT distinct  nama_fakultas, fakultas.id_fakultas from universitas, fak_univ, fakultas, prodi_fak, prodi  where universitas.id_universitas=fak_univ.id_universitas AND fak_univ.id_fakultas=fakultas.id_fakultas AND fakultas.id_fakultas=prodi_fak.id_fakultas AND prodi_fak.id_prodi=prodi.id_prodi AND (prodi.tingkatan='Magister' OR prodi.tingkatan='Doktor') GROUP BY nama_fakultas LIMIT $start,$limit");
    return $query;
@@ -110,7 +114,7 @@ class FakultasM extends CI_Model{
    return $query;
   }
 
-    public function tampil_fakultas_list_negara($negara){
+    public function tampil_fakultas_list_negara_rows($negara){
    $query = $this->db->query("SELECT distinct  nama_fakultas, fakultas.id_fakultas from universitas, fak_univ, fakultas, prodi_fak, prodi  where universitas.id_universitas=fak_univ.id_universitas AND fak_univ.id_fakultas=fakultas.id_fakultas AND fakultas.id_fakultas = prodi_fak.id_fakultas AND prodi_fak.id_prodi = prodi.id_prodi AND negara='$negara' GROUP BY nama_fakultas");
    return $query;
   }
