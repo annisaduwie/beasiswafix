@@ -40,7 +40,7 @@ class AdminC extends CI_Controller
 			'id_fakultas' => $this->FakultasM->get_fakultas($id_universitas)->row_array()
 		);
 
-		$data['universitas']= $this->UniversitasM->get_universitas()->result();
+		$data['universitas']= $this->UniversitasM->get_universitas_by_id($id_universitas)->result();
 		$data['fakultas']= $this->FakultasM->get_fakultas($id_universitas)->result();
 		$data['beasiswa']= $this->BeasiswaM->get_beasiswa($id_universitas)->result();
 

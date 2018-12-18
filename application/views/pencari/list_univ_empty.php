@@ -18,19 +18,23 @@ $this->load->view('pencari/header_user');
     <section class="section purchase" data-stellar-background-ratio="0.5" style="padding-left:20px;padding-bottom:10px; background-color:#3c8dbc; ; -webkit-background-size: 100% 100%; -moz-background-size: cover; -o-background-size: cover; background-size: cover; height: 300px;">
  
       <div class="container" style="padding-top: 30px; ">
-      <h5 class="title-text" style="color:#fff; ">Area Universitas</h5>
-<h6 class="title-text" style="color:#fff;">
+      <h5 class="title-text" style="color:#fff; ">Maaf</h5>
+      <h6 class="title-text" style="color:#fff;">
     
 
    <!--  <?php echo $keyword_prodi;?> -->
 
            
-             Berikut adalah daftar universitas yang menawarkan <br> 
-            <?php echo $keyword_tingkatan;  ?> program studi 
+            Kami tidak bisa menemukan pencarian kamu untuk <br> 
+            "<?php echo $keyword_tingkatan;  ?> program studi 
             <?php echo $keyword_prodi;  ?> di 
             <?php echo $keyword_kategori; ?>
-
+            "
+            </h6><br>
+            <h6 class="title-text" style="color:#fff;">
+                Mohon lakukan pencarian yang berbeda,<br>silahkan <a href="<?php echo base_url('Awal')?>" style="color:#fff;text-decoration: underline;">kembali ke pencarian</a>  untuk melakukan pencarian ulang
             </h6>
+
 
             <!-- <p>Join thousand of employers and earn what you deserve!</p>
             <a href="my-account.html" class="btn btn-common">Get Started Now</a> -->
@@ -46,19 +50,11 @@ $this->load->view('pencari/header_user');
 
     
 <section class="main-block light-bg">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-5">
-                    <div class="styled-heading">
-                        <h3>Daftar hasil pencarian universitas</h3>
-                    </div>
-                </div>
-            </div>
-            
+        <div class="container">   
            
     <div class="add-listing-wrap">
         <img src="<?php echo base_url('assets/images/searching.png');?>" class="img"><br>
-          <h6>Maaf, Pencarian tidak ditemukan</h6>
+          <h6>Pencarian tidak ditemukan</h6>
         </div>
     </div>
     </section>

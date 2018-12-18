@@ -97,58 +97,64 @@ $this->load->view('pencari/header_user');
             <div class="form-group">
               <button type="submit" class="btn btn1 btn-block" id="butSave">Daftar</button>
           </div>
+          <div class="form-group">
+              <button type="submit" onclick="goBack()" class="btn btn-block" id="butSave">Batal</button>
+          </div>
       </form>
   </div>
 
-<!--   <script type="text/javascript">
+<script type="text/javascript">
+    function goBack() {
+  window.history.back()
+}
 
 
 
-    $(document).ready(function(){
-        reload();
-    });
-    var myTable;
+    // $(document).ready(function(){
+    //     reload();
+    // });
+    // var myTable;
 
-     function tambah_data() {
-        // $('#butSave').text("Menyimpan...");
-        $('#butSave').attr('disabled',true);
-        $.ajax({
-            url : "<?php echo base_url("regispencari/index_post"); ?>",
-            type: "POST",
-            data: $('#form').serialize(),
-            dataType: "JSON",
-            success: function(data)
-            {
-                // to refresh, exactly for datatable integration
-                location.reload();
-                if (data.status == true) {
-                    alert("Akun berhasil dibuat. Silahkan verifikasi akun dari email !");
-                    reload();
+    //  function tambah_data() {
+    //     // $('#butSave').text("Menyimpan...");
+    //     $('#butSave').attr('disabled',true);
+    //     $.ajax({
+    //         url : "<?php echo base_url("regispencari/index_post"); ?>",
+    //         type: "POST",
+    //         data: $('#form').serialize(),
+    //         dataType: "JSON",
+    //         success: function(data)
+    //         {
+    //             // to refresh, exactly for datatable integration
+    //             location.reload();
+    //             if (data.status == true) {
+    //                 alert("Akun berhasil dibuat. Silahkan verifikasi akun dari email !");
+    //                 reload();
                     
                     
-                   // $('#myModal').modal('hide');
-                    $('#form')[0].reset();
-                    // $('#butSave').text("Simpan");
-                    $('#butSave').attr('disabled',false);
-                }else{
-                    alert("Isian kurang lengkap !");
-                // $('#butSave').text("Simpan");
-                $('#butSave').attr('disabled',false); 
+    //                // $('#myModal').modal('hide');
+    //                 $('#form')[0].reset();
+    //                 // $('#butSave').text("Simpan");
+    //                 $('#butSave').attr('disabled',false);
+    //             }else{
+    //                 alert("Isian kurang lengkap !");
+    //             // $('#butSave').text("Simpan");
+    //             $('#butSave').attr('disabled',false); 
 
-                }
-            },
-                 error: function (jqXHR, textStatus, errorThrown)
-            // {
-            //     alert("Isian kurang lengkap !");
-            //     // $('#butSave').text("Simpan");
-            //     $('#butSave').attr('disabled',false); 
-            // }
+    //             }
+    //         },
+    //              error: function (jqXHR, textStatus, errorThrown)
+    //         // {
+    //         //     alert("Isian kurang lengkap !");
+    //         //     // $('#butSave').text("Simpan");
+    //         //     $('#butSave').attr('disabled',false); 
+    //         // }
                 
             
            
-        });
+    //     });
             
-    }
-</script> -->
+    // }
+</script> 
 </body>
 </html>

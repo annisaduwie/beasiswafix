@@ -83,7 +83,8 @@ $this->load->view('admin/headerAdmin');
                 </ol>
                 <div class="box">
               <div class="box-header">
-                 <?php foreach ($universitas as $value){ ?>
+                <?php foreach ($universitas as $value){ ?>
+
                 <h3>
 
                   Informasi Umum <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-<?php echo $value->id_universitas; ?>"><span data-toogle="tooltip" title="Edit Informasi Umum">
@@ -93,27 +94,27 @@ $this->load->view('admin/headerAdmin');
                 </h3><hr>
 
                 <div class="row">
-                  <div class="col-md-4">
+                  <div class="col-md-5">
                     
                     <table class="table table-bordered table-striped">
                       <tr>
                         <td colspan="2" style="text-align: center;"><img class="img" src="<?php echo base_url('universitas/'.$nama_univ['gambar_universitas']);?>"></td>
                       </tr>
                       <tr>
-                        <td>Alamat  </td>
+                        <td><center><i class="fa fa-map-marker"></i></center></td>
                         <td><?php echo $nama_univ['alamat_universitas'];?></td>
                       </tr>
                       <tr>
-                        <td>Email </td>
+                        <td><center><i class="fa fa-envelope-o"></i></center></td>
                         <td><?php echo $nama_univ['email'];?></td>
                       </tr>
                       <tr>
-                        <td>No Telepon </td>
+                        <td><center><i class="fa fa-phone"></i></center></td>
                         <td><?php echo $nama_univ['no_telp'];?></td>
                       </tr>
                     </table>
                   </div>
-                  <div class="col-md-8">
+                  <div class="col-md-7">
                     <p><?php echo $nama_univ['deskripsi_universitas']?></p>
                   </div>
                 </div>

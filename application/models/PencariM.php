@@ -15,7 +15,7 @@ class PencariM extends CI_Model{
    return $query;
  }
  public function get_konsultasi(){
-   $query = $this->db->query("SELECT * from pencari, konsultasi where pencari.id_pencari=konsultasi.id_pencari");
+   $query = $this->db->query("SELECT * from pencari, konsultasi where pencari.id_pencari=konsultasi.id_pencari GROUP BY id_konsultasi ORDER BY konsultasi.create_dtm DESC");
    return $query;
  }
   public function get_detail_konsultasi($id_konsultasi){

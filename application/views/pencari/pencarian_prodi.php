@@ -53,7 +53,7 @@ $this->load->view('pencari/header_user');
         <div class="row" style="background-color: #d2d6de; padding-top: 15px;">
         <div class="col-md-12">
         <div class="form-group">
-        <label><i class="fa fa-reorder" > Saring Bedasarkan</i></label><br>
+        <label><i class="fa fa-reorder" > Saring Bedasarkan</i></label><br><br>
   
             <label class="radio-inline">
                 <input type="radio" id="universitas" name="key" value="universitas" onclick="showUniversitas();"> <i class="fa fa-university"> Universitas</i></label>

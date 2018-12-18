@@ -79,8 +79,8 @@ $this->load->view('admin/headerAdmin');
                 <tr><center>
                   <th><center>No </center></th>
                   <th><center>Nama</center></th>
-                  <th><center>Prodi yang dtanyakan</center></th>
-                  <th><center>Kategori yang dtanyakan</center></th>
+                  <th><center>Prodi yang ditanyakan</center></th>
+                  <th><center>Kategori yang ditanyakan</center></th>
                   <th><center>Tanggal Masuk</center></th>
                   <th><center>Status</center></th>
                   <th><center>Aksi</center></th>

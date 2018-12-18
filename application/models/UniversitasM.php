@@ -9,6 +9,10 @@ class UniversitasM extends CI_Model{
    $query = $this->db->query("SELECT * from universitas, detail_universitas WHERE universitas.id_universitas=detail_universitas.id_universitas");
    return $query;
   } 
+  public function get_universitas_by_id($id_universitas){
+   $query = $this->db->query("SELECT * from universitas, detail_universitas WHERE universitas.id_universitas=detail_universitas.id_universitas AND universitas.id_universitas='$id_universitas'");
+   return $query;
+  } 
   public function get_negara(){
    $query = $this->db->query("SELECT distinct negara from universitas ");
    return $query;

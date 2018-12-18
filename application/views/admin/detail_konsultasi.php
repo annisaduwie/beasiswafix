@@ -78,22 +78,28 @@ $this->load->view('admin/headerAdmin');
               <form >
                <div class="post">
                   <div class="user-block" ">
-
-                     <?php 
+                  <div class="row">
+                  <div class="col-md-1">
+                  
+                  <?php 
                           if( $value->profil_pic == NULL ){ ?>
-                <img class="img-circle img-bordered-sm" src="<?php echo base_url('assets/images/user2.png');?>" style="margin-right:20px; margin-top:10px;">
+                <img class="img-circle img-bordered-sm" src="<?php echo base_url('assets/images/user2.png');?>" style="height: 60px; width: 60px;">
 
                 <?php }else{ ?>
 
-                    <img class="img-circle img-bordered-sm" src="<?php echo base_url('fileUpload/'.$value->profil_pic);?>" alt="user image" style="margin-right:20px;">
+                    <img class="img-circle img-bordered-sm" src="<?php echo base_url('fileUpload/'.$value->profil_pic);?>" alt="user image" style="height: 60px; width: 60px; " >
 
                 <?php } ?>
-
+              </div>
+              <div class="col-md-11">
                         <span class="username">
-                          <?php echo $value->nama;?><div class="description" style="font-size: 11px;"><?php echo "(".$value->email.")"?></sup>
+                          <?php echo $value->nama;?>
                         </span>
-                    <span class="description"><?php echo tgl_indo(date("Y-m-d",strtotime($value->create_dtm))); ?> - <?php echo date("H:i",strtotime($value->create_dtm)); ?></span>     
+                        <span class="description">
+                            <i class="fa fa-envelope-o">  <?php echo $value->email ;?></i></span>
+                    <span class="description"><i class="fa fa-calendar">  <?php echo tgl_indo(date("Y-m-d",strtotime($value->create_dtm))); ?></i> - <?php echo date("H:i",strtotime($value->create_dtm)); ?></span>     
                   </div>
+                </div>
 
 
                    <div class="row">
