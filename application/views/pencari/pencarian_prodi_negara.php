@@ -50,7 +50,7 @@ $this->load->view('pencari/header_user');
    
         <div class="row" style="background-color: #d2d6de; padding-top: 20px; height: 80px;">
           <div class="col-md-12">
-            <h5><i class="fa fa-flag"> <?php echo $negara;?></i></h5>
+            <h5><i class="fa fa-flag">&ensp;<?php echo $negara;?></i></h5>
           </div>
         </div>
 </div>

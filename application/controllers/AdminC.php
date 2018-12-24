@@ -74,6 +74,35 @@ class AdminC extends CI_Controller
 		$this->load->view('admin/detail_konsultasi', $data);
 
 	}
+	public function get_data_scraping_beasiswa(){
+
+		$data['beasiswa']= $this->BeasiswaM->get_beasiswa_scraping()->result();
+		$this->load->view('admin/detail_scraping_beasiswa_umum', $data);
+	}
+
+	public function get_pencarian_scraping_beasiswa(){
+
+		$date = $this->input->post('date');
+		$from = date("Y-m-d", strtotime(substr($date, 0, 10)));
+		$to = date("Y-m-d", strtotime(substr($date, 13, 10)));
+
+		if (isset($_POST['btn_submit'])){
+
+		$data = array(
+			'date_value' => $date
+		);
+		}else{
+
+		$data = array(
+			'date_value' => ""
+		);
+		}
+		
+	
+		$data['beasiswa']= $this->BeasiswaM->get_beasiswa_scraping_date($from, $to)->result();
+		$this->load->view('admin/detail_scraping_beasiswa_umum', $data);
+	}
+
 	public function replyKonsul($id_konsultasi){
 		$id_pencari = $this->session->userdata('id_pencari');
 		$email = $this->input->post('email');
@@ -251,6 +280,18 @@ class AdminC extends CI_Controller
 
 
 	}
+	public function hapus_beasiswa_scraping($id_konten_beasiswa_umum){
+		
+		if($this->BeasiswaM->hapus_beasiswa_scraping($id_konten_beasiswa_umum)){
+			$this->session->set_flashdata('success', 'Data berhasil dihapus');
+			}
+			else
+			{
+			$this->session->set_flashdata('error', 'Data gagal dihapus');
+			} 
+			redirect('AdminC/get_data_scraping_beasiswa');
+	}
+
 	public function hapus_beasiswa_umum($id_beasiswa_umum){
 		
 		if($this->BeasiswaM->hapus_beasiswa_umum($id_beasiswa_umum)){
@@ -413,11 +454,11 @@ class AdminC extends CI_Controller
 		$this->form_validation->set_rules('url_universitas','URL Universitas','trim|required');
 		$this->form_validation->set_rules('kategori_universitas','Kategori Universitas','required');
 		$this->form_validation->set_rules('negara','Negara','required');
-		$this->form_validation->set_rules('deskripsi_universitas','Deskripsi Universitas','required');
+		// $this->form_validation->set_rules('deskripsi_universitas','Deskripsi Universitas','required');
 		$this->form_validation->set_rules('alamat_universitas','Alamat Universitas','required');
 		$this->form_validation->set_rules('latitude','Latitude Universitas','required');
 		$this->form_validation->set_rules('longitude','Longitude Universitas','required');
-		$this->form_validation->set_rules('kategori_universitas','Kategori Universitas','required');$this->form_validation->set_rules('kategori_universitas','Kategori Universitas','required');
+		$this->form_validation->set_rules('no_telp','No Telepon','required');
 
 		if($this->form_validation->run() == FALSE)
 		{
@@ -626,10 +667,39 @@ class AdminC extends CI_Controller
 
 	public function hapusUniv($id_univ){
 
-		if($this->UniversitasM->delete_univ($id_univ)){
+		$cek_delete_prodi=$this->UniversitasM->cek_delete_univ($id_univ)->num_rows();
+		$cek_delete_beasiswa=$this->UniversitasM->cek_detail_univ_beasiswa($id_univ)->num_rows();
+		$cek_delete_fakultas=$this->UniversitasM->cek_detail_univ_fakultas($id_univ)->num_rows();
+		$cek_delete_only_beasiswa=$this->UniversitasM->cek_detail_univ_only_beasiswa($id_univ)->num_rows();
+
+
+		if($cek_delete > 0){
+
+			$this->UniversitasM->delete_detail_univ($id_univ);
 
 			redirect('AdminC/get_universitas');
+		}else if($cek_delete_beasiswa > 0){
+			$this->UniversitasM->delete_detail_univ_beasiswa($id_univ);
+
+			redirect('AdminC/get_universitas');
+			
+		}else if($cek_delete_fakultas > 0){
+
+			$this->UniversitasM->delete_detail_univ_fakultas($id_univ);
+
+			redirect('AdminC/get_universitas');
+
+		}else if($cek_delete_only_beasiswa > 0){
+			$this->UniversitasM->delete_detail_univ_only_beasiswa($id_univ);
+
+			redirect('AdminC/get_universitas');
+
 		}
+		else{
+			$this->UniversitasM->delete_univ($id_univ);
+			redirect('AdminC/get_universitas');
+		}
+		
 	}
 
 	public function tambah_fakultas(){

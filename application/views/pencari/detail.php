@@ -38,7 +38,7 @@ $this->load->view('pencari/header_user');
              <p style="color:#fff; font-size: 16px;" ><span class="icon-location-pin"></span> <?php echo $list_detail->negara;?></p><hr>
 
 
-             <a class="btn-form" type="btn" href="<?php echo base_url('Pencarian_BeasiswaC/get_beasiswa');?>" class="btn-form" style="float: right; margin-bottom: 15px; border-radius: 5px;background-color:#fff; color:black;"><center><i class="fa fa-mortar-board"> Lihat Beasiswa</i></center></a>
+             <button class="btn-form" type="btn" class="btn-form" style="float: right; margin-bottom: 15px; border-radius: 5px;background-color:#fff; color:black;"><center><i class="fa fa-mortar-board"> Lihat Beasiswa</i></center></button>
            </div>
 
          </div>

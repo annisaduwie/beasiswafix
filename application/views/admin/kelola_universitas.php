@@ -17,10 +17,16 @@ $this->load->view('admin/head_admin');
    <link rel="stylesheet" href="<?php echo base_url();?>AdminLTE/dist/css/skins/_all-skins.min.css">
  </head>
 
+ <style>
+.test[style] {
+     padding-right:0 !important;
+ }
+</style>
+
  <?php
  $this->load->view('admin/headerAdmin');
  ?>
- <body class="hold-transition skin-blue sidebar-mini">
+ <body class="hold-transition skin-blue sidebar-mini" style="padding-right: 0 !important">
   <div class="wrapper">
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -71,7 +77,7 @@ $this->load->view('admin/head_admin');
         <!-- <small>Version 2.0</small> -->
       </h1>
       <ol class="breadcrumb">
-        <li class="active">Universitas</li>
+        <li class="active"><i class="fa fa-university">&ensp;Universitas</i></li>
       </ol>
               </div>
               <div class="box-body">
@@ -152,13 +158,13 @@ $this->load->view('admin/head_admin');
     <!-- /.content -->
   </div>
 
-  <footer class="main-footer">
+<!--   <footer class="main-footer">
     <div class="pull-right hidden-xs">
       <b>Version</b> 2.4.0
     </div>
     <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
     reserved.
-  </footer>
+  </footer> -->
 
 
 
@@ -182,14 +188,14 @@ $this->load->view('admin/head_admin');
            <div class="form-group" style="padding: 5px 0;">
             <label for="inputnip" class="col-sm-2 control-label">Nama Universitas</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" name="nama_universitas" id="nama_universitas" placeholder="Masukkan Nama Universitas">
+              <input type="text" class="form-control" name="nama_universitas" id="nama_universitas" placeholder="Masukkan Nama Universitas" required oninvalid="this.setCustomValidity('Nama universitas tidak boleh kosong')" oninput="setCustomValidity('')">
             </div>
           </div>
 
           <div class="form-group" style="padding: 5px 0;">
             <label for="inputnip" class="col-sm-2 control-label">URL</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" name="url_universitas" id="url_universitas" placeholder="Masukkan URL">
+              <input type="text" class="form-control" name="url_universitas" id="url_universitas" placeholder="Masukkan URL" required oninvalid="this.setCustomValidity('URL tidak boleh kosong')" oninput="setCustomValidity('')">
             </div>
           </div>
 
@@ -202,19 +208,19 @@ $this->load->view('admin/head_admin');
           <div class="form-group" style="padding: 15px 0;">
             <label for="inputurl" class="col-sm-2 control-label">Alamat Lengkap</label>
             <div class="col-sm-10">
-              <textarea name="alamat_universitas" class="form-control" id="alamat" value="" placeholder="Masukkan alamat"></textarea>
+              <textarea name="alamat_universitas" class="form-control" id="alamat" value="" placeholder="Masukkan alamat" required oninvalid="this.setCustomValidity('Alamat tidak boleh kosong')" oninput="setCustomValidity('')"></textarea>
             </div>
           </div>
           <div class="form-group" style="padding: 15px 0;">
             <label for="inputurl" class="col-sm-2 control-label">Latitude</label>
             <div class="col-sm-10">
-              <input name="latitude" class="form-control" id="inputnegara" value="" placeholder="Masukkan latitude">
+              <input name="latitude" class="form-control" id="inputnegara" value="" placeholder="Masukkan latitude" required oninvalid="this.setCustomValidity('Latitude tidak boleh kosong')" oninput="setCustomValidity('')">
           </div>
         </div>
           <div class="form-group" style="padding: 15px 0;">
             <label for="inputurl" class="col-sm-2 control-label">Longitude</label>
             <div class="col-sm-10">
-              <input name="longitude" class="form-control" id="inputnegara" value="" placeholder="Masukkan longitude">
+              <input name="longitude" class="form-control" id="inputnegara" value="" placeholder="Masukkan longitude" required oninvalid="this.setCustomValidity('Longitude tidak boleh kosong')" oninput="setCustomValidity('')">
           </div>
         </div>
 
@@ -228,13 +234,9 @@ $this->load->view('admin/head_admin');
           <div class="form-group" style="padding: 5px 0;">
             <label for="inputnip" class="col-sm-2 control-label">No Telepon</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" name="no_telp" id="no_telp" placeholder="Masukkan no telepon">
+              <input type="text" class="form-control" name="no_telp" id="no_telp" placeholder="Masukkan no telepon" required oninvalid="this.setCustomValidity('No Telepon tidak boleh kosong')" oninput="setCustomValidity('')">
             </div>
           </div>
-
-
-
-
           <div class="form-group" style="padding: 15px 0;">
             <label for="kategori" class="col-sm-2 control-label">Kategori</label>
             <div class="col-sm-10">
@@ -247,7 +249,7 @@ $this->load->view('admin/head_admin');
           <div class="form-group" style="padding: 5px 0;">
             <label for="inputnip" class="col-sm-2 control-label">Negara</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" name="negara" id="negara" placeholder="Masukkan Negara">
+              <input type="text" class="form-control" name="negara" id="negara" placeholder="Masukkan Negara" required oninvalid="this.setCustomValidity('Negara tidak boleh kosong')" oninput="setCustomValidity('')">
             </div>
           </div>
 
@@ -296,6 +298,16 @@ $this->load->view('admin/head_admin');
   <script src="<?php echo base_url();?>AdminLTE/dist/js/demo.js"></script>
   <!-- page script -->
   <script>
+
+  $('#modal-tambah').on('show.bs.modal', function (e) {
+     $('body').addClass('test');
+  });
+
+
+
+
+
+
     $(function () {
       $('#example1').DataTable()
       $('#example2').DataTable({

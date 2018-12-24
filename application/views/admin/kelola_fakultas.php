@@ -17,6 +17,11 @@ $this->load->view('admin/head_admin');
    <link rel="stylesheet" href="<?php echo base_url();?>AdminLTE/dist/css/skins/_all-skins.min.css">
  </head>
  <style>
+
+.test[style] {
+     padding-right:0 !important;
+ }
+
  .img{
   height: 240px;
   width: 290px;
@@ -78,8 +83,8 @@ $this->load->view('admin/headerAdmin');
                   <!-- <small>Version 2.0</small> -->
                 </h1>
                 <ol class="breadcrumb">
-                  <li><a href="<?php echo base_url('AdminC/get_universitas');?>">Universitas</a></li>
-                  <li class="active">Detail Universitas</li>
+                  <li><a href="<?php echo base_url('AdminC/get_universitas');?>"><i class="fa fa-university">&ensp;Universitas</i></a></li>
+                  <li class="active"><i class="fa fa-list">&ensp;Detail Universitas</i></li>
                 </ol>
                 <div class="box">
               <div class="box-header">
@@ -98,7 +103,11 @@ $this->load->view('admin/headerAdmin');
                     
                     <table class="table table-bordered table-striped">
                       <tr>
+                        <?php if( $nama_univ['gambar_universitas'] == NULL){;?>
+                        <td colspan="2" style="text-align: center;"><img class="img" src="<?php echo base_url('assets/images/university.png');?>"></td>
+                      <?php } else{?>
                         <td colspan="2" style="text-align: center;"><img class="img" src="<?php echo base_url('universitas/'.$nama_univ['gambar_universitas']);?>"></td>
+                      <?php }?>
                       </tr>
                       <tr>
                         <td><center><i class="fa fa-map-marker"></i></center></td>
@@ -345,7 +354,7 @@ $this->load->view('admin/headerAdmin');
                 <table id="example" class="table table-bordered table-striped">
 
                   <h3>
-                   Data Beasiswa <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-tambah_beasiswa"><span data-toogle="tooltip" title="Tambah Beasiswa">
+                   Data Beasiswa <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-tambah-beasiswa"><span data-toogle="tooltip" title="Tambah Beasiswa">
                      <i class=" fa fa-plus"></i></span>
                    </button>
                    <!-- <small>Version 2.0</small> -->
@@ -431,7 +440,7 @@ $this->load->view('admin/headerAdmin');
               </table>
 
               <!-- modal untuk tambah manual -->
-              <div class="modal fade" id="modal-tambah_beasiswa">
+              <div class="modal fade" id="modal-tambah-beasiswa">
                 <div class="modal-dialog">
                   <div class="modal-content">
                     <div class="modal-header">
@@ -477,13 +486,13 @@ $this->load->view('admin/headerAdmin');
     <!-- /.content -->
   </div>
 
-  <footer class="main-footer">
+<!--   <footer class="main-footer">
     <div class="pull-right hidden-xs">
       <b>Version</b> 2.4.0
     </div>
     <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
     reserved.
-  </footer>
+  </footer> -->
 
 
 
@@ -492,9 +501,9 @@ $this->load->view('admin/headerAdmin');
   <?php 
   $data2=$this->session->flashdata('error');
   ?>              
-
+<?php foreach($universitas as $nilai){?>
   <!-- modal untuk tambah manual -->
-  <div class="modal fade" id="modal-tambah-<?php echo $id;?>">
+  <div class="modal fade" id="modal-tambah-<?php echo $nilai->id_universitas;?>">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -505,7 +514,7 @@ $this->load->view('admin/headerAdmin');
           <div class="modal-body">
 
            <?php echo form_open_multipart('AdminC/tambah_fakultas','id ="form" class="form-horizontal"');?> 
-           <input type="hidden" value="<?php echo $id;?>" class="form-control" name="id_universitas" >
+           <input type="text" value="<?php echo $id;?>" class="form-control" name="id_universitas" >
            
            <input type="hidden" value="<?php echo $id_fakultas['id_fakultas'];?>" class="form-control" name="id_fakultas" >
            
@@ -513,7 +522,7 @@ $this->load->view('admin/headerAdmin');
            <div class="form-group" style="padding: 5px 0;">
             <label for="inputnip" class="col-sm-2 control-label">Nama Fakultas</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" name="nama_fakultas" id="nama_prodi" placeholder="Masukkan Nama Fakultas">
+              <input type="text" class="form-control" name="nama_fakultas" id="nama_prodi" placeholder="Masukkan Nama Fakultas" required oninvalid="this.setCustomValidity('Nama fakultas tidak boleh kosong')" oninput="setCustomValidity('')">
             </div>
           </div>
 
@@ -548,6 +557,7 @@ $this->load->view('admin/headerAdmin');
         <!-- /.modal-dialog -->
       </div>
       <!-- /.modal -->
+    <?php }?>
       
 
 
@@ -572,6 +582,32 @@ $this->load->view('admin/headerAdmin');
       <script src="<?php echo base_url();?>AdminLTE/dist/js/demo.js"></script>
       <!-- page script -->
       <script>
+
+      <?php foreach ($universitas as $value) {?>
+        $('#modal-<?php echo $value->id_universitas; ?>').on('show.bs.modal', function (e) {
+        $('body').addClass('test');
+        });
+      <?php } ?>
+      <?php foreach ($universitas as $nilai) {?>
+        $('#modal-tambah-<?php echo $nilai->id_universitas; ?>').on('show.bs.modal', function (e) {
+        $('body').addClass('test');
+        });
+      <?php } ?>
+      <?php foreach ($fakultas as $value) {?>
+        $('#modal-<?php echo $value->id_fakultas; ?>').on('show.bs.modal', function (e) {
+        $('body').addClass('test');
+        });
+      <?php } ?>
+      <?php foreach ($beasiswa as $value) {?>
+        $('#modal-<?php echo $value->id_beasiswa; ?>').on('show.bs.modal', function (e) {
+        $('body').addClass('test');
+        });
+      <?php } ?>
+
+        $('#modal-tambah-beasiswa').on('show.bs.modal', function (e) {
+        $('body').addClass('test');
+        });
+
         $(function () {
           $('#example1').DataTable()
           $('#example2').DataTable({

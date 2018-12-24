@@ -69,7 +69,7 @@ $this->load->view('admin/headerAdmin');
                   <!-- <small>Version 2.0</small> -->
                 </h1>
                 <ol class="breadcrumb">
-                  <li class="active">Beasiswa</li>
+                  <li class="active"><i class="fa fa-envelope">&ensp;Kotak Masuk</i></li>
                 </ol>
               </div>
             
@@ -129,13 +129,13 @@ $this->load->view('admin/headerAdmin');
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-  <footer class="main-footer">
+<!--   <footer class="main-footer">
     <div class="pull-right hidden-xs">
       <b>Version</b> 2.4.0
     </div>
     <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
     reserved.
-  </footer>
+  </footer> -->
 
   
 <!-- ./wrapper -->

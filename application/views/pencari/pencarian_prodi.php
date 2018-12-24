@@ -56,45 +56,38 @@ $this->load->view('pencari/header_user');
         <label><i class="fa fa-reorder" > Saring Bedasarkan</i></label><br><br>
   
             <label class="radio-inline">
-                <input type="radio" id="universitas" name="key" value="universitas" onclick="showUniversitas();"> <i class="fa fa-university"> Universitas</i></label>
+                <input type="radio" id="univ" name="key" onclick="showUniversitas();"> <i class="fa fa-university">&ensp;Universitas</i></label>
                 
                 <label  class="radio-inline">        
-                    <input type="radio" id="negara" name="key" value="negara" onclick="showNegara();"> <i class="fa fa-flag"> Negara</i></label>
-
-               
+                    <input type="radio" id="negara" name="key" onclick="showNegara();"> <i class="fa fa-flag">&ensp;Negara</i></label>      
             </div>
           </div>
-           
-            
-         
-            <form class="col-md-12" id="dropdown_universitas" style="display: none;" method="POST" id="form" action="<?php echo base_url('PencarianC/tampil_pencarian_prodi_by_universitas')?>">
 
-            <div class="form-group" >
-              <select class="form-control" id="value_univ" name="filter_universitas" style="height: 50px;" id="filterUniv">
-
-               <option disabled selected value='0' >Pilih Universitas</option>
-
-               <?php foreach ($universitas as $list_nama) {?>
+           <form class="col-md-12" method="POST" id="dropdown_universitas" style="display: none;">
+           <div class="form-group" >
+          <select id="value_univ" class="form-control" name="filter_universitas" style="height: 50px;">
+            <option disabled selected value="0">Pilih Universitas</option>
+           <?php foreach ($universitas as $list_nama) {?>
                 <option value="<?php echo $list_nama->id_universitas;?>"><?php echo $list_nama->nama_universitas;?></option>
               <?php  } ?>
-            </select>
-            </div>
-            <div id="btnUniversitas" style="display: none;">
-            <button type="submit" class="btn btn-danger " style="width:100%; height: 50px;" ><i class="fa fa-search"></i></button>
-            </div>
-          
-          </form>
-          <form class="col-md-12" method="POST" id="dropdown_negara" action="<?php echo base_url('PencarianC/tampil_pencarian_prodi_by_negara')?>" id="dropdown_negara" style="display: none;">
+          </select>
+        </div>
+          <div id="btnUniversitas" style="display: none;">
+        <button type="submit" onclick="submit_form()" class="btn btn-danger " style="width:100%; height: 50px;" ><i class="fa fa-search"></i></button>
+      </div>
+      </form>
+
+          <form class="col-md-12" method="POST" id="dropdown_negara" style="display: none;">
            <div class="form-group" >
           <select id="value_negara" class="form-control" name="filter_negara" style="height: 50px;">
-            <option disabled selected value='0'>Pilih Negara</option>
+            <option disabled selected value="0">Pilih Negara</option>
             <?php foreach ($negara as $list_nama) {?>
               <option value="<?php echo $list_nama->negara;?>"><?php echo $list_nama->negara;?></option>
             <?php  } ?>
           </select>
         </div>
           <div id="btnNegara" style="display: none;">
-        <button type="submit" class="btn btn-danger " style="width:100%; height: 50px;" ><i class="fa fa-search"></i></button>
+        <button type="submit" onclick="submit_form()" class="btn btn-danger " style="width:100%; height: 50px;" ><i class="fa fa-search"></i></button>
       </div>
       </form>
       </div>
@@ -410,6 +403,8 @@ $this->load->view('pencari/header_user');
 <script src="assets/js/jquery.magnific-popup.js"></script>
 <!-- Swipper Slider JS -->
 <script src="assets/js/swiper.min.js"></script>
+
+
 <script>
   var swiper = new Swiper('.swiper-container', {
     slidesPerView: 3,
@@ -449,6 +444,38 @@ $this->load->view('pencari/header_user');
 
 <script type="text/javascript" src="<?php echo base_url();?>'assets/js/jquery-1.11.3.js'"></script>
 <script type="text/javascript">
+
+  function showUniversitas(){
+  document.getElementById('dropdown_universitas').style.display ='block';
+  document.getElementById('btnUniversitas').style.display ='block';
+  document.getElementById('value_negara').value = 0; 
+  document.getElementById('dropdown_negara').style.display ='none';
+  document.getElementById('btnNegara').style.display ='none';
+  }
+  function showNegara(){
+  document.getElementById('btnNegara').style.display ='block';
+  document.getElementById('value_univ').value = 0;
+  document.getElementById('dropdown_negara').style.display ='block';
+  document.getElementById('dropdown_universitas').style.display ='none';
+  document.getElementById('btnUniversitas').style.display ='none';
+  }
+
+   function submit_form() {
+
+    var universitas = $('select[name="filter_universitas"] option:selected').val()
+    var negara = $('select[name="filter_negara"] option:selected').val()
+
+    if (universitas != 0) {
+      document.getElementById("dropdown_universitas").action ='<?php echo base_url('PencarianC/tampil_pencarian_prodi_by_universitas/')?>' + universitas ;
+   
+    }else if(negara != 0){
+       document.getElementById("dropdown_negara").action = '<?php echo base_url('PencarianC/tampil_pencarian_prodi_by_negara/')?>' + negara;
+    }else{
+       document.getElementById("value_univ").setCustomValidity('Silahkan pilih universitas terlebih dahulu');
+        document.getElementById("value_negara").setCustomValidity('Silahkan pilih negara terlebih dahulu');
+  }
+}
+
   var x = document.getElementById("show_hide");
   var txt = document.getElementById("box");;
   var i;
@@ -467,25 +494,6 @@ $this->load->view('pencari/header_user');
   });
 
 </script>
-<script type="text/javascript">
-  function showUniversitas(){
-  document.getElementById('dropdown_universitas').style.display ='block';
-  document.getElementById('btnUniversitas').style.display ='block';
-  document.getElementById('value_negara').value = 0; 
-  document.getElementById('dropdown_negara').style.display ='none';
-  }
-  function showNegara(){
-  document.getElementById('dropdown_universitas').style.display ='none';
-  document.getElementById('btnNegara').style.display ='block';
-  document.getElementById('value_univ').value = 0;
-  document.getElementById('dropdown_negara').style.display ='block';
-  }
-
-</script>
-
-
-
-
 </body>
 </html>
 

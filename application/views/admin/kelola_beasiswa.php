@@ -16,6 +16,11 @@ $this->load->view('admin/head_admin');
    folder instead of downloading all of them to reduce the load. -->
    <link rel="stylesheet" href="<?php echo base_url();?>AdminLTE/dist/css/skins/_all-skins.min.css">
  </head>
+<style>
+.test[style] {
+     padding-right:0 !important;
+ }
+</style>
 
  <?php
  $this->load->view('admin/headerAdmin');
@@ -70,7 +75,7 @@ $this->load->view('admin/head_admin');
                   <!-- <small>Version 2.0</small> -->
                 </h1>
                 <ol class="breadcrumb">
-                  <li class="active">Beasiswa</li>
+                  <li class="active"><i class="fa fa-graduation-cap ">&ensp;Beasiswa</i></li>
                 </ol>
                    </div>
               
@@ -124,8 +129,6 @@ $this->load->view('admin/head_admin');
                       </td>
                     </tr>
 
-
-
                     <div class="modal fade" id="modal-<?php echo $value->id_beasiswa_umum; ?>">
                       <div class="modal-dialog">
                         <div class="modal-content">
@@ -158,7 +161,7 @@ $this->load->view('admin/head_admin');
                               <div class="form-group" style="padding: 15px 0;">
                                 <label for="nama_universitas" class="col-sm-2 control-label">Jenjang</label>
                                 <div class="col-sm-10">
-                                  <select name="jenjang" class="form-control" >
+                                  <select name="jenjang" class="form-control" required>
                                    <option value="0" disabled selected>--Jenjang--</option>
 
                                    <option <?php if($value->jenjang == "Diploma") 
@@ -243,13 +246,15 @@ $this->load->view('admin/head_admin');
   <!-- /.content -->
 </div>
 
-<footer class="main-footer">
+<!-- <footer class="main-footer">
   <div class="pull-right hidden-xs">
     <b>Version</b> 2.4.0
   </div>
   <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
   reserved.
-</footer>
+</footer> -->
+
+
 
 
 
@@ -287,7 +292,7 @@ $this->load->view('admin/head_admin');
      <div class="form-group" style="padding: 5px 0;">
       <label for="inputurl" class="col-sm-2 control-label">Negara</label>
       <div class="col-sm-10">
-        <input type="text" placeholder="Masukkan Negara" name="negara" class="form-control" id="inputurl" >
+        <input type="text" placeholder="Masukkan Negara" name="negara" class="form-control" id="inputurl" required oninvalid="this.setCustomValidity('Negara tidak boleh kosong')" oninput="setCustomValidity('')">
       </div>
     </div>
 
@@ -305,11 +310,11 @@ $this->load->view('admin/head_admin');
   </div>
   <?php echo form_close(); ?> 
 </div>
-<!-- /.modal-content -->
-</div>
-<!-- /.modal-dialog -->
-</div>
-<!-- /.modal -->
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
 
 
 
@@ -318,22 +323,34 @@ $this->load->view('admin/head_admin');
 
 
 <!-- jQuery 3 -->
-<script src="<?php echo base_url();?>AdminLTE/bower_components/jquery/dist/jquery.min.js"></script>
-<!-- Bootstrap 3.3.7 -->
-<script src="<?php echo base_url();?>AdminLTE/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- DataTables -->
-<script src="<?php echo base_url();?>AdminLTE/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
-<script src="<?php echo base_url();?>AdminLTE/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-<!-- SlimScroll -->
-<script src="<?php echo base_url();?>AdminLTE/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-<!-- FastClick -->
-<script src="<?php echo base_url();?>AdminLTE/bower_components/fastclick/lib/fastclick.js"></script>
-<!-- AdminLTE App -->
-<script src="<?php echo base_url();?>AdminLTE/dist/js/adminlte.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="<?php echo base_url();?>AdminLTE/dist/js/demo.js"></script>
+  <script src="<?php echo base_url();?>AdminLTE/bower_components/jquery/dist/jquery.min.js"></script>
+  <!-- Bootstrap 3.3.7 -->
+  <script src="<?php echo base_url();?>AdminLTE/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <!-- DataTables -->
+  <script src="<?php echo base_url();?>AdminLTE/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+  <script src="<?php echo base_url();?>AdminLTE/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+  <!-- SlimScroll -->
+  <script src="<?php echo base_url();?>AdminLTE/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+  <!-- FastClick -->
+  <script src="<?php echo base_url();?>AdminLTE/bower_components/fastclick/lib/fastclick.js"></script>
+  <!-- AdminLTE App -->
+  <script src="<?php echo base_url();?>AdminLTE/dist/js/adminlte.min.js"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="<?php echo base_url();?>AdminLTE/dist/js/demo.js"></script>
 <!-- page script -->
 <script>
+
+
+  $('#modal-tambah').on('show.bs.modal', function (e) {
+     $('body').addClass('test');
+  });
+<?php foreach ($beasiswa as $value) {?>
+  $('#modal-<?php echo $value->id_beasiswa_umum; ?>').on('show.bs.modal', function (e) {
+     $('body').addClass('test');
+  });
+
+<?php } ?>
+  
   $(function () {
     $('#example1').DataTable()
     $('#example2').DataTable({

@@ -72,17 +72,17 @@ $this->load->view('admin/headAdmin');
         <li class="header">MAIN NAVIGATION</li>
         <li>
           <a href="<?php echo site_url('AdminC/get_dashboard');?>">
-            <span>Dashboard</span>
+            <span><i class="fa fa-dashboard">&ensp;Dashboard</i></span>
           </a>
         </li>
         <li>
           <a href="<?php echo site_url('AdminC/get_pencari');?>">
-            <span>Pencari</span>
+            <span><i class="fa fa-users">&ensp;Pencari</i></span>
           </a>
         </li>
         <li>
           <a href="<?php echo site_url('AdminC/get_konsultasi');?>">
-            <span>Kotak masuk</span>
+            <span><i class="fa fa-envelope">&ensp;Kotak masuk</i></span>
             <span class="pull-right-container">
               <?php 
               $result =  $this->db->query("SELECT count(id_konsultasi) as kotak_masuk from konsultasi WHERE status='dikirim'")->row_array();?>
@@ -93,13 +93,19 @@ $this->load->view('admin/headAdmin');
         </li>
         <li >
             <a href="<?php echo base_url('AdminC/get_universitas');?>">
-            <span>Universitas</span>
+            <span><i class="fa fa-university">&ensp;Universitas</i></span>
           </a>
         </li>
 
-         <li >
+        <li >
             <a href="<?php echo base_url('AdminC/get_beasiswa_umum');?>">
-            <span>Beasiswa</span>
+            <span><i class="fa fa-graduation-cap">&ensp;Input Beasiswa</i></span>
+          </a>
+        </li>
+
+        <li >
+            <a href="<?php echo base_url('AdminC/get_data_scraping_beasiswa');?>">
+            <span><i class="fa fa-graduation-cap">&ensp;Data Beasiswa</i></span>
           </a>
         </li>
 

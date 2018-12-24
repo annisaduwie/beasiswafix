@@ -54,7 +54,7 @@ class Pencarian_BeasiswaC extends CI_Controller
 		$result=array();
 		$id_universitas=$this->input->post('keyword_universitas');
 		$hasil = $this->BeasiswaM->get_url_beasiswa($id_universitas);
-		
+
 		$nama_universitas = $hasil->nama_universitas;
 		
 		$i = 0; // index of array result

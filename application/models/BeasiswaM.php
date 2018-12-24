@@ -9,6 +9,14 @@ class BeasiswaM extends CI_Model{
    $query = $this->db->query("SELECT * from universitas, beasiswa_universitas, beasiswa where universitas.id_universitas=beasiswa_universitas.id_universitas AND beasiswa_universitas.id_beasiswa_univ=beasiswa.id_beasiswa_univ AND universitas.id_universitas='$id_universitas'");
    return $query;
   } 
+  public function get_beasiswa_scraping(){
+   $query = $this->db->query("SELECT * from konten_beasiswa");
+   return $query;
+  } 
+  public function get_beasiswa_scraping_date($from, $to){
+   $query = $this->db->query("SELECT * from konten_beasiswa WHERE konten_beasiswa.date >= '$from' AND konten_beasiswa.date <= '$to'");
+   return $query;
+  } 
   public function get_beasiswa_umum(){
    $query = $this->db->query("SELECT * from beasiswa_umum");
    return $query;
@@ -68,6 +76,10 @@ class BeasiswaM extends CI_Model{
   }
   public function hapus_beasiswa_umum($id){
      $query = $this->db->delete('beasiswa_umum',"id_beasiswa_umum = '$id'");
+    return $query;
+  }
+  public function hapus_beasiswa_scraping($id){
+     $query = $this->db->delete('konten_beasiswa',"id_konten_beasiswa_umum = '$id'");
     return $query;
   }
   public function hapus_beasiswa($id){

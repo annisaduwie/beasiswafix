@@ -73,10 +73,10 @@ $this->load->view('admin/head_admin');
         <!-- <small>Version 2.0</small> -->
       </h1>
       <ol class="breadcrumb">
-        <li><a href="<?php echo base_url('AdminC/get_universitas');?>">Universitas</a></li>
-        <li><a href="<?php echo base_url('AdminC/tampil_admin_fakultas/'.$id_univ['id_universitas']);?>">Detail Universitas</a></li>
+        <li><a href="<?php echo base_url('AdminC/get_universitas');?>"><i class="fa fa-university">&ensp;Universitas</i></a></li>
+        <li><a href="<?php echo base_url('AdminC/tampil_admin_fakultas/'.$id_univ['id_universitas']);?>"><i class="fa fa-list">&ensp;Detail Universitas</i></a></li>
 
-        <li class="active">Program Studi</li>
+        <li class="active"><i class="fa fa-book">&ensp;Program Studi</i></li>
       </ol>
 
               </div>
@@ -200,14 +200,14 @@ $this->load->view('admin/head_admin');
   <!-- /.content -->
 </div>
 
-<footer class="main-footer">
+<!-- <footer class="main-footer">
   <div class="pull-right hidden-xs">
     <b>Version</b> 2.4.0
   </div>
   <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
   reserved.
 </footer>
-
+ -->
 
 
 
@@ -234,14 +234,14 @@ $data2=$this->session->flashdata('error');
          <div class="form-group" style="padding: 5px 0;">
                                 <label for="inputurl" class="col-sm-2 control-label">Nama Prodi</label>
                                 <div class="col-sm-10">
-                                  <input type="text" name="nama_prodi" class="form-control" id="inputurl" placeholder="Masukkan Nama Prodi">
+                                  <input type="text" name="nama_prodi" class="form-control" id="inputurl" placeholder="Masukkan Nama Prodi" required oninvalid="this.setCustomValidity('Nama prodi tidak boleh kosong')" oninput="setCustomValidity('')">
                                 </div>
                               </div>
 
         <div class="form-group" style="padding: 5px 0;">
               <label for="inputurl" class="col-sm-2 control-label">Tingkatan</label>
               <div class="col-sm-10">
-              <select name="tingkatan" class="form-control required" required>
+              <select name="tingkatan" class="form-control required" required oninvalid="this.setCustomValidity('Silahkan pilih tingkatan terlebih dahulu')" onclick="setCustomValidity('Silahkan pilih tingkatan terlebih dahulu')">
                 <option value="" disabled selected>--Pilih Tingkatan--</option>
                 <option value="Diploma">Diploma</option>
                 <option value="Sarjana">Sarjana</option>
@@ -261,6 +261,7 @@ $data2=$this->session->flashdata('error');
     <!-- /.modal-dialog -->
   </div>
   <!-- /.modal -->
+</div>
   
 
 

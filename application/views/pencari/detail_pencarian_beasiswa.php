@@ -52,7 +52,7 @@ $this->load->view('pencari/header_user');
         <div class="user-block">
           <div class="row">
           <div class="col-md-12 featured-responsive">
-     <span class="username"><p><i class="fa fa-list"> Menampilkan <?php echo !empty($hasil['total']) ? $hasil['total'] : '0' ?> hasil</i></p></span></div></div>
+     <span class="username"><p><i class="fa fa-list">&ensp;Menampilkan <?php echo !empty($hasil['total']) ? $hasil['total'] : '0' ?> hasil</i></p></span></div></div>
     
      <?php foreach ($hasil as $value): ?>
       <form id="form" action="<?php echo base_url().'Pencarian_BeasiswaC/tampil_detail_beasiswa_univ'?>" method="POST">
@@ -76,7 +76,7 @@ $this->load->view('pencari/header_user');
 
             </div>
             
-            <div class="text-muted small pb-2"><i class="fa fa-calendar"></i> <i><?php echo tgl_indo(date("Y-m-d",strtotime($value['date']))); ?></i></div>
+            <div class="text-muted small pb-2"><i class="fa fa-calendar">&ensp;<?php echo tgl_indo(date("Y-m-d",strtotime($value['date']))); ?></i></div>
           </span>
           <p>
          <?php echo $value['deskripsi']; ?>

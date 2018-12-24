@@ -68,8 +68,8 @@ $this->load->view('admin/headerAdmin');
                   <!-- <small>Version 2.0</small> -->
                 </h1>
                 <ol class="breadcrumb">
-                  <li><a href="<?php echo base_url('AdminC/get_konsultasi');?>">Konsultasi</a></li>
-                  <li>Detail Konsultasi</li>
+                  <li><a href="<?php echo base_url('AdminC/get_konsultasi');?>"><i class="fa fa-envelope">&ensp;Kotak Masuk</i></a></li>
+                  <li><i class="fa fa-list">&ensp;Detail Konsultasi</i></li>
                 </ol>
               </div>
               
@@ -82,7 +82,7 @@ $this->load->view('admin/headerAdmin');
                   <div class="col-md-1">
                   
                   <?php 
-                          if( $value->profil_pic == NULL ){ ?>
+                if( $value->profil_pic == NULL ){ ?>
                 <img class="img-circle img-bordered-sm" src="<?php echo base_url('assets/images/user2.png');?>" style="height: 60px; width: 60px;">
 
                 <?php }else{ ?>
@@ -97,7 +97,8 @@ $this->load->view('admin/headerAdmin');
                         </span>
                         <span class="description">
                             <i class="fa fa-envelope-o">  <?php echo $value->email ;?></i></span>
-                    <span class="description"><i class="fa fa-calendar">  <?php echo tgl_indo(date("Y-m-d",strtotime($value->create_dtm))); ?></i> - <?php echo date("H:i",strtotime($value->create_dtm)); ?></span>     
+                    <span class="description"><i class="fa fa-calendar">  <?php echo tgl_indo(date("Y-m-d",strtotime($value->create_dtm))); ?></i> - <?php echo date("H:i",strtotime($value->create_dtm)); ?>
+                  </span>     
                   </div>
                 </div>
 
@@ -124,9 +125,9 @@ $this->load->view('admin/headerAdmin');
           </div>
           <div class="box-tools pull-right">
             <?php if($value->status=='Sudah Dibalas'){?>
-                <a value="Terkirim" class="btn btn-primary" disabled>Terkirim</a>
+                <a value="Terkirim" class="btn btn-primary" disabled><i class="fa fa-send">&ensp;Terkirim</i></a>
             <?php }else{?>
-                <a value="Balas" id="tampil" class="btn btn-primary">Balas</a>
+                <a value="Balas" id="tampil" class="btn btn-primary"><i class="fa fa-reply">&ensp;Balas</i></a>
             <?php }?>
               </div>
           <!-- /.box -->
@@ -187,13 +188,6 @@ $this->load->view('admin/headerAdmin');
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-  <footer class="main-footer">
-    <div class="pull-right hidden-xs">
-      <b>Version</b> 2.4.0
-    </div>
-    <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
-    reserved.
-  </footer>
 
   
 <!-- ./wrapper -->

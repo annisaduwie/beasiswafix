@@ -2,7 +2,7 @@
 $this->load->view('admin/head_admin');
 ?>
 <head>
-    <link rel="stylesheet" href="<?php echo base_url();?>AdminLTE/bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="<?php echo base_url();?>AdminLTE/bower_components/bootstrap/dist/css/bootstrap.min.css">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="<?php echo base_url();?>AdminLTE/bower_components/font-awesome/css/font-awesome.min.css">
   <!-- Ionicons -->
@@ -12,12 +12,13 @@ $this->load->view('admin/head_admin');
   <!-- Theme style -->
   <link rel="stylesheet" href="<?php echo base_url();?>AdminLTE/dist/css/AdminLTE.min.css">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
-       folder instead of downloading all of them to reduce the load. -->
-  <link rel="stylesheet" href="<?php echo base_url();?>AdminLTE/dist/css/skins/_all-skins.min.css">
-  </head>
-<?php
-$this->load->view('admin/headerAdmin');
-?>
+   folder instead of downloading all of them to reduce the load. -->
+   <link rel="stylesheet" href="<?php echo base_url();?>AdminLTE/dist/css/skins/_all-skins.min.css">
+ </head>
+
+ <?php
+ $this->load->view('admin/headerAdmin');
+ ?>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 <!-- Content Wrapper. Contains page content -->
@@ -62,11 +63,15 @@ $this->load->view('admin/headerAdmin');
         </div>
       </div>
 
-
           <div class="box">
             <div class="box-header">
-              <h1 class="box-title">Data Pencari</h1>
-            </div>
+                <h1>Data Pencari
+                  <!-- <small>Version 2.0</small> -->
+                </h1>
+                <ol class="breadcrumb">
+                  <li class="active"><i class="fa fa-users"> Pencari</i></li>
+                </ol>
+              </div>
             
             <div class="box-body">
               <table id="univ" class="table table-bordered table-striped">
@@ -120,13 +125,13 @@ $this->load->view('admin/headerAdmin');
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-  <footer class="main-footer">
+<!--   <footer class="main-footer">
     <div class="pull-right hidden-xs">
       <b>Version</b> 2.4.0
     </div>
     <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
     reserved.
-  </footer>
+  </footer> -->
 
   
 <!-- ./wrapper -->
