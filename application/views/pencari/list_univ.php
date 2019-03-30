@@ -95,7 +95,7 @@ $this->load->view('pencari/header_user');
        <?php }?> 
 
      </h6>
-      <a class="btn-form" type="btn" href="<?php echo base_url('Pencarian_BeasiswaC/get_beasiswa');?>" class="btn-form" style="background-color:#fff; color:black;"><i class="fa fa-mortar-board"> Lihat Beasiswa</i></a>
+      <a class="btn-form" type="btn" href="<?php echo base_url('Pencarian_BeasiswaC/get_beasiswa');?>" class="btn-form" style="background-color:#fff; color:black;"><i class="fa fa-mortar-board"> Cari Beasiswa</i></a>
    </div>
  </div>
 
@@ -109,6 +109,9 @@ $this->load->view('pencari/header_user');
 
           <section class="main-block light-bg">
             <div class="container">
+              <div class="styled-heading">
+        <h3>Daftar Universitas</h3>
+      </div>
 
 
 

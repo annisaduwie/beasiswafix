@@ -58,7 +58,7 @@ $this->load->view('pencari/header_user');
             <p class="login-box-msg">Masukkan kata sandi baru:</p>
         
         <?php echo form_open('Pencari/forgot_password'); ?>
-        <input type="text" name="email_def" value="<?php echo $email; ?>">
+        <input type="hidden" name="email_def" value="<?php echo $email; ?>">
         <div class="form-group has-feedback">
           <input type="password" name="password" class="form-control" placeholder="Masukkan kata sandi baru minimal 6 karakter" autofocus required>
         </div>
@@ -76,6 +76,21 @@ $this->load->view('pencari/header_user');
     <!-- /.login-box-body -->
   </div>
   <!-- /.login-box -->
+  <!--============================= FOOTER =============================-->
+<footer class="main-block dark-bg">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="copyright">
+          <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+          <p>Copyright &copy; 2018 E-Beasiswa</p>
+          <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+<!--//END FOOTER -->
   <script type="text/javascript">
 
 

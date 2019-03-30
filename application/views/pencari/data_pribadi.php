@@ -2,8 +2,19 @@
 $this->load->view('pencari/profilpencari');?>
   
   <div class="col-md-9">
- <div class="box box-primary"><br>
-                <?php
+ <div class="box box-primary">
+               
+           
+     <div class="box-header with-border">
+      <h3 class="box-title">Data Profil</h3>
+
+    </div>
+
+    <div class="callout callout-info">
+      <p>Anda dapat melakukan edit pada akun anda dengan mengisi form dibawah ini. 
+        Email tidak bisa diubah</p>
+    </div>
+     <?php
                 $this->load->helper('form');
                 $error = $this->session->flashdata('error');
                 if($error)
@@ -11,17 +22,17 @@ $this->load->view('pencari/profilpencari');?>
                   ?>
                   <div class="alert alert-danger alert-dismissable">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                    <?php echo $this->session->flashdata('error'); ?>                    
+                    <?php echo $this->session->flashdata('error_data_profil'); ?>                    
                   </div>
                 <?php } ?>
                 <?php  
-                $success = $this->session->flashdata('success');
+                $success = $this->session->flashdata('success_data_profil');
                 if($success)
                 {
                   ?>
                   <div class="alert alert-success alert-dismissable">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                    <?php echo $this->session->flashdata('success'); ?>
+                    <?php echo $this->session->flashdata('success_data_profil'); ?>
                   </div>
                 <?php } ?>
 
@@ -30,15 +41,6 @@ $this->load->view('pencari/profilpencari');?>
                     <?php echo validation_errors('<div class="alert alert-danger alert-dismissable">', ' <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button></div>'); ?>
                   </div>
                 </div>
-           
-    <div class="box-header with-border">
-      <h3 class="box-title">Data Profil</h3>
-    </div>
-
-    <div class="callout callout-info">
-      <p>Anda dapat melakukan edit pada akun anda dengan mengisi form dibawah ini. 
-        Email tidak bisa diubah</p>
-    </div>
             
         <form role="form" method="POST" action="<?php echo base_url()."Pencari/edit_pencari/"?>">
           <div class="box-body">
@@ -66,14 +68,17 @@ $this->load->view('pencari/profilpencari');?>
 
             <div class="form-group">
               <label for="exampleInputEmail">Kategori</label>
-              <select name="tingkatan" class="form-control required" required>
+              <input type="text" class="form-control" name="email" id="email" value="<?php echo $nama_pencari['tingkatan'];?>" readonly>
+              
+              <!-- <select name="tingkatan" class="form-control required" readonly>
                 <option <?php if($nama_pencari['tingkatan'] == "Pelajar") 
                 {
                   echo "selected=selected";
                 } 
                 ?> value="Pelajar">Pelajar</option>
                 <option <?php if($nama_pencari['tingkatan'] == "Mahasiswa") {echo "selected=selected";} ?> value="Mahasiswa">Mahasiswa</option>
-                </select><?php echo form_error('tingkatan');?>
+                </select>
+                <?php echo form_error('tingkatan');?> -->
               </div><br>
               <div class="box-tools pull-right">
                 <input type="submit" value="Simpan" class="btn btn-primary">

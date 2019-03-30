@@ -34,7 +34,7 @@ $this->load->view('pencari/header_user');
 
             <!-- <p>Join thousand of employers and earn what you deserve!</p>
               <a href="my-account.html" class="btn btn-common">Get Started Now</a> -->
-              <a class="btn" type="btn" href="<?php echo base_url('Pencarian_BeasiswaC/get_beasiswa');?>" class="btn-form" style="background-color:#fff; color:black;"><i class="fa fa-mortar-board"> Lihat Beasiswa</i></a>
+              <a class="btn" type="btn" href="<?php echo base_url('Pencarian_BeasiswaC/get_beasiswa');?>" class="btn-form" style="background-color:#fff; color:black;"><i class="fa fa-mortar-board"> Cari Beasiswa</i></a>
             </div>
           </div>
 
@@ -46,6 +46,9 @@ $this->load->view('pencari/header_user');
 
           <section class="main-block light-bg">
             <div class="container">
+              <div class="styled-heading">
+        <h3>Daftar Universitas</h3>
+      </div>
 
              <div class="row" >
               <?php foreach ($list_univ_by_fakultas as $value){?> 
@@ -251,11 +254,6 @@ $this->load->view('pencari/header_user');
           <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
           <p>Copyright &copy; 2018 E-Beasiswa</p>
           <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-          <ul>
-            <li><a href="#"><span class="ti-facebook"></span></a></li>
-            <li><a href="#"><span class="ti-twitter-alt"></span></a></li>
-            <li><a href="#"><span class="ti-instagram"></span></a></li>
-          </ul>
         </div>
       </div>
     </div>

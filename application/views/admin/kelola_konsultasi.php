@@ -72,6 +72,43 @@ $this->load->view('admin/headerAdmin');
                   <li class="active"><i class="fa fa-envelope">&ensp;Kotak Masuk</i></li>
                 </ol>
               </div>
+
+               <div style="background-color: #d2d6de; height: 80px;">
+            <div class="col-md-12" style="padding-top: 8px;" >
+            <label>Filter Status</label>
+            </div>
+
+            <form action="<?php echo base_url('AdminC/filter_konsultasi');?>" method="POST" style="padding-bottom: 50px;padding-top: 5px;">
+
+              <div class="form-group col-md-6" >
+                <div class="input-group input-group-sm">
+                  <div class="input-group-addon">
+                    <i class="fa fa-bars"></i>
+                  </div>
+
+                  <select class="form-control" id="reservation" name="filter_konsultasi" >
+                     <option value='0' disable selected>-- pilih status --</option>
+                      <option value="belum dibalas">Belum Dibalas</option>
+                      <option value="sudah dibalas">Sudah Dibalas</option>
+                  </select>
+             
+                  <span class="input-group-btn">
+
+                      <button type="submit" class="btn btn-primary btn-flat">Cari</button>
+
+                     
+
+                     
+                    </span>
+
+                </div>
+                <!-- /.input group -->
+                
+              </div>
+              <!-- /.form group -->
+            </form>
+          </div>
+           
             
             <div class="box-body">
               <table id="univ" class="table table-bordered table-striped">
@@ -96,7 +133,7 @@ $this->load->view('admin/headerAdmin');
                         <td ><center><?php echo $value->kategori;?></center></td>
                         <td ><center><?php echo $value->create_dtm;?></center></td>
                         <td ><center>
-                          <?php if($value->status == 'dikirim'){?>
+                          <?php if($value->status == 'belum dibalas'){?>
                           <span class="label label-warning"><?php echo $value->status;?></span>
                           <?php }elseif($value->status == 'Sudah Dibalas'){?>
                             <span class="label label-success"><?php echo $value->status;?></span></center></td>
@@ -104,7 +141,7 @@ $this->load->view('admin/headerAdmin');
                         <td><a class="btn btn-danger btn-xs tooltips"  data-popup="tooltip" data-original-title="Hapus Data" data-placement="top" href="<?php echo site_url('AdminC/hapusKonsultasi/'.$value->id_konsultasi); ?>" onclick="return confirm('Apakah anda yakin ingin menghapus konsultasi  ?')" ><i class="fa fa-times"></i></a>
 
                           <a class="btn btn-info btn-xs tooltips" href="<?php echo base_url('AdminC/get_detail_konsultasi/'.$value->id_konsultasi);?>">
-                          <span data-toogle="tooltip" title="Lihat Fakultas"><i class="fa fa-search-plus" style="color: #fff"></i></span>
+                          <span data-toogle="tooltip" title="Lihat Konsultasi"><i class="fa fa-search-plus" style="color: #fff"></i></span>
                         </a></td>
 
                       </tr>

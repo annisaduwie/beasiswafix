@@ -83,7 +83,6 @@ $this->load->view('pencari/header_user');
 
 
 
-
             <a class="btn btn-primary btn-block"  style="color:#fff;" id="myBtn"><b>Unggah Foto</b></a>
 
 
@@ -92,13 +91,17 @@ $this->load->view('pencari/header_user');
             <div id="myModal" class="modal">
 
              <div class="modal-content">
-              <div class="modal-header">
-                <span class="close">&times;</span>
-                <h6>Unggah Foto</h6>
-              </div>
+              
               <div class="modal-body">
                 <?php echo form_open_multipart('Pencari/upload_foto');?> 
-               <!-- <form id="form" class="form-horizontal" method="POST" action="<?php echo base_url()."Pencari/upload_foto/"?>"> -->
+
+                 <?php if ($nama_pencari['profil_pic'] == NULL){ ?>
+
+                   <center><img src="<?php echo base_url('assets/images/no_pic.jpg');?>" id="gambar_nodin" height="180" width="200" alt="Preview Gambar" /></center>
+
+                <?php } else {?>
+                    <center><img  height="180" width="200" src="<?php echo base_url('fileUpload/'.$nama_pencari['profil_pic']);?>"></center>
+                <?php } ?>
                  <div class="form-group">
                   <label>Silahkan pilih foto</label>
                   <input type="hidden" id="id_pencari" name="id_pencari" value="<?php echo $nama_pencari['id_pencari']; ?>"><br>
@@ -107,7 +110,6 @@ $this->load->view('pencari/header_user');
                 <div class="form-group">
                   <p class="text-red">*Ukuran gambar maksimal 3 mb</p>
                 </div>
-
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Batal</button>
@@ -189,6 +191,22 @@ $this->load->view('pencari/header_user');
 <script src="<?php echo base_url();?>AdminLTE/dist/js/demo.js"></script>
 <!-- page script -->
 <script>
+
+  function bacaGambar(input) {
+   if (input.files && input.files[0]) {
+      var reader = new FileReader();
+ 
+      reader.onload = function (e) {
+          $('#gambar_nodin').attr('src', e.target.result);
+      }
+ 
+      reader.readAsDataURL(input.files[0]);
+   }
+}
+$("#pic").change(function(){
+   bacaGambar(this);
+});
+
   $(function () {
     $('#example1').DataTable()
     $('#example2').DataTable({

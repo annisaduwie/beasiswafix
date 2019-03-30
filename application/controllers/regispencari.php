@@ -12,40 +12,26 @@ class regispencari extends CI_Controller  {
     function index() {
         $this->load->view('pencari/register');
     }
+    //fungsi daftar akun
     function tambah_data() {
-
-     
-
-
+    //mendeklarasikan variabel inputan
       $nama = $this->input->post('nama');
       $username = $this->input->post('username');
       $password = md5($this->input->post('password'));
       $email = $this->input->post('email');
       $tingkatan = $this->input->post('tingkatan');
-
-            // $cekEmail=$this->PencariM->cekEmailPencari($email)->row();
       $cekEmail=$this->PencariM->cekEmail('pencari', $email);
-
-      // $key = $this->PencariM->cekId($id_pencari);
-
-  
-
-
+      //validasi inputan
       $this->load->library('form_validation');
       $this->form_validation->set_rules('nama', 'nama', 'required');
       $this->form_validation->set_rules('username', 'username', 'required');
       $this->form_validation->set_rules('password', 'password', 'required');
       $this->form_validation->set_rules('email', 'email', 'required');
-
       if($this->form_validation->run() == FALSE ){
-
         redirect('regispencari');
-
-    }else if($cekEmail   ==  false)  {   
-
-
+      //cek agar email tidak duplikat
+      }else if($cekEmail   ==  false)  { 
         $data = array(
-
             'nama'           => $nama,
             'username'       => $username,
             'password'       => $password,
@@ -54,21 +40,9 @@ class regispencari extends CI_Controller  {
             'tingkatan'      => $tingkatan,
             'create_dtm'     => date('Y-m-d H-s-i')
         );
-
         $result = $this->PencariM->insert($data);
-//         $id = $this->PencariM->getId($email);
 
-// //         $insert = $this->db->insert('pencari', $data);
-// //         if ($insert) {
-// //             echo json_encode(array('status' => True ));
-// //         } else{
-// //             echo json_encode(array('status' => False ));
-// //         }
-
-//         foreach ($id->result_array() as $key) {
-//             $id_pencari = $key['id_pencari'];
         $encrypted_id = md5($result);
-
         $this->load->library('email');
         $config = array();
         $config['charset'] = 'utf-8';
@@ -84,7 +58,6 @@ class regispencari extends CI_Controller  {
         $config['newline']="\r\n"; 
         $config['wordwrap'] = TRUE;
         //memanggil library email dan set konfigurasi untuk pengiriman email
-
         $this->email->initialize($config);
         //konfigurasi pengiriman
         $this->email->from($config['smtp_user']);
@@ -92,49 +65,33 @@ class regispencari extends CI_Controller  {
         $this->email->subject("Verifikasi Akun");
         $this->email->message(
             "terimakasih telah melakuan registrasi, untuk memverifikasi silahkan klik tautan dibawah ini<br><br>".site_url("regispencari/verification/$encrypted_id")
-        );
-        
-  //error
+        );      
+
+        //error
         if($this->email->send()){
-            // $data = array(
-            //  "getstatus" => $this->Mhome->daftar_berhasil()->row_array(),
-            // );
-            // $data['cart'] = $this->cart->contents();
-            // $this->load->view("vdaftar",$data);
-            redirect('Awal');
+          	$this->session->set_flashdata('sukses',"Email verifikasi telah dikirim ke email anda, silahkan lakukan verifikasi untuk mengaktifkan akun anda");
+            redirect('Awal/login');
         }else{
-            // $data['cart'] = $this->cart->contents();
-            // $this->load->view("vdaftar",$data);
-            redirect('Awal/home');
+        	$this->session->set_flashdata('error',"Pendaftaran berhasil, namun email tidak terkirim");
+            redirect('Awal/regispencari');
         }
-
-
-
+        
     }else{
-
         $nama = $data['nama'];
         $username = $data['username'];
         $email = $data['email'];
-
         $this->session->set_flashdata('error','*email sudah digunakan');
         redirect('regispencari');
-//header("location: ".$_SERVER['HTTP_REFERER']);
     }
 
 }
 //error
 public function verification($key){
-
     $this->verifemail->changeActiveState($key);
-
-    echo "Selamat kamu telah memverifikasi akun kamu";
-    echo "<br><br><a href='".site_url("Awal/login")."'>Kembali ke Menu Login</a>";
+    $this->load->view('pencari/alertVerifikasi');
+    // echo "Selamat kamu telah memverifikasi akun kamu";
+    // echo "<br><br><a href='".site_url("Awal/login")."'>Login Sekarang</a>";
 }
-
-
-
-
-
 
 }
 

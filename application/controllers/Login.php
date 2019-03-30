@@ -24,15 +24,13 @@ class Login extends CI_Controller
 
         $username=$this->input->post('username');
         $password=$this->input->post('password');
-        $ceknum=$this->LoginM->ceknum($username,$password)->num_rows();
+        $ceknum=$this->LoginM->ceknum($username, $password)->num_rows();
         $ceknumAdmin=$this->LoginAdmin->ceknumAdmin($username,$password)->num_rows();
         $query=$this->LoginM->ceknum($username,$password)->row();
         $cek=$this->PencariM->cekStatus($username)->num_rows();
         
 
         if( $ceknum > 0){
-
-          
               $userData = array(
                 'id_pencari' => $query->id_pencari,
                 'username' => $query->username,
@@ -40,25 +38,17 @@ class Login extends CI_Controller
                 'status' => $query->status,
                 'logged_in' => TRUE
               );
-
               $this->session->set_userdata($userData);
-
-              if ($this->session->userdata('status') == "belum aktif"){
-                 $this->session->set_flashdata('error','Akun belum diverifikasi, silahkan verifikasi dari email anda');
-              }else
-
-            
-              redirect('Awal');
-        // $this->session->set_userdata($userData);
-        //         if ($this->session->userdata('peran') == "admin"){
-        //             redirect('Awal');
-        //         }else if ($this->session->userdata('peran') == "logistik"){
-        //             redirect('Awal');
-        //         }
-
-               }
-               else if($ceknumAdmin>0){
-                
+              $status=$this->LoginM->cekStatus($username);
+              foreach($status->result_array() as $key){
+              if($key['status'] == "aktif"){
+                 redirect('Awal');
+                }else{
+                  $this->session->set_flashdata('error','Anda belum melakukan verifikasi akun, silahkan verifikasi terlebih dahulu melalui email');
+                 redirect('Awal/login');
+                }
+             }
+          }else if($ceknumAdmin>0){
                 $userData = array(
                 'username' => $query->username,
                 'password' => $query->password,
@@ -84,20 +74,15 @@ class Login extends CI_Controller
         //             redirect('Awal');
         //         }
 
-            }else
+             
+            }else{
                 $this->session->set_flashdata('error','Username dan Password Salah');
-                redirect('Login');
+                redirect('Awal/login');
             
-            // else 
-            //     $this->session->set_flashdata('error','Username dan Password Salah');
-            //     redirect('Login');
-            
-
-}
-
-
-           
+            }
+   
         }
+      }
 
 
 

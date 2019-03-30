@@ -39,7 +39,7 @@ $this->load->view('admin/head_admin');
 
             <div class="row">
               <div class="col-md-12">
-                <?php
+                 <?php
                 $this->load->helper('form');
                 $error = $this->session->flashdata('error');
                 if($error)
@@ -47,7 +47,9 @@ $this->load->view('admin/head_admin');
                   ?>
                   <div class="alert alert-danger alert-dismissable">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                    <?php echo $this->session->flashdata('error'); ?>                    
+                    <i class="fa fa-exclamation-triangle">&ensp;
+                    <?php echo $this->session->flashdata('error'); ?>
+                    </i>                 
                   </div>
                 <?php } ?>
                 <?php  
@@ -57,7 +59,9 @@ $this->load->view('admin/head_admin');
                   ?>
                   <div class="alert alert-success alert-dismissable">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <i class="fa fa-check">&ensp;
                     <?php echo $this->session->flashdata('success'); ?>
+                  </i>
                   </div>
                 <?php } ?>
 
@@ -83,7 +87,7 @@ $this->load->view('admin/head_admin');
               
 
               <div class="callout callout-warning">
-                <h4>Perhatian !</h4>
+                <h4><i class="fa fa-exclamation-triangle">&ensp;Perhatian !</i></h4>
 
                 <p>Untuk pengisian pada kolom negara, tidak boleh menggunakan spasi (" "), anda dapat menggantinya dengan strip (-), misalkan Timor-Leste </p>
               </div>
@@ -121,9 +125,9 @@ $this->load->view('admin/head_admin');
                       <td ><?php echo $value->url_beasiswa_umum; ?></td>
 
                       <td> <a class="btn btn-info btn-xs tooltips" data-toggle="modal" data-target="#modal-<?php echo $value->id_beasiswa_umum; ?>">
-                        <span data-toogle="tooltip" title="Ubah"><i class="fa fa-pencil" style="color: #fff"></i></span></a>
+                        <span data-toogle="tooltip" title="Ubah beasiswa"><i class="fa fa-pencil" style="color: #fff"></i></span></a>
 
-                        <a class="btn btn-danger btn-xs tooltips"  data-popup="tooltip" data-original-title="Hapus Data" data-placement="top" href="<?php echo site_url('AdminC/hapus_beasiswa_umum/'.$value->id_beasiswa_umum); ?>" onclick="return confirm('Apakah anda yakin ingin menghapus universitas  ?')" ><i class="fa fa-times" ></i></a>
+                        <a class="btn btn-danger btn-xs tooltips"  data-popup="tooltip" title="Hapus beasiswa" data-placement="top" href="<?php echo site_url('AdminC/hapus_beasiswa_umum/'.$value->id_beasiswa_umum); ?>" onclick="return confirm('Apakah anda yakin ingin menghapus beasiswa  ?')" ><i class="fa fa-times" ></i></a>
 
 
                       </td>
@@ -142,7 +146,7 @@ $this->load->view('admin/head_admin');
 
                               <?php echo form_open_multipart('AdminC/edit_beasiswa_umum','id ="form" class="form-horizontal"');?>
 
-                              <div class="form-group" style="padding: 15px 0;">
+                              <div class="form-group">
 
                                 <div class="col-sm-10">
 

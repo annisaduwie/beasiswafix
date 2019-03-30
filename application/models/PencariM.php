@@ -18,6 +18,10 @@ class PencariM extends CI_Model{
    $query = $this->db->query("SELECT * from pencari, konsultasi where pencari.id_pencari=konsultasi.id_pencari GROUP BY id_konsultasi ORDER BY konsultasi.create_dtm DESC");
    return $query;
  }
+  public function get_pencarian_konsultasi($status){
+   $query = $this->db->query("SELECT * from pencari, konsultasi where pencari.id_pencari=konsultasi.id_pencari AND konsultasi.status='$status'GROUP BY id_konsultasi ORDER BY konsultasi.create_dtm DESC");
+   return $query;
+ }
   public function get_detail_konsultasi($id_konsultasi){
    $query = $this->db->query("SELECT * from pencari, konsultasi where pencari.id_pencari=konsultasi.id_pencari AND id_konsultasi='$id_konsultasi'");
    return $query;
@@ -25,9 +29,9 @@ class PencariM extends CI_Model{
 
 
 
- public function cekEmailPencari($email){
+ public function cekEmailPencari($username){
   $this->db->select('email');
-  $this->db->where('email', $email);
+  $this->db->where('email', $username);
 
     // $this->db->where('peran', 'analis');
   return $this->db->get('pencari');

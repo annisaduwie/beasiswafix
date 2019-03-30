@@ -85,7 +85,7 @@ $this->load->view('admin/headAdmin');
             <span><i class="fa fa-envelope">&ensp;Kotak masuk</i></span>
             <span class="pull-right-container">
               <?php 
-              $result =  $this->db->query("SELECT count(id_konsultasi) as kotak_masuk from konsultasi WHERE status='dikirim'")->row_array();?>
+              $result =  $this->db->query("SELECT count(id_konsultasi) as kotak_masuk from konsultasi WHERE status='belum dibalas'")->row_array();?>
 
               <small class="label pull-right bg-yellow"><?php echo $result['kotak_masuk'];?></small>
             
@@ -105,7 +105,7 @@ $this->load->view('admin/headAdmin');
 
         <li >
             <a href="<?php echo base_url('AdminC/get_data_scraping_beasiswa');?>">
-            <span><i class="fa fa-graduation-cap">&ensp;Data Beasiswa</i></span>
+            <span><i class="fa fa-file">&ensp; Data Beasiswa</i></span>
           </a>
         </li>
 

@@ -44,7 +44,7 @@ $this->load->view('pencari/header_user');
 
   <div class="container" style="padding-top: 20px; ">
     <h5 class="title-text" style="color:#fff; ">
-      Area Program Studi<br></h5>
+      Area Fakultas<br></h5>
         <h6 class="title-text" style="color:#fff; padding-bottom: 30px;">Temukan program studi sesuai pilihanmu.<br> Kamu dapat menyaring berdasarkan universitas dan negara yang kamu ingin pilih.<br></h6>
 
    
@@ -324,11 +324,6 @@ $this->load->view('pencari/header_user');
           <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
           <p>Copyright &copy; E-beasiswa</p>
           <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-          <ul>
-            <li><a href="#"><span class="ti-facebook"></span></a></li>
-            <li><a href="#"><span class="ti-twitter-alt"></span></a></li>
-            <li><a href="#"><span class="ti-instagram"></span></a></li>
-          </ul>
         </div>
       </div>
     </div>

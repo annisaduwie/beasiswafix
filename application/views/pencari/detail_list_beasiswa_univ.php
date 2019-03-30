@@ -37,7 +37,7 @@ $this->load->view('pencari/header_user');
 
           <div class="col-md-12 featured-responsive">
             <h4><i class="fa fa-th-list"> Informasi Persyaratan</h4></i><br>
-      <?php echo $value['id'];?>    
+     
       <?php echo $value['description'];?>
    </div>
  </div>

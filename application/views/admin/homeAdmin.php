@@ -33,6 +33,8 @@ $this->load->view('admin/head_admin');
     $result_pelajar = $this->db->query("SELECT count(id_pencari) as jumlah_pelajar from pencari where tingkatan='Pelajar'")->row_array(); 
     $result_mahasiswa = $this->db->query("SELECT count(id_pencari) as jumlah_mahasiswa from pencari where tingkatan='Mahasiswa'")->row_array();
     $result_pencari =  $this->db->query("SELECT count(id_pencari) as jumlah_pencari from pencari")->row_array();
+    $result_universitas = $this->db->query("SELECT count(id_universitas) as jumlah_universitas from universitas")->row_array();
+    $result_beasiswa = $this->db->query("SELECT count(id_konten_beasiswa_umum) as jumlah_beasiswa from konten_beasiswa")->row_array();
     // $persen_pelajar = ($result_pelajar['jumlah_pelajar']/$result_pencari['jumlah_pencari'])*100;
     // $persen_mahasiswa = ($result_mahasiswa['jumlah_mahasiswa']/$result_pencari['jumlah_pencari'])*100;
     ?>
@@ -71,98 +73,135 @@ $this->load->view('admin/head_admin');
             
           </div>
         </div>
+        <!-- col-->
+          <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-red">
+            <div class="inner">
+              
+              <h3><?php echo $result_universitas['jumlah_universitas'];?><sup style="font-size: 20px"></sup></h3>
+
+              <p>Universitas</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-home"></i>
+            </div>
+            
+          </div>
+        </div>
         <!-- ./col -->
+         <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-green">
+            <div class="inner">
+              
+              <h3><?php echo $result_beasiswa['jumlah_beasiswa'];?><sup style="font-size: 20px"></sup></h3>
+
+              <p>Beasiswa</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-university"></i>
+            </div>
+            
+          </div>
+        </div>
        
       </div>
 
       <div class="row">
-        <div class="col-md-6">
-          <!-- AREA CHART -->
-          <div class="box box-primary">
-            <div class="box-header with-border">
-              <h3 class="box-title">Area Chart</h3>
-
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
-            </div>
-            <div class="box-body">
-              <div class="chart">
-                <canvas id="areaChart" style="height:250px"></canvas>
-              </div>
-            </div>
-            <!-- /.box-body -->
-          </div>
-          <!-- /.box -->
-
-          <!-- DONUT CHART -->
-          <div class="box box-danger">
-            <div class="box-header with-border">
-              <h3 class="box-title">Donut Chart</h3>
-
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
-            </div>
-            <div class="box-body">
-              <canvas id="pieChart" style="height:250px"></canvas>
-            </div>
-            <!-- /.box-body -->
-          </div>
-          <!-- /.box -->
-
-        </div>
+        
         <!-- /.col (LEFT) -->
-        <div class="col-md-6">
+        <div class="col-md-12">
           <!-- LINE CHART -->
           <div class="box box-info">
             <div class="box-header with-border">
-              <h3 class="box-title">Line Chart</h3>
-
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
+              <h3 class="box-title">Grafik Pencarian Universitas</h3>
             </div>
             <div class="box-body">
               <div class="chart">
+            <div style="float: right;">
+                 <ul class="sidebar-menu" data-widget="tree">
+                  <li><i class="fa fa-square" style="color: #c1c7d1"></i> <span>Mahasiswa</span></a></li>
+                 <li><i class="fa fa-square" style="color: #3b8bba"></i> <span>Pelajar</span></a></li>
+                 
+               </ul>
+             </div>
                 <canvas id="lineChart" style="height:250px"></canvas>
               </div>
             </div>
             <!-- /.box-body -->
           </div>
           <!-- /.box -->
-
-          <!-- BAR CHART -->
-          <div class="box box-success">
+          <!-- LINE CHART -->
+          <div class="box box-info">
             <div class="box-header with-border">
-              <h3 class="box-title">Bar Chart</h3>
-
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
+              <h3 class="box-title">Grafik Pencarian Beasiswa</h3>
             </div>
             <div class="box-body">
               <div class="chart">
-                <canvas id="barChart" style="height:230px"></canvas>
+            <div style="float: right;">
+                 <ul class="sidebar-menu" data-widget="tree">
+                  <li><i class="fa fa-square" style="color: #c1c7d1"></i> <span>Mahasiswa</span></a></li>
+                 <li><i class="fa fa-square" style="color: #3b8bba"></i> <span>Pelajar</span></a></li>
+                 
+               </ul>
+             </div>
+                <canvas id="lineChartbeasiswa" style="height:250px"></canvas>
               </div>
             </div>
             <!-- /.box-body -->
           </div>
           <!-- /.box -->
 
+
         </div>
         <!-- /.col (RIGHT) -->
+
       </div>
       <!-- /.row -->
+<!-- TABLE: LATEST ORDERS -->
+          <div class="box box-info">
+            <div class="box-header with-border">
+              <h3 class="box-title">Universitas Favorit</h3>
 
+             
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <div class="table-responsive">
+                <table class="table no-margin">
+                  <thead>
+                  <tr>
+                    <th>No</th>
+                    <th>Nama Universitas</th>
+                    <th>Popularitas</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                     <?php $no=0; foreach ($universitas_favorit as $value): $no++; ?>
+                  <tr>
+                    <td><?php echo $no; ?></td>
+                    <td><?php echo $value->nama_universitas; ?></td>
+                    <td><?php echo $value->total; ?>
+                    <?php
+                    $nilai_max = $this->db->query("SELECT Max(total) as maksimum from (select count(*) as total from pencarian_favorit, universitas, detail_universitas WHERE pencarian_favorit.id_universitas=universitas.id_universitas AND universitas.id_universitas=detail_universitas.id_universitas GROUP BY pencarian_favorit.id_universitas order by total) as total;")->row_array();
+                    if( $value->total == $nilai_max['maksimum']){ ?>
+                    <i class="fa fa-star text-yellow"></i>
+                    <?php }?>
+                  </td>
+                  </tr>
+                 <?php  endforeach; ?>
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.table-responsive -->
+            </div>
+            <!-- /.box-body -->
+           
+          </div>
+          <!-- /.box -->
+        </div>
+        <!-- /.col -->
     </section>
     <!-- /.content -->  
 </div>
@@ -220,12 +259,12 @@ $this->load->view('admin/head_admin');
     //--------------
 
     // Get context with jQuery - using jQuery's .get() method.
-    var areaChartCanvas = $('#areaChart').get(0).getContext('2d')
+    var areaChartCanvas = $('#lineChart').get(0).getContext('2d')
     // This will get the first returned node in the jQuery collection.
     var areaChart       = new Chart(areaChartCanvas)
 
     var areaChartData = {
-      labels  : ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+      labels  : ['Januari', 'Februari', 'Maret', 'April', 'Mei'],
       datasets: [
         {
           label               : 'Electronics',
@@ -235,7 +274,28 @@ $this->load->view('admin/head_admin');
           pointStrokeColor    : '#c1c7d1',
           pointHighlightFill  : '#fff',
           pointHighlightStroke: 'rgba(220,220,220,1)',
-          data                : [65, 59, 80, 81, 56, 55, 40]
+          data                : [
+          <?php  
+          $result_januari = $this->db->query("SELECT count(id_pencarian) as jumlah_pencarian from pencarian, pencari where pencarian.id_pencari=pencari.id_pencari AND MONTH(waktu_pencarian)='1' AND pencari.tingkatan='Mahasiswa'")->row_array();
+          echo $result_januari['jumlah_pencarian'];
+          ?>, 
+          <?php  
+          $result_februari = $this->db->query("SELECT count(id_pencarian) as jumlah_pencarian from pencarian, pencari where pencarian.id_pencari=pencari.id_pencari AND MONTH(waktu_pencarian)='2' AND pencari.tingkatan='Mahasiswa'")->row_array();
+          echo $result_februari['jumlah_pencarian'];
+          ?>,
+          <?php  
+          $result_maret = $this->db->query("SELECT count(id_pencarian) as jumlah_pencarian from pencarian, pencari where pencarian.id_pencari=pencari.id_pencari AND MONTH(waktu_pencarian)='3' AND pencari.tingkatan='Mahasiswa'")->row_array();
+          echo $result_maret['jumlah_pencarian'];
+          ?>,
+          <?php  
+          $result_april = $this->db->query("SELECT count(id_pencarian) as jumlah_pencarian from pencarian, pencari where pencarian.id_pencari=pencari.id_pencari AND MONTH(waktu_pencarian)='4' AND pencari.tingkatan='Mahasiswa'")->row_array();
+          echo $result_april['jumlah_pencarian'];
+          ?>,
+          <?php
+          $result_mei = $this->db->query("SELECT count(id_pencarian) as jumlah_pencarian from pencarian, pencari where pencarian.id_pencari=pencari.id_pencari AND MONTH(waktu_pencarian)='5' AND pencari.tingkatan='Mahasiswa'")->row_array();
+          echo $result_mei['jumlah_pencarian'];
+          ?>
+          ]
         },
         {
           label               : 'Digital Goods',
@@ -245,7 +305,28 @@ $this->load->view('admin/head_admin');
           pointStrokeColor    : 'rgba(60,141,188,1)',
           pointHighlightFill  : '#fff',
           pointHighlightStroke: 'rgba(60,141,188,1)',
-          data                : [28, 48, 40, 19, 86, 27, 90]
+          data                : [ 
+          <?php
+          $result_januari = $this->db->query("SELECT count(id_pencarian) as jumlah_pencarian from pencarian, pencari where pencarian.id_pencari=pencari.id_pencari AND MONTH(waktu_pencarian)='1' AND pencari.tingkatan='Pelajar'")->row_array();
+          echo $result_januari['jumlah_pencarian'];
+          ?>,
+          <?php  
+          $result_februari = $this->db->query("SELECT count(id_pencarian) as jumlah_pencarian from pencarian, pencari where pencarian.id_pencari=pencari.id_pencari AND MONTH(waktu_pencarian)='2' AND pencari.tingkatan='Pelajar'")->row_array();
+          echo $result_februari['jumlah_pencarian'];
+          ?>,
+          <?php
+          $result_maret = $this->db->query("SELECT count(id_pencarian) as jumlah_pencarian from pencarian, pencari where pencarian.id_pencari=pencari.id_pencari AND MONTH(waktu_pencarian)='3' AND pencari.tingkatan='Pelajar'")->row_array();
+          echo $result_maret['jumlah_pencarian'];
+          ?>,
+          <?php
+          $result_april = $this->db->query("SELECT count(id_pencarian) as jumlah_pencarian from pencarian, pencari where pencarian.id_pencari=pencari.id_pencari AND MONTH(waktu_pencarian)='4' AND pencari.tingkatan='Pelajar'")->row_array();
+          echo $result_april['jumlah_pencarian'];
+          ?>,
+          <?php
+          $result_mei = $this->db->query("SELECT count(id_pencarian) as jumlah_pencarian from pencarian, pencari where pencarian.id_pencari=pencari.id_pencari AND MONTH(waktu_pencarian)='5' AND pencari.tingkatan='Pelajar'")->row_array();
+          echo $result_mei['jumlah_pencarian'];
+          ?>
+          ]
         }
       ]
     }
@@ -305,88 +386,93 @@ $this->load->view('admin/head_admin');
     //- PIE CHART -
     //-------------
     // Get context with jQuery - using jQuery's .get() method.
-    var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
-    var pieChart       = new Chart(pieChartCanvas)
-    var PieData        = [
-      {
-        value    : 700,
-        color    : '#f56954',
-        highlight: '#f56954',
-        label    : 'Chrome'
-      },
-      {
-        value    : 500,
-        color    : '#00a65a',
-        highlight: '#00a65a',
-        label    : 'IE'
-      },
-      {
-        value    : 400,
-        color    : '#f39c12',
-        highlight: '#f39c12',
-        label    : 'FireFox'
-      },
-      {
-        value    : 600,
-        color    : '#00c0ef',
-        highlight: '#00c0ef',
-        label    : 'Safari'
-      },
-      {
-        value    : 300,
-        color    : '#3c8dbc',
-        highlight: '#3c8dbc',
-        label    : 'Opera'
-      },
-      {
-        value    : 100,
-        color    : '#d2d6de',
-        highlight: '#d2d6de',
-        label    : 'Navigator'
-      }
-    ]
-    var pieOptions     = {
-      //Boolean - Whether we should show a stroke on each segment
-      segmentShowStroke    : true,
-      //String - The colour of each segment stroke
-      segmentStrokeColor   : '#fff',
-      //Number - The width of each segment stroke
-      segmentStrokeWidth   : 2,
-      //Number - The percentage of the chart that we cut out of the middle
-      percentageInnerCutout: 50, // This is 0 for Pie charts
-      //Number - Amount of animation steps
-      animationSteps       : 100,
-      //String - Animation easing effect
-      animationEasing      : 'easeOutBounce',
-      //Boolean - Whether we animate the rotation of the Doughnut
-      animateRotate        : true,
-      //Boolean - Whether we animate scaling the Doughnut from the centre
-      animateScale         : false,
-      //Boolean - whether to make the chart responsive to window resizing
-      responsive           : true,
-      // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
-      maintainAspectRatio  : true,
-      //String - A legend template
-      legendTemplate       : '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<segments.length; i++){%><li><span style="background-color:<%=segments[i].fillColor%>"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>'
-    }
-    //Create pie or douhnut chart
-    // You can switch between pie and douhnut using the method below.
-    pieChart.Doughnut(PieData, pieOptions)
+   
 
-    //-------------
-    //- BAR CHART -
-    //-------------
-    var barChartCanvas                   = $('#barChart').get(0).getContext('2d')
-    var barChart                         = new Chart(barChartCanvas)
-    var barChartData                     = areaChartData
-    barChartData.datasets[1].fillColor   = '#00a65a'
-    barChartData.datasets[1].strokeColor = '#00a65a'
-    barChartData.datasets[1].pointColor  = '#00a65a'
-    var barChartOptions                  = {
-      //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
-      scaleBeginAtZero        : true,
+    barChartOptions.datasetFill = false
+    barChart.Bar(barChartData, barChartOptions)
+  })
+
+ $(function () {
+
+
+// Get context with jQuery - using jQuery's .get() method.
+    var areaChartCanvas = $('#lineChartbeasiswa').get(0).getContext('2d')
+    // This will get the first returned node in the jQuery collection.
+    var areaChart       = new Chart(areaChartCanvas)
+
+    var areaChartData = {
+      labels  : ['Januari', 'Februari', 'Maret', 'April', 'Mei'],
+      datasets: [
+        {
+          label               : 'Electronics',
+          fillColor           : 'rgba(210, 214, 222, 1)',
+          strokeColor         : 'rgba(210, 214, 222, 1)',
+          pointColor          : 'rgba(210, 214, 222, 1)',
+          pointStrokeColor    : '#c1c7d1',
+          pointHighlightFill  : '#fff',
+          pointHighlightStroke: 'rgba(220,220,220,1)',
+          data                : [
+          <?php  
+          $result_januari = $this->db->query("SELECT count(id_pencarian_beasiswa) as jumlah_pencarian from pencarian_beasiswa, pencari where pencarian_beasiswa.id_pencari=pencari.id_pencari AND MONTH(waktu_pencarian)='1' AND pencari.tingkatan='Mahasiswa'")->row_array();
+          echo $result_januari['jumlah_pencarian'];
+          ?>, 
+          <?php  
+          $result_februari = $this->db->query("SELECT count(id_pencarian_beasiswa) as jumlah_pencarian from pencarian_beasiswa, pencari where pencarian_beasiswa.id_pencari=pencari.id_pencari AND MONTH(waktu_pencarian)='2' AND pencari.tingkatan='Mahasiswa'")->row_array();
+          echo $result_februari['jumlah_pencarian'];
+          ?>,
+          <?php  
+          $result_maret = $this->db->query("SELECT count(id_pencarian_beasiswa) as jumlah_pencarian from pencarian_beasiswa, pencari where pencarian_beasiswa.id_pencari=pencari.id_pencari AND MONTH(waktu_pencarian)='3' AND pencari.tingkatan='Mahasiswa'")->row_array();
+          echo $result_maret['jumlah_pencarian'];
+          ?>,
+          <?php  
+          $result_april = $this->db->query("SELECT count(id_pencarian_beasiswa) as jumlah_pencarian from pencarian_beasiswa, pencari where pencarian_beasiswa.id_pencari=pencari.id_pencari AND MONTH(waktu_pencarian)='4' AND pencari.tingkatan='Mahasiswa'")->row_array();
+          echo $result_april['jumlah_pencarian'];
+          ?>,
+          <?php 
+          $result_mei = $this->db->query("SELECT count(id_pencarian_beasiswa) as jumlah_pencarian from pencarian_beasiswa, pencari where pencarian_beasiswa.id_pencari=pencari.id_pencari AND MONTH(waktu_pencarian)='5' AND pencari.tingkatan='Mahasiswa'")->row_array();
+          echo $result_mei['jumlah_pencarian'];
+          ?>
+          ]
+        },
+        {
+          label               : 'Digital Goods',
+          fillColor           : 'rgba(60,141,188,0.9)',
+          strokeColor         : 'rgba(60,141,188,0.8)',
+          pointColor          : '#3b8bba',
+          pointStrokeColor    : 'rgba(60,141,188,1)',
+          pointHighlightFill  : '#fff',
+          pointHighlightStroke: 'rgba(60,141,188,1)',
+          data                : [ 
+          <?php
+          $result_januari = $this->db->query("SELECT count(id_pencarian_beasiswa) as jumlah_pencarian from pencarian_beasiswa, pencari where pencarian_beasiswa.id_pencari=pencari.id_pencari AND MONTH(waktu_pencarian)='1' AND pencari.tingkatan='Pelajar'")->row_array();
+          echo $result_januari['jumlah_pencarian'];
+          ?>,
+          <?php  
+          $result_februari = $this->db->query("SELECT count(id_pencarian_beasiswa) as jumlah_pencarian from pencarian_beasiswa, pencari where pencarian_beasiswa.id_pencari=pencari.id_pencari AND MONTH(waktu_pencarian)='2' AND pencari.tingkatan='Pelajar'")->row_array();
+          echo $result_februari['jumlah_pencarian'];
+          ?>,
+          <?php
+          $result_maret = $this->db->query("SELECT count(id_pencarian_beasiswa) as jumlah_pencarian from pencarian_beasiswa, pencari where pencarian_beasiswa.id_pencari=pencari.id_pencari AND MONTH(waktu_pencarian)='3' AND pencari.tingkatan='Pelajar'")->row_array();
+          echo $result_maret['jumlah_pencarian'];
+          ?>,
+          <?php
+          $result_april = $this->db->query("SELECT count(id_pencarian_beasiswa) as jumlah_pencarian from pencarian_beasiswa, pencari where pencarian_beasiswa.id_pencari=pencari.id_pencari AND MONTH(waktu_pencarian)='4' AND pencari.tingkatan='Pelajar'")->row_array();
+          echo $result_april['jumlah_pencarian'];
+          ?>,
+          <?php
+          $result_mei = $this->db->query("SELECT count(id_pencarian_beasiswa) as jumlah_pencarian from pencarian_beasiswa, pencari where pencarian_beasiswa.id_pencari=pencari.id_pencari AND MONTH(waktu_pencarian)='5' AND pencari.tingkatan='Pelajar'")->row_array();
+          echo $result_mei['jumlah_pencarian'];
+          ?>
+          ]
+        }
+      ]
+    }
+
+    var areaChartOptions = {
+      //Boolean - If we should show the scale at all
+      showScale               : true,
       //Boolean - Whether grid lines are shown across the chart
-      scaleShowGridLines      : true,
+      scaleShowGridLines      : false,
       //String - Colour of the grid lines
       scaleGridLineColor      : 'rgba(0,0,0,.05)',
       //Number - Width of the grid lines
@@ -395,20 +481,49 @@ $this->load->view('admin/head_admin');
       scaleShowHorizontalLines: true,
       //Boolean - Whether to show vertical lines (except Y axis)
       scaleShowVerticalLines  : true,
-      //Boolean - If there is a stroke on each bar
-      barShowStroke           : true,
-      //Number - Pixel width of the bar stroke
-      barStrokeWidth          : 2,
-      //Number - Spacing between each of the X value sets
-      barValueSpacing         : 5,
-      //Number - Spacing between data sets within X values
-      barDatasetSpacing       : 1,
+      //Boolean - Whether the line is curved between points
+      bezierCurve             : true,
+      //Number - Tension of the bezier curve between points
+      bezierCurveTension      : 0.3,
+      //Boolean - Whether to show a dot for each point
+      pointDot                : false,
+      //Number - Radius of each point dot in pixels
+      pointDotRadius          : 4,
+      //Number - Pixel width of point dot stroke
+      pointDotStrokeWidth     : 1,
+      //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
+      pointHitDetectionRadius : 20,
+      //Boolean - Whether to show a stroke for datasets
+      datasetStroke           : true,
+      //Number - Pixel width of dataset stroke
+      datasetStrokeWidth      : 2,
+      //Boolean - Whether to fill the dataset with a color
+      datasetFill             : true,
       //String - A legend template
-      legendTemplate          : '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<datasets.length; i++){%><li><span style="background-color:<%=datasets[i].fillColor%>"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>',
-      //Boolean - whether to make the chart responsive
-      responsive              : true,
-      maintainAspectRatio     : true
+      legendTemplate          : '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<datasets.length; i++){%><li><span style="background-color:<%=datasets[i].lineColor%>"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>',
+      //Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+      maintainAspectRatio     : true,
+      //Boolean - whether to make the chart responsive to window resizing
+      responsive              : true
     }
+
+    //Create the line chart
+    areaChart.Line(areaChartData, areaChartOptions)
+
+    //-------------
+    //- LINE CHART -
+    //--------------
+    var lineChartCanvas          = $('#lineChartbeasiswa').get(0).getContext('2d')
+    var lineChart                = new Chart(lineChartCanvas)
+    var lineChartOptions         = areaChartOptions
+    lineChartOptions.datasetFill = false
+    lineChart.Line(areaChartData, lineChartOptions)
+
+    //-------------
+    //- PIE CHART -
+    //-------------
+    // Get context with jQuery - using jQuery's .get() method.
+   
 
     barChartOptions.datasetFill = false
     barChart.Bar(barChartData, barChartOptions)

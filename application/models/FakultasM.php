@@ -9,6 +9,10 @@ class FakultasM extends CI_Model{
     $query = $this->db->query("SELECT tingkatan from pencari where id_pencari='$id_pencari'")->row_array();
     return $query;
   }
+  public function cek_nama_fakultas($nama_fakultas, $id_universitas){
+    $query = $this->db->query("SELECT nama_fakultas from universitas, fak_univ, fakultas where universitas.id_universitas=fak_univ.id_universitas AND fak_univ.id_fakultas = fakultas.id_fakultas AND nama_fakultas='$nama_fakultas' AND universitas.id_universitas='$id_universitas'");
+    return $query;
+  }
 
 	public function get_fakultas($id_universitas){
    $query = $this->db->query("SELECT * from universitas, fak_univ, fakultas where universitas.id_universitas=fak_univ.id_universitas AND fak_univ.id_fakultas = fakultas.id_fakultas AND universitas.id_universitas='$id_universitas'");

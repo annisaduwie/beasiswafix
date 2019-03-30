@@ -113,6 +113,23 @@ $this->load->view('pencari/header_user');
 </div>
 </section>
 
+<!--============================= FOOTER =============================-->
+<footer class="main-block dark-bg">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="copyright">
+          <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+          <p>Copyright &copy; 2018 E-Beasiswa</p>
+          <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+       
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+<!--//END FOOTER -->
+
 <script type="text/javascript">
   function submit_form () {
     var jenjang = $('select[name="keyword_jenjang"] option:selected').val()

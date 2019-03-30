@@ -18,28 +18,51 @@ class Awal extends CI_Controller  {
 
 	public function index()
 	{
-		$keyword_kategori = 'Dalam Negeri';
+
+		$keyword_kategori = $this->input->post('keyword_kategori');
+		$data['kategori'] = $this->ProdiM->kategori();
 		if($this->session->userdata('logged_in')){
-
-		$data['prodi_pelajar']= $this->ProdiM->get_prodi_dropdown_pelajar()->result();
-		$data['prodi_mahasiswa']= $this->ProdiM->get_prodi_dropdown_mahasiswa($keyword_kategori)->result();
-		// $data['list_prodi']= $this->ProdiM->tampil_prodi()->result();
+		// menampilkan fakultas untuk pencari berstatus pelajar
 		$data['fakultas_pelajar'] = $this->FakultasM->tampil_fakultas_pelajar_limit()->result();
-
+		// menampilkan fakultas untuk pencari berstatus mahasiswa
 		$data['fakultas_mahasiswa'] = $this->FakultasM->tampil_fakultas_mahasiswa_limit()->result();
-
-
 		}else{
-		$data['prodi']= $this->ProdiM->get_prodi_dropdown()->result();
+		// menampilkan fakultas untuk pencari umum
 		$data['fakultas'] = $this->FakultasM->tampil_fakultas_limit()->result();
-
 		}
-		
+		//mengambil session id_pencari
 		$data['nama_pencari']= $this->session->userdata('id_pencari');
-	
-		$this->load->view('pencari/user', $data);
-		
+		$this->load->view('pencari/user', $data);	
 	}
+
+	public function dropdown_mhs()
+	{
+		$keyword_kategori = $this->input->post('keyword_kategori');
+		// menampilkan prodi untuk pencari berstatus mahasiswa
+		$data = $this->ProdiM->get_prodi_dropdown_mahasiswa($keyword_kategori)->result();
+		echo json_encode($data);
+	}
+	public function dropdown_pjr()
+	{
+		$keyword_kategori = $this->input->post('keyword_kategori');
+		// menampilkan prodi untuk pencari berstatus pelajar
+		$data= $this->ProdiM->get_prodi_dropdown_pelajar($keyword_kategori)->result();
+		echo json_encode($data);
+	}
+	public function dropdown_umum()
+	{
+		$keyword_kategori = $this->input->post('keyword_kategori');
+		// menampilkan prodi untuk pencari umum
+		$data= $this->ProdiM->get_prodi_dropdown($keyword_kategori)->result();
+		echo json_encode($data);
+	}
+
+	public function tampil_user_prodi(){
+	//menampilkan list daftar program studi
+	$data['prodi']= $this->ProdiM->get_prodi()->result();
+	$this->load->view('pencari/user', $data);
+
+}
 
 	public function keyword_prodi($keyword_kategori){
 
@@ -76,6 +99,7 @@ class Awal extends CI_Controller  {
 		$this->load->view('pencari/user', $data);
 
 	}
+
 	public function user()
 	{
 		//$this->load->view('bendahara/view_kotak');
@@ -84,13 +108,6 @@ class Awal extends CI_Controller  {
 		$this->load->view('pencari/user');
 		
 	}
-
-	public function tampil_user_prodi(){
-		
-	$data['prodi']= $this->ProdiM->get_prodi()->result();
-	$this->load->view('pencari/user', $data);
-
-}
 
 
 	public function regispencari(){

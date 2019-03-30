@@ -48,7 +48,9 @@ $this->load->view('admin/head_admin');
                   ?>
                   <div class="alert alert-danger alert-dismissable">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                    <?php echo $this->session->flashdata('error'); ?>                    
+                     <i class="fa fa-exclamation-triangle">&ensp;
+                    <?php echo $this->session->flashdata('error'); ?>
+                    </i>                  
                   </div>
                 <?php } ?>
                 <?php  
@@ -58,7 +60,9 @@ $this->load->view('admin/head_admin');
                   ?>
                   <div class="alert alert-success alert-dismissable">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <i class="fa fa-check">&ensp;
                     <?php echo $this->session->flashdata('success'); ?>
+                  </i>
                   </div>
                 <?php } ?>
 
@@ -108,9 +112,7 @@ $this->load->view('admin/head_admin');
                     <!-- <td ><center><?php echo $value->id_universitas; ?></center></td> -->
                     <td ><?php 
                     if( $value->gambar_universitas == NULL ){ ?>
-                      <?php $kosong ="Gambar belum ada";
-                      echo $kosong;
-                      ?>
+                      <img class="profile-user-img img-responsive" src="<?php echo base_url('assets/images/no_pic.jpg');?>">
 
                     <?php }else{ ?>
 
@@ -131,15 +133,6 @@ $this->load->view('admin/head_admin');
                         </a>
                         </td>
                       </tr>
-
-
-                    
-
-
-
-
-
-
                   <?php  endforeach; ?>
 
 
@@ -211,19 +204,7 @@ $this->load->view('admin/head_admin');
               <textarea name="alamat_universitas" class="form-control" id="alamat" value="" placeholder="Masukkan alamat" required oninvalid="this.setCustomValidity('Alamat tidak boleh kosong')" oninput="setCustomValidity('')"></textarea>
             </div>
           </div>
-          <div class="form-group" style="padding: 15px 0;">
-            <label for="inputurl" class="col-sm-2 control-label">Latitude</label>
-            <div class="col-sm-10">
-              <input name="latitude" class="form-control" id="inputnegara" value="" placeholder="Masukkan latitude" required oninvalid="this.setCustomValidity('Latitude tidak boleh kosong')" oninput="setCustomValidity('')">
-          </div>
-        </div>
-          <div class="form-group" style="padding: 15px 0;">
-            <label for="inputurl" class="col-sm-2 control-label">Longitude</label>
-            <div class="col-sm-10">
-              <input name="longitude" class="form-control" id="inputnegara" value="" placeholder="Masukkan longitude" required oninvalid="this.setCustomValidity('Longitude tidak boleh kosong')" oninput="setCustomValidity('')">
-          </div>
-        </div>
-
+          
          <div class="form-group" style="padding: 5px 0;">
             <label for="inputnip" class="col-sm-2 control-label">Email</label>
             <div class="col-sm-10">
@@ -262,6 +243,8 @@ $this->load->view('admin/head_admin');
 
           </div>
 
+          <center><img src="<?php echo base_url('assets/images/no_pic.jpg');?>" id="gambar_nodin" height="200" width="200" alt="Preview Gambar" /></center>
+
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Batal</button>
@@ -298,6 +281,21 @@ $this->load->view('admin/head_admin');
   <script src="<?php echo base_url();?>AdminLTE/dist/js/demo.js"></script>
   <!-- page script -->
   <script>
+
+  function bacaGambar(input) {
+   if (input.files && input.files[0]) {
+      var reader = new FileReader();
+ 
+      reader.onload = function (e) {
+          $('#gambar_nodin').attr('src', e.target.result);
+      }
+ 
+      reader.readAsDataURL(input.files[0]);
+   }
+}
+$("#picuniv").change(function(){
+   bacaGambar(this);
+});
 
   $('#modal-tambah').on('show.bs.modal', function (e) {
      $('body').addClass('test');

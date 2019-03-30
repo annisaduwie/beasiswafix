@@ -1,4 +1,5 @@
- <?php
+
+<?php
 $this->load->view('pencari/header_user');
 ?>
 <body >
@@ -20,81 +21,81 @@ $this->load->view('pencari/header_user');
            </div>
            <center> <div class="row d-flex justify-content-center">
             <div class="col-md-10" style="background-color:#d2d6de; padding-bottom: 8px;">
-              <form class="form-wrap mt-4" method="POST" action="<?php echo base_url('PencarianC/getPencarian')?>">
-                <div class="btn-group" role="group" aria-label="Basic example">
 
-              
-             
-
+          
               <?php if ($this->session->userdata('logged_in')){
 
               $query = $this->db->query("SELECT tingkatan from pencari where id_pencari=".$nama_pencari)->row_array(); 
 
-                if($query['tingkatan'] == "Pelajar"){?>
+              if($query['tingkatan'] == "Pelajar"){?>
 
-                  <select name="keyword_kategori" class="btn-group2">
+                <form class="form-wrap mt-4" method="POST" id="keyword">
+                  <div class="btn-group" role="group" aria-label="Basic example">
+
+                  <select name="keyword_kategori" class="btn-group2" id="keyword_kategori_pjr">
+                      <option value="0" disabled selected>Tujuan Negara</option>
+                      <option value="Dalam Negeri">Dalam Negeri</option>
+                      <option value="Luar Negeri">Luar Negeri</option>
+                  </select>
+                  <select name="keyword_prodi" class="btn-group2" id="keyword_prodi_pjr">
+                      <option value="0" disabled selected>Area Jurusan</option>
+                  </select>
+                  <select name="keyword_tingkatan" class="btn-group2" id="keyword_tingkatan_pjr">
+                     <option value="0" disabled selected>Jenjang</option>
+                     <option value="Diploma">Diploma</option>
+                     <option value="Sarjana">Sarjana</option>
+                  </select>
+                    <button type="submit" class="btn-form btn-primary" onclick="submit_form_pjr()"><span class="icon-magnifier search-icon"></span>CARI<i class="pe-7s-angle-right"></i></button>
+                  </div>
+                </form>
+
+              <?php }else if($query['tingkatan'] == "Mahasiswa"){?>
+                <form class="form-wrap mt-4" method="POST" id="keyword">
+                  <div class="btn-group" role="group" aria-label="Basic example">
+
+                    <select name="keyword_kategori" class="btn-group2" id="keyword_kategori_mhs">
                       <option value="0" disabled selected>Tujuan Negara</option>
                       <option value="Dalam Negeri">Dalam Negeri</option>
                       <option value="Luar Negeri">Luar Negeri</option>
 
                     </select>
-                    <select name="keyword_prodi"  class="btn-group2">
-                      <option value="0" disabled selected>Area Jurusan</option>
 
-                      <?php foreach ($prodi_pelajar as $value) {?>
+
+                      <select name="keyword_prodi" class="btn-group2" id="keyword_prodi_mhs">
+                      <option value="0" disabled selected>Area Jurusan</option> 
+                      <!-- <?php foreach ($prodi_mahasiswa as $value) {?>
                       <option value="<?php echo $value->nama_prodi;?>"><?php echo $value->nama_prodi;?></option>
-                      <?php  } ?>
+                      <?php  } ?> -->
               
                     </select>
-                    
 
-                    <select name="keyword_tingkatan" class="btn-group2">
-                     <option value="0" disabled selected>Jenjang</option>
-                     <option value="Diploma">Diploma</option>
-                     <option value="Sarjana">Sarjana</option>
-                   </select>
-
-                 <?php }else if($query['tingkatan'] == "Mahasiswa"){?>
-                  <select name="keyword_kategori" id="keyword_kategori" class="btn-group2">
-                    <option value="0" disabled selected>Tujuan Negara</option>
-                    <option value="Dalam Negeri">Dalam Negeri</option>
-                    <option value="Luar Negeri">Luar Negeri</option>
-                    
-                  </select>
-                    <select name="keyword_prodi"  class="btn-group2">
-                      <option value="0" disabled selected>Area Jurusan</option>
-
-                      <?php foreach ($prodi_mahasiswa as $value) {?>
-                      <option value="<?php echo $value->nama_prodi;?>"><?php echo $value->nama_prodi;?></option>
-                      <?php  } ?>
-              
-                    </select>
-                    <select name="keyword_tingkatan" class="btn-group2">
+                    <select name="keyword_tingkatan" class="btn-group2" id="keyword_tingkatan_mhs">
                      <option value="0" disabled selected>Jenjang</option>
                      <option value="Magister">Magister</option>
                      <option value="Doktor">Doktor</option>
                    </select>
+
+                    <button type="submit" class="btn-form btn-primary" onclick="submit_form_mhs()"><span class="icon-magnifier search-icon"></span>CARI<i class="pe-7s-angle-right"></i></button>
+                  </div>
+                </form>
                  <?php }?>
 
-               <?php }else{ ?>
-                </select>
-                    <select name="keyword_kategori" class="btn-group2">
+                 <?php }else{ ?>
+
+                <form class="form-wrap mt-4" method="POST" id="keyword">
+                  <div class="btn-group" role="group" aria-label="Basic example">
+                    <select name="keyword_kategori" class="btn-group2" id="keyword_kategori_umum">
                       <option value="0" disabled selected>Tujuan Negara</option>
                       <option value="Dalam Negeri">Dalam Negeri</option>
                       <option value="Luar Negeri">Luar Negeri</option>
 
                     </select>
 
-              <select name="keyword_prodi"  class="btn-group2">
+              <select name="keyword_prodi"  class="btn-group2" id="keyword_prodi_umum">
               <option value="0" disabled selected>Area Jurusan</option>
-
-                    <?php foreach ($prodi as $value) {?>
-                      <option value="<?php echo $value->nama_prodi;?>"><?php echo $value->nama_prodi;?></option>
-                    <?php  } ?>
-              
             </select>
 
-            <select name="keyword_tingkatan" class="btn-group2">
+            <select name="keyword_tingkatan" class="btn-group2" id="keyword_tingkatan_umum">
              <option value="0" disabled selected>Jenjang</option>
              <option value="Diploma">Diploma</option>
              <option value="Sarjana">Sarjana</option>
@@ -102,12 +103,14 @@ $this->load->view('pencari/header_user');
              <option value="Doktor">Doktor</option>
            </select> 
 
-         <?php }?>
-           <button type="submit" class="btn-form btn-primary"><span class="icon-magnifier search-icon"></span>CARI<i class="pe-7s-angle-right"></i></button>
+            <button type="submit" class="btn-form btn-primary" onclick="submit_form_umum()"><span class="icon-magnifier search-icon"></span>CARI<i class="pe-7s-angle-right"></i></button>
          </div>
        </form>
-       
-     </div>
+
+         <?php }?>
+          
+
+ </div>
    </div>
  </div>
 </div>
@@ -140,7 +143,7 @@ $this->load->view('pencari/header_user');
                 <?php $no=0; foreach ($fakultas_pelajar as $value): $no++; ?>
                 <div class="col-md-4 featured-responsive">
                   <div class="featured-place-wrap">
-                    <a href="detail.html">
+                    
 
                       <span class="featured-rating-orange"><?php echo $no; ?></span>
                       <div class="featured-title-box"><br>
@@ -158,7 +161,7 @@ $this->load->view('pencari/header_user');
                         </ul>
 
                       </div>
-                    </a>
+          
                   </div>
                 </div>
               <?php  endforeach; ?>
@@ -312,11 +315,6 @@ $this->load->view('pencari/header_user');
           <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
           <p>Copyright &copy; 2018 E-Beasiswa</p>
           <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-          <ul>
-            <li><a href="#"><span class="ti-facebook"></span></a></li>
-            <li><a href="#"><span class="ti-twitter-alt"></span></a></li>
-            <li><a href="#"><span class="ti-instagram"></span></a></li>
-          </ul>
         </div>
       </div>
     </div>
@@ -324,21 +322,169 @@ $this->load->view('pencari/header_user');
 </footer>
 <!--//END FOOTER -->
 
-
-
-
 <!-- jQuery, Bootstrap JS. -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 
-<script type="text/javascript">
-  $(document).ready(function(){
-    $('#keyword_kategori').change(function(){
-      var keyword_kategori=$('#keyword_kategori').val();
-      $.get('<?php echo site_url('Awal/keyword_prodi/') ?>'+keyword_kategori, function(resp){
-        $('#keyword_prodi').html(resp);
+
+
+<script type="text/javascript" src="<?php echo base_url().'assets/js/jquery-2.2.3.min.js'?>"></script>
+<script type="text/javascript"> 
+
+
+$(document).ready(function(){
+$('#keyword_kategori_mhs').change(function(){
+      var keyword_kategori=$(this).val();
+      $.ajax({
+        url : "<?php echo base_url();?>Awal/dropdown_mhs",
+        method : "POST",
+        data : {keyword_kategori: keyword_kategori},
+        async : false,
+            dataType : 'json',
+        success: function(data){
+          var html = '';
+                var i;
+                for(i=0; i<data.length; i++){
+                    html += '<option>'+data[i].nama_prodi+'</option>';
+                }
+                $('#keyword_prodi_mhs').html(html);
+        }
       });
     });
   });
+
+   $(document).ready(function(){
+    $('#keyword_kategori_pjr').change(function(){
+      var keyword_kategori=$(this).val();
+      $.ajax({
+        url : "<?php echo base_url();?>Awal/dropdown_pjr",
+        method : "POST",
+        data : {keyword_kategori: keyword_kategori},
+        async : false,
+            dataType : 'json',
+        success: function(data){
+          var html = '';
+                var i;
+                for(i=0; i<data.length; i++){
+                    html += '<option>'+data[i].nama_prodi+'</option>';
+                }
+                $('#keyword_prodi_pjr').html(html);
+          
+        }
+      });
+    });
+  });
+
+
+   $(document).ready(function(){
+    $('#keyword_kategori_umum').change(function(){
+      var keyword_kategori=$(this).val();
+      $.ajax({
+        url : "<?php echo base_url();?>Awal/dropdown_umum",
+        method : "POST",
+        data : {keyword_kategori: keyword_kategori},
+        async : false,
+            dataType : 'json',
+        success: function(data){
+          var html = '';
+                var i;
+                for(i=0; i<data.length; i++){
+                    html += '<option>'+data[i].nama_prodi+'</option>';
+                }
+                $('#keyword_prodi_umum').html(html);
+          
+        }
+      });
+    });
+  });
+
+
+     
+    function submit_form_umum() {
+
+    var jurusan = $('select[name="keyword_prodi"][id="keyword_prodi_umum"] option:selected').val();
+    var kategori = $('select[name="keyword_kategori"][id="keyword_kategori_umum"] option:selected').val();
+    var tingkatan = $('select[name="keyword_tingkatan"][id="keyword_tingkatan_umum"] option:selected').val();
+
+    document.getElementById("keyword_kategori_umum").setCustomValidity('');
+    document.getElementById("keyword_prodi_umum").setCustomValidity('');
+    document.getElementById("keyword_tingkatan_umum").setCustomValidity('');
+
+    if (kategori == 0 ){
+      document.getElementById("keyword_kategori_umum").setCustomValidity('Silahkan pilih kategori terlebih dahulu');
+      return false;
+    }else if (jurusan == 0) {
+      document.getElementById("keyword_prodi_umum").setCustomValidity('Silahkan pilih jurusan terlebih dahulu');
+      return false;
+    }else if (tingkatan == 0){
+      document.getElementById("keyword_tingkatan_umum").setCustomValidity('Silahkan pilih jenjang terlebih dahulu');
+      return false;
+    }else{
+       document.getElementById("keyword_kategori_umum").setCustomValidity('');
+       document.getElementById("keyword_prodi_umum").setCustomValidity('');
+       document.getElementById("keyword_tingkatan_umum").setCustomValidity('');
+       document.getElementById("keyword").action ='<?php echo base_url('PencarianC/getPencarian')?>';
+       return true;
+    }
+}
+
+function submit_form_mhs(){
+
+    document.getElementById("keyword_kategori_mhs").setCustomValidity('');
+    document.getElementById("keyword_prodi_mhs").setCustomValidity('');
+    document.getElementById("keyword_tingkatan_mhs").setCustomValidity('');
+
+    var jurusan_mhs = $('select[name="keyword_prodi"][id="keyword_prodi_mhs"] option:selected').val();
+    var kategori_mhs = $('select[name="keyword_kategori"][id="keyword_kategori_mhs"] option:selected').val();
+    var tingkatan_mhs = $('select[name="keyword_tingkatan"][id="keyword_tingkatan_mhs"] option:selected').val();
+
+    if (kategori_mhs == 0) {
+      document.getElementById("keyword_kategori_mhs").setCustomValidity('Silahkan pilih kategori terlebih dahulu');
+      return false;
+    }else if (jurusan_mhs == 0) {
+      document.getElementById("keyword_prodi_mhs").setCustomValidity('Silahkan pilih jurusan terlebih dahulu');
+      return false;
+    }else if (tingkatan_mhs == 0) {
+      document.getElementById("keyword_tingkatan_mhs").setCustomValidity('Silahkan pilih jenjang terlebih dahulu');
+      return false;
+    }else if(kategori_mhs!=0 && jurusan_mhs != 0 && tingkatan_mhs != 0){
+      document.getElementById("keyword_kategori_mhs").setCustomValidity('');
+      document.getElementById("keyword_prodi_mhs").setCustomValidity('');
+      document.getElementById("keyword_tingkatan_mhs").setCustomValidity('');
+      document.getElementById("keyword").action ='<?php echo base_url('PencarianC/getPencarian')?>';    
+      return true;  
+       
+    }
+}
+
+function submit_form_pjr(){
+
+  var jurusan_pjr = $('select[name="keyword_prodi"][id="keyword_prodi_pjr"] option:selected').val();
+  var kategori_pjr = $('select[name="keyword_kategori"][id="keyword_kategori_pjr"] option:selected').val();
+  var tingkatan_pjr = $('select[name="keyword_tingkatan"][id="keyword_tingkatan_pjr"] option:selected').val();
+
+      document.getElementById("keyword_kategori_pjr").setCustomValidity('');
+      document.getElementById("keyword_prodi_pjr").setCustomValidity('');
+      document.getElementById("keyword_tingkatan_pjr").setCustomValidity('');
+
+  if (kategori_pjr == 0) {
+      document.getElementById("keyword_kategori_pjr").setCustomValidity('Silahkan pilih kategori terlebih dahulu');
+      return false;
+    }else if (jurusan_pjr == 0) {
+      document.getElementById("keyword_prodi_pjr").setCustomValidity('Silahkan pilih jurusan terlebih dahulu');
+      return false;
+    }else if (tingkatan_pjr == 0) {
+      document.getElementById("keyword_tingkatan_pjr").setCustomValidity('Silahkan pilih jenjang terlebih dahulu');
+      return false;
+    }else {
+      document.getElementById("keyword_kategori_pjr").setCustomValidity('');
+      document.getElementById("keyword_prodi_pjr").setCustomValidity('');
+      document.getElementById("keyword_tingkatan_pjr").setCustomValidity('');
+      document.getElementById("keyword").action ='<?php echo base_url('PencarianC/getPencarian')?>';    
+      return true; 
+    }
+
+}
+
 </script>
 <script>
   $(window).scroll(function() {
@@ -362,4 +508,4 @@ $this->load->view('pencari/header_user');
    
   })
 </script>
-      </body>
+</body>

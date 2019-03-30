@@ -116,6 +116,7 @@ $this->load->view('admin/headerAdmin');
                 <dd><span class="description" style="font-size: 14px;"><?php echo $value->program_studi;?></span></dd><br>
                 <dt>Kategori</dt>
                 <dd><span class="description" style="font-size: 14px;"><?php echo $value->kategori;?></span></dd><br>
+                <dt>Deskipsi</dt>
                 <dd><span class="description" style="font-size: 14px;"><?php echo $value->deskripsi;?></span></dd>
                 
               </dl>
@@ -154,7 +155,7 @@ $this->load->view('admin/headerAdmin');
             <div class="box-header">
               <i class="fa fa-envelope"></i>
 
-              <h3 class="box-title">Quick Email</h3>
+              <h3 class="box-title">Balasan</h3>
               <!-- tools box -->
              
               <!-- /. tools -->
@@ -165,11 +166,11 @@ $this->load->view('admin/headerAdmin');
                   <input type="email" class="form-control" name="email" value="<?php echo $value->email;?>" readonly>
                 </div>
                 <div class="form-group">
-                  <input type="text" class="form-control" name="subjek" placeholder="Subyek :">
+                  <input type="text" class="form-control" name="subjek" placeholder="Judul :" required oninvalid="this.setCustomValidity('judul belum disi')" oninput="setCustomValidity('')">
                 </div>
                 <div>
-                  <textarea class="textarea" placeholder="Message" name="pesan" 
-                            style="width: 100%; height: 125px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                  <textarea class="textarea" placeholder="Pesan" name="pesan" 
+                            style="width: 100%; height: 125px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" required oninvalid="this.setCustomValidity('deskripsi belum disi')" oninput="setCustomValidity('')"></textarea>
                 </div>
             </div>
             <div class="box-footer clearfix">

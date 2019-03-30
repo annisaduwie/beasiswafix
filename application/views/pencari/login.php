@@ -42,11 +42,17 @@ $this->load->view('pencari/header_user');
    
 </style>
 
+<body class="hold-transition login-page">
+
 <section class="slider d-flex align-items-center">
-<div class="login-form">
-       <form action="<?php echo site_url('Login/signin'); ?>" method="post">
-        <h4 class="text-center" style="padding-bottom: 20px;"><img class="pic" src="<?php echo base_url()?>assets/images/userprofil.png"/><br><br>Masuk</h4><hr> 
-        <?php 
+<div class="login-box">
+  <div class="login-logo">
+ 
+  </div>
+  <!-- /.login-logo -->
+  <div class="login-box-body">
+    <p class="login-box-msg">Masuk untuk melakukan pencarian beasiswa</p>
+     <?php 
         $data=$this->session->flashdata('sukses');
         if($data!=""){ ?>
                             <div class="alert alert-success"><strong>Sukses! </strong> <?=$data;?></div>
@@ -57,31 +63,47 @@ $this->load->view('pencari/header_user');
                             <div class="alert alert-danger"><strong> Error! </strong> <?=$data2;?></div>
                             <?php } ?>
 
-        <div class="form-group">
-            <input type="text" class="form-control" name="username" placeholder="Username" autofocus required oninvalid="this.setCustomValidity('Username tidak boleh kosong')" oninput="setCustomValidity('')">
-        </div>
-        <div class="form-group">
-            <input type="password" class="form-control" name="password" placeholder="Password" required oninvalid="this.setCustomValidity('Password tidak boleh kosong')" oninput="setCustomValidity('')">
-        </div>
-        <div class="form-group">
+    <form action="<?php echo site_url('Login/signin'); ?>" method="post">
+      <div class="form-group has-feedback">
+        <input type="text" class="form-control" name="username"  placeholder="Username / Email" autofocus required oninvalid="this.setCustomValidity('Username/Email tidak boleh kosong')" oninput="setCustomValidity('')">
+        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+      </div>
+      <div class="form-group has-feedback">
+        <input type="password" class="form-control" name="password" placeholder="Password" required oninvalid="this.setCustomValidity('Password tidak boleh kosong')" oninput="setCustomValidity('')">
+        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+      </div>
+      <div class="form-group">
             <button type="submit" class="btn btn1 btn-block">Masuk</button>
         </div>
+    </form>
+
         <div class="clearfix">
             <label class="pull-left checkbox-inline">Tidak punya akun ?  </label>
-            <a href="regispencari" class="pull-left"> Daftar</a>
-        </div>       
+            <a href="regispencari" class="pull-left">&ensp;Daftar</a>
+        </div> 
         <div class="clearfix">
             <a href="<?php echo base_url('Pencari/halaman_lupa_password');?>" class="pull-left">Lupa password</a>
-        </div>  
-      </form>
-     
-    </div>
-    <!-- /.login-box-body -->
+        </div> 
+
   </div>
-  <!-- /.login-box -->
-  <script type="text/javascript">
-
-
-    </script>
+  <!-- /.login-box-body -->
+</div>
+<!-- /.login-box -->
+</section>
 </body>
-</html>
+
+<!--============================= FOOTER =============================-->
+<footer class="main-block dark-bg">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="copyright">
+          <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+          <p>Copyright &copy; 2018 E-Beasiswa</p>
+          <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+<!--//END FOOTER -->

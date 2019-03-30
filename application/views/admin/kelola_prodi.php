@@ -16,6 +16,11 @@ $this->load->view('admin/head_admin');
    folder instead of downloading all of them to reduce the load. -->
    <link rel="stylesheet" href="<?php echo base_url();?>AdminLTE/dist/css/skins/_all-skins.min.css">
  </head>
+ <style>
+.test[style] {
+     padding-right:0 !important;
+ }
+</style>
 
  <?php
  $this->load->view('admin/headerAdmin');
@@ -42,7 +47,9 @@ $this->load->view('admin/head_admin');
                   ?>
                   <div class="alert alert-danger alert-dismissable">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                    <?php echo $this->session->flashdata('error'); ?>                    
+                    <i class="fa fa-exclamation-triangle">&ensp;
+                    <?php echo $this->session->flashdata('error'); ?>
+                    </i>                 
                   </div>
                 <?php } ?>
                 <?php  
@@ -52,7 +59,9 @@ $this->load->view('admin/head_admin');
                   ?>
                   <div class="alert alert-success alert-dismissable">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <i class="fa fa-check">&ensp;
                     <?php echo $this->session->flashdata('success'); ?>
+                  </i>
                   </div>
                 <?php } ?>
 
@@ -93,7 +102,7 @@ $this->load->view('admin/head_admin');
 
                     <tr>
                       <th>No </th>
-                      <th>Nama Prodi</th>
+                      <th>Nama Program Studi</th>
                       <th>Tingkatan</th>
                       <th>Aksi</th>
                     </tr>
@@ -108,44 +117,43 @@ $this->load->view('admin/head_admin');
                     <td ><?php echo $value->tingkatan; ?></td>
 
                     <td> <a class="btn btn-info btn-xs tooltips" data-toggle="modal" data-target="#modal-<?php echo $value->id_prodi; ?>">
-                      <span data-toogle="tooltip" title="Ubah"><i class="fa fa-pencil" style="color: #fff"></i></span></a>
+                      <span data-toogle="tooltip" title="Ubah program studi"><i class="fa fa-pencil" style="color: #fff"></i></span></a>
                       
-                      <a class="btn btn-danger btn-xs tooltips"  data-popup="tooltip" data-original-title="Hapus Data" data-placement="top" href="<?php echo site_url('PencarianC/deleteProdi/'.$value->id_prodi.'/'.$id); ?>" onclick="return confirm('Apakah anda yakin ingin menghapus program studi ?')" ><i class="fa fa-times" ></i></a></td>
+                      <a class="btn btn-danger btn-xs tooltips"  data-popup="tooltip" title="Hapus program studi" data-placement="top" href="<?php echo site_url('PencarianC/deleteProdi/'.$value->id_prodi.'/'.$id); ?>" onclick="return confirm('Apakah anda yakin ingin menghapus program studi ?')" ><i class="fa fa-times" ></i></a></td>
                     </tr>
+<div class="modal fade" id="modal-<?php echo $value->id_prodi; ?>">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title"><center>Ubah Program Studi</center></h4>
+        </div>
+        <div class="modal-body">
 
-                    <div class="modal fade" id="modal-<?php echo $value->id_prodi; ?>">
-                      <div class="modal-dialog">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">&times;</span></button>
-                              <h4 class="modal-title"><center>Ubah Program Studi</center></h4>
-                            </div>
-                            <div class="modal-body">
-
-                              <?php echo form_open_multipart('PencarianC/edit_prodi','id ="form" class="form-horizontal"');?>
-                              <input type="hidden" name="id_fakultas" value="<?php echo $value->id_fakultas ?>">
-                              <div class="form-group" style="padding: 15px 0;">
-                                <div class="col-sm-10">
-                                  <input type="hidden" name="id_prodi" class="form-control" id="inputid" value="<?php echo $value->id_prodi; ?>" readonly>
-                                  <input type="hidden" name="id_prodi" value="<?php echo $value->id_prodi; ?>">
-                                </div>
-                              </div>
-                              <div class="form-group" style="padding: 15px 0;">
-                                <label for="inputurl" class="col-sm-2 control-label">Nama Prodi</label>
-                                <div class="col-sm-10">
-                                  <input type="text" name="nama_prodi" class="form-control" id="inputurl" value="<?php echo $value->nama_prodi; ?>" >
-                                </div>
-                              </div>
-                              <div class="form-group" style="padding: 15px 0;">
-                                <label for="inputurl" class="col-sm-2 control-label">Tingkatan</label>
-                                <div class="col-sm-10">
-                                  <select name="tingkatan" class="form-control required" required>
-                                    <option value="" disabled selected>--Pilih Tingkatan--</option>
+         <?php echo form_open_multipart('PencarianC/edit_prodi','id ="form" class="form-horizontal"');?>
+         <input type="hidden" name="id_fakultas" value="<?php echo $value->id_fakultas ?>">
+            <div class="form-group">
+              <div class="col-sm-10">
+                 <input type="hidden" name="id_prodi" class="form-control" id="inputid" value="<?php echo $value->id_prodi; ?>" readonly>
+                 <input type="hidden" name="id_prodi" value="<?php echo $value->id_prodi; ?>">
+              </div>
+            </div>
+            <div class="form-group" style="padding: 25px 0;">
+              <label for="inputurl" class="col-sm-2 control-label">Nama Program Studi</label>
+                <div class="col-sm-10">
+                  <input type="text" name="nama_prodi" class="form-control" id="inputurl" value="<?php echo $value->nama_prodi; ?>" >
+                </div>
+            </div>
+          <div class="form-group" style="padding:25px 0;">
+            <label for="inputurl" class="col-sm-2 control-label">Tingkatan</label>
+              <div class="col-sm-10">
+                <select name="tingkatan" class="form-control required" required>
+                  <option value="" disabled selected>--Pilih Tingkatan--</option>
                                     <option <?php if($value->tingkatan == "Diploma") 
                                     {
                                       echo "selected=selected";
-                                    } 
+                                     } 
                                     ?>value="Diploma">Diploma</option>
                                     <option <?php if($value->tingkatan == "Sarjana") 
                                     {
@@ -163,25 +171,21 @@ $this->load->view('admin/head_admin');
                                     } 
                                     ?>value="Doktor">Doktor</option>
                                   </select>
-              </div>
-              </div>
-
-                            </div>
-
-
+                               </div>
+                              </div>
                             <div class="modal-footer">
                               <button type="button" style="margin-left: 5px;"class="btn btn-default pull-right" data-dismiss="modal">Batal</button>
                               <input type="submit" value="Simpan" class="btn btn-primary">
                             </div>
-                          </div>
-                        </div>
-                        <?php echo form_close(); ?> 
-                      </div>
-                      <!-- /.modal-content -->
-                    </div>
-                    <!-- /.modal-dialog -->
-                  </div>
-                  <!-- /.modal -->
+        <?php echo form_close(); ?> 
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
+
+                    
                 <?php  endforeach; ?>
 
 
@@ -209,15 +213,13 @@ $this->load->view('admin/head_admin');
 </footer>
  -->
 
-
-
-
 <?php 
 $data2=$this->session->flashdata('error');
 ?>              
 
 <!-- modal untuk tambah manual -->
-<div class="modal fade" id="modal-tambah-<?php echo $id;?>">
+<?php foreach($fakultas as $value){?> 
+<div class="modal fade" id="modal-tambah-<?php echo $value->id_fakultas;?>">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -228,11 +230,12 @@ $data2=$this->session->flashdata('error');
         <div class="modal-body">
 
          <?php echo form_open_multipart('PencarianC/tambah_prodi','id ="form" class="form-horizontal"');?> 
-         <input type="hidden" name="id_fakultas" value="<?php echo $id;?>">
+         <input type="hidden" name="id_fakultas" value="<?php echo $value->id_fakultas;?>">
+         <input type="hidden" name="id_universitas" value="<?php echo $value->id_universitas;?>">
         
 
          <div class="form-group" style="padding: 5px 0;">
-                                <label for="inputurl" class="col-sm-2 control-label">Nama Prodi</label>
+                                <label for="inputurl" class="col-sm-2 control-label">Nama Program studi</label>
                                 <div class="col-sm-10">
                                   <input type="text" name="nama_prodi" class="form-control" id="inputurl" placeholder="Masukkan Nama Prodi" required oninvalid="this.setCustomValidity('Nama prodi tidak boleh kosong')" oninput="setCustomValidity('')">
                                 </div>
@@ -241,7 +244,7 @@ $data2=$this->session->flashdata('error');
         <div class="form-group" style="padding: 5px 0;">
               <label for="inputurl" class="col-sm-2 control-label">Tingkatan</label>
               <div class="col-sm-10">
-              <select name="tingkatan" class="form-control required" required oninvalid="this.setCustomValidity('Silahkan pilih tingkatan terlebih dahulu')" onclick="setCustomValidity('Silahkan pilih tingkatan terlebih dahulu')">
+              <select name="tingkatan" class="form-control" required oninvalid="this.setCustomValidity('Silahkan pilih tingkatan terlebih dahulu')" oninput="this.setCustomValidity('')" >
                 <option value="" disabled selected>--Pilih Tingkatan--</option>
                 <option value="Diploma">Diploma</option>
                 <option value="Sarjana">Sarjana</option>
@@ -261,10 +264,8 @@ $data2=$this->session->flashdata('error');
     <!-- /.modal-dialog -->
   </div>
   <!-- /.modal -->
+<?php }?>
 </div>
-  
-
-
   
   <!-- ./wrapper -->
 
@@ -286,6 +287,16 @@ $data2=$this->session->flashdata('error');
   <script src="<?php echo base_url();?>AdminLTE/dist/js/demo.js"></script>
   <!-- page script -->
   <script>
+      <?php foreach ($fakultas as $value) {?>
+        $('#modal-tambah-<?php echo $value->id_fakultas; ?>').on('show.bs.modal', function (e) {
+        $('body').addClass('test');
+        });
+      <?php } ?>
+      <?php foreach ($fakultas as $value) {?>
+        $('#modal-<?php echo $value->id_fakultas; ?>').on('show.bs.modal', function (e) {
+        $('body').addClass('test');
+        });
+      <?php } ?>
     $(function () {
       $('#example1').DataTable()
       $('#example2').DataTable({

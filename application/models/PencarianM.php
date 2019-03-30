@@ -118,7 +118,7 @@ return $query;
 
 public function tampil_histori_pencarian($id_pencari){
 
-  $query= $this->db->query("SELECT distinct * from pencari, pencarian WHERE pencari.id_pencari=pencarian.id_pencari AND pencarian.id_pencari='$id_pencari' GROUP BY pencarian.id_pencarian order by waktu_pencarian DESC;");
+  $query= $this->db->query("SELECT distinct * from pencari, pencarian WHERE pencari.id_pencari=pencarian.id_pencari AND pencarian.id_pencari='$id_pencari' AND pencarian.status='Belum Dihapus' GROUP BY pencarian.id_pencarian order by waktu_pencarian DESC;");
 
 return $query;
 
@@ -126,7 +126,7 @@ return $query;
 
 public function tampil_histori_pencarian_beasiswa($id_pencari){
 
-  $query= $this->db->query("SELECT distinct * from pencari, pencarian_beasiswa WHERE pencari.id_pencari=pencarian_beasiswa.id_pencari AND pencarian_beasiswa.id_pencari='$id_pencari' GROUP BY pencarian_beasiswa.id_pencarian_beasiswa order by pencarian_beasiswa.create_dtm DESC;");
+  $query= $this->db->query("SELECT distinct * from pencari, pencarian_beasiswa WHERE pencari.id_pencari=pencarian_beasiswa.id_pencari AND pencarian_beasiswa.id_pencari='$id_pencari' AND pencarian_beasiswa.status='Belum Dihapus' GROUP BY pencarian_beasiswa.id_pencarian_beasiswa order by pencarian_beasiswa.create_dtm DESC;");
 
 return $query;
 

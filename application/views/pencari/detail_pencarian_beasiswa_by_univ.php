@@ -58,7 +58,7 @@ $this->load->view('pencari/header_user');
             <input type="hidden" name="link" value="<?php echo $value['link']; ?>">
             <div style="padding-bottom: 10px;"><?php echo $value['judul']; ?>
             </div>
-            <?php echo $value['id'];?>
+            <input type="hidden" name="id" value="<?php echo $value['id'];?>">
             
           </span>
           <p>

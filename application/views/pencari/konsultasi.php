@@ -11,7 +11,7 @@ $this->load->view('pencari/profilpencari');?>
 
 
     <div class="callout callout-info">
-      <p>Konsultasi akan dibalas didalam email anda</p>
+      <p>Balasan konsultasi akan dikirim melalui email, pastikan email yang tertulis sudah benar</p>
     </div>
 
     <?php
@@ -58,19 +58,19 @@ $this->load->view('pencari/profilpencari');?>
 
       <div class="form-group">
         <label for="exampleInputEmail1">No HP</label>
-        <input type="text" class="form-control" name="no_hp" id="nama" value=" "required ><?php echo form_error('no_hp');?>
+        <input type="text" class="form-control" name="no_hp" id="nama" placeholder="contoh : 081xxxxxxxxx">
 
       </div>
 
       <div class="form-group">
         <label for="exampleInputEmail1">Program yang dicari</label>
-        <input type="text" class="form-control" name="nama_prodi" id="nama_prodi" value=" "required ><?php echo form_error('nama_pencari');?>
+        <input type="text" class="form-control" name="nama_prodi" id="nama_prodi" placeholder="contoh : Komputer dan Sistem Informasi" type="text" name="nama_prodi" class="form-control" id="inputurl" placeholder="Masukkan Nama Prodi" required oninvalid="this.setCustomValidity('program yang dicari harus diisi')" oninput="setCustomValidity('')">
 
       </div>
 
       <div class="form-group">
         <label for="exampleInputEmail">Kategori</label>
-        <select name="kategori" class="form-control required" required>
+        <select name="kategori" class="form-control required" required onvalid="this.setCustomValidity('Kkategori negara harus disi')" >
           <option value="Dalam Negeri">Dalam Negeri</option>
           <option value="Luar Negeri">Luar Negeri</option>
         </select>

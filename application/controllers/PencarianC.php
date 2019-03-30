@@ -58,15 +58,14 @@ class PencarianC extends CI_Controller
 
 			"keyword_prodi"=>$keyword_prodi,
 			"keyword_kategori"=>$keyword_kategori,
-			"keyword_tingkatan"=>$keyword_tingkatan
+			"keyword_tingkatan"=>$keyword_tingkatan,
+
 		);
 
 
 		$cek = $this->PencarianM->pencarian($keyword_prodi, $keyword_kategori, $keyword_tingkatan)->num_rows();	
 
 		$getidkey=get_idpencarian();
-
-
 
         //konfigurasi pagination
         $config['base_url'] = site_url('PencarianC/getPencarian'); //site url
@@ -138,7 +137,8 @@ class PencarianC extends CI_Controller
         			"keyword_prodi"=>$keyword_prodi,
         			"keyword_kategori"=>$keyword_kategori,
         			"keyword_tingkatan"=>$keyword_tingkatan,
-        			"id_pencari"=>$this->session->userdata['id_pencari']
+        			"id_pencari"=>$this->session->userdata['id_pencari'],
+                    "status"=>"Belum Dihapus"
         		);
         		$this->PencarianM->insertPencarian($dataPencarian);
         		$data['page'] = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
@@ -198,120 +198,83 @@ class PencarianC extends CI_Controller
 
 
     public function tampil_admin_prodi($id_fakultas){
-	// print_r($id_universitas);
     	$id_universitas = $this->input->post('id_universitas');
-
     	$data = array(
     		'id' => $id_fakultas,
     		'nama_fakultas' => $this->FakultasM->get_full_fakultas($id_fakultas)->row_array(),
-    		// 'id_univ' => $this->ProdiM->get_univ_prodi($id_fakultas)->row_array(),
             'id_univ' => $this->ProdiM->get_univ_prodi_kosong($id_fakultas)->row_array()
             
     	);
+        $data['fakultas']=$this->ProdiM->get_fakultas($id_fakultas)->result();
     	$data['prodi']= $this->ProdiM->get_prodi($id_fakultas)->result();
-		// $data['prodi_back']= $this->ProdiM->get_univ_prodi($id_fakultas)->row_array();
-
-
     	$this->load->view('admin/kelola_prodi', $data);
 
     }
-
-
-
-
 
     public function tambah_prodi(){
 
     	$id_fakultas = $this->input->post('id_fakultas');
     	$nama_prodi = $this->input->post('nama_prodi');
     	$tingkatan = $this->input->post('tingkatan');
+        $id_universitas = $this->input->post('id_universitas');
 
-    	$cekProdi =$this->ProdiM->cekNamaProdi('prodi', $nama_prodi);
+        $get_id_univ_full= $this->ProdiM->get_id_univ_full($nama_prodi, $tingkatan, $id_fakultas);
+        
+        $cekProdiSama = $this->ProdiM->cekNamaProdi($id_universitas,$nama_prodi,$tingkatan,$id_fakultas);
+        // print_r($cekProdiSama);
+        // exit;
 
     	$this->load->library('form_validation');
     	$this->form_validation->set_rules('nama_prodi','Nama Prodi','trim|required');
     	$this->form_validation->set_rules('tingkatan','Tingkatan','trim|required');
 
     	if($this->form_validation->run() == FALSE){
-      //jika form tidak lengkap maka akan dikembalikan ke route "akunAdminR"
     		$this->session->set_flashdata('error','Data Belum diisi');
     		redirect('PencarianC/tampil_admin_prodi');
 
-    	}else {
-
-    		// $id_fakultas_db = $this->db->query("SELECT MAX(id_univ_fak) AS id_univ_fakultas FROM univ_fak");
-    		// foreach ($id_fakultas_db->result_array() as $univ_fak) {
-
-
-
-		// 	$id_prodi_fk = $this->db->query("SELECT MAX(id_prodi) AS id_prodi FROM prodi");
-		// 	foreach ($id_prodi_fk->result_array() as $prodi) {
-		// 		$DetailProdi =  array(
-
-		// 			'id_univ_fak' =>$univ_fak['id_univ_fakultas']
-		// 		);
-		// 	// printer_end_doc(printer_handle)each(w)t_r($prodi['id_prodi']);
-		// 	}
-
-
-		// $result = $this->db->insert('fak_prodi',$DetailProdi);
-
-    		
-    			$dataProdi =  array(
+    	}else if(count($cekProdiSama->result_array()) < 1){
+    		$dataProdi =  array(
     				"nama_prodi"=>$nama_prodi,
     				"tingkatan"=>$tingkatan
     				
-    			);
-                $result = $this->ProdiM->insertProdi($dataProdi);
+    		);
+            $result = $this->ProdiM->insertProdi($dataProdi);
+            $id_prodi = $this->db->query("SELECT id_prodi from prodi, fakultas WHERE id_fakultas='$id_fakultas'");
 
-                $id_prodi = $this->db->query("SELECT id_prodi from prodi, fakultas WHERE id_fakultas='$id_fakultas'");
-                foreach ($id_prodi->result_array() as $fak_prodi) {
-
-                 $dataDetailFakultas =  array(
-
-                 'id_prodi' =>$fak_prodi['id_prodi'],
+            foreach ($id_prodi->result_array() as $fak_prodi) {
+            $dataDetailFakultas =  array(
+                'id_prodi' =>$fak_prodi['id_prodi'],
                  'id_fakultas' =>$id_fakultas
-                );
-
-    			}
-                $result = $this->db->insert('prodi_fak',$dataDetailFakultas);
-
-    			
-    			if($result > 0)
-    			{
-    				$this->session->set_flashdata('success', 'Data berhasil ditambah');
-    			}else{
-    				$this->session->set_flashdata('error', 'Data gagal ditambah');
-    			}
-
+             );
+            }
+            $result = $this->db->insert('prodi_fak',$dataDetailFakultas);
+            if($result > 0){
+    			$this->session->set_flashdata('success', 'Data program studi berhasil ditambah');
+    		}else{
+    			$this->session->set_flashdata('error', 'Data program studi gagal ditambah');
     		}
-    	
-    	redirect('PencarianC/tampil_admin_prodi/'.$id_fakultas);
+    	}else{
+            $this->session->set_flashdata('error', 'Nama program studi sudah digunakan');
+        }
+    	   redirect('PencarianC/tampil_admin_prodi/'.$id_fakultas);
+        
     }
 
 
     public function edit_prodi(){
-		//get id univ yang ingin di edit
     	$id_prodi = $this->input->post('id_prodi');
     	$id_fakultas = $this->input->post('id_fakultas');
-
     	$nama_prodi = $this->input->post('nama_prodi');
     	$fakultas= $this->input->post('fakultas');
     	$tingkatan = $this->input->post('tingkatan');
 
-
-
     	$this->load->library('form_validation');
-
     	$this->form_validation->set_rules('nama_prodi','Nama','required');
     	$this->form_validation->set_rules('tingkatan','Tingkatan','required');
 
     	if($this->form_validation->run() == FALSE)
     	{
-			//jika form tidak lengkap maka akan dikembalikan ke route "dosenAdminR"
     		redirect('PencarianC/tampil_admin_prodi/'.$id_fakultas);
-
-
     	}else {
 
     		$dataProdi =  array(
@@ -322,11 +285,11 @@ class PencarianC extends CI_Controller
 
     		if($result == TRUE)
     		{
-    			$this->session->set_flashdata('success', 'Data berhasil diubah');
+    			$this->session->set_flashdata('success', 'Data program studi berhasil diubah');
     		}
     		else
     		{
-    			$this->session->set_flashdata('error', 'Data gagal diubah');
+    			$this->session->set_flashdata('error', 'Data program studi gagal diubah');
     		}	
 
     		redirect('PencarianC/tampil_admin_prodi/'.$id_fakultas);
@@ -338,8 +301,14 @@ class PencarianC extends CI_Controller
 		// $id_fakultas = $this->input->post('id_fakultas');
 		// print_r($id_fakultas);
     	if($this->ProdiM->delete_by_id($id_prodi)){
+            $this->session->set_flashdata('success', 'Program studi berhasil dihapus');
+            }
+            else
+            {
+            $this->session->set_flashdata('error', 'Program studi gagal dihapus');
+            } 
     		redirect('PencarianC/tampil_admin_prodi/'.$id_fakultas);
-    	}
+    	
     }
 
     function simpanKeyword(){
@@ -516,31 +485,21 @@ class PencarianC extends CI_Controller
     }
 
 }else{
-
-
     	$list_universitas = $this->input->post('filter_universitas');
     	$list_negara = $this->input->post('filter_negara');
     	$nama_fakultas = $this->input->post('nama_fakultas');
-
-
-
     	$data['filter_all'] = $this->FakultasM->tampil_fakultas_list_all($list_universitas, $list_negara)->result();
     	$data['nama_fakultas'] = $this->FakultasM->tampil_nama_fakultas()->result();
-	// $data['fakultas_univ'] = $this->FakultasM->tampil_fakultas_list_univ_rows($list_universitas)->result();
-    	// $data['fakultas_negara'] = $this->FakultasM->tampil_fakultas_list_negara($list_negara)->result();
     	$data['list_prodi']= $this->ProdiM->tampil_prodi()->result();
     	$data['jml_prodi']= $this->ProdiM->jumlah_prodi()->row_array();
-
     	$data['negara'] = $this->UniversitasM->get_negara()->result();
-
     	$config['total_rows'] = $this->FakultasM->tampil_fakultas_rows()->num_rows();
 		 $config['base_url'] = site_url('PencarianC/tampil_pencarian_prodi'); //site url
         $config['per_page'] = 5;  //show record per halaman
         $config["uri_segment"] = 3;  // uri parameter
         $choice = $config["total_rows"] / $config["per_page"];
         $config["num_links"] = floor($choice);
-
-                // Membuat Style pagination untuk BootStrap v4
+        // Membuat Style pagination untuk BootStrap v4
         $config['first_link']       = 'Pertama';
         $config['last_link']        = 'Terakhir';
         $config['next_link']        = 'Selanjutnya';
@@ -559,45 +518,31 @@ class PencarianC extends CI_Controller
         $config['first_tagl_close'] = '</span></li>';
         $config['last_tag_open']    = '<li class="page-item"><span class="page-link">';
         $config['last_tagl_close']  = '</span></li>';
-
         $this->pagination->initialize($config);
-
         $data['page'] = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
         $data['fakultas'] = $this->FakultasM->tampil_fakultas($config["per_page"], $data['page'])->result();
-
         $data['pagination'] = $this->pagination->create_links();
-
     }
-
     $this->load->view('pencari/pencarian_prodi', $data);
-
 }
 
 public function tampil_pencarian_prodi_by_negara($value_negara){
-  
         $data = array(
             'negara'=>$value_negara
         );
-
         if ($this->session->userdata('logged_in')){
-
         $username = $this->session->userdata('username');
         $data['nama_pencari']= $this->PencariM->get_nama_pencari($username)->row_array();
         $id_pencari=$this->session->userdata['id_pencari'];
-
         $cek = $this->FakultasM->cek_tingkatan($id_pencari);
-
         if($cek['tingkatan']=='Pelajar'){
-
-
             $config['total_rows'] = $this->FakultasM->tampil_fakultas_rows_pelajar_negara($value_negara)->num_rows();//total row
                 $config['base_url'] = site_url('PencarianC/tampil_pencarian_prodi_by_negara/'.$value_negara); //site url
                 $config['per_page'] = 10;  //show record per halaman
                 $config["uri_segment"] = 4;  // uri parameter
                 $choice = $config["total_rows"] / $config["per_page"];
                 $config["num_links"] = floor($choice);
-
-                        // Membuat Style pagination untuk BootStrap v4
+                // Membuat Style pagination untuk BootStrap v4
                 $config['first_link']       = 'Pertama';
                 $config['last_link']        = 'Terakhir';
                 $config['next_link']        = 'Selanjutnya';
@@ -616,13 +561,9 @@ public function tampil_pencarian_prodi_by_negara($value_negara){
                 $config['first_tagl_close'] = '</span></li>';
                 $config['last_tag_open']    = '<li class="page-item"><span class="page-link">';
                 $config['last_tagl_close']  = '</span></li>';
-
                 $this->pagination->initialize($config);
-
                 $this->session->flashdata('id_univ');
-
                 $data['page'] = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
-
                 $data['fakultas_pelajar_negara'] = $this->FakultasM->tampil_fakultas_pelajar_negara( $value_negara, $config["per_page"], $data['page'])->result();
                 $data['pagination_pelajar_negara'] = $this->pagination->create_links();
 
@@ -636,8 +577,7 @@ public function tampil_pencarian_prodi_by_negara($value_negara){
                 $config["uri_segment"] = 4;  // uri parameter
                 $choice = $config["total_rows"] / $config["per_page"];
                 $config["num_links"] = floor($choice);
-
-                        // Membuat Style pagination untuk BootStrap v4
+               // Membuat Style pagination untuk BootStrap v4
                 $config['first_link']       = 'Pertama';
                 $config['last_link']        = 'Terakhir';
                 $config['next_link']        = 'Selanjutnya';
@@ -656,33 +596,22 @@ public function tampil_pencarian_prodi_by_negara($value_negara){
                 $config['first_tagl_close'] = '</span></li>';
                 $config['last_tag_open']    = '<li class="page-item"><span class="page-link">';
                 $config['last_tagl_close']  = '</span></li>';
-
                 $this->pagination->initialize($config);
-
                 $this->session->flashdata('id_univ');
-
-                $data['page'] = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
-
+                $data['page'] = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
                 $data['fakultas_mahasiswa_negara'] = $this->FakultasM->tampil_fakultas_mahasiswa_negara( $value_negara, $config["per_page"], $data['page'])->result();
                 $data['pagination_mahasiswa_negara'] = $this->pagination->create_links();
-
             }
-
-             }
-
+        }
         else{
 
-
-        // $this->session->set_userdata('id_univ', $id_universitas);
-        
         $config['total_rows'] = $this->FakultasM->tampil_fakultas_list_negara_rows($value_negara)->num_rows();//total row
         $config['base_url'] = site_url('PencarianC/tampil_pencarian_prodi_by_negara/'.$value_negara); //site url
         $config['per_page'] = 10;  //show record per halaman
         $config["uri_segment"] =4;  // uri parameter
         $choice = $config["total_rows"] / $config["per_page"];
         $config["num_links"] = floor($choice);
-
-                // Membuat Style pagination untuk BootStrap v4
+        // Membuat Style pagination untuk BootStrap v4
         $config['first_link']       = 'Pertama';
         $config['last_link']        = 'Terakhir';
         $config['next_link']        = 'Selanjutnya';
@@ -701,57 +630,37 @@ public function tampil_pencarian_prodi_by_negara($value_negara){
         $config['first_tagl_close'] = '</span></li>';
         $config['last_tag_open']    = '<li class="page-item"><span class="page-link">';
         $config['last_tagl_close']  = '</span></li>';
-
         $this->pagination->initialize($config);
         $this->session->flashdata('id_univ');
-
         $data['page'] = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
-
         $data['fakultas_negara'] = $this->FakultasM->tampil_fakultas_list_negara_page( $config["per_page"], $data['page'], $value_negara)->result();
         $data['pagination_negara'] = $this->pagination->create_links();
 
         }
-
             $this->load->view('pencari/pencarian_prodi_negara', $data);
 
 }
 public function tampil_pencarian_prodi_by_universitas($id_universitas){
-
-
- 
-
     $data['universitas'] = $this->UniversitasM->get_universitas()->result();
-   
-    
-    
-
     $data = array(
-        'id_universitas'=> $id_universitas
-       
+        'id_universitas'=> $id_universitas     
     );
     $data['nama_univ'] = $this->UniversitasM->get_name_by_id($id_universitas)->row_array();    
-    $this->session->set_userdata('id_univ', $id_universitas);
-        
-
-      
-	if ($this->session->userdata('logged_in')){
-        
+    $this->session->set_userdata('id_univ', $id_universitas); 
+	if ($this->session->userdata('logged_in')){     
 		$username = $this->session->userdata('username');
 		$data['nama_pencari']= $this->PencariM->get_nama_pencari($username)->row_array();
 		$id_pencari=$this->session->userdata['id_pencari'];
 
 		$cek = $this->FakultasM->cek_tingkatan($id_pencari);
-
 		if($cek['tingkatan']=='Pelajar'){
-
             $config['total_rows'] = $this->FakultasM->tampil_fakultas_rows_pelajar_universitas($id_universitas)->num_rows();//total row
                 $config['base_url'] = site_url('PencarianC/tampil_pencarian_prodi_by_universitas/'.$id_universitas); //site url
                 $config['per_page'] = 10;  //show record per halaman
                 $config["uri_segment"] = 4;  // uri parameter
                 $choice = $config["total_rows"] / $config["per_page"];
                 $config["num_links"] = floor($choice);
-
-                        // Membuat Style pagination untuk BootStrap v4
+                // Membuat Style pagination untuk BootStrap v4
                 $config['first_link']       = 'Pertama';
                 $config['last_link']        = 'Terakhir';
                 $config['next_link']        = 'Selanjutnya';
@@ -770,27 +679,20 @@ public function tampil_pencarian_prodi_by_universitas($id_universitas){
                 $config['first_tagl_close'] = '</span></li>';
                 $config['last_tag_open']    = '<li class="page-item"><span class="page-link">';
                 $config['last_tagl_close']  = '</span></li>';
-
                 $this->pagination->initialize($config);
-
                 $this->session->flashdata('id_univ');
-
                 $data['page'] = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
-                
-
                 $data['fakultas_pelajar_universitas'] = $this->FakultasM->tampil_fakultas_pelajar_universitas( $id_universitas, $config["per_page"], $data['page'])->result();
                 $data['pagination_pelajar_universitas'] = $this->pagination->create_links();
             }
             if($cek['tingkatan']=='Mahasiswa'){
-
             $config['total_rows'] = $this->FakultasM->tampil_fakultas_rows_mahasiswa_universitas($id_universitas)->num_rows();//total row
                 $config['base_url'] = site_url('PencarianC/tampil_pencarian_prodi_by_universitas/'.$id_universitas); //site url
                 $config['per_page'] = 10;  //show record per halaman
                 $config["uri_segment"] = 4;  // uri parameter
                 $choice = $config["total_rows"] / $config["per_page"];
                 $config["num_links"] = floor($choice);
-
-                        // Membuat Style pagination untuk BootStrap v4
+                // Membuat Style pagination untuk BootStrap v4
                 $config['first_link']       = 'Pertama';
                 $config['last_link']        = 'Terakhir';
                 $config['next_link']        = 'Selanjutnya';
@@ -809,31 +711,21 @@ public function tampil_pencarian_prodi_by_universitas($id_universitas){
                 $config['first_tagl_close'] = '</span></li>';
                 $config['last_tag_open']    = '<li class="page-item"><span class="page-link">';
                 $config['last_tagl_close']  = '</span></li>';
-
                 $this->pagination->initialize($config);
-
                 $this->session->flashdata('id_univ');
-
                 $data['page'] = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
-
                 $data['fakultas_mahasiswa_universitas'] = $this->FakultasM->tampil_fakultas_mahasiswa_universitas($id_universitas, $config["per_page"], $data['page'])->result();
                 $data['pagination_mahasiswa_universitas'] = $this->pagination->create_links();
             }
         }
-
-        else{
-
-
-        
-        
+        else{       
         $config['total_rows'] = $this->FakultasM->tampil_fakultas_list_univ_rows($id_universitas)->num_rows();//total row
         $config['base_url'] = site_url('PencarianC/tampil_pencarian_prodi_by_universitas/'.$id_universitas); //site url
         $config['per_page'] = 10;  //show record per halaman
         $config["uri_segment"] = 4;  // uri parameter
         $choice = $config["total_rows"] / $config["per_page"];
         $config["num_links"] = floor($choice);
-
-                // Membuat Style pagination untuk BootStrap v4
+        // Membuat Style pagination untuk BootStrap v4
         $config['first_link']       = 'Pertama';
         $config['last_link']        = 'Terakhir';
         $config['next_link']        = 'Selanjutnya';
@@ -852,26 +744,15 @@ public function tampil_pencarian_prodi_by_universitas($id_universitas){
         $config['first_tagl_close'] = '</span></li>';
         $config['last_tag_open']    = '<li class="page-item"><span class="page-link">';
         $config['last_tagl_close']  = '</span></li>';
-
         $this->pagination->initialize($config);
         $this->session->flashdata('id_univ');
-
         $data['page'] = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
-
         $data['fakultas_universitas'] = $this->FakultasM->tampil_fakultas_list_univ_page( $config["per_page"], $data['page'], $id_universitas)->result();
         $data['pagination_universitas'] = $this->pagination->create_links();
 
     }
-
-
-           
-        
-
          $this->load->view('pencari/pencarian_prodi_universitas', $data);
-    
-
 }
-
 
 public function detail_pencarian(){
 
@@ -887,58 +768,26 @@ public function detail_pencarian(){
 	$data['list_detail'] = $this->UniversitasM->tampil_detail_univ($nama_univ)->result();
 	$data['fakultas'] = $this->FakultasM->tampil_fakultas_list_univ($id_univ)->result();
 
-
-
-	// 	foreach ($list_detail as $list_detail_univ) {
-
-	// 	$data = array(
-	// 				'nama_univ' => $list_detail_univ->nama_universitas,
-	// 				'gambar_univ' => $list_detail_univ->gambar_universitas,
-	// 				'negara' => $list_detail_univ->negara
-	// 			);
-	// }
-
 	if ($this->session->userdata('logged_in')){
-         $id_pencari = $this->session->userdata['id_pencari'];
-
-
+        $id_pencari = $this->session->userdata['id_pencari'];
 		$getidkey=get_idpencarian();
-
-			// $data=array(
-			// 	"keyword"=>$this->PencarianM->get_pencarian_by_id($getidkey)->row_array(),
-			// // "list_univ"=>$this->PencarianM->pencarian($keyword_prodi, $keyword_kategori)->row_array()
-			// );
-
-
-		// 	// print_r($nama_univ);
 		$id_univ= $this->UniversitasM->get_id_by_name($nama_univ)->result();
 		foreach ($id_univ as $univ) {
 			$max_id = $this->db->query("SELECT MAX(id_pencarian) as id_pencarian FROM pencarian WHERE id_pencari='$id_pencari'");
 
 			foreach ($max_id->result_array() as $max) {
-				// print_r($max['id_pencarian']); 
-				// print_r($univ->id_universitas);
 				$dataUniv = array(
 					"id_universitas" => $univ->id_universitas,
 					"id_pencarian" => $max['id_pencarian']
 
 				);
-
-
-
 				$result = $this->db->insert('detail_pencarian',$dataUniv);
-
 			}
 		}
-
 		$this->load->view('pencari/detail', $data);
-
 	}else{
-
 		$this->load->view('pencari/detail', $data);
 	}
-
-
 
 }
 

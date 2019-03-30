@@ -38,10 +38,10 @@ $this->load->view('pencari/head');
                  <a class="dropdown-item" href="<?php echo base_url('PencarianC/tampil_pencarian_prodi');?>"  >Berdasarkan fakultas</a>
                </div>
              </li>
-            <?php if ($this->session->userdata('logged_in')){ ?>
+            <?php if ($this->session->userdata('logged_in') && $this->session->userdata('status') == "aktif"){ ?>
 
               <li class="nav-item dropdown">
-                <a class="nav-link" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Hello, <?php  echo $this->session->userdata("username");?>
+                <a class="nav-link" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Hai, <?php  echo $this->session->userdata("username");?>
                  <span class="icon-arrow-down"></span>
                </a>
                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">

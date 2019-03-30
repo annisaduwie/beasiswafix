@@ -22,7 +22,7 @@ class BeasiswaM extends CI_Model{
    return $query;
   } 
   public function get_list_negara(){
-   $query = $this->db->query("SELECT negara from beasiswa_umum WHERE negara is not null");
+   $query = $this->db->query("SELECT distinct negara from beasiswa_umum WHERE negara is not null");
    return $query;
   }
   public function tambah_beasiswa_umum($data){
@@ -94,10 +94,10 @@ class BeasiswaM extends CI_Model{
       $query = $this->db->query("SELECT * from universitas, beasiswa_universitas, beasiswa where universitas.id_universitas=beasiswa_universitas.id_universitas AND beasiswa_universitas.id_beasiswa_univ=beasiswa.id_beasiswa_univ AND nama_universitas='$keyword_universitas'");
     return $query;
   }
-    public function pencarian_beasiswa_by_univ($keyword_universitas){
-      $query = $this->db->query("SELECT * from universitas, beasiswa_universitas, beasiswa, detail_beasiswa, detail_kategori, kategori where universitas.id_universitas=beasiswa_universitas.id_universitas AND beasiswa_universitas.id_beasiswa_univ=beasiswa.id_beasiswa_univ AND beasiswa.id_beasiswa=detail_beasiswa.id_beasiswa AND detail_beasiswa.id_detail_beasiswa=detail_kategori.id_detail_beasiswa AND detail_kategori.id_kategori=kategori.id_kategori AND nama_universitas='$keyword_universitas' GROUP BY detail_beasiswa.id_detail_beasiswa");
-    return $query;
-  }
+  //   public function pencarian_beasiswa_by_univ($keyword_universitas){
+  //     $query = $this->db->query("SELECT * from universitas, beasiswa_universitas, beasiswa, detail_beasiswa, detail_kategori, kategori where universitas.id_universitas=beasiswa_universitas.id_universitas AND beasiswa_universitas.id_beasiswa_univ=beasiswa.id_beasiswa_univ AND beasiswa.id_beasiswa=detail_beasiswa.id_beasiswa AND detail_beasiswa.id_detail_beasiswa=detail_kategori.id_detail_beasiswa AND detail_kategori.id_kategori=kategori.id_kategori AND nama_universitas='$keyword_universitas' GROUP BY detail_beasiswa.id_detail_beasiswa");
+  //   return $query;
+  // }
 
   public function get_url_beasiswa($id_universitas) {
     $result = $this->db->select('url, nama_universitas')

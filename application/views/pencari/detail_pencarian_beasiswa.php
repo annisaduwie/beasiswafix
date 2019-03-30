@@ -70,7 +70,7 @@ $this->load->view('pencari/header_user');
         <div class="col-md-12 featured-responsive">
           <span class="username">
             <input type="hidden" name="link" value="<?php echo $value['link']; ?>">
-            <input type="text" name="id_konten" value="<?php echo $value['id_konten_beasiswa_umum'];?>">
+            <input type="hidden" name="id_konten" value="<?php echo $value['id_konten_beasiswa_umum'];?>">
             
             <div style="padding-bottom: 10px;"><?php echo $value['judul']; ?>
 

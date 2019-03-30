@@ -9,6 +9,14 @@ class UniversitasM extends CI_Model{
    $query = $this->db->query("SELECT * from universitas, detail_universitas WHERE universitas.id_universitas=detail_universitas.id_universitas");
    return $query;
   } 
+  public function get_universitas_favorit(){
+   $query = $this->db->query("SELECT *, count(*) as total from pencarian_favorit, universitas, detail_universitas WHERE pencarian_favorit.id_universitas=universitas.id_universitas AND universitas.id_universitas=detail_universitas.id_universitas GROUP BY pencarian_favorit.id_universitas order by total desc LIMIT 3;");
+   return $query;
+  } 
+    public function cek_nama_universitas($nama_universitas){
+    $query = $this->db->query("SELECT nama_universitas from universitas where universitas.nama_universitas='$nama_universitas'");
+    return $query;
+  }
   public function get_universitas_by_id($id_universitas){
    $query = $this->db->query("SELECT * from universitas, detail_universitas WHERE universitas.id_universitas=detail_universitas.id_universitas AND universitas.id_universitas='$id_universitas'");
    return $query;

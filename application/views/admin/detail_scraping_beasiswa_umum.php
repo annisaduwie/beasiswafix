@@ -45,7 +45,7 @@ $this->load->view('admin/head_admin');
 
             <div class="row">
               <div class="col-md-12">
-                <?php
+                 <?php
                 $this->load->helper('form');
                 $error = $this->session->flashdata('error');
                 if($error)
@@ -53,7 +53,9 @@ $this->load->view('admin/head_admin');
                   ?>
                   <div class="alert alert-danger alert-dismissable">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                    <?php echo $this->session->flashdata('error'); ?>                    
+                    <i class="fa fa-exclamation-triangle">&ensp;
+                    <?php echo $this->session->flashdata('error'); ?>
+                    </i>                 
                   </div>
                 <?php } ?>
                 <?php  
@@ -63,7 +65,9 @@ $this->load->view('admin/head_admin');
                   ?>
                   <div class="alert alert-success alert-dismissable">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <i class="fa fa-check">&ensp;
                     <?php echo $this->session->flashdata('success'); ?>
+                  </i>
                   </div>
                 <?php } ?>
 
@@ -90,7 +94,8 @@ $this->load->view('admin/head_admin');
             <div class="col-md-12" style="padding-top: 8px;" >
             <label>Filter Tanggal</label>
             </div>
-            <form id="form" action="<?php echo base_url('AdminC/get_pencarian_scraping_beasiswa');?>" method="POST" style="padding-bottom: 50px;padding-top: 5px;">
+
+            <form action="<?php echo base_url('AdminC/get_pencarian_scraping_beasiswa');?>" method="POST" style="padding-bottom: 50px;padding-top: 5px;">
 
               <div class="form-group col-md-6" >
                 <div class="input-group input-group-sm">
@@ -104,7 +109,8 @@ $this->load->view('admin/head_admin');
                   <input type="text" value="<?php echo $date_value;?>" class="form-control" id="reservation" name="date">
 
                   <span class="input-group-btn">
-                      <button type="button" class="btn btn-danger btn-flat"><i class="fa fa-search"></i></button>
+
+                      <button type="submit" class="btn btn-danger btn-flat">Cari</button>
                     </span>
 
                 </div>
@@ -112,8 +118,6 @@ $this->load->view('admin/head_admin');
                 
               </div>
               <!-- /.form group -->
-            
-           
             </form>
           </div>
            
@@ -146,7 +150,7 @@ $this->load->view('admin/head_admin');
                       <td ><?php echo $value->deskripsi; ?></td>
 
                       <td> 
-                        <a class="btn btn-danger btn-xs tooltips"  data-popup="tooltip" data-original-title="Hapus Data" data-placement="top" href="<?php echo site_url('AdminC/hapus_beasiswa_scraping/'.$value->id_konten_beasiswa_umum); ?>" onclick="return confirm('Apakah anda yakin ingin menghapus universitas  ?')" ><i class="fa fa-times" ></i></a>
+                        <a class="btn btn-danger btn-xs tooltips"  data-popup="tooltip" data-original-title="Hapus Data" data-placement="top" href="<?php echo site_url('AdminC/hapus_beasiswa_scraping/'.$value->id_konten_beasiswa_umum); ?>" onclick="return confirm('Apakah anda yakin ingin menghapus beasiswa  ?')" ><i class="fa fa-times" ></i></a>
 
 
                       </td>

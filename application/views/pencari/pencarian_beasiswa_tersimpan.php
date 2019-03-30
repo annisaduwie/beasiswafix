@@ -27,7 +27,7 @@ $this->load->view('pencari/profilpencari');?>
 
               <?php
               $id_pencari = $nama_pencari['id_pencari'];
-              $query= $this->db->query("SELECT distinct * from pencari, pencarian_beasiswa WHERE pencari.id_pencari=pencarian_beasiswa.id_pencari AND pencarian_beasiswa.id_pencari='$id_pencari' GROUP BY pencarian_beasiswa.id_pencarian_beasiswa order by waktu_pencarian")->num_rows();
+              $query= $this->db->query("SELECT distinct * from pencari, pencarian_beasiswa WHERE pencari.id_pencari=pencarian_beasiswa.id_pencari AND pencarian_beasiswa.id_pencari='$id_pencari' AND pencarian_beasiswa.status='Belum Dihapus' GROUP BY pencarian_beasiswa.id_pencarian_beasiswa order by waktu_pencarian")->num_rows();
               ?>
 
               <?php if ($query < 1){ ?>
@@ -41,7 +41,7 @@ $this->load->view('pencari/profilpencari');?>
                 
               <!-- Post -->
                 <div class="post">
-                <form action="<?php echo base_url('Pencarian_BeasiswaC/pencarian_beasiswa')?>" method="POST">
+                <form action="<?php echo base_url('Pencarian_BeasiswaC/pencarian_beasiswa'.'/'.$value->keyword_jenjang.'/'.$value->keyword_negara).'/'.'1'?>" method="POST">
 
                   <div class="user-block">
               
@@ -70,7 +70,7 @@ $this->load->view('pencari/profilpencari');?>
           <?php }?>
                    
                   </p>
-                  <input type="hidden" value="<?php echo $value->keyword_jenjang;?>" name="keyword_prodi">
+                  <input type="hidden" value="<?php echo $value->keyword_jenjang;?>" name="keyword_jenjang">
                   <input type="hidden" value="<?php echo $value->keyword_negara;?>" name="keyword_negara">
                   <button type="submit" name="tampil_pencarian" class="btn btn-sm btn-primary btn-flat pull-left">tampilkan pencarian</button><br>
                   </form>

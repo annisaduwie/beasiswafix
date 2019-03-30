@@ -10,8 +10,6 @@
 </style>
 <!-- Main Styles -->
 
-</head>
-
 
 <body>
 
@@ -74,21 +72,51 @@ $this->load->view('pencari/header_user');
 
         <section class="reserve-block" style="padding-top:50px; padding-bottom: 50px; background-color: #f3f4f7">
           <div class="container">
-            <h6>Jurusan yang Tersedia</h6><br><hr>
+            <h6>Fakultas yang Tersedia</h6><br><hr>
             <div class="row">
               <?php foreach ($fakultas as $key) {?>
-                <div class="col-md-3">
+                <div class="col-md-12">
 
 
 
-                  <p><h6><?php echo $key->nama_fakultas;?></h6></p>
+                  
                   <ul>
-                    <?php 
-                    $list_prodi = $this->db->query("SELECT distinct nama_prodi from universitas, fak_univ, fakultas, prodi_fak, prodi  where universitas.id_universitas=fak_univ.id_universitas AND fak_univ.id_fakultas=fakultas.id_fakultas AND fakultas.id_fakultas = prodi_fak.id_fakultas AND prodi_fak.id_prodi = prodi.id_prodi AND nama_universitas='$list_detail->nama_universitas ' AND nama_fakultas ='$key->nama_fakultas';");
+                    <div class="box box-default collapsed-box">
+            <div class="box-header with-border">
+              <h3 class="box-title"><?php echo $key->nama_fakultas;?></h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+                </button>
+              </div>
+              <!-- /.box-tools -->
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <?php 
+                    $list_prodi = $this->db->query("SELECT distinct nama_prodi, tingkatan from universitas, fak_univ, fakultas, prodi_fak, prodi  where universitas.id_universitas=fak_univ.id_universitas AND fak_univ.id_fakultas=fakultas.id_fakultas AND fakultas.id_fakultas = prodi_fak.id_fakultas AND prodi_fak.id_prodi = prodi.id_prodi AND nama_universitas='$list_detail->nama_universitas ' AND nama_fakultas ='$key->nama_fakultas';");
                     foreach ($list_prodi->result() as $value){?>
-                      <li class="prodi" ><p style="font-size: 14px;"><?php echo $value->nama_prodi;?></p>
+
+                      
+                      <li class="prodi" style="margin-left: 10px;"><p style="font-size: 14px;"><?php echo $value->nama_prodi;?>
+                      <?php if($value->tingkatan=="Sarjana"){?>
+                      ( S1 )
+                    <?php } else if($value->tingkatan=="Diploma"){?>
+                      ( D3 )
+                    <?php } else if($value->tingkatan=="Magister"){?>
+                    ( S2 )
+                   <?php } else if($value->tingkatan=="Doktor"){?>
+                    ( S3 )
+                  <?php } ?>
+                      </p>
                       </li>
-                    <?php }?>
+                  
+                     <?php }?>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+                    
                   </ul>
 
                 </div>     
@@ -124,55 +152,10 @@ $this->load->view('pencari/header_user');
 
   <section class="reserve-block" style="padding-top:50px; padding-bottom: 50px;background-color: #fff;">
     <div class="container">
-     <h6>Lokasi</h6><br><hr><br>
+     <h6>Lokasi dan Kontak</h6><br><hr><br>
      <div class="row">
-      <div class="col-md-6">
-        <!--The div element for the map -->
-
-  <div id="map"></div>
-
-        <?php
-
-        $carimap = $this->db->query("select latitude, longitude from universitas, detail_universitas where universitas.id_universitas = detail_universitas.id_universitas AND nama_universitas ='$list_detail->nama_universitas'")->result_array();
-        foreach ($carimap as $dcari){
-          $lat1 = $dcari['latitude'];
-          $lng1 = $dcari['longitude'];
-        ?>
-       
-
-  <script type="text/javascript">
-
-function initMap() {
-
-    var map = new google.maps.Map(document.getElementById('map'), {
-          center: new google.maps.LatLng(<?php echo $dcari['latitude'] ?>, <?php echo $dcari['longitude']; ?>), 
-          zoom: 16
-        });
-
-    var marker = new google.maps.Marker({
-          map: map,
-          position: new google.maps.LatLng(<?php echo $dcari['latitude']; ?>, <?php echo $dcari['longitude']; ?>)
-        });
-  }
-</script>
-
- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7-fRsQfb2xc9Q3vQbyF8eIPQa0gCZGLA&callback=initMap"
-        async defer>
-      </script>
-
-   <?php } ?>
-  
-
-
-    <!--Load the API from the specified URL
-    * The async attribute allows the browser to render the page while the API loads
-    * The key parameter will contain your own API key (which is not needed for this tutorial)
-    * The callback parameter executes the initMap() function
-  -->
-
-</div>
-
-<div class="col-md-6">
+   
+<div class="col-md-12">
   <div class="contact-info">
     <div class="address">
       <span class="icon-location-pin"></span>
@@ -206,11 +189,7 @@ function initMap() {
           <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
           <p>Copyright &copy; 2018 E-Beasiswa</p>
           <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-          <ul>
-            <li><a href="#"><span class="ti-facebook"></span></a></li>
-            <li><a href="#"><span class="ti-twitter-alt"></span></a></li>
-            <li><a href="#"><span class="ti-instagram"></span></a></li>
-          </ul>
+ 
         </div>
       </div>
     </div>
@@ -227,6 +206,18 @@ function initMap() {
 <script src="assets/js/jquery.magnific-popup.js"></script>
 <!-- Swipper Slider JS -->
 <script src="assets/js/swiper.min.js"></script>
+<!-- jQuery 3 -->
+<script src="<?php echo base_url();?>AdminLTE/bower_components/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap 3.3.7 -->
+<script src="<?php echo base_url();?>AdminLTE/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- Slimscroll -->
+<script src="<?php echo base_url();?>AdminLTE/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+<!-- FastClick -->
+<script src="<?php echo base_url();?>AdminLTE/bower_components/fastclick/lib/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="<?php echo base_url();?>AdminLTE/dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="<?php echo base_url();?>AdminLTE/dist/js/demo.js"></script>
 
 <script>
   if ($('.image-link').length) {

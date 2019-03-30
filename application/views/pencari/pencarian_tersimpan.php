@@ -27,7 +27,7 @@ $this->load->view('pencari/profilpencari');?>
 
               <?php
               $id_pencari = $nama_pencari['id_pencari'];
-              $query= $this->db->query("SELECT distinct * from pencari, pencarian WHERE pencari.id_pencari=pencarian.id_pencari AND pencarian.id_pencari='$id_pencari' GROUP BY pencarian.id_pencarian order by waktu_pencarian")->num_rows();
+              $query= $this->db->query("SELECT distinct * from pencari, pencarian WHERE pencari.id_pencari=pencarian.id_pencari AND pencarian.id_pencari='$id_pencari' AND pencarian.status='Belum Dihapus' GROUP BY pencarian.id_pencarian order by waktu_pencarian")->num_rows();
               ?>
 
               <?php if ($query < 1){ ?>
@@ -53,7 +53,7 @@ $this->load->view('pencari/profilpencari');?>
                   </div>
                   <!-- /.user-block -->
                   <p>
-                    Jurusan <?php echo $value->keyword_prodi;?> <?php echo $value->tingkatan ;?> di <?php echo $value->keyword_kategori;?><br>
+                    Jurusan <?php echo $value->keyword_prodi;?> <?php echo $value->keyword_tingkatan ;?> di <?php echo $value->keyword_kategori;?><br>
                    
                   </p>
                   <input type="hidden" value="<?php echo $value->keyword_prodi;?>" name="keyword_prodi">

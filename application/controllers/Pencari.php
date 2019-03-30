@@ -37,11 +37,7 @@ class Pencari extends CI_Controller
 
 	}
 	public function upload_foto(){
-
 		$id_pencari = $this->input->post('id_pencari');
-
-
-
 	// $this->load->library('form_validation');
 		
 	// 	$this->form_validation->set_rules('pic','pic','required');
@@ -95,18 +91,14 @@ class Pencari extends CI_Controller
 
 	// }
 	}
+
 	public function edit_pencari(){
 		//get id univ yang ingin di edit
 		$id_pencari = $this->input->post('id_pencari');
-		
-		
-		
 		$this->load->library('form_validation');
-		
 		$this->form_validation->set_rules('nama_pencari','Nama','required');
 		$this->form_validation->set_rules('username','Kategori Universitas','required');
 		$this->form_validation->set_rules('tingkatan','Tingkatan','required');
-		
 		if($this->form_validation->run() == FALSE)
 		{
 			//jika form tidak lengkap maka akan dikembalikan ke route "dosenAdminR"
@@ -114,12 +106,9 @@ class Pencari extends CI_Controller
 		}
 		else
 		{
-
 			$nama = $this->input->post('nama_pencari');
 			$username = $this->input->post('username');
 			$tingkatan = $this->input->post('tingkatan');
-			
-
 			$dataPencari =  array(
 				"nama"=>$nama,
 				"username"=>$username,
@@ -127,23 +116,17 @@ class Pencari extends CI_Controller
 				"update_dtm"=>date('Y-m-d H-s-i')
 			);
 
-
-
-			$result = $this->PencariM->editPencari($dataPencari, $id_pencari);
-			
+			$result = $this->PencariM->editPencari($dataPencari, $id_pencari);		
 			if($result == TRUE)
 			{
-				$this->session->set_flashdata('success', 'Data berhasil diubah');
+				$this->session->set_flashdata('success_data_profil', 'Data berhasil diubah');
 			}
 			else
 			{
-				$this->session->set_flashdata('error', 'Data gagal diubah');
-			}	
-			
+				$this->session->set_flashdata('error_data_profil', 'Data gagal diubah');
+			}		
 			redirect('Pencari/get_nama_pencari');
-
 		}
-
 	}
 	public function logoutUser(){	
 		$this->session->unset_userdata($userData);
@@ -198,19 +181,13 @@ class Pencari extends CI_Controller
 		);
 		$this->load->view('pencari/lupa_password_confirm', $data);
 	}
-
 	public function lupa_pass(){
-
 		$this->form_validation->set_rules('email','email','required');
 		$email = $this->input->post('email');
-
 		$cekAkun = $this->db->query("SELECT * FROM pencari WHERE email ='$email'")->num_rows();
-		
-
 		if($cekAkun==0){
 			if($email == "ebeasiswa.indonesia@gmail.com"){
 				$encrypted_email = md5($email);
-
 				// email($email);
 				 $this->load->library('email');
         $config = array();
@@ -227,7 +204,6 @@ class Pencari extends CI_Controller
         $config['newline']="\r\n"; 
         $config['wordwrap'] = TRUE;
         //memanggil library email dan set konfigurasi untuk pengiriman email
-
         $this->email->initialize($config);
         //konfigurasi pengiriman
         $this->email->from($config['smtp_user']);
@@ -248,7 +224,8 @@ class Pencari extends CI_Controller
 				$this->session->set_flashdata('error',"Email yang Anda masukkan belum terdaftar.");
 				redirect('Login');
 			}
-		} else{
+		}
+		else{
 			if($this->form_validation->run() == FALSE){
 				$this->session->set_flashdata('error',"Pastikan mengisi email dengan benar!");
 				redirect('Login');
@@ -296,15 +273,12 @@ class Pencari extends CI_Controller
 		$username = $this->session->userdata('username');
 		$id_pencari = $this->session->userdata('id_pencari');
 
-		// $password_lama = $this->input->post('password_lama');
 		$password_baru = $this->input->post('password_baru');
 		$ulang_password = $this->input->post('ulang_password');
 		$EnteredPass = md5($_POST['password_lama']);
 
 		$cekAkun = $this->db->query("SELECT * FROM pencari WHERE username='$username' AND password='$EnteredPass'")->num_rows();
 		
-		// $cekPassword =  $this->db->query("SELECT password FROM pencari WHERE username='$username'")->row_array();
-
 		if ($cekAkun >= 1){
 			if($password_baru != $ulang_password){
 				$this->session->set_flashdata('error','Konfirmasi password tidak valid');
@@ -358,7 +332,7 @@ class Pencari extends CI_Controller
 			'program_studi'=>$nama_prodi,
 			'kategori'=>$kategori,
 			'deskripsi'=>$deskripsi,
-			'status'=>"dikirim",
+			'status'=>"belum dibalas",
 			'id_pencari'=>$id_pencari
 
 		);
@@ -411,7 +385,7 @@ class Pencari extends CI_Controller
 	public function tampil_pencarian_tersimpan(){
 
 		$username = $this->session->userdata('username');
-		$id_pencari=$this->session->userdata['id_pencari'];
+		$id_pencari=$this->session->userdata('id_pencari');
 
 		$data['nama_pencari']= $this->PencariM->get_nama_pencari($username)->row_array();
 		$data['pencarian']= $this->PencarianM->tampil_histori_pencarian($id_pencari)->result();
@@ -422,7 +396,7 @@ class Pencari extends CI_Controller
 	public function tampil_pencarian_beasiswa_tersimpan(){
 
 		$username = $this->session->userdata('username');
-		$id_pencari=$this->session->userdata['id_pencari'];
+		$id_pencari=$this->session->userdata('id_pencari');
 
 		$data['nama_pencari']= $this->PencariM->get_nama_pencari($username)->row_array();
 		$data['pencarian']= $this->PencarianM->tampil_histori_pencarian_beasiswa($id_pencari)->result();
@@ -433,18 +407,28 @@ class Pencari extends CI_Controller
 	public function hapus_pencarian_tersimpan($id_pencarian, $id_pencari){
 		$username = $this->session->userdata('username');
 		$data['id_pencari']= $this->session->userdata('id_pencari');
-		if($this->PencarianM->hapus_histori_pencarian($id_pencarian, $id_pencari)){
-
-			redirect('Pencari/tampil_pencarian_tersimpan',$data);
-		}
+		$data=array(
+			"status"=>"Sudah Dihapus"
+		);
+		$this->db->where('id_pencarian', $id_pencarian);
+		$this->db->where('id_pencari', $id_pencari);
+		$this->db->update('pencarian', $data);
+		redirect('Pencari/tampil_pencarian_tersimpan',$data);
+		
 	}
 	public function hapus_pencarian_beasiswa_tersimpan($id_pencarian_beasiswa, $id_pencari){
 		$username = $this->session->userdata('username');
 		$data['id_pencari']= $this->session->userdata('id_pencari');
-		if($this->PencarianM->hapus_histori_pencarian_beasiswa($id_pencarian_beasiswa, $id_pencari)){
+
+		$data=array(
+			"status"=>'Sudah Dihapus',
+		);
+		$this->db->where('id_pencarian_beasiswa', $id_pencarian_beasiswa);
+		$this->db->where('id_pencari', $id_pencari);
+		$this->db->update('pencarian_beasiswa', $data);
 
 			redirect('Pencari/tampil_pencarian_beasiswa_tersimpan',$data);
-		}
+		
 	}
 	
 
