@@ -45,15 +45,17 @@ $this->load->view('pencari/header_user');
   <div class="container" style="padding-top: 20px; ">
     <h5 class="title-text" style="color:#fff; ">
       Area Fakultas<br><h5>
-        <h6 class="title-text" style="color:#fff; padding-bottom: 30px;">Temukan program studi sesuai pilihanmu.<br> Kamu dapat menyaring berdasarkan universitas dan negara yang kamu ingin pilih.<br></h6>
-
-
+        <h6 class="title-text" style="color:#fff; padding-bottom: 20px;">Temukan program studi sesuai pilihanmu.<br> Kamu dapat menyaring berdasarkan universitas dan negara yang kamu ingin pilih.<br></h6>
       </h5>
+      <div class="col-md-12">
+            <h5><i class="fa fa-flag">&ensp;Hai</i></h5>
+          </div>
       
         <div class="row" style="background-color: #d2d6de; padding-top: 15px;">
         <div class="col-md-12">
+
         <div class="form-group">
-        <label><i class="fa fa-reorder" > Saring Bedasarkan</i></label><br><br>
+        <label><i class="fa fa-reorder" > Saring Bedasarkan</i></label><br>
   
             <label class="radio-inline">
                 <input type="radio" id="univ" name="key" onclick="showUniversitas();"> <i class="fa fa-university">&ensp;Universitas</i></label>
@@ -61,42 +63,49 @@ $this->load->view('pencari/header_user');
                 <label  class="radio-inline">        
                     <input type="radio" id="negara" name="key" onclick="showNegara();"> <i class="fa fa-flag">&ensp;Negara</i></label>      
             </div>
-          </div>
+         
 
-           <form class="col-md-12" method="POST" id="dropdown_universitas" style="display: none;">
-           <div class="form-group" >
-          <select id="value_univ" class="form-control" name="filter_universitas" style="height: 50px;">
-            <option disabled selected value="0">Pilih Universitas</option>
-           <?php foreach ($universitas as $list_nama) {?>
+           <form method="POST" id="dropdown_universitas" style="display: none;">
+             <div class="form-group">
+            <div class="input-group input-group-sm">
+            <select id="value_univ" class="form-control" name="filter_universitas" style="height: 50px;">
+              <option disabled selected value="0">Pilih Universitas</option>
+               <?php foreach ($universitas as $list_nama) {?>
                 <option value="<?php echo $list_nama->id_universitas;?>"><?php echo $list_nama->nama_universitas;?></option>
-              <?php  } ?>
-          </select>
-        </div>
-          <div id="btnUniversitas" style="display: none;">
-        <button type="submit" onclick="submit_form()" class="btn btn-danger " style="width:100%; height: 50px;" ><i class="fa fa-search"></i></button>
+               <?php  } ?>
+            </select>
+                    <span class="input-group-btn">
+                      <div id="btnUniversitas" style="display: none;">
+                        <button type="submit" onclick="submit_form()" class="btn btn-primary " style="width:70px; height: 48px;" ><i class="fa fa-search"></i></button>
+                      </div>
+                    </span>
+            </div>
+            <center>
+          <input type="button" class="btn" onclick="hideUniversitas()" Value="Tutup"></center>
       </div>
       </form>
-
+      
           <form class="col-md-12" method="POST" id="dropdown_negara" style="display: none;">
-           <div class="form-group" >
+          <div class="form-group">
+          <div class="input-group input-group-sm">
           <select id="value_negara" class="form-control" name="filter_negara" style="height: 50px;">
             <option disabled selected value="0">Pilih Negara</option>
             <?php foreach ($negara as $list_nama) {?>
-              <option value="<?php echo $list_nama->negara;?>"><?php echo $list_nama->negara;?></option>
+              <option value="<?php echo str_replace(" ", "-", $list_nama->negara);?>"><?php echo $list_nama->negara;?></option>
             <?php  } ?>
           </select>
+               <span class="input-group-btn">
+                 <div id="btnNegara" style="display: none;">
+                   <button type="submit" onclick="submit_form()" class="btn btn-primary " style="width:70px; height: 48px;" ><i class="fa fa-search"></i></button>
+                  </div>
+               </span>
+        </div><center>
+          <input type="button" class="btn" onclick="hideNegara()" Value="Tutup"></center>
         </div>
-          <div id="btnNegara" style="display: none;">
-        <button type="submit" onclick="submit_form()" class="btn btn-danger " style="width:100%; height: 50px;" ><i class="fa fa-search"></i></button>
-      </div>
       </form>
+
       </div>
-      
-       
-
     </div>
-  
-
 </div>
 
 
@@ -122,7 +131,7 @@ $this->load->view('pencari/header_user');
 
         <?php if ($this->session->userdata('logged_in')){
 
-        $id_pencari = $nama_pencari['id_pencari'];
+        $id_pencari = $this->session->userdata('id_pencari');
         $query = $this->db->query("SELECT tingkatan from pencari where id_pencari='$id_pencari'")->row_array(); 
 
           if($query['tingkatan'] == "Pelajar"){?>
@@ -447,10 +456,24 @@ $this->load->view('pencari/header_user');
   document.getElementById('dropdown_negara').style.display ='none';
   document.getElementById('btnNegara').style.display ='none';
   }
+  function hideUniversitas(){
+  document.getElementById('dropdown_universitas').style.display ='none';
+  document.getElementById('btnUniversitas').style.display ='none';
+  document.getElementById('value_negara').value = 0; 
+  document.getElementById('dropdown_negara').style.display ='none';
+  document.getElementById('btnNegara').style.display ='none';
+  }
   function showNegara(){
   document.getElementById('btnNegara').style.display ='block';
   document.getElementById('value_univ').value = 0;
   document.getElementById('dropdown_negara').style.display ='block';
+  document.getElementById('dropdown_universitas').style.display ='none';
+  document.getElementById('btnUniversitas').style.display ='none';
+  }
+  function hideNegara(){
+  document.getElementById('btnNegara').style.display ='none';
+  document.getElementById('value_univ').value = 0;
+  document.getElementById('dropdown_negara').style.display ='none';
   document.getElementById('dropdown_universitas').style.display ='none';
   document.getElementById('btnUniversitas').style.display ='none';
   }

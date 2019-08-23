@@ -14,7 +14,7 @@ $this->load->view('pencari/header_user');
             <div class="row">
               <div class="col-md-12">
                 <div class="slider-content_wrap">
-                 <h1  style="color:#fff;">Temukan Jurusanmu </h1>
+                 <h1  style="color:#fff;">Temukan Universitas Impianmu</h1>
                  <h5> Website Pencarian Universitas dan Beasiswa Dalam dan Luar Negeri</h5>
                </div>
              </div>
@@ -24,8 +24,10 @@ $this->load->view('pencari/header_user');
 
           
               <?php if ($this->session->userdata('logged_in')){
+                
+              $id_pencari = $this->session->userdata('id_pencari');
 
-              $query = $this->db->query("SELECT tingkatan from pencari where id_pencari=".$nama_pencari)->row_array(); 
+              $query = $this->db->query("SELECT tingkatan from pencari where id_pencari= $id_pencari")->row_array(); 
 
               if($query['tingkatan'] == "Pelajar"){?>
 
@@ -37,7 +39,7 @@ $this->load->view('pencari/header_user');
                       <option value="Dalam Negeri">Dalam Negeri</option>
                       <option value="Luar Negeri">Luar Negeri</option>
                   </select>
-                  <select name="keyword_prodi" class="btn-group2" id="keyword_prodi_pjr">
+                  <select name="keyword_prodi" class="btn-group2" style="width: 400px;" id="keyword_prodi_pjr">
                       <option value="0" disabled selected>Area Jurusan</option>
                   </select>
                   <select name="keyword_tingkatan" class="btn-group2" id="keyword_tingkatan_pjr">
@@ -45,7 +47,7 @@ $this->load->view('pencari/header_user');
                      <option value="Diploma">Diploma</option>
                      <option value="Sarjana">Sarjana</option>
                   </select>
-                    <button type="submit" class="btn-form btn-primary" onclick="submit_form_pjr()"><span class="icon-magnifier search-icon"></span>CARI<i class="pe-7s-angle-right"></i></button>
+                    <button type="submit" class="btn-form btn-primary" onclick="submit_form()"><span class="icon-magnifier search-icon"></span>CARI<i class="pe-7s-angle-right"></i></button>
                   </div>
                 </form>
 
@@ -53,21 +55,18 @@ $this->load->view('pencari/header_user');
                 <form class="form-wrap mt-4" method="POST" id="keyword">
                   <div class="btn-group" role="group" aria-label="Basic example">
 
-                    <select name="keyword_kategori" class="btn-group2" id="keyword_kategori_mhs">
+                    <select name="keyword_kategori" class="btn-group2"id="keyword_kategori_mhs">
                       <option value="0" disabled selected>Tujuan Negara</option>
                       <option value="Dalam Negeri">Dalam Negeri</option>
                       <option value="Luar Negeri">Luar Negeri</option>
 
                     </select>
-
-
-                      <select name="keyword_prodi" class="btn-group2" id="keyword_prodi_mhs">
-                      <option value="0" disabled selected>Area Jurusan</option> 
-                      <!-- <?php foreach ($prodi_mahasiswa as $value) {?>
-                      <option value="<?php echo $value->nama_prodi;?>"><?php echo $value->nama_prodi;?></option>
-                      <?php  } ?> -->
-              
-                    </select>
+     
+                <select name="keyword_prodi" class="btn-group2" style="width: 400px; background-color:   #fff;" id="keyword_prodi_mhs">
+                  
+                   <option value="0" disabled selected>Area Jurusan</option> 
+               
+                </select>
 
                     <select name="keyword_tingkatan" class="btn-group2" id="keyword_tingkatan_mhs">
                      <option value="0" disabled selected>Jenjang</option>
@@ -75,14 +74,11 @@ $this->load->view('pencari/header_user');
                      <option value="Doktor">Doktor</option>
                    </select>
 
-                    <button type="submit" class="btn-form btn-primary" onclick="submit_form_mhs()"><span class="icon-magnifier search-icon"></span>CARI<i class="pe-7s-angle-right"></i></button>
+                    <button type="submit" class="btn-form btn-primary" onclick="submit_form()"><span class="icon-magnifier search-icon"></span>CARI<i class="pe-7s-angle-right"></i></button>
                   </div>
                 </form>
-                 <?php }?>
-
-                 <?php }else{ ?>
-
-                <form class="form-wrap mt-4" method="POST" id="keyword">
+                 <?php }else if($query['tingkatan'] == "Umum"){?>
+                  <form class="form-wrap mt-4" method="POST" id="keyword">
                   <div class="btn-group" role="group" aria-label="Basic example">
                     <select name="keyword_kategori" class="btn-group2" id="keyword_kategori_umum">
                       <option value="0" disabled selected>Tujuan Negara</option>
@@ -91,7 +87,7 @@ $this->load->view('pencari/header_user');
 
                     </select>
 
-              <select name="keyword_prodi"  class="btn-group2" id="keyword_prodi_umum">
+              <select name="keyword_prodi"  class="btn-group2" style="width: 400px;" id="keyword_prodi_umum">
               <option value="0" disabled selected>Area Jurusan</option>
             </select>
 
@@ -103,7 +99,34 @@ $this->load->view('pencari/header_user');
              <option value="Doktor">Doktor</option>
            </select> 
 
-            <button type="submit" class="btn-form btn-primary" onclick="submit_form_umum()"><span class="icon-magnifier search-icon"></span>CARI<i class="pe-7s-angle-right"></i></button>
+            <button type="submit" class="btn-form btn-primary" onclick="submit_form()"><span class="icon-magnifier search-icon"></span>CARI<i class="pe-7s-angle-right"></i></button>
+         </div>
+       </form>
+     <?php }?>
+                 <?php }else{ ?>
+
+                <form class="form-wrap mt-4" method="POST" id="keyword">
+                  <div class="btn-group" role="group" aria-label="Basic example">
+                    <select name="keyword_kategori" class="btn-group2" id="keyword_kategori_umum">
+                      <option value="0" disabled selected>Tujuan Negara</option>
+                      <option value="Dalam Negeri">Dalam Negeri</option>
+                      <option value="Luar Negeri">Luar Negeri</option>
+
+                    </select>
+
+              <select name="keyword_prodi"  class="btn-group2" style="width: 400px;" id="keyword_prodi_umum">
+              <option value="0" disabled selected>Area Jurusan</option>
+            </select>
+
+            <select name="keyword_tingkatan" class="btn-group2" id="keyword_tingkatan_umum">
+             <option value="0" disabled selected>Jenjang</option>
+             <option value="Diploma">Diploma</option>
+             <option value="Sarjana">Sarjana</option>
+             <option value="Magister">Magister</option>
+             <option value="Doktor">Doktor</option>
+           </select> 
+
+            <button type="submit" class="btn-form btn-primary" onclick="submit_form()"><span class="icon-magnifier search-icon"></span>CARI<i class="pe-7s-angle-right"></i></button>
          </div>
        </form>
 
@@ -127,15 +150,12 @@ $this->load->view('pencari/header_user');
     <div class="row justify-content-center">
       <div class="col-md-5">
         <div class="styled-heading">
-          <h3>Daftar Fakultas</h3>
+          <h3>Daftar Jurusan</h3>
         </div>
       </div>
     </div>
     
     <div class="row">
-
-
-   
               <?php if ($this->session->userdata('logged_in')){?>
 
                 <?php if($query['tingkatan']=='Pelajar'){?>
@@ -166,24 +186,17 @@ $this->load->view('pencari/header_user');
                 </div>
               <?php  endforeach; ?>
   
-
-
-
-
                 <?php }else if($query['tingkatan']=='Mahasiswa'){?>
 
                 <?php $no=0; foreach ($fakultas_mahasiswa as $value): $no++; ?>
                 <div class="col-md-4 featured-responsive">
                   <div class="featured-place-wrap">
-                    <a href="detail.html">
-
+                    
                       <span class="featured-rating-orange"><?php echo $no; ?></span>
                       <div class="featured-title-box"><br>
                         <h6><?php echo $value->nama_fakultas;?></h6><br><hr>
 
                         <ul>
-
-
                   <?php 
                      $list_prodi = $this->db->query("SELECT distinct nama_prodi from fakultas, prodi_fak, prodi  where fakultas.id_fakultas = prodi_fak.id_fakultas AND prodi_fak.id_prodi=prodi.id_prodi  AND (prodi.tingkatan='Magister' OR prodi.tingkatan='Doktor') AND nama_fakultas='$value->nama_fakultas' limit 4;");
                         foreach ($list_prodi->result() as $value){?>
@@ -198,34 +211,49 @@ $this->load->view('pencari/header_user');
                   </div>
                 </div>
               <?php  endforeach; ?>
-              <?php } ?>
 
-              <?php }else{?>
-
-                   <?php $no=0; foreach ($fakultas as $value): $no++; ?>
+              <?php } else if($query['tingkatan']=='Umum'){?>
+                 <?php $no=0; foreach ($fakultas_umum as $value): $no++; ?>
                    <div class="col-md-4 featured-responsive">
                     <div class="featured-place-wrap">
-                      <a href="detail.html">
+                      
 
                         <span class="featured-rating-orange"><?php echo $no; ?></span>
                         <div class="featured-title-box"><br>
                           <h6><?php echo $value->nama_fakultas;?></h6><br><hr>
 
                           <ul>
-
-
                        <?php 
                         $list_prodi = $this->db->query("SELECT distinct nama_prodi from fakultas, prodi_fak, prodi  where fakultas.id_fakultas = prodi_fak.id_fakultas AND prodi_fak.id_prodi=prodi.id_prodi AND nama_fakultas='$value->nama_fakultas' limit 4;");
                       foreach ($list_prodi->result() as $value){?>
                         <li><p><?php echo $value->nama_prodi;?></p>
                         </li><hr>
                 <?php }?>
-
-             
-              
-
               </ul>
-              
+            </div>
+          </a>
+        </div>
+      </div>
+      <?php  endforeach; ?>
+              <?php }?>
+              <?php }else{?>
+
+                   <?php $no=0; foreach ($fakultas as $value): $no++; ?>
+                   <div class="col-md-4 featured-responsive">
+                    <div class="featured-place-wrap">
+                    
+                        <span class="featured-rating-orange"><?php echo $no; ?></span>
+                        <div class="featured-title-box"><br>
+                          <h6><?php echo $value->nama_fakultas;?></h6><br><hr>
+
+                          <ul>
+                       <?php 
+                        $list_prodi = $this->db->query("SELECT distinct nama_prodi from fakultas, prodi_fak, prodi  where fakultas.id_fakultas = prodi_fak.id_fakultas AND prodi_fak.id_prodi=prodi.id_prodi AND nama_fakultas='$value->nama_fakultas' limit 4;");
+                      foreach ($list_prodi->result() as $value){?>
+                        <li><p><?php echo $value->nama_prodi;?></p>
+                        </li><hr>
+                <?php }?>
+              </ul>
             </div>
           </a>
         </div>
@@ -234,20 +262,6 @@ $this->load->view('pencari/header_user');
    <?php }?>
       
 </div>
-
-
-<div class="row justify-content-center">
-      <div class="col-md-5">
-        <div class="featured-btn-wrap">
-           <a href="<?php echo base_url('PencarianC/tampil_pencarian_prodi');?>" class="btn btn-primary" style="height: 70px; width: 200px; padding-top: 25px;"><center>Lihat Semua</center></a>
-        </div>
-      </div>
-    </div>
-
-
-
-
-
 </section>
 <!--//END FEATURED PLACES -->
 
@@ -269,7 +283,7 @@ $this->load->view('pencari/header_user');
           </div>
         </div>
         <div class="add-listing-wrap">
-            <p>Memudahkan pencarian Universitas sesuai dengan pilihanmu dalam dan luar negeri</p>
+            <p style="font-size: 18px;">Memudahkan pencarian Universitas sesuai dengan pilihanmu dalam dan luar negeri</p>
         </div> 
       </div>
       
@@ -281,7 +295,7 @@ $this->load->view('pencari/header_user');
           </div>
         </div>
           <div class="add-listing-wrap">
-            <p>Memudahkan pencarian Beasiswa sesuai dengan pilihanmu dalam dan luar negeri</p>
+            <p style="font-size: 18px;">Memudahkan pencarian Beasiswa sesuai dengan pilihanmu dalam dan luar negeri</p>
           </div>
       </div>
 
@@ -294,7 +308,7 @@ $this->load->view('pencari/header_user');
         </div>
         </div>
         <div class="add-listing-wrap">
-          <p>Menyediakan informasi mengenai Universitas dan Beasiswa dalam dan luar negeri</p>
+          <p style="font-size: 18px;">Menyediakan informasi mengenai Universitas dan Beasiswa dalam dan luar negeri</p>
         </div>
       </div>
 
@@ -307,15 +321,43 @@ $this->load->view('pencari/header_user');
 
 <!--//END ADD LISTING -->
 <!--============================= FOOTER =============================-->
-<footer class="main-block dark-bg">
+<footer class="main-block dark-bg" style="height: 350px;">
   <div class="container">
+
     <div class="row">
+      <div class="col-md-6">
+        <h2 class="page-header" style="font-style: calibri; color: #fff ; float: left; ">
+            Info Kontak</h2>
+        <!-- /.col -->
+      </div>
+      <div class="col-md-6">
+        <h2 class="page-header" style="font-style: calibri; color: #fff ; float: left; ">
+            Tentang Kami</h2>
+        <!-- /.col -->
+      </div>
+      <!-- info row -->
       <div class="col-md-12">
-        <div class="copyright">
-          <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-          <p>Copyright &copy; 2018 E-Beasiswa</p>
-          <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+      <div class="row invoice-info">
+        <div class="col-sm-6 invoice-col">
+          <address style="padding-top: 20px;">
+            <img src="<?php echo base_url('assets/images/phone_contact.png');?>" style="float: left; width: 40px; height: 40px;">
+            <div style="color: #fff; padding-top: 8px;">&nbsp;&nbsp;&nbsp;&nbsp;+62 89532 500 8487</div>
+          <br>
+             <img src="<?php echo base_url('assets/images/email_contact.png');?>" style="float: left; width: 40px; height: 40px;">
+             <div style="color: #fff; padding-top: 8px;">&nbsp;&nbsp;&nbsp;&nbsp;ebeasiswa.indonesia@gmail.com</div>
+          </address>
         </div>
+        <div class="col-sm-6 invoice-col">
+          <address>
+            <div style="color:#fff"><strong>E-Beasiswa</strong> adalah sebuah website pencarian<br>
+            beasiswa dalam dan luar negeri<br>
+            yang membantu mahasiswa/pelajar<br>
+            dalam menemukan beasiswa yang tepat<br>
+            dan sesuai keinginan
+          </div>
+          </address>
+        </div>
+    </div>
       </div>
     </div>
   </div>
@@ -328,6 +370,7 @@ $this->load->view('pencari/header_user');
 
 
 <script type="text/javascript" src="<?php echo base_url().'assets/js/jquery-2.2.3.min.js'?>"></script>
+<script src="<?php echo base_url('AdminLTE/bower_components/select2/dist/js/select2.full.min.js')?>"></script>
 <script type="text/javascript"> 
 
 
@@ -344,6 +387,8 @@ $('#keyword_kategori_mhs').change(function(){
           var html = '';
                 var i;
                 for(i=0; i<data.length; i++){
+
+
                     html += '<option>'+data[i].nama_prodi+'</option>';
                 }
                 $('#keyword_prodi_mhs').html(html);
@@ -399,94 +444,30 @@ $('#keyword_kategori_mhs').change(function(){
 
 
      
-    function submit_form_umum() {
+    function submit_form() {
 
-    var jurusan = $('select[name="keyword_prodi"][id="keyword_prodi_umum"] option:selected').val();
-    var kategori = $('select[name="keyword_kategori"][id="keyword_kategori_umum"] option:selected').val();
-    var tingkatan = $('select[name="keyword_tingkatan"][id="keyword_tingkatan_umum"] option:selected').val();
-
-    document.getElementById("keyword_kategori_umum").setCustomValidity('');
-    document.getElementById("keyword_prodi_umum").setCustomValidity('');
-    document.getElementById("keyword_tingkatan_umum").setCustomValidity('');
+   
+    var jurusan = $('select[name="keyword_prodi"] option:selected').val();
+    var kategori = $('select[name="keyword_kategori"] option:selected').val();
+    var tingkatan = $('select[name="keyword_tingkatan"] option:selected').val();
 
     if (kategori == 0 ){
-      document.getElementById("keyword_kategori_umum").setCustomValidity('Silahkan pilih kategori terlebih dahulu');
-      return false;
+      alert('Silahkan pilih tujuan negara terlebih dahulu');
     }else if (jurusan == 0) {
-      document.getElementById("keyword_prodi_umum").setCustomValidity('Silahkan pilih jurusan terlebih dahulu');
-      return false;
+      alert('Silahkan pilih jurusan terlebih dahulu');
     }else if (tingkatan == 0){
-      document.getElementById("keyword_tingkatan_umum").setCustomValidity('Silahkan pilih jenjang terlebih dahulu');
-      return false;
+      alert('Silahkan pilih jenjang terlebih dahulu');
     }else{
-       document.getElementById("keyword_kategori_umum").setCustomValidity('');
-       document.getElementById("keyword_prodi_umum").setCustomValidity('');
-       document.getElementById("keyword_tingkatan_umum").setCustomValidity('');
        document.getElementById("keyword").action ='<?php echo base_url('PencarianC/getPencarian')?>';
        return true;
     }
-}
+  }
 
-function submit_form_mhs(){
 
-    document.getElementById("keyword_kategori_mhs").setCustomValidity('');
-    document.getElementById("keyword_prodi_mhs").setCustomValidity('');
-    document.getElementById("keyword_tingkatan_mhs").setCustomValidity('');
+  $('.btn-group2').select2();
 
-    var jurusan_mhs = $('select[name="keyword_prodi"][id="keyword_prodi_mhs"] option:selected').val();
-    var kategori_mhs = $('select[name="keyword_kategori"][id="keyword_kategori_mhs"] option:selected').val();
-    var tingkatan_mhs = $('select[name="keyword_tingkatan"][id="keyword_tingkatan_mhs"] option:selected').val();
 
-    if (kategori_mhs == 0) {
-      document.getElementById("keyword_kategori_mhs").setCustomValidity('Silahkan pilih kategori terlebih dahulu');
-      return false;
-    }else if (jurusan_mhs == 0) {
-      document.getElementById("keyword_prodi_mhs").setCustomValidity('Silahkan pilih jurusan terlebih dahulu');
-      return false;
-    }else if (tingkatan_mhs == 0) {
-      document.getElementById("keyword_tingkatan_mhs").setCustomValidity('Silahkan pilih jenjang terlebih dahulu');
-      return false;
-    }else if(kategori_mhs!=0 && jurusan_mhs != 0 && tingkatan_mhs != 0){
-      document.getElementById("keyword_kategori_mhs").setCustomValidity('');
-      document.getElementById("keyword_prodi_mhs").setCustomValidity('');
-      document.getElementById("keyword_tingkatan_mhs").setCustomValidity('');
-      document.getElementById("keyword").action ='<?php echo base_url('PencarianC/getPencarian')?>';    
-      return true;  
-       
-    }
-}
 
-function submit_form_pjr(){
-
-  var jurusan_pjr = $('select[name="keyword_prodi"][id="keyword_prodi_pjr"] option:selected').val();
-  var kategori_pjr = $('select[name="keyword_kategori"][id="keyword_kategori_pjr"] option:selected').val();
-  var tingkatan_pjr = $('select[name="keyword_tingkatan"][id="keyword_tingkatan_pjr"] option:selected').val();
-
-      document.getElementById("keyword_kategori_pjr").setCustomValidity('');
-      document.getElementById("keyword_prodi_pjr").setCustomValidity('');
-      document.getElementById("keyword_tingkatan_pjr").setCustomValidity('');
-
-  if (kategori_pjr == 0) {
-      document.getElementById("keyword_kategori_pjr").setCustomValidity('Silahkan pilih kategori terlebih dahulu');
-      return false;
-    }else if (jurusan_pjr == 0) {
-      document.getElementById("keyword_prodi_pjr").setCustomValidity('Silahkan pilih jurusan terlebih dahulu');
-      return false;
-    }else if (tingkatan_pjr == 0) {
-      document.getElementById("keyword_tingkatan_pjr").setCustomValidity('Silahkan pilih jenjang terlebih dahulu');
-      return false;
-    }else {
-      document.getElementById("keyword_kategori_pjr").setCustomValidity('');
-      document.getElementById("keyword_prodi_pjr").setCustomValidity('');
-      document.getElementById("keyword_tingkatan_pjr").setCustomValidity('');
-      document.getElementById("keyword").action ='<?php echo base_url('PencarianC/getPencarian')?>';    
-      return true; 
-    }
-
-}
-
-</script>
-<script>
   $(window).scroll(function() {
             // 100 = The point you would like to fade the nav in.
 
@@ -501,11 +482,8 @@ function submit_form_pjr(){
             };
           });
 
-  $(function () {
-    //Initialize Select2 Elements
-    $('#select2').select2()
 
-   
-  })
+
+</script>
 </script>
 </body>

@@ -66,6 +66,41 @@ class AdminC extends CI_Controller
 		$this->load->view('admin/kelola_konsultasi', $data);
 
 	}
+	public function get_ulasan(){
+		$id_pencari = $this->session->userdata('id_pencari');
+
+		$data['ulasan']=$this->PencariM->get_full_ulasan()->result();
+		$data['ulasan_disetujui']=$this->PencariM->get_full_ulasan_disetujui()->result();
+		$data['ulasan_dibatalkan']=$this->PencariM->get_full_ulasan_dibatalkan()->result();
+		$this->load->view('admin/kelola_ulasan', $data);
+
+	}
+	public function update_ulasan(){
+		$id_pencari = $this->session->userdata('id_pencari');
+		$judul_ulasan = $this->input->post('judul_ulasan');
+		$data['ulasan']=$this->PencariM->get_full_ulasan()->result();
+		$id_ulasan = $this->input->post('id_ulasan');
+
+		if(isset($_POST['setujui'])){
+			$dataUlasan = array(
+				"status_publikasi" => "Sudah disetujui"
+			);
+			
+
+			$this->PencariM->update_ulasan($id_ulasan, $dataUlasan);
+
+		}elseif(isset($_POST['batalkan'])){
+			$dataUlasan = array(
+				"status_publikasi" => "Tidak disetujui"
+			);
+			
+			$this->PencariM->update_ulasan($id_ulasan, $dataUlasan);
+		}
+
+		// $this->load->view('admin/kelola_ulasan', $data);
+		redirect('AdminC/get_ulasan');
+
+	}
 	public function filter_konsultasi(){
 		$id_pencari = $this->session->userdata('id_pencari');
 		$filter_konsultasi = $this->input->post('filter_konsultasi');
@@ -191,6 +226,10 @@ class AdminC extends CI_Controller
 		$this->form_validation->set_rules('nama_beasiswa_umum','nama_beasiswa_umum','trim|required');
 		$this->form_validation->set_rules('url_beasiswa_umum','url_beasiswa_umum','trim|required');
 
+		if($this->session->userdata('logged_in')){
+
+		$id_admin=$this->session->userdata('id_admin');
+
 		if($this->form_validation->run() == FALSE)
 		{
 			$this->session->set_flashdata('error','Data yang diisi belum lengkap');
@@ -198,7 +237,6 @@ class AdminC extends CI_Controller
 		}
 		else{
 			$nama_beasiswa_umum = $this->input->post('nama_beasiswa_umum');
-			$jenjang = $this->input->post('jenjang');
 			$negara = $this->input->post('negara');
 			$url_beasiswa_umum = $this->input->post('url_beasiswa_umum');
 
@@ -207,19 +245,20 @@ class AdminC extends CI_Controller
 			}
 			$dataBeasiswaUmum =  array(
 					'nama_beasiswa_umum' =>$nama_beasiswa_umum,
-					'jenjang' =>$jenjang,
 					'negara' =>$negara,
-					'url_beasiswa_umum' =>$url_beasiswa_umum
+					'url_beasiswa_umum' =>$url_beasiswa_umum,
+					'id_admin' =>$id_admin
 				);
 			$result = $this->BeasiswaM->tambah_beasiswa_umum($dataBeasiswaUmum);
 
 			if($result > 0){
-				$this->session->set_flashdata('error', 'Beasiswa gagal ditambah');
+				$this->session->set_flashdata('success', 'Beasiswa berhasil ditambah');
 			}else{
 				
-				$this->session->set_flashdata('success', 'Beasiswa berhasil ditambah');
+				$this->session->set_flashdata('error', 'Beasiswa gagal ditambah');
 			}
 		}
+	}
 		redirect('AdminC/get_beasiswa_umum');
 	}
 
@@ -236,7 +275,6 @@ class AdminC extends CI_Controller
 		else{
 			$id_beasiswa_umum = $this->input->post('id_beasiswa_umum');
 			$nama_beasiswa_umum = $this->input->post('nama_beasiswa_umum');
-			$jenjang = $this->input->post('jenjang');
 			$negara = $this->input->post('negara');
 			$url_beasiswa_umum = $this->input->post('url_beasiswa_umum');
 
@@ -245,7 +283,6 @@ class AdminC extends CI_Controller
 			}
 			$dataEditBeasiswaUmum =  array(
 					'nama_beasiswa_umum' =>$nama_beasiswa_umum,
-					'jenjang' =>$jenjang,
 					'negara' =>$negara,
 					'url_beasiswa_umum' =>$url_beasiswa_umum
 				);
@@ -504,7 +541,7 @@ class AdminC extends CI_Controller
 					"no_telp" => $no_telp );
 			}else{
 				$dataUniversitas =  array(
-					"nama_universitas"=>$deskripsi,
+					"nama_universitas"=>$nama_universitas,
 					"url_universitas"=>$url,
 					"kategori_universitas"=>$kategori,
 					"negara"=>$negara,

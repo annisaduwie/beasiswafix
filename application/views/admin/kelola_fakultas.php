@@ -23,8 +23,8 @@ $this->load->view('admin/head_admin');
  }
 
  .img{
-  height: 240px;
-  width: 290px;
+  height: 250px;
+  width: 430px;
 }
 </style>
 

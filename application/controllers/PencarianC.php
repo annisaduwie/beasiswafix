@@ -123,7 +123,7 @@ class PencarianC extends CI_Controller
 
             }else if(isset($_POST["like"])){
 
-                 $data['page'] = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+                $data['page'] = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
                 $data['univ']= $this->PencarianM->pencarianPage($config["per_page"], $data['page'], $keyword_prodi, $keyword_kategori, $keyword_tingkatan)->result();
                 $data['pagination'] = $this->pagination->create_links();
 
@@ -327,6 +327,7 @@ class PencarianC extends CI_Controller
 
     		$nama_pencari= $this->session->userdata['username'];
     		$getId=$this->PencariM->getIdPencari($nama_pencari);
+            $id_pencari = $this->session->userdata('id_pencari');
 
     		$dataPencarian =  array(
 
@@ -336,7 +337,12 @@ class PencarianC extends CI_Controller
     			"waktu_pencarian"=>date("Y-m-d H:i:s"),
     			"id_pencari"=>$this->session->userdata['id_pencari']
     		);
+            $id_pencari = $this->session->userdata('id_pencari');
+
+            $cek = $this->db->query("SELECT * from pencari, pencarian WHERE pencari.id_pencari=pencarian_beasiswa.id_pencari AND pencarian.id_pencari='$id_pencari' AND keyword_jenjang='$keyword_jenjang' AND keyword_negara='$keyword_negara' AND keyword_prodi='$keyword_prodi' And pencarian_beasiswa.status='Belum Dihapus'")->num_rows();
+            if ($cek == 0) {
     		$this->PencarianM->insertPencarian($dataPencarian);
+            }
     		$detail_pencarian =array(
 
     		);
@@ -348,18 +354,6 @@ class PencarianC extends CI_Controller
     		);
 
     		$data['body'] = $this->load->view('pencari/list_univ',$data, true);
-
-
-  	// $getkeyword=$this->KeywordM	->get_key($getidkey)->result_array();
-		// $this->load->view('pencari/list_univ',$data);
-
-		// $dataKey=array(
-		// 	"keyword_prodi" => $keyword_prodi,
-		// 	"keyword_kategori" => $keyword_kategori,
-		// 	"keyword_tingkatan" => $keyword_tingkatan
-		// 	// "list_univ"=>$this->PencarianM->pencarian($keyword_prodi, $keyword_kategori)->row_array()
-		// );
-
 
     		if($cek > 0 ){
 
@@ -527,17 +521,20 @@ class PencarianC extends CI_Controller
 }
 
 public function tampil_pencarian_prodi_by_negara($value_negara){
+    $data['universitas'] = $this->UniversitasM->get_universitas()->result();
+    $data['negara'] = $this->UniversitasM->get_negara()->result();
+    
+    $value = str_replace("-", " ", $value_negara);
         $data = array(
-            'negara'=>$value_negara
+            'negara'=>$value
         );
         if ($this->session->userdata('logged_in')){
-        $username = $this->session->userdata('username');
-        $data['nama_pencari']= $this->PencariM->get_nama_pencari($username)->row_array();
-        $id_pencari=$this->session->userdata['id_pencari'];
+        $id_pencari = $this->session->userdata('id_pencari');
+        $data['nama_pencari']= $this->PencariM->get_nama_pencari($id_pencari)->row_array();
         $cek = $this->FakultasM->cek_tingkatan($id_pencari);
         if($cek['tingkatan']=='Pelajar'){
-            $config['total_rows'] = $this->FakultasM->tampil_fakultas_rows_pelajar_negara($value_negara)->num_rows();//total row
-                $config['base_url'] = site_url('PencarianC/tampil_pencarian_prodi_by_negara/'.$value_negara); //site url
+            $config['total_rows'] = $this->FakultasM->tampil_fakultas_rows_pelajar_negara($value)->num_rows();//total row
+                $config['base_url'] = site_url('PencarianC/tampil_pencarian_prodi_by_negara/'.$value); //site url
                 $config['per_page'] = 10;  //show record per halaman
                 $config["uri_segment"] = 4;  // uri parameter
                 $choice = $config["total_rows"] / $config["per_page"];
@@ -564,15 +561,15 @@ public function tampil_pencarian_prodi_by_negara($value_negara){
                 $this->pagination->initialize($config);
                 $this->session->flashdata('id_univ');
                 $data['page'] = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
-                $data['fakultas_pelajar_negara'] = $this->FakultasM->tampil_fakultas_pelajar_negara( $value_negara, $config["per_page"], $data['page'])->result();
+                $data['fakultas_pelajar_negara'] = $this->FakultasM->tampil_fakultas_pelajar_negara( $value, $config["per_page"], $data['page'])->result();
                 $data['pagination_pelajar_negara'] = $this->pagination->create_links();
 
             }
 
             if($cek['tingkatan']=='Mahasiswa'){
 
-            $config['total_rows'] = $this->FakultasM->tampil_fakultas_rows_mahasiswa_negara($value_negara)->num_rows();//total row
-                $config['base_url'] = site_url('PencarianC/tampil_pencarian_prodi_by_negara/'.$value_negara); //site url
+            $config['total_rows'] = $this->FakultasM->tampil_fakultas_rows_mahasiswa_negara($value)->num_rows();//total row
+                $config['base_url'] = site_url('PencarianC/tampil_pencarian_prodi_by_negara/'.$value); //site url
                 $config['per_page'] = 10;  //show record per halaman
                 $config["uri_segment"] = 4;  // uri parameter
                 $choice = $config["total_rows"] / $config["per_page"];
@@ -599,14 +596,14 @@ public function tampil_pencarian_prodi_by_negara($value_negara){
                 $this->pagination->initialize($config);
                 $this->session->flashdata('id_univ');
                 $data['page'] = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
-                $data['fakultas_mahasiswa_negara'] = $this->FakultasM->tampil_fakultas_mahasiswa_negara( $value_negara, $config["per_page"], $data['page'])->result();
+                $data['fakultas_mahasiswa_negara'] = $this->FakultasM->tampil_fakultas_mahasiswa_negara( $value, $config["per_page"], $data['page'])->result();
                 $data['pagination_mahasiswa_negara'] = $this->pagination->create_links();
             }
         }
         else{
 
-        $config['total_rows'] = $this->FakultasM->tampil_fakultas_list_negara_rows($value_negara)->num_rows();//total row
-        $config['base_url'] = site_url('PencarianC/tampil_pencarian_prodi_by_negara/'.$value_negara); //site url
+        $config['total_rows'] = $this->FakultasM->tampil_fakultas_list_negara_rows($value)->num_rows();//total row
+        $config['base_url'] = site_url('PencarianC/tampil_pencarian_prodi_by_negara/'.$value); //site url
         $config['per_page'] = 10;  //show record per halaman
         $config["uri_segment"] =4;  // uri parameter
         $choice = $config["total_rows"] / $config["per_page"];
@@ -633,7 +630,7 @@ public function tampil_pencarian_prodi_by_negara($value_negara){
         $this->pagination->initialize($config);
         $this->session->flashdata('id_univ');
         $data['page'] = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
-        $data['fakultas_negara'] = $this->FakultasM->tampil_fakultas_list_negara_page( $config["per_page"], $data['page'], $value_negara)->result();
+        $data['fakultas_negara'] = $this->FakultasM->tampil_fakultas_list_negara_page( $config["per_page"], $data['page'], $value)->result();
         $data['pagination_negara'] = $this->pagination->create_links();
 
         }
@@ -642,6 +639,7 @@ public function tampil_pencarian_prodi_by_negara($value_negara){
 }
 public function tampil_pencarian_prodi_by_universitas($id_universitas){
     $data['universitas'] = $this->UniversitasM->get_universitas()->result();
+
     $data = array(
         'id_universitas'=> $id_universitas     
     );
@@ -649,8 +647,9 @@ public function tampil_pencarian_prodi_by_universitas($id_universitas){
     $this->session->set_userdata('id_univ', $id_universitas); 
 	if ($this->session->userdata('logged_in')){     
 		$username = $this->session->userdata('username');
-		$data['nama_pencari']= $this->PencariM->get_nama_pencari($username)->row_array();
-		$id_pencari=$this->session->userdata['id_pencari'];
+        $id_pencari = $this->session->userdata('id_pencari');
+		$data['nama_pencari']= $this->PencariM->get_nama_pencari($id_pencari)->row_array();
+		
 
 		$cek = $this->FakultasM->cek_tingkatan($id_pencari);
 		if($cek['tingkatan']=='Pelajar'){
@@ -754,21 +753,37 @@ public function tampil_pencarian_prodi_by_universitas($id_universitas){
          $this->load->view('pencari/pencarian_prodi_universitas', $data);
 }
 
-public function detail_pencarian(){
+public function detail_pencarian($id_univ){
+    // if($keyword_prodi == " " AND $keyword_tingkatan== " " AND $keyword_kategori == " " AND $id_univ == " "){
+    	$keyword_prodi=$this->input->post('keyword_prodi');
+    	$keyword_kategori=$this->input->post('keyword_kategori');
+    	$keyword_tingkatan=$this->input->post('keyword_tingkatan');
 
-	$keyword_prodi=$this->input->post('keyword_prodi');
-	$keyword_kategori=$this->input->post('keyword_kategori');
-	$keyword_tingkatan=$this->input->post('keyword_tingkatan');
-
+        // $id_univ = $this->input->post('id_universitas');
+        $nama_univ = $this->input->post('nama_univ');
+    // }else{
+    //     $keyword_prodi = str_replace("-", " ",$keyword_prodi);
+    //     $keyword_kategori = str_replace("-", " ",$keyword_kategori);
+    // }
+    $data = array(
+        'keyword_prodi' => $keyword_prodi,
+        'keyword_kategori' => $keyword_kategori,
+        'keyword_tingkatan' => $keyword_tingkatan,
+        'id_univ' => $id_univ,
+        'nama_univ' => $nama_univ
+    );
 	$cek = $this->PencarianM->pencarian($keyword_prodi, $keyword_kategori, $keyword_tingkatan)->num_rows();
 
-	$id_univ = $this->input->post('id_universitas');
+	
     $nama_univ = $this->input->post('nama_univ');
 
 	$data['list_detail'] = $this->UniversitasM->tampil_detail_univ($nama_univ)->result();
 	$data['fakultas'] = $this->FakultasM->tampil_fakultas_list_univ($id_univ)->result();
 
+    $data['data_ulasan'] =  $this->PencariM->get_ulasan($id_univ)->result();
+
 	if ($this->session->userdata('logged_in')){
+
         $id_pencari = $this->session->userdata['id_pencari'];
 		$getidkey=get_idpencarian();
 		$id_univ= $this->UniversitasM->get_id_by_name($nama_univ)->result();
@@ -910,25 +925,28 @@ public function hapus_favorit_list_univ($id_pencarian_favorit, $id_pencari){
 	
 }
 
-public function hapus_favorit_list_univ_fakultas($id){
+public function hapus_favorit_list_univ_fakultas($id_pencarian_favorit, $id_pencari){
 
 	$nama_univ=$this->input->post('nama_univ');
-	$nama_fakultas=$this->input->post('nama_fakultas');
+    $nama_fakultas = $this->input->post('nama_fakultas');
+    $id_universitas=$this->input->post('id_universitas');
 
-	$this->session->set_flashdata('nama_fakultas', $nama_fakultas);
+    $this->session->set_flashdata('nama_fakultas', $nama_fakultas);
+    $this->session->set_flashdata('nama_univ', $nama_univ);
 
-	if ($this->session->userdata('logged_in')){
+    if ($this->session->userdata('logged_in')){
 
-		$this->session->set_flashdata('nama_fakultas', $nama_fakultas);
+        $this->session->set_flashdata('nama_fakultas', $nama_fakultas);
+        $this->session->set_flashdata('nama_univ', $nama_univ);
 
 
-		$nama_pencari= $this->session->userdata['username'];
-		$getId=$this->PencariM->getIdPencari($nama_pencari);
-		$id_univ= $this->UniversitasM->get_id_by_name($nama_univ)->result();
+        $nama_pencari= $this->session->userdata['username'];
+        $getId=$this->PencariM->getIdPencari($nama_pencari);
+        $id_univ= $this->UniversitasM->get_id_by_name($nama_univ)->result();
 
 	}
 
-	if($this->PencarianM->hapus_favorit($id)){
+	if($this->PencarianM->hapus_favorit($id_pencarian_favorit, $id_pencari)){
 		redirect('PencarianC/pencarian_univ_berdasar_fakultas');
 	}
 }

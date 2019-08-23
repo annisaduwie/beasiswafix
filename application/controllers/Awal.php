@@ -26,6 +26,7 @@ class Awal extends CI_Controller  {
 		$data['fakultas_pelajar'] = $this->FakultasM->tampil_fakultas_pelajar_limit()->result();
 		// menampilkan fakultas untuk pencari berstatus mahasiswa
 		$data['fakultas_mahasiswa'] = $this->FakultasM->tampil_fakultas_mahasiswa_limit()->result();
+		$data['fakultas_umum'] = $this->FakultasM->tampil_fakultas_limit()->result();
 		}else{
 		// menampilkan fakultas untuk pencari umum
 		$data['fakultas'] = $this->FakultasM->tampil_fakultas_limit()->result();

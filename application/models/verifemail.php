@@ -1,5 +1,5 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-	class verifemail extends CI_Model { 
+	class Verifemail extends CI_Model { 
 
 	
      public function changeActiveState($key)  

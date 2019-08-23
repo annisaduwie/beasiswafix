@@ -7,6 +7,9 @@
     height: 900px;  /* The height is 400 pixels */
     width: 100%;  /* The width is the width of the web page */
   }
+  .checked {
+  color: orange;
+}
 </style>
 <!-- Main Styles -->
 
@@ -25,10 +28,12 @@ $this->load->view('pencari/header_user');
 
 
         <?php foreach ($list_detail as  $list_detail){ ?>
+          <?php $id_universitas = $list_detail->id_universitas?>
           <div>
             <img src="<?php echo base_url('universitas/'.$list_detail->gambar_universitas);?>" style="width:180px; height: 200px; padding-top: 20px; padding-bottom:10px; ">
           </div>
           <div class="col-md-10">
+
             <form class="form-wrap mt-4" action="<?php echo base_url('Pencarian_BeasiswaC/tampil_beasiswa_univ');?>" method="POST">
               <input type="hidden" value="<?php echo $list_detail->id_universitas?>" name="keyword_universitas">
              <h5 class="title-text" style="color:#fff; padding-top: 30px;"><b><?php echo $list_detail->nama_universitas?></b>
@@ -36,7 +41,8 @@ $this->load->view('pencari/header_user');
              <p style="color:#fff; font-size: 16px;" ><span class="icon-location-pin"></span> <?php echo $list_detail->negara;?></p><hr>
 
 
-             <button class="btn-form" type="btn" class="btn-form" style="float: right; margin-bottom: 15px; border-radius: 5px;background-color:#fff; color:black;"><center><i class="fa fa-mortar-board"> Lihat Beasiswa</i></center></button>
+             <button class="btn-form" type="btn" class="btn-form" style="float: right; margin-bottom: 15px; border-radius: 5px;background-color:#fff; color:black;"><center><i class="fa fa-mortar-board"> Informasi Beasiswa</i></center></button>
+           </form>
            </div>
 
          </div>
@@ -127,6 +133,8 @@ $this->load->view('pencari/header_user');
 
 
 
+
+
    <!--  <section class="reserve-block" style="padding-top:50px; background-color: #fff; padding-bottom: 50px;">
       <div class="container">
         <h2>Beasiswa</h2><br><hr>
@@ -166,6 +174,10 @@ $this->load->view('pencari/header_user');
       <p style="font-size: 14px;"><?php echo $list_detail->no_telp;?></p>
     </div>
     <div class="address">
+      <i class="fa fa-envelope-o"></i>
+      <p style="font-size: 14px;"><?php echo $list_detail->email;?></p>
+    </div>
+    <div class="address">
       <span class="icon-link"></span>
       <p style="font-size: 14px;"><?php echo $list_detail->url_universitas;?></p>
     </div>
@@ -176,25 +188,169 @@ $this->load->view('pencari/header_user');
 </div>
 </section>
 
+        <section class="reserve-block" style="padding-top:50px; padding-bottom: 50px; background-color: #f3f4f7">
+          <div class="container">
+            <h6>Ulasan Tentang Universitas</h6><br><hr>
+            <div class="row">
+              
+                <div class="col-md-12">
+
+            <?php
+            $query=$this->db->query("SELECT * from ulasan, universitas WHERE ulasan.id_universitas AND universitas.id_universitas AND ulasan.id_universitas ='$id_universitas' AND status_publikasi='Sudah Disetujui';")->num_rows();
+
+            if($query < 1 ){?>
+            <center>
+            <p style="font-size: 18px; padding-bottom: 20px;"><b>Universitas ini belum memiliki ulasan</b></p>
+            </center>
+          <?php }else{ ?>
+
+          <?php
+          foreach($data_ulasan as $ulasan){?>
+
+            <div class="box box-widget">
+            <div class="box-header with-border">
+              <div class="user-block">
+                <img class="img-circle" src="<?php echo base_url('fileUpload/'.$ulasan->profil_pic);?>" style="margin-right: 20px;" alt="User Image">
+                <span class="description"><?php echo $ulasan->nama;?></span>
+                <span class="username" style="color: #B0C4DE;"><?php echo $ulasan->judul_ulasan;?></span>
+              </div>
+              <!-- /.user-block -->
+             
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <!-- post text -->
+              <div class="row" style="padding-left: 10px;">
+             
+              <p style="font-size:  15px;">
+                <?php 
+            if($ulasan->rating==0){?>
+                <span class="fa fa-star-o"></span>
+                <span class="fa fa-star-o"></span>
+                <span class="fa fa-star-o"></span>
+                <span class="fa fa-star-o"></span>
+                <span class="fa fa-star-o"></span>
+            <?php 
+            }elseif($ulasan->rating==5){?>
+
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+              <?php
+            }elseif($ulasan->rating==4){?>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star-o"></span>
+            <?php }elseif($ulasan->rating==3){ ?>
+              <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star-o"></span>
+                <span class="fa fa-star-o"></span>
+            <?php }elseif($ulasan->rating==2){?>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star-o"></span>
+                <span class="fa fa-star-o"></span>
+                <span class="fa fa-star-o"></span>
+            <?php }else{?>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star-o"></span>
+                <span class="fa fa-star-o"></span>
+                <span class="fa fa-star-o"></span>
+                <span class="fa fa-star-o"></span>
+
+            <?php }?></p>
+                
+                &nbsp;<p style="font-size: 15px;"><?php echo $ulasan->post_ulasan;?></p>
+            </div>
+              <p style="font-size:  16px;"><?php echo $ulasan->deskripsi_ulasan;?></p>
+
+                </div>
+              </div>
+
+                <?php } ?>
+
+         <?php }
+          ?>
+          
+              <?php 
+             
+              if ($this->session->userdata('logged_in') && $this->session->userdata('status') == "aktif"){ ?>
+
+                <form method="POST" action="<?php echo base_url('Pencari/get_ulasan');?>">
+         
+                  <input type="hidden" name="id_univ" value="<?php echo $list_detail->id_universitas?>">
+                  <input type="hidden" name="nama_univ" value="<?php echo $list_detail->nama_universitas?>">
+                  <input type="hidden" name="key_prodi" value="<?php echo $keyword_prodi?>">
+                  <input type="hidden" name="key_kategori" value="<?php echo $keyword_kategori?>">
+                  <input type="hidden" name="key_tingkatan" value="<?php echo $keyword_tingkatan?>">
+             
+                <center>
+                <button type="submit" class="btn-form" style="background-color: #B0C4DE; margin-bottom: 15px; border-radius: 5px; color:black;">Tulis Ulasan</button></center>
+              </form>
+             <?php } ?>
+
+
+
+            </div>
+                </div>     
+           
+            </div>
+          </section>
+
+
  <?php }?>
 
 
 
 <!--============================= FOOTER =============================-->
-<footer class="main-block dark-bg">
+<footer class="main-block dark-bg" style="height: 350px;">
   <div class="container">
+
     <div class="row">
+      <div class="col-md-6">
+        <h2 class="page-header" style="font-style: calibri; color: #fff ; float: left; ">
+            Info Kontak</h2>
+        <!-- /.col -->
+      </div>
+      <div class="col-md-6">
+        <h2 class="page-header" style="font-style: calibri; color: #fff ; float: left; ">
+            Tentang Kami</h2>
+        <!-- /.col -->
+      </div>
+      <!-- info row -->
       <div class="col-md-12">
-        <div class="copyright">
-          <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-          <p>Copyright &copy; 2018 E-Beasiswa</p>
-          <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
- 
+      <div class="row invoice-info">
+        <div class="col-sm-6 invoice-col">
+          <address style="padding-top: 20px;">
+            <img src="<?php echo base_url('assets/images/phone_contact.png');?>" style="float: left; width: 40px; height: 40px;">
+            <div style="color: #fff; padding-top: 8px;">&nbsp;&nbsp;&nbsp;&nbsp;+62 89532 500 8487</div>
+          <br>
+             <img src="<?php echo base_url('assets/images/email_contact.png');?>" style="float: left; width: 40px; height: 40px;">
+             <div style="color: #fff; padding-top: 8px;">&nbsp;&nbsp;&nbsp;&nbsp;ebeasiswa.indonesia@gmail.com</div>
+          </address>
         </div>
+        <div class="col-sm-6 invoice-col">
+          <address>
+            <div style="color:#fff"><strong>E-Beasiswa</strong> adalah sebuah website pencarian<br>
+            beasiswa dalam dan luar negeri<br>
+            yang membantu mahasiswa/pelajar<br>
+            dalam menemukan beasiswa yang tepat<br>
+            dan sesuai keinginan
+          </div>
+          </address>
+        </div>
+    </div>
       </div>
     </div>
   </div>
 </footer>
+<!--//END FOOTER -->
 <!--//END FOOTER -->
 
 
@@ -220,6 +376,8 @@ $this->load->view('pencari/header_user');
 <script src="<?php echo base_url();?>AdminLTE/dist/js/demo.js"></script>
 
 <script>
+
+
   if ($('.image-link').length) {
     $('.image-link').magnificPopup({
       type: 'image',

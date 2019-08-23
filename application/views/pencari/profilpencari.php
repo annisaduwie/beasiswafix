@@ -41,6 +41,12 @@
   text-decoration: none;
   cursor: pointer;
 }
+
+.test[style] {
+     padding-right:0 !important;
+ }
+
+
 </style>
 
 <?php
@@ -81,18 +87,18 @@ $this->load->view('pencari/header_user');
             <h3 class="profile-username text-center"><?php echo $nama_pencari['nama']; ?></h3>
             <p class="text-muted text-center"><?php echo $nama_pencari['tingkatan']; ?></p>
 
-
-
-            <a class="btn btn-primary btn-block"  style="color:#fff;" id="myBtn"><b>Unggah Foto</b></a>
+            <a class="btn btn-primary btn-block"  data-toggle="modal" data-target="#myModalprofil" style="color:#fff;" id="myBtn"><b>Unggah Foto</b></a>
 
 
 
             <!-- The Modal -->
-            <div id="myModal" class="modal">
-
-             <div class="modal-content">
+            <div id="myModalprofil" class="modal fade">
+            <div class="modal-dialog">
+             <div class="modal-content" style="height:400px;width:650px;">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
               
               <div class="modal-body">
+                
                 <?php echo form_open_multipart('Pencari/upload_foto');?> 
 
                  <?php if ($nama_pencari['profil_pic'] == NULL){ ?>
@@ -118,9 +124,8 @@ $this->load->view('pencari/header_user');
               <?php echo form_close(); ?> 
               <!-- </form> -->
             </div>
-
-
           </div>
+        </div>
 
 
 
@@ -160,6 +165,10 @@ $this->load->view('pencari/header_user');
             <span>Konsultasi</span>
           </a>
           <hr>
+          <a href="<?php echo base_url('Pencari/get_tampil_ulasan');?>">
+            <span>Ulasan Anda</span>
+          </a>
+          <hr>
 
 
         </div>
@@ -191,7 +200,9 @@ $this->load->view('pencari/header_user');
 <script src="<?php echo base_url();?>AdminLTE/dist/js/demo.js"></script>
 <!-- page script -->
 <script>
-
+  $('#myModalprofil').on('show.bs.modal', function (e) {
+        $('body').addClass('test');
+        });
   function bacaGambar(input) {
    if (input.files && input.files[0]) {
       var reader = new FileReader();

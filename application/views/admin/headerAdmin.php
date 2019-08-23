@@ -25,7 +25,7 @@ $this->load->view('admin/headAdmin');
 
 
 <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $this->session->userdata['username'];?><span class="caret"></span></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $this->session->userdata('username');?><span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
                 <li><a href="<?php echo base_url('AdminC/logoutAdmin');?>" class="">Keluar</a></li>
                 <!-- <li><a href="#">Another action</a></li>
@@ -89,6 +89,11 @@ $this->load->view('admin/headAdmin');
 
               <small class="label pull-right bg-yellow"><?php echo $result['kotak_masuk'];?></small>
             
+          </a>
+        </li>
+        <li >
+            <a href="<?php echo base_url('AdminC/get_ulasan');?>">
+            <span><i class="fa fa-file">&ensp; Data Ulasan</i></span>
           </a>
         </li>
         <li >

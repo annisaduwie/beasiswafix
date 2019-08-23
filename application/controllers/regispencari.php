@@ -2,12 +2,12 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class regispencari extends CI_Controller  {
+class Regispencari extends CI_Controller  {
 
 	function __construct() {
         parent::__construct();
         $this->load->model('PencariM');
-        $this->load->model('verifemail');
+        $this->load->model('Verifemail');
     }
     function index() {
         $this->load->view('pencari/register');
@@ -64,7 +64,7 @@ class regispencari extends CI_Controller  {
         $this->email->to($email);
         $this->email->subject("Verifikasi Akun");
         $this->email->message(
-            "terimakasih telah melakuan registrasi, untuk memverifikasi silahkan klik tautan dibawah ini<br><br>".site_url("regispencari/verification/$encrypted_id")
+            "terimakasih telah melakuan registrasi, untuk memverifikasi silahkan klik tautan dibawah ini<br><br>".site_url("Regispencari/verification/$encrypted_id")
         );      
 
         //error
@@ -80,14 +80,14 @@ class regispencari extends CI_Controller  {
         $nama = $data['nama'];
         $username = $data['username'];
         $email = $data['email'];
-        $this->session->set_flashdata('error','*email sudah digunakan');
-        redirect('regispencari');
+        $this->session->set_flashdata('error','email sudah digunakan');
+        redirect('Regispencari');
     }
 
 }
 //error
 public function verification($key){
-    $this->verifemail->changeActiveState($key);
+    $this->Verifemail->changeActiveState($key);
     $this->load->view('pencari/alertVerifikasi');
     // echo "Selamat kamu telah memverifikasi akun kamu";
     // echo "<br><br><a href='".site_url("Awal/login")."'>Login Sekarang</a>";

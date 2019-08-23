@@ -95,8 +95,11 @@ $this->load->view('pencari/header_user');
        <?php }?> 
 
      </h6>
-      <a class="btn-form" type="btn" href="<?php echo base_url('Pencarian_BeasiswaC/get_beasiswa');?>" class="btn-form" style="background-color:#fff; color:black;"><i class="fa fa-mortar-board"> Cari Beasiswa</i></a>
-   </div>
+
+      <a class="btn-form" type="btn" href="<?php echo base_url('Pencarian_BeasiswaC/get_beasiswa');?>" class="btn-form" style="background-color:#fff; color:black;"><i class="fa fa-mortar-board">Cari Beasiswa</i></a>
+
+    </div>
+
  </div>
 
 
@@ -121,7 +124,7 @@ $this->load->view('pencari/header_user');
                 <div class="col-md-4 featured-responsive">
                  <div class="featured-place-wrap">
 
-                  <form action="<?php echo base_url('PencarianC/detail_pencarian');?>" method="POST">
+                  <form action="<?php echo base_url('PencarianC/detail_pencarian/'.$value->id_universitas);?>" method="POST">
                     <input type="hidden" value="<?php echo $keyword_tingkatan;?>" name="keyword_tingkatan">
                     <input type="hidden" value="<?php echo $keyword_prodi;?>" name="keyword_prodi">
                     <input type="hidden" value="<?php echo $keyword_kategori;?>" name="keyword_kategori">
@@ -142,7 +145,7 @@ $this->load->view('pencari/header_user');
                    
                       <br>
                       <input type="submit" value="Baca Selengkapnya..." class="btn btn-primary pull-left">
-                      <!-- <a class="btn btn-danger btn-xs tooltips" name="tambahFavorit" style="width:50px;  display: inline-block; float:right;" data-popup="tooltip" title="Tambah ke favorit" data-placement="top" href="<?php echo site_url('PencarianC/getPencarian'); ?>"><i class="fa fa-heart white" style="color: white;" ></i></a> -->
+                      
                     </form>
                     
                     
@@ -161,7 +164,7 @@ $this->load->view('pencari/header_user');
                       <input type="hidden" name="keyword_prodi" value="<?php echo $keyword_prodi ?>">
                       <input type="hidden" name="keyword_kategori" value="<?php echo $keyword_kategori ?>">
                       <input type="hidden" name="keyword_tingkatan" value="<?php echo $keyword_tingkatan ?>">
-                      <p><button name="like" class="btn btn-danger pull-right" style="color: white; margin-left: 10px;"><span data-toogle="tooltip" title="tambah favorit"><i class="fa fa-heart-o" style="color: #fff"></i></span></button></p>
+                      <p><button name="like" class="btn btn-danger pull-right" style="color: #fff; margin-left: 10px;"><span data-toogle="tooltip" title="tambah favorit"><i class="fa fa-heart-o" style="color: #fff"></i></span></button></p>
                     </form>
                   <?php } else { ?>
                     <?php
@@ -174,7 +177,7 @@ $this->load->view('pencari/header_user');
                       <input type="hidden" name="keyword_prodi" value="<?php echo $keyword_prodi ?>">
                       <input type="hidden" name="keyword_kategori" value="<?php echo $keyword_kategori ?>">
                       <input type="hidden" name="keyword_tingkatan" value="<?php echo $keyword_tingkatan ?>">
-                      <p><button name="dont_like" class="btn btn-basic pull-right" style="color: #fff; margin-left: 10px;"><span data-toogle="tooltip" title="Sudah ada di dalam list favoritmu"><i class="fa fa-heart-o"></i></span></button></p>
+                      <p><button name="dont_like" class="btn btn-basic pull-right" style="color: white; margin-left: 10px;"><span data-toogle="tooltip" title="Sudah ada di dalam list favoritmu"><i class="fa fa-heart-o"></i></span></button></p>
                     </form>
                   <?php }?>
 
@@ -228,24 +231,48 @@ $this->load->view('pencari/header_user');
 <!--//END FEATURED PLACES -->
 
 
-<footer class="main-block dark-bg">
+<footer class="main-block dark-bg" style="height: 350px;">
   <div class="container">
+
     <div class="row">
+      <div class="col-md-6">
+        <h2 class="page-header" style="font-style: calibri; color: #fff ; float: left; ">
+            Info Kontak</h2>
+        <!-- /.col -->
+      </div>
+      <div class="col-md-6">
+        <h2 class="page-header" style="font-style: calibri; color: #fff ; float: left; ">
+            Tentang Kami</h2>
+        <!-- /.col -->
+      </div>
+      <!-- info row -->
       <div class="col-md-12">
-        <div class="copyright">
-          <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-          <p>Copyright &copy; 2018 E-Beasiswa</p>
-          <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-          <ul>
-            <li><a href="#"><span class="ti-facebook"></span></a></li>
-            <li><a href="#"><span class="ti-twitter-alt"></span></a></li>
-            <li><a href="#"><span class="ti-instagram"></span></a></li>
-          </ul>
+      <div class="row invoice-info">
+        <div class="col-sm-6 invoice-col">
+          <address style="padding-top: 20px;">
+            <img src="<?php echo base_url('assets/images/phone_contact.png');?>" style="float: left; width: 40px; height: 40px;">
+            <div style="color: #fff; padding-top: 8px;">&nbsp;&nbsp;&nbsp;&nbsp;+62 89532 500 8487</div>
+          <br>
+             <img src="<?php echo base_url('assets/images/email_contact.png');?>" style="float: left; width: 40px; height: 40px;">
+             <div style="color: #fff; padding-top: 8px;">&nbsp;&nbsp;&nbsp;&nbsp;ebeasiswa.indonesia@gmail.com</div>
+          </address>
         </div>
+        <div class="col-sm-6 invoice-col">
+          <address>
+            <div style="color:#fff"><strong>E-Beasiswa</strong> adalah sebuah website pencarian<br>
+            beasiswa dalam dan luar negeri<br>
+            yang membantu mahasiswa/pelajar<br>
+            dalam menemukan beasiswa yang tepat<br>
+            dan sesuai keinginan
+          </div>
+          </address>
+        </div>
+    </div>
       </div>
     </div>
   </div>
 </footer>
+<!--//END FOOTER -->
 <!--//END FOOTER -->
 
 

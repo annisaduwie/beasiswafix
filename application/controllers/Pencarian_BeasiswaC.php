@@ -20,11 +20,7 @@ class Pencarian_BeasiswaC extends CI_Controller
 		$this->model = $this->UniversitasM;
 		$this->model = $this->PencarianM;
 		$this->model = $this->BeasiswaM;
-	 	 // $peran=$this->session->userdata('peran');\
-        // if($peran!="admin"){
-        //  redirect('LoginC');
-        //  }
-	 	 // $this->load->model('TemplateM');	
+	 	
 		header('Cache-Control: no-cache, must-revalidate, max-age=0');
 		header('Cache-Control: post-check=0, pre-check=0', false);
 	}
@@ -36,17 +32,16 @@ class Pencarian_BeasiswaC extends CI_Controller
 	public function get_beasiswa(){
 		if ($this->session->userdata('logged_in')){
 			$username = $this->session->userdata('username');
+			$id_pencari= $this->session->userdata('id_pencari');
 			$data['list_beasiswa']=$this->BeasiswaM->get_list_negara()->result();
 			$data['beasiswa_univ']=$this->BeasiswaM->beasiswa_univ()->result();
-			$data['nama_pencari']= $this->PencariM->get_nama_pencari($username)->row_array();
+			$data['nama_pencari']= $this->PencariM->get_nama_pencari($id_pencari)->row_array();
 			$this->load->view('pencari/pencarian_beasiswa', $data);
 		}else{
 			redirect('Login');
 		}
 
 	}
-
-
 
 	//Scraping buat beasiswa universitas
 	public function scrapping_by_universitas(){
@@ -145,57 +140,9 @@ class Pencarian_BeasiswaC extends CI_Controller
 		return $result;
 	}
 
-	//Scraping buat keyword kategori beasiswa
-
-	// public function scrapping_by_keyword_kategori_beasiswa($page){
-	// 	$result=array();
-	// 	$kategori_beasiswa = $this->input->post('keyword_kategori_beasiswa');
-
-	// 	$hasil = $this->BeasiswaM->get_url_beasiswa_umum_key_kategori_beasiswa($kategori_beasiswa)->row();
-	// 	$html_load = file_get_html($hasil->url_beasiswa_umum);
-	// 	$i = 0;
-	// 	if($html_load && is_object($html_load) && isset($html_load->nodes)){
-	// 		foreach ($html_load->find('div#ht-content .ht-container') as $data ) {
-
-	// 			foreach ($data->find('main#main') as $value) {
-
-	// 				foreach ($value->find('article') as $a) {
-
-	// 					$search = array(
-	// 						'Hai sobat Beasiswa.ID',
-	// 						'Hai Sobat Beasiswa.ID!', 
-	// 						'Hai Sobat Beasiswa.ID !',
-	// 						'Hai sobat Beasiswa.ID!',
-	// 						'Hai, Sobat Beasiswa.ID',
-	// 						'!'
-	// 					);
-
-	// 					$newstring = '';
-
-	// 					$result[$i] = array (
-	// 						'judul'=> $a->find('h1.entry-title', 0)->plaintext,
-	// 						'deskripsi'=> str_replace($search, $newstring, $a->children(2)->plaintext),
-	// 						'link'=> $a->children(0)->children(0)->children(0)->href
-	// 					);
-	// 				// $langs['replace'] = array ('Hai Sobat Beasiswa.ID!'=>" ");
-
-	// 					$i++;
-
-
-	// 				}
-
-
-
-	// 			}
-				
-	// 		}		
-
-	// 	}
-	// 	return $result;
-	// }
 
 	//Scraping buat keyword jenjang dan negara 
-	public function scrapping_by_keyword_negara($jenjang, $negara, $page){
+	public function scrapping_by_keyword_jenjang_negara($jenjang, $negara, $page){
 		$result=array();
 		$hasil = $this->BeasiswaM->get_url_beasiswa_umum_key_negara($negara);
 		$id_konten_post= $this->input->post('id_konten');
@@ -236,12 +183,16 @@ class Pencarian_BeasiswaC extends CI_Controller
 					$newstring = '';
 					$deskripsi = $data->find('.entry-content', 0)->plaintext;
 
-					$id_beasiswa=$data->getAttribute('id');
-					$idList = explode(',', $id_beasiswa);
-					$idList = implode(',', array_unique(array_map('intval', $idList)));
-					$cek_id_konten = $this->db->query("SELECT * from konten_beasiswa WHERE id_konten_beasiswa_umum IN ($idList)");
-					
-					if (count($cek_id_konten->result_array())<1){
+					$id_pencarian = $this->db->query("SELECT MAX(id_pencarian_beasiswa) as id_pencarian_beasiswa from pencarian_beasiswa");
+
+					foreach($id_pencarian->result_array() as $id_pencarian){
+						$id_pencarian_beasiswa = $id_pencarian['id_pencarian_beasiswa'];
+
+						$detail[$i] = array (
+							'id_konten_beasiswa_umum'=> $data->getAttribute('id'),
+							'id_pencarian_beasiswa' => $id_pencarian_beasiswa
+						);
+
 
 
 					$result[$i] = array (
@@ -252,28 +203,30 @@ class Pencarian_BeasiswaC extends CI_Controller
 						'link'=> $data->find('h1.entry-title', 0)->children(0)->href
 					);
 
-					$this->PencarianM->insertKontenBeasiswa($result[$i]);
-					$i++;
-					$total++;
+					$id= $result[$i]['id_konten_beasiswa_umum'];
+					$idList=explode(',', $id);
+					$idL=implode(array_unique(array_map('trim', $idList)));
+					
+					$cek_id_konten = $this->db->query("SELECT * from konten_beasiswa WHERE id_konten_beasiswa_umum IN ('$idL')");
+					
 
-					}else{
+					if (count($cek_id_konten->result_array())<1){
 
-						$result[$i] = array (
-						'id_konten_beasiswa_umum'=> $data->getAttribute('id'),
-						'judul'=> $data->find('h1.entry-title', 0)->plaintext,
-						'date'=> date("Y-m-d",strtotime($data->find('.entry-date',0)->plaintext)),
-						'deskripsi'=> trim(str_replace($search, $newstring, $deskripsi)),
-						'link'=> $data->find('h1.entry-title', 0)->children(0)->href
-					);
-
-					$i++;
-					$total++;
-
+						$this->PencarianM->insertKontenBeasiswa($result[$i]);
 					}
+					$this->PencarianM->detailPencarianBeasiswa($detail[$i]);
+					
+					$i++;
+					$total++;
 				}
+
+				}
+					
+				
 					
 				$go = false;
 			}
+			
 
 			// start pagination
 			foreach ($html_load->find('div.pgntn-page-pagination-block') as $data ) {
@@ -294,218 +247,12 @@ class Pencarian_BeasiswaC extends CI_Controller
 		}
 		return $result;
 	}
-
-	//Scraping buat keyword jenjang dan kategori
-
-	// public function scrapping_by_keyword_jenjang_kategori($page){
-
-	// 	$jenjang = $this->input->post('keyword_jenjang');
-	// 	$kategori_beasiswa = $this->input->post('keyword_kategori_beasiswa');
-	// 	$result=array();
-
-	// 	$hasil = $this->BeasiswaM->get_url_beasiswa_umum_key_jenjang_kategori_beasiswa($jenjang, $kategori_beasiswa)->row();
-	// 		$html_load = file_get_html($hasil->url_beasiswa_umum);
-	// 	$i = 0;
-	// 	if($html_load && is_object($html_load) && isset($html_load->nodes)){
-	// 		foreach ($html_load->find('div#ht-content .ht-container') as $data ) {
-
-	// 			foreach ($data->find('main#main') as $value) {
-
-	// 				foreach ($value->find('article') as $a) {
-
-	// 					$search = array(
-	// 						'Hai sobat Beasiswa.ID',
-	// 						'Hai Sobat Beasiswa.ID!', 
-	// 						'Hai Sobat Beasiswa.ID !',
-	// 						'Hai sobat Beasiswa.ID!',
-	// 						'Hai, Sobat Beasiswa.ID',
-	// 						'!'
-	// 					);
-
-	// 					$newstring = '';
-
-	// 					$result[$i] = array (
-	// 						'judul'=> $a->children(0)->children(0)->children(0)->plaintext,
-	// 						'deskripsi'=> str_replace($search, $newstring, $a->children(2)->plaintext),
-	// 						'link'=> $a->children(0)->children(0)->children(0)->href
-	// 					);
-	// 				// $langs['replace'] = array ('Hai Sobat Beasiswa.ID!'=>" ");
-
-	// 					$i++;
-
-
-	// 				}
-
-
-
-	// 			}
-				
-	// 		}		
-
-	// 	}
-	// 	return $result;
-
-
-	// }
-
-	//Scraping buat keyword jenjang dan negara
-	// public function scrapping_by_keyword_jenjang_negara($page){
-
-	// 	$jenjang = $this->input->post('keyword_jenjang');
-	// 	$negara = $this->input->post('keyword_negara');
-
-	// 	$hasil = $this->BeasiswaM->get_url_beasiswa_umum_key_jenjang_negara($jenjang, $negara)->row();
-	// 		$html_load = file_get_html($hasil->url_beasiswa_umum);
-	// 	$i = 0;
-	// 	if($html_load && is_object($html_load) && isset($html_load->nodes)){
-	// 		foreach ($html_load->find('div#ht-content .ht-container') as $data ) {
-
-	// 			foreach ($data->find('main#main') as $value) {
-
-	// 				foreach ($value->find('article') as $a) {
-
-	// 					$search = array(
-	// 						'Hai sobat Beasiswa.ID',
-	// 						'Hai Sobat Beasiswa.ID!', 
-	// 						'Hai Sobat Beasiswa.ID !',
-	// 						'Hai sobat Beasiswa.ID!',
-	// 						'Hai, Sobat Beasiswa.ID',
-	// 						'!'
-	// 					);
-
-	// 					$newstring = '';
-
-	// 					$result[$i] = array (
-	// 						'judul'=> $a->children(0)->children(0)->children(0)->plaintext,
-	// 						'deskripsi'=> str_replace($search, $newstring, $a->children(2)->plaintext),
-	// 						'link'=> $a->children(0)->children(0)->children(0)->href
-	// 					);
-	// 				// $langs['replace'] = array ('Hai Sobat Beasiswa.ID!'=>" ");
-
-	// 					$i++;
-
-
-	// 				}
-
-
-
-	// 			}
-				
-	// 		}		
-
-	// 	}
-	// 	return $result;
-	// }
-
-	//Scraping buat keyword kategori dan negara
-	// public function scrapping_by_keyword_kategori_negara(){
-	// 	$kategori_beasiswa = $this->input->post('keyword_kategori_beasiswa');
-	// 	$negara = $this->input->post('keyword_negara');
-	// 	$result=array();
-
-
-	// 	$hasil = $this->BeasiswaM->get_url_beasiswa_umum_key_kategori_beasiswa_negara($kategori_beasiswa, $negara)->row();
-	// 		$html_load = file_get_html($hasil->url_beasiswa_umum);
-	// 	$i = 0;
-	// 	if($html_load && is_object($html_load) && isset($html_load->nodes)){
-	// 		foreach ($html_load->find('div#ht-content .ht-container') as $data ) {
-
-	// 			foreach ($data->find('main#main') as $value) {
-
-	// 				foreach ($value->find('article') as $a) {
-
-	// 					$search = array(
-	// 						'Hai sobat Beasiswa.ID',
-	// 						'Hai Sobat Beasiswa.ID!', 
-	// 						'Hai Sobat Beasiswa.ID !',
-	// 						'Hai sobat Beasiswa.ID!',
-	// 						'Hai, Sobat Beasiswa.ID',
-	// 						'!'
-	// 					);
-
-	// 					$newstring = '';
-
-	// 					$result[$i] = array (
-	// 						'judul'=> $a->children(0)->children(0)->children(0)->plaintext,
-	// 						'deskripsi'=> str_replace($search, $newstring, $a->children(2)->plaintext),
-	// 						'link'=> $a->children(0)->children(0)->children(0)->href
-	// 					);
-	// 				// $langs['replace'] = array ('Hai Sobat Beasiswa.ID!'=>" ");
-
-	// 					$i++;
-
-
-	// 				}
-
-
-
-	// 			}
-				
-	// 		}		
-
-	// 	}
-
-	// 	return $result;
-
-	// 	}
-
-		// Scraping buat keyword jenjang, kategori, dan negara
-
-		// public function scrapping_by_keyword_jenjang_kategori_negara($page){
-
-		// 	$jenjang = $this->input->post('keyword_jenjang');
-		// 	$kategori_beasiswa = $this->input->post('keyword_kategori_beasiswa');
-		// 	$negara = $this->input->post('keyword_negara');
-
-		// 	$result=array();
-
-		// 	$hasil = $this->BeasiswaM->get_url_beasiswa_umum_all($jenjang, $kategori_beasiswa, $negara);
-		// 	$html_load = file_get_html($hasil->url_beasiswa_umum);
-		// $i = 0;
-		// if($html_load && is_object($html_load) && isset($html_load->nodes)){
-		// 	foreach ($html_load->find('div#ht-content .ht-container') as $data ) {
-
-		// 		foreach ($data->find('main#main') as $value) {
-
-		// 			foreach ($value->find('article') as $a) {
-
-		// 				$search = array(
-		// 					'Hai sobat Beasiswa.ID',
-		// 					'Hai Sobat Beasiswa.ID!', 
-		// 					'Hai Sobat Beasiswa.ID !',
-		// 					'Hai sobat Beasiswa.ID!',
-		// 					'Hai, Sobat Beasiswa.ID',
-		// 					'!'
-		// 				);
-
-		// 				$newstring = '';
-
-		// 				$result[$i] = array (
-		// 					'judul'=> $a->children(0)->children(0)->children(0)->plaintext,
-		// 					'deskripsi'=> str_replace($search, $newstring, $a->children(2)->plaintext),
-		// 					'link'=> $a->children(0)->children(0)->children(0)->href
-		// 				);
-		// 			// $langs['replace'] = array ('Hai Sobat Beasiswa.ID!'=>" ");
-
-		// 				$i++;
-
-
-		// 			}
-
-
-
-		// 		}
-				
-		// 	}		
-
-		// }
-		// return $result;
-		// }
 				
 //Menampilkan list beasiswa berdasarkan keyword
 
 	public function pencarian_beasiswa($keyword_jenjang = NULL, $keyword_negara = NULL, $page = NULL){
 	
+	$keyword_new_negara = str_replace("-", " ", $keyword_negara);
 
 		$dataPencarianBeasiswaUmum =  array(
 
@@ -515,17 +262,19 @@ class Pencarian_BeasiswaC extends CI_Controller
         			"id_pencari"=>$this->session->userdata['id_pencari'],
         			"status"=>"Belum Dihapus"
         );
+		$id_pencari = $this->session->userdata('id_pencari');
+		$cek = $this->db->query("SELECT * from pencari, pencarian_beasiswa WHERE pencari.id_pencari=pencarian_beasiswa.id_pencari AND pencarian_beasiswa.id_pencari='$id_pencari' AND keyword_jenjang='$keyword_jenjang' AND keyword_negara='$keyword_negara' And pencarian_beasiswa.status='Belum Dihapus'")->num_rows();
 		
+
+		if ($cek == 0) {
+			$this->PencarianM->insertPencarianBeasiswa($dataPencarianBeasiswaUmum);
+		}
 		
-		$this->PencarianM->insertPencarianBeasiswa($dataPencarianBeasiswaUmum);
-
-		//$result= $this->BeasiswaM->tampil_list_beasiswa($keyword_jenjang, $keyword_negara)->result_array();
-		$result = $this->scrapping_by_keyword_negara($keyword_jenjang, $keyword_negara, $page);
-
+		$result = $this->scrapping_by_keyword_jenjang_negara($keyword_jenjang, $keyword_new_negara, $page);
 
 		$data =  array(
 			"keyword_jenjang"=>$keyword_jenjang,
-			"keyword_negara"=>$keyword_negara
+			"keyword_negara"=>str_replace("-", " ", $keyword_negara)
 
 		);
 
@@ -544,6 +293,8 @@ class Pencarian_BeasiswaC extends CI_Controller
 
 		$keyword_universitas = $this->input->post('keyword_universitas');
 
+		if ($this->session->userdata('logged_in')){
+
 		$result = $this->scrapping_by_universitas();
 
 
@@ -552,17 +303,16 @@ class Pencarian_BeasiswaC extends CI_Controller
 			'keyword_universitas'=>$this->db->where('id_universitas', $keyword_universitas)->get('universitas')->row()->nama_universitas,
 			'id_pencari'=>$this->session->userdata['id_pencari']
 		);
-				// $this->PencarianM->insertPencarian($data);
-
-		// $data['pencarian_beasiswa_by_univ']=$this->BeasiswaM->pencarian_beasiswa_by_univ($keyword_universitas)->result();
+				
 
 		$data['hasil']=$result;
 		$data['detail_univ']=$this->UniversitasM->get_full_univ($keyword_universitas)->row_array();
 
 		$this->load->view('pencari/detail_pencarian_beasiswa_by_univ', $data);
-
-
+	}else{
+		redirect('Login');
 	}
+}
 
 //Scraping buat detaildari list-list beasiswa
 
@@ -574,15 +324,9 @@ class Pencarian_BeasiswaC extends CI_Controller
 		$result=array();
 		$i = 0;
 
-		if($html_load && is_object($html_load) && isset($html_load->nodes)){
-
-			
+		if($html_load && is_object($html_load) && isset($html_load->nodes)){		
 			foreach ($html_load->find('div#ht-page #ht-content .ht-container h1') as $data ) {
-				
-			
-
 			$i = 0;
-			
 			$counter = 0;
 
 			foreach ($html_load->find('div#primary') as $a ) {
@@ -608,8 +352,6 @@ class Pencarian_BeasiswaC extends CI_Controller
 							//$hasil->find('iframe', 0)->outertext = '';
 							$counter++;
 						}
-
-
 						$result[$i] =array(
 							'id' => $b->getAttribute('id'),
 							'title' => $data->plaintext,
@@ -620,10 +362,7 @@ class Pencarian_BeasiswaC extends CI_Controller
 				}
 			}
 		}
-			
-
-		}
-
+	}
 		return $result;
 
 	}

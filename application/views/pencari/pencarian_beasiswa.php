@@ -69,33 +69,35 @@ $this->load->view('pencari/header_user');
               $query = $this->db->query("SELECT tingkatan from pencari where id_pencari=".$nama_pencari['id_pencari'])->row_array(); 
 
                 if($query['tingkatan'] == "Pelajar"){?>
+             <select name="keyword_jenjang" class="btn-group2" id="keyword_jenjang_pelajar">
+             <option value="0" disabled selected>Jenjang</option>
+             <option value="D3">Diploma</option>
+             <option value="S1">Sarjana</option>
+             
+           </select> 
 
-                    <select name="keyword_jenjang" class="btn-group2" required="">
-                     <option value="0" disabled selected>Jenjang</option>
-                     <option value="D3">Diploma</option>
-                     <option value="S1">Sarjana</option>
-                   </select>
 
                  <?php }else if($query['tingkatan'] == "Mahasiswa"){?>
                     
-                    <select name="keyword_jenjang" class="btn-group2">
+                    <select name="keyword_jenjang" class="btn-group2" id="keyword_jenjang_mahasiswa">
                      <option value="0" disabled selected>Jenjang</option>
                      <option value="S2">Magister</option>
                      <option value="S3">Doktor</option>
                    </select>
+                 <?php }else if($query['tingkatan'] == "Umum"){?>
+                    
+                    <select name="keyword_jenjang" class="btn-group2" id="keyword_jenjang_mahasiswa">
+                     <option value="0" disabled selected>Jenjang</option>
+                     <option value="D3">Diploma</option>
+                     <option value="S1">Sarjana</option>
+                     <option value="S2">Magister</option>
+                     <option value="S3">Doktor</option>
+                   </select>
                  <?php }?>
-
-
-                 <!-- <select name="keyword_kategori_beasiswa" class="btn-group2">
-                     <option value="0" disabled selected>Kategori Beasiswa</option>
-                     <option value="Beasiswa Penuh">Beasiswa Penuh</option>
-                     <option value="Beasiswa Sebagian">Beasiswa Sebagian</option>
-                   </select> -->
-                   
-                  <select name="keyword_negara" class="btn-group2" required="">
+                  <select name="keyword_negara" class="btn-group2" id="keyword_negara">
                      <option value="0" disabled selected>Negara</option>
                       <?php foreach ($list_beasiswa as $list) {?>
-                     <option value="<?php echo $list->negara;?>"><?php echo $list->negara;?></option>
+                     <option value="<?php echo str_replace(" ", "-", $list->negara);?>"><?php echo $list->negara;?></option>
                     <?php  } ?>
                    </select>
 
@@ -114,23 +116,16 @@ $this->load->view('pencari/header_user');
 </section>
 
 <!--============================= FOOTER =============================-->
-<footer class="main-block dark-bg">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="copyright">
-          <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-          <p>Copyright &copy; 2018 E-Beasiswa</p>
-          <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-       
-        </div>
-      </div>
-    </div>
-  </div>
-</footer>
+
 <!--//END FOOTER -->
 
+<script src="<?php echo base_url('AdminLTE/bower_components/select2/dist/js/select2.full.min.js')?>"></script>
+
 <script type="text/javascript">
+  $('#keyword_jenjang_pelajar').select2();
+  $('#keyword_jenjang_mahasiswa').select2();
+  $('#keyword_negara').select2();
+
   function submit_form () {
     var jenjang = $('select[name="keyword_jenjang"] option:selected').val()
     var negara = $('select[name="keyword_negara"] option:selected').val()
@@ -138,8 +133,11 @@ $this->load->view('pencari/header_user');
 
     if (jenjang != 0 && negara != 0) {
       window.location = '<?php echo base_url('Pencarian_BeasiswaC/pencarian_beasiswa/') ?>' + jenjang + '/' + negara + '/' + page;
+     
     } else if (jenjang != 0 && negara == 0){
-      window.location = '<?php echo base_url('Pencarian_BeasiswaC/pencarian_beasiswa/') ?>' + jenjang + '/' + page;
+       alert('Silahkan pilih Negara terlebih dahulu!')
+    }else if (jenjang == 0 && negara != 0){
+       alert('Silahkan pilih Jenjang terlebih dahulu!')
     }
     else {
       alert('Silahkan pilih Jenjang dan Negara terlebih dahulu!')

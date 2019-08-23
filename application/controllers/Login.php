@@ -25,17 +25,18 @@ class Login extends CI_Controller
         $username=$this->input->post('username');
         $password=$this->input->post('password');
         $ceknum=$this->LoginM->ceknum($username, $password)->num_rows();
-        $ceknumAdmin=$this->LoginAdmin->ceknumAdmin($username,$password)->num_rows();
-        $query=$this->LoginM->ceknum($username,$password)->row();
+        $ceknumAdmin=$this->LoginM->ceknumAdmin($username,$password)->num_rows();
+        $queryUser=$this->LoginM->ceknum($username,$password)->row();
+        $queryAdmin=$this->LoginM->ceknumAdmin($username,$password)->row();
         $cek=$this->PencariM->cekStatus($username)->num_rows();
         
 
         if( $ceknum > 0){
               $userData = array(
-                'id_pencari' => $query->id_pencari,
-                'username' => $query->username,
-                'password' => $query->password,
-                'status' => $query->status,
+                'id_pencari' => $queryUser->id_pencari,
+                'username' => $queryUser->username,
+                'password' => $queryUser->password,
+                'status' => $queryUser->status,
                 'logged_in' => TRUE
               );
               $this->session->set_userdata($userData);
@@ -49,14 +50,15 @@ class Login extends CI_Controller
                 }
              }
           }else if($ceknumAdmin>0){
-                $userData = array(
-                'username' => $query->username,
-                'password' => $query->password,
-                'status' => $query->status,
+                $userDataAdmin = array(
+
+                'id_admin' => $queryAdmin->id_admin,
+                'username' => $queryAdmin->username,
+                'password' => $queryAdmin->password,
                 'logged_in' => TRUE
               );
 
-              $this->session->set_userdata($userData);
+              $this->session->set_userdata($userDataAdmin);
 
             // $userData = array(
             //     'username' => $query->username,
@@ -65,6 +67,8 @@ class Login extends CI_Controller
             //   );
             $this->session->set_userdata('username', $username);
             $this->session->set_userdata('id_pencari', $id_pencari);
+
+
 
             redirect('AdminC/get_dashboard');
         // $this->session->set_userdata($userData);

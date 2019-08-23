@@ -6,12 +6,13 @@ class LoginM extends CI_Model{
 	}
 
 	public function ceknum($username, $password){
-
+		$this->db->select('*');
 		$this->db->where("(username = '$username' OR email ='$username')");
 		$this->db->where('password', md5($password));
 		return $this->db->get('pencari');
 	}
 	public function ceknumAdmin($username, $password){
+		$this->db->select('*');
 		$this->db->where('username', $username);
 		$this->db->where('password', md5($password));
 		return $this->db->get('admin');

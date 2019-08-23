@@ -7,6 +7,7 @@ class Pencari extends CI_Controller
 		parent::__construct();	
 		$this->load->model('PencariM');
 		$this->load->model('PencarianM');
+		$this->load->model('UniversitasM');
 		$this->load->helper('url','form');
 		$this->model = $this->PencarianM;
 
@@ -30,8 +31,9 @@ class Pencari extends CI_Controller
 	}
 	public function get_nama_pencari(){
 		$username = $this->session->userdata('username');
+		$id_pencari = $this->session->userdata('id_pencari');
 
-		$data['nama_pencari']= $this->PencariM->get_nama_pencari($username)->row_array();
+		$data['nama_pencari']= $this->PencariM->get_nama_pencari($id_pencari)->row_array();
 
 		$this->load->view('pencari/data_pribadi', $data);
 
@@ -56,6 +58,9 @@ class Pencari extends CI_Controller
 		$config['max_size']  = '3072';
 		$config['remove_space'] = TRUE;
 		$config['overwrite'] =  TRUE;
+
+		$ukuran_file = $_FILES['file']['size'];
+		$nama_file = $FILES['file']['name'];
 
 
 		$this->load->library('upload', $config);
@@ -95,10 +100,10 @@ class Pencari extends CI_Controller
 	public function edit_pencari(){
 		//get id univ yang ingin di edit
 		$id_pencari = $this->input->post('id_pencari');
+
 		$this->load->library('form_validation');
 		$this->form_validation->set_rules('nama_pencari','Nama','required');
 		$this->form_validation->set_rules('username','Kategori Universitas','required');
-		$this->form_validation->set_rules('tingkatan','Tingkatan','required');
 		if($this->form_validation->run() == FALSE)
 		{
 			//jika form tidak lengkap maka akan dikembalikan ke route "dosenAdminR"
@@ -108,15 +113,14 @@ class Pencari extends CI_Controller
 		{
 			$nama = $this->input->post('nama_pencari');
 			$username = $this->input->post('username');
-			$tingkatan = $this->input->post('tingkatan');
 			$dataPencari =  array(
 				"nama"=>$nama,
 				"username"=>$username,
-				"tingkatan"=>$tingkatan,
 				"update_dtm"=>date('Y-m-d H-s-i')
 			);
 
 			$result = $this->PencariM->editPencari($dataPencari, $id_pencari);		
+
 			if($result == TRUE)
 			{
 				$this->session->set_flashdata('success_data_profil', 'Data berhasil diubah');
@@ -302,16 +306,147 @@ class Pencari extends CI_Controller
 
 	public function tampil_data_pribadi(){
 		$username = $this->session->userdata('username');
+		$id_pencari = $this->session->userdata('id_pencari');
 
-		$data['nama_pencari']= $this->PencariM->get_nama_pencari($username)->row_array();
+		$data['nama_pencari']= $this->PencariM->get_nama_pencari($id_pencari)->row_array();
 		$this->load->view('pencari/data_pribadi', $data);
 
 	}
+	public function get_ulasan(){
+		$username = $this->session->userdata('username');
+		$id_pencari = $this->session->userdata('id_pencari');
+		$id_univ = $this->input->post('id_univ');
+
+
+		$keyword_prodi=$this->input->post('key_prodi');
+		$keyword_kategori=$this->input->post('key_kategori');
+		$keyword_tingkatan=$this->input->post('key_tingkatan');
+
+	  $data = array(
+        'keyword_prodi' => $keyword_prodi,
+        'keyword_kategori' => $keyword_kategori,
+        'keyword_tingkatan' => $keyword_tingkatan,
+        '$id_univ' => $id_univ
+    );
+
+		$data['detail_univ'] = $this->UniversitasM->get_universitas_by_id($id_univ)->result_array();
+
+		$data['nama_pencari']= $this->PencariM->get_nama_pencari($id_pencari)->row_array();
+		$this->load->view('pencari/ulasan_univ', $data);
+
+	}
+
+	public function get_tampil_ulasan(){
+
+	    $username = $this->session->userdata('username');
+		$id_pencari=$this->session->userdata('id_pencari');
+
+		$data['nama_pencari']= $this->PencariM->get_nama_pencari($id_pencari)->row_array();
+		$data['data_ulasan']= $this->PencariM->get_ulasan_by_pencari($id_pencari)->result();
+		$this->load->view('pencari/data_ulasan', $data);
+
+	}
+
+	public function get_tampil_detail_ulasan($id_ulasan){
+
+	    $username = $this->session->userdata('username');
+		$id_pencari=$this->session->userdata('id_pencari');
+
+		$data['nama_pencari']= $this->PencariM->get_nama_pencari($id_pencari)->row_array();
+		$data['data_ulasan']= $this->PencariM->get_ulasan_by_pencari_ulasan($id_pencari, $id_ulasan)->result();
+		$this->load->view('pencari/detail_ulasan', $data);
+
+	}
+
+
+	public function tambah_ulasan(){
+
+
+	$keyword_prodi=$this->input->post('key_prodi');
+	$keyword_kategori=$this->input->post('key_kategori');
+	$keyword_tingkatan=$this->input->post('key_tingkatan');
+
+		$judul_ulasan = $this->input->post('judul_ulasan');
+    	$deskripsi = $this->input->post('deskripsi_ulasan');
+        $rating = $this->input->post('rating');
+        $id_univ = $this->input->post('id_univ');
+
+    $data = array(
+        'keyword_prodi' => $keyword_prodi,
+        'keyword_kategori' => $keyword_kategori,
+        'keyword_tingkatan' => $keyword_tingkatan,
+        '$id_univ' => $id_univ
+    );
+
+        $this->session->set_flashdata('id_univ', $id_univ);
+
+        $id_pencari = $this->session->userdata('id_pencari');
+
+  //       $id_pencarian = $this->db->query("SELECT MAX(id_detail_pencarian) as id_detail_pencarian from detail_pencarian");
+
+		// foreach($id_pencarian->result_array() as $id_pencarian){
+		// 	$id_detail_pencarian = $id_pencarian['id_detail_pencarian'];
+
+		// }
+
+        $dataUlasan = array(
+        	"judul_ulasan" => $judul_ulasan,
+        	"deskripsi_ulasan" => $deskripsi,
+        	"rating" => $rating,
+        	"status_publikasi" => "Belum disetujui",
+        	"id_universitas" => $id_univ,
+        	"id_pencari" => $id_pencari
+
+        );
+
+        $this->PencariM->insertUlasan($dataUlasan);
+    	
+    	$this->load->view('pencari/alert_ulasan');
+	}
+
+	 public function update_ulasan_pencari($id_ulasan){
+
+        // POST values
+        $rating = $this->input->post('rating');
+        $judul_ulasan = $this->input->post('judul_ulasan');
+        $deskripsi_ulasan = $this->input->post('deskripsi_ulasan');
+
+        $dataUlasan= array(
+        	'rating' => $rating,
+        	'judul_ulasan' => $judul_ulasan,
+        	'deskripsi_ulasan' => $deskripsi_ulasan,
+        	'status_publikasi' => "Belum disetujui"
+
+        );
+
+        $result = $this->PencariM->update_ulasan_pencari($id_ulasan,$dataUlasan);
+
+        if($result > 0){
+				$this->session->set_flashdata('success', 'Ulasan Anda berhasil diubah. Untuk publikasi menunggu persetujuan dari admin');
+			}else{
+				$this->session->set_flashdata('error', 'Ulasan Gagal diubah. Pastikan anda mengisi data sesuai dengan ketentuan');
+			}
+
+        redirect('Pencari/get_tampil_detail_ulasan/'.$id_ulasan);
+
+    }
+     public function hapus_ulasan($id_ulasan){
+
+      if($this->PencariM->hapus_ulasan_pencari($id_ulasan)){
+
+				$this->session->set_flashdata('success', 'Ulasan Anda berhasil dihapus');
+			}else{
+				$this->session->set_flashdata('error', 'Ulasan Gagal dihapus');
+			}
+        redirect('Pencari/get_tampil_ulasan');
+
+    }
+
 
 	public function tampil_konsultasi(){
 		$username = $this->session->userdata('username');
 		$id_pencari = $this->session->userdata('id_pencari');
-		$data['nama_pencari']= $this->PencariM->get_nama_pencari($username)->row_array();
+		$data['nama_pencari']= $this->PencariM->get_nama_pencari($id_pencari)->row_array();
 
 
 		$this->load->view('pencari/konsultasi', $data);
@@ -325,7 +460,7 @@ class Pencari extends CI_Controller
 		$nama_prodi = $this->input->post('nama_prodi');
 		$kategori = $this->input->post('kategori');
 		$deskripsi = $this->input->post('deskripsi');
-		$data['nama_pencari']= $this->PencariM->get_nama_pencari($username)->row_array();
+		$data['nama_pencari']= $this->PencariM->get_nama_pencari($id_pencari)->row_array();
 
 		$dataKonsultasi = array(
 			'no_hp'=>$no_hp,
@@ -354,10 +489,9 @@ class Pencari extends CI_Controller
 
 	public function tampil_favorit(){
 		$username = $this->session->userdata('username');
-		$id_pencari=$this->session->userdata['id_pencari'];
-
-
-		$data['nama_pencari']= $this->PencariM->get_nama_pencari($username)->row_array();
+		$id_pencari=$this->session->userdata('id_pencari');
+		$id_univ=$this->input->post('id_univ');
+		$data['nama_pencari']= $this->PencariM->get_nama_pencari($id_pencari)->row_array();
 		$data['list_favorit']= $this->PencarianM->tampil_favorit($id_pencari)->result();
 
 		$this->load->view('pencari/pencarian_favorit', $data);
@@ -387,7 +521,7 @@ class Pencari extends CI_Controller
 		$username = $this->session->userdata('username');
 		$id_pencari=$this->session->userdata('id_pencari');
 
-		$data['nama_pencari']= $this->PencariM->get_nama_pencari($username)->row_array();
+		$data['nama_pencari']= $this->PencariM->get_nama_pencari($id_pencari)->row_array();
 		$data['pencarian']= $this->PencarianM->tampil_histori_pencarian($id_pencari)->result();
 		$this->load->view('pencari/pencarian_tersimpan', $data);
 
@@ -398,7 +532,7 @@ class Pencari extends CI_Controller
 		$username = $this->session->userdata('username');
 		$id_pencari=$this->session->userdata('id_pencari');
 
-		$data['nama_pencari']= $this->PencariM->get_nama_pencari($username)->row_array();
+		$data['nama_pencari']= $this->PencariM->get_nama_pencari($id_pencari)->row_array();
 		$data['pencarian']= $this->PencarianM->tampil_histori_pencarian_beasiswa($id_pencari)->result();
 		$this->load->view('pencari/pencarian_beasiswa_tersimpan', $data);
 
@@ -435,13 +569,13 @@ class Pencari extends CI_Controller
 
 	public function edit_password(){
 		$username = $this->session->userdata('username');
+		$id_pencari = $this->session->userdata('id_pencari');
 
-		$data['nama_pencari']= $this->PencariM->get_nama_pencari($username)->row_array();
+		$data['nama_pencari']= $this->PencariM->get_nama_pencari($id_pencari)->row_array();
 		$this->load->view('pencari/ubah_password', $data);
 
 	}
-
-
-
-
 }
+
+
+

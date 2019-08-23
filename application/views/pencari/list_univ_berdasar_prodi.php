@@ -34,7 +34,9 @@ $this->load->view('pencari/header_user');
 
             <!-- <p>Join thousand of employers and earn what you deserve!</p>
               <a href="my-account.html" class="btn btn-common">Get Started Now</a> -->
+              <div style="float:right;">
               <a class="btn" type="btn" href="<?php echo base_url('Pencarian_BeasiswaC/get_beasiswa');?>" class="btn-form" style="background-color:#fff; color:black;"><i class="fa fa-mortar-board"> Cari Beasiswa</i></a>
+            </div>
             </div>
           </div>
 
@@ -54,7 +56,7 @@ $this->load->view('pencari/header_user');
               <?php foreach ($list_univ_by_fakultas as $value){?> 
                 <div class="col-md-4 featured-responsive">
 
-                  <form action="<?php echo base_url('PencarianC/detail_pencarian');?>" method="POST">
+                  <form action="<?php echo base_url('PencarianC/detail_pencarian/'.$value->id_universitas);?>" method="POST">
 
 
                     <div class="featured-place-wrap">
@@ -181,7 +183,7 @@ $this->load->view('pencari/header_user');
                              <form action="<?php echo base_url('PencarianC/tambah_favorit_from_fakultas');?>" method="POST">
                               <input type="hidden" value="<?php echo $value->nama_universitas;?>" name="nama_univ">
                               <input type="hidden" value="<?php echo $nama_fakultas;?>" name="nama_fakultas">
-                              <p><button class="btn btn-danger pull-right" style="color: white; margin-left: 10px;"><span data-toogle="tooltip" title="tambah favorit"><i class="fa fa-heart-o" style="color: #fff"></i></span></button></p>
+                              <p><button class="btn btn-danger pull-right" style="color: #fff; margin-left: 10px;"><span data-toogle="tooltip" title="tambah favorit"><i class="fa fa-heart-o" style="color: #fff"></i></span></button></p>
                             </form>
                           <?php } else { ?>
                             <?php
@@ -189,9 +191,10 @@ $this->load->view('pencari/header_user');
                             $id_univ=$this->db->query("SELECT id_pencarian_favorit from pencarian_favorit where id_universitas='$value->id_universitas' AND id_pencari='$id_pencari'");?>
 
                             <?php foreach ($id_univ->result() as $id){?>
-                              <form action="<?php echo base_url('PencarianC/hapus_favorit_list_univ/'.$id->id_pencarian_favorit.'/'.$id_pencari);?>" method="POST">
+                              <form action="<?php echo base_url('PencarianC/hapus_favorit_list_univ_fakultas/'.$id->id_pencarian_favorit.'/'.$id_pencari);?>" method="POST">
                                 <input type="hidden" value="<?php echo $value->nama_universitas;?>" name="nama_univ">
-                                <p><button class="btn btn-basic pull-right" style="color: #fff; margin-left: 10px;"><span data-toogle="tooltip" title="Sudah ada di dalam list favoritmu"><i class="fa fa-heart-o"></i></span></button></p>
+                                <input type="hidden" value="<?php echo $nama_fakultas;?>" name="nama_fakultas">
+                                <p><button class="btn btn-basic pull-right" style="margin-left: 10px; color: white; "><span data-toogle="tooltip" title="Sudah ada di dalam list favoritmu"><i class="fa fa-heart-o"></i></span></button></p>
                               </form>
                             <?php }?>
 

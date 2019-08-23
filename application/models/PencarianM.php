@@ -52,10 +52,20 @@ class PencarianM extends CI_Model{
       $this->db->trans_complete();
       return $insert_id;
     }
+     public function detailPencarianBeasiswa($dataPencarianBeasiswa){
+
+        
+      return $this->db->insert('detail_pencarian_beasiswa', $dataPencarianBeasiswa);
+     
+      $insert_id = $this->db->insert_id();
+      
+      $this->db->trans_complete();
+      return $insert_id;
+    }
 
   public function pencarian($keyword_prodi, $keyword_kategori, $keyword_tingkatan){
 
-    $query = $this->db->query("SELECT nama_universitas, negara, gambar_universitas from universitas, fak_univ, fakultas, prodi_fak, prodi where universitas.id_universitas=fak_univ.id_universitas AND fak_univ.id_fakultas=fakultas.id_fakultas AND fakultas.id_fakultas=prodi_fak.id_fakultas AND prodi_fak.id_prodi=prodi.id_prodi AND prodi.nama_prodi='$keyword_prodi' AND universitas.kategori_universitas='$keyword_kategori' AND prodi.tingkatan='$keyword_tingkatan'");
+    $query = $this->db->query("SELECT nama_universitas, negara, gambar_universitas from universitas, fak_univ, fakultas, prodi_fak, prodi where universitas.id_universitas=fak_univ.id_universitas AND fak_univ.id_fakultas=fakultas.id_fakultas AND fakultas.id_fakultas=prodi_fak.id_fakultas AND prodi_fak.id_prodi=prodi.id_prodi AND prodi.nama_prodi='$keyword_prodi' AND universitas.kategori_universitas='$keyword_kategori' AND prodi.tingkatan='$keyword_tingkatan' GROUP BY universitas.id_universitas");
     
     return $query;
     
@@ -64,7 +74,7 @@ class PencarianM extends CI_Model{
 
    public function pencarianCount($keyword_prodi, $keyword_kategori, $keyword_tingkatan){
 
-    $query = $this->db->query("SELECT count(*) from universitas, fak_univ, fakultas, prodi_fak, prodi where universitas.id_universitas=fak_univ.id_universitas AND fak_univ.id_fakultas=fakultas.id_fakultas AND fakultas.id_fakultas=prodi_fak.id_fakultas AND prodi_fak.id_prodi=prodi.id__prodi AND prodi.nama_prodi='$keyword_prodi' AND universitas.kategori_universitas='$keyword_kategori' AND prodi.tingkatan='$keyword_tingkatan'");
+    $query = $this->db->query("SELECT count(*) from universitas, fak_univ, fakultas, prodi_fak, prodi where universitas.id_universitas=fak_univ.id_universitas AND fak_univ.id_fakultas=fakultas.id_fakultas AND fakultas.id_fakultas=prodi_fak.id_fakultas AND prodi_fak.id_prodi=prodi.id__prodi AND prodi.nama_prodi='$keyword_prodi' AND universitas.kategori_universitas='$keyword_kategori' AND prodi.tingkatan='$keyword_tingkatan' GROUP BY universitas.id_universitas");
     
     return $query;
     
@@ -73,7 +83,7 @@ class PencarianM extends CI_Model{
 
     public function pencarianPage($limit, $start, $keyword_prodi, $keyword_kategori, $keyword_tingkatan){
 
-    $query = $this->db->query("SELECT * from universitas, fak_univ, fakultas, prodi_fak, prodi where universitas.id_universitas=fak_univ.id_universitas AND fak_univ.id_fakultas=fakultas.id_fakultas AND fakultas.id_fakultas=prodi_fak.id_fakultas AND prodi_fak.id_prodi=prodi.id_prodi AND prodi.nama_prodi='$keyword_prodi' AND universitas.kategori_universitas='$keyword_kategori' AND prodi.tingkatan='$keyword_tingkatan' LIMIT $start,$limit");
+    $query = $this->db->query("SELECT * from universitas, fak_univ, fakultas, prodi_fak, prodi where universitas.id_universitas=fak_univ.id_universitas AND fak_univ.id_fakultas=fakultas.id_fakultas AND fakultas.id_fakultas=prodi_fak.id_fakultas AND prodi_fak.id_prodi=prodi.id_prodi AND prodi.nama_prodi='$keyword_prodi' AND universitas.kategori_universitas='$keyword_kategori' AND prodi.tingkatan='$keyword_tingkatan' GROUP BY universitas.id_universitas LIMIT $start,$limit");
     
     return $query;
     

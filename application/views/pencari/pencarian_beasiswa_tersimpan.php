@@ -31,7 +31,7 @@ $this->load->view('pencari/profilpencari');?>
               ?>
 
               <?php if ($query < 1){ ?>
-              <img src="<?php echo base_url('assets/images/searching.png');?>" class="img">
+              <img src="<?php echo base_url('assets/images/searching.png');?>" class="img" style="margin-top: 50px">
 
                 <div class="text-center" style="font-size: 18px;">Anda belum melakukan pencarian</div><br>
 

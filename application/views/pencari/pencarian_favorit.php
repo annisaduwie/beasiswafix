@@ -36,7 +36,6 @@ $this->load->view('pencari/profilpencari');?>
           <?php } else{ ?>
 
 
-
     <?php foreach ($list_favorit as $value){ ?>
       <div class="box-body">
         <div class="box-body">
@@ -45,7 +44,7 @@ $this->load->view('pencari/profilpencari');?>
         <ul class="products-list product-list-in-box">
 
         
-            <form action="<?php echo base_url('PencarianC/detail_pencarian');?>" method="POST" name="form" id="form">
+            <form action="<?php echo base_url('PencarianC/detail_pencarian/'.$value->id_universitas);?>" method="POST" name="form" id="form">
 
               <li class="item">
 
@@ -64,10 +63,8 @@ $this->load->view('pencari/profilpencari');?>
                   <span class="product-description">
                     <span class="icon-location-pin"></span><?php echo $value->negara; ?>
                   </span>
-                </div>
-              
+                </div>  
             </li>
-
           </form>
         
         </ul>

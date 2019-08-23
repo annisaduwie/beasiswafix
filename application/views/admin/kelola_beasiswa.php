@@ -84,14 +84,6 @@ $this->load->view('admin/head_admin');
                    </div>
               
               
-              
-
-              <div class="callout callout-warning">
-                <h4><i class="fa fa-exclamation-triangle">&ensp;Perhatian !</i></h4>
-
-                <p>Untuk pengisian pada kolom negara, tidak boleh menggunakan spasi (" "), anda dapat menggantinya dengan strip (-), misalkan Timor-Leste </p>
-              </div>
-           
 
               <div class="box-body">
 
@@ -107,7 +99,6 @@ $this->load->view('admin/head_admin');
                     <tr>
                       <th>No </th>
                       <th>Nama Beasiswa</th>
-                      <th>Jenjang</th>
                       <th>Negara</th>
                       <th>Link</th>
 
@@ -120,7 +111,6 @@ $this->load->view('admin/head_admin');
                     <tr>   
                       <td><?php echo $no; ?></td>
                       <td ><?php echo $value->nama_beasiswa_umum; ?></td>
-                      <td ><?php echo $value->jenjang; ?></td>
                       <td ><?php echo $value->negara; ?></td>
                       <td ><?php echo $value->url_beasiswa_umum; ?></td>
 
@@ -161,36 +151,6 @@ $this->load->view('admin/head_admin');
                                   <input type="text" value="<?php echo $value->nama_beasiswa_umum;?>" name="nama_beasiswa_umum" class="form-control" id="inputurl">
                                 </div>
                               </div>
-
-                              <div class="form-group" style="padding: 15px 0;">
-                                <label for="nama_universitas" class="col-sm-2 control-label">Jenjang</label>
-                                <div class="col-sm-10">
-                                  <select name="jenjang" class="form-control" required>
-                                   <option value="0" disabled selected>--Jenjang--</option>
-
-                                   <option <?php if($value->jenjang == "Diploma") 
-                                   {
-                                    echo "selected=selected";
-                                  } 
-                                  ?>value="Diploma">Diploma</option>
-                                  <option <?php if($value->jenjang == "Sarjana") 
-                                  {
-                                    echo "selected=selected";
-                                  } 
-                                  ?>value="Sarjana">Sarjana</option>
-                                  <option <?php if($value->jenjang == "Magister") 
-                                  {
-                                    echo "selected=selected";
-                                  } 
-                                  ?>value="Magister">Magister</option>
-                                  <option <?php if($value->jenjang == "Doktor") 
-                                  {
-                                    echo "selected=selected";
-                                  } 
-                                  ?>value="Doktor">Doktor</option>
-                                </select>
-                              </div>
-                            </div>
 
                             
                           <div class="form-group" style="padding: 15px 0;">
@@ -280,19 +240,6 @@ $this->load->view('admin/head_admin');
             <input type="text" placeholder="Masukkan Nama Beasiswa" name="nama_beasiswa_umum" class="form-control" id="inputurl" required oninvalid="this.setCustomValidity('Nama Beasiswa tidak boleh kosong')" oninput="setCustomValidity('')">
           </div>
         </div>
-        <div class="form-group" style="padding: 5px 0;">
-          <label for="nama_universitas" class="col-sm-2 control-label">Pilih Jenjang</label>
-          <div class="col-sm-10">
-            <select name="jenjang" class="form-control" >
-             <option value="0" disabled selected>---- Jenjang ----</option>
-             <option value="Diploma">Diploma</option>
-             <option value="Sarjana">Sarjana</option>
-             <option value="Magister">Magister</option>
-             <option value="Doktor">Doktor</option>
-           </select>
-         </div>
-       </div>
-
      <div class="form-group" style="padding: 5px 0;">
       <label for="inputurl" class="col-sm-2 control-label">Negara</label>
       <div class="col-sm-10">

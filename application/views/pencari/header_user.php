@@ -27,9 +27,14 @@ $this->load->view('pencari/head');
 
             <ul class="navbar-nav navbar-right">
                <li class="nav-item">
+                <?php if($this->session->userdata('logged_in') && $this->session->userdata('status') == "aktif"){?>
               <a class="nav-link" href="<?php echo base_url('Pencarian_BeasiswaC/get_beasiswa');?>">Cari Beasiswa</a>
+            <?php } else{?>
+              <a class="nav-link" href="" data-toggle="modal" data-target="#myModalLogin" >Cari Beasiswa</a>
+            <?php }?>
+            
             </li>
-              <li class="nav-item dropdown">
+              <!-- <li class="nav-item dropdown">
                 <a class="nav-link" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                  Cari Jurusan
                  <span class="icon-arrow-down"></span>
@@ -37,11 +42,14 @@ $this->load->view('pencari/head');
                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                  <a class="dropdown-item" href="<?php echo base_url('PencarianC/tampil_pencarian_prodi');?>"  >Berdasarkan fakultas</a>
                </div>
-             </li>
+             </li> -->
             <?php if ($this->session->userdata('logged_in') && $this->session->userdata('status') == "aktif"){ ?>
-
+              <?php 
+              $id_pencari = $this->session->userdata("id_pencari");
+              $username=$this->db->query("SELECT username from pencari where id_pencari ='$id_pencari'")->row_array();
+              ?>
               <li class="nav-item dropdown">
-                <a class="nav-link" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Hai, <?php  echo $this->session->userdata("username");?>
+                <a class="nav-link" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Hai, <?php echo $username['username'];?>
                  <span class="icon-arrow-down"></span>
                </a>
                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -53,7 +61,7 @@ $this->load->view('pencari/head');
 
             <?php }else { ?>
              <li>
-              <a href="<?php echo base_url('Login')?>" class="btn btn-outline-light top-btn">Masuk</a>
+              <a href="<?php echo base_url('Login')?>" class="btn btn-outline top-btn">Masuk</a>
             </li>
           </ul>
 
@@ -64,3 +72,25 @@ $this->load->view('pencari/head');
 </div>
 </div>
 </div>
+<div class="modal fade" id="myModalLogin" >
+                <div class="modal-dialog">
+                          <div class="modal-content">
+                              <div class="modal-header">
+                                  <center>Perhatian</center>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span></button>
+                              </div>
+                            <div class="modal-body">
+                            <center><img style="width: 100px;height: 100px; margin-bottom: 20px;" src="<?php echo base_url('assets/images/infobeasiswa.png');""?>"></center>
+                              <form method="POST" action="<?php echo base_url('Login');?>">
+                                
+                                 <center><p style="font-style: calibri; font-size: 14px; padding-bottom: 30px;"><b>Temukan berbagai informasi lengkap mengenai beasiswa dalam dan luar negeri, silahkan login terlebih dahulu</b></p>
+                              
+                                  <input type="submit" value="Login" name="Login" class="btn" style="width:80px; background-color: #3c8dbc; color:#fff;">
+                                  
+                              </form>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+ 

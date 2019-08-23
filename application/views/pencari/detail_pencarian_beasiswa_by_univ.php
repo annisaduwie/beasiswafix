@@ -101,26 +101,48 @@ $this->load->view('pencari/header_user');
   </ul>
 </nav>
 </section>
+<!--============================= FOOTER =============================-->
+<footer class="main-block dark-bg" style="height: 350px;">
+  <div class="container">
 
-    <!--============================= FOOTER =============================-->
-    <footer class="main-block dark-bg">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="copyright">
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                        <p>Copyright &copy; 2018 E-Beasiswa</p>
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                        <ul>
-                            <li><a href="#"><span class="ti-facebook"></span></a></li>
-                            <li><a href="#"><span class="ti-twitter-alt"></span></a></li>
-                            <li><a href="#"><span class="ti-instagram"></span></a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+    <div class="row">
+      <div class="col-md-6">
+        <h2 class="page-header" style="font-style: calibri; color: #fff ; float: left; ">
+            Info Kontak</h2>
+        <!-- /.col -->
+      </div>
+      <div class="col-md-6">
+        <h2 class="page-header" style="font-style: calibri; color: #fff ; float: left; ">
+            Tentang Kami</h2>
+        <!-- /.col -->
+      </div>
+      <!-- info row -->
+      <div class="col-md-12">
+      <div class="row invoice-info">
+        <div class="col-sm-6 invoice-col">
+          <address style="padding-top: 20px;">
+            <img src="<?php echo base_url('assets/images/phone_contact.png');?>" style="float: left; width: 40px; height: 40px;">
+            <div style="color: #fff; padding-top: 8px;">&nbsp;&nbsp;&nbsp;&nbsp;+62 89532 500 8487</div>
+          <br>
+             <img src="<?php echo base_url('assets/images/email_contact.png');?>" style="float: left; width: 40px; height: 40px;">
+             <div style="color: #fff; padding-top: 8px;">&nbsp;&nbsp;&nbsp;&nbsp;ebeasiswa.indonesia@gmail.com</div>
+          </address>
         </div>
-    </footer>
-    <!--//END FOOTER -->
+        <div class="col-sm-6 invoice-col">
+          <address>
+            <div style="color:#fff"><strong>E-Beasiswa</strong> adalah sebuah website pencarian<br>
+            beasiswa dalam dan luar negeri<br>
+            yang membantu mahasiswa/pelajar<br>
+            dalam menemukan beasiswa yang tepat<br>
+            dan sesuai keinginan
+          </div>
+          </address>
+        </div>
+    </div>
+      </div>
+    </div>
+  </div>
+</footer>
+<!--//END FOOTER -->
 
 

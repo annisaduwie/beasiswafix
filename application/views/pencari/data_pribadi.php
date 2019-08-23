@@ -68,7 +68,7 @@ $this->load->view('pencari/profilpencari');?>
 
             <div class="form-group">
               <label for="exampleInputEmail">Kategori</label>
-              <input type="text" class="form-control" name="email" id="email" value="<?php echo $nama_pencari['tingkatan'];?>" readonly>
+              <input type="text" class="form-control" name="kategori" value="<?php echo $nama_pencari['tingkatan'];?>" readonly>
               
               <!-- <select name="tingkatan" class="form-control required" readonly>
                 <option <?php if($nama_pencari['tingkatan'] == "Pelajar") 

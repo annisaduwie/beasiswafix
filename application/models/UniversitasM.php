@@ -121,6 +121,50 @@ class UniversitasM extends CI_Model{
     $query = $this->db->query("SELECT * from universitas, detail_universitas, fak_univ, fakultas, prodi_fak, prodi WHERE universitas.id_universitas=detail_universitas.id_universitas AND universitas.id_universitas=fak_univ.id_universitas AND fak_univ.id_fakultas=fakultas.id_fakultas AND fakultas.id_fakultas=prodi_fak.id_fakultas AND prodi_fak.id_prodi=prodi.id_prodi AND nama_universitas='$nama_univ' GROUP BY nama_universitas");
     return $query;
   }
+public function userRating($id_detail_pencari,$id_universitas,$judul_ulasan, $rating){
 
+    $this->db->select('*');
+    $this->db->from('ulasan');
+    $this->db->where("id_detail_pencari", $id_universitas);
+    $userRatingquery = $this->db->get();
+
+      $userRatingResult = $userRatingquery->result_array();
+        if(count($userRatingResult) > 0){
+
+          $postRating_id = $userRatingResult[0]['id_ulasan'];
+          // Update
+            $value=array('rating'=>$rating);
+            $this->db->where('id_ulasan',$postRating_id);
+            $this->db->update('posts_rating',$value);
+        }else{
+          $userRating = array(
+               "judul_ulasan" => $judul_ulasan ,
+               "deskripsi_ulasan" => $deskripsi,
+               "rekomendasi" => $rekmen,
+               "rating" => $rating,
+               "id_detail_pencarian" => $id_detail_pencarian,
+               "id_pencari"=> $id_pencari
+            );
+
+            $this->db->insert('ulasan', $userRating);
+        }
+
+        // Average rating
+    $this->db->select('ROUND(AVG(rating),1) as averageRating');
+    $this->db->from('ulasan');
+    $this->db->where("id_detail_pencarian", $id_detail_pencarian);
+    $ratingquery = $this->db->get();
+          
+      $postResult = $ratingquery->result_array();
+
+      $rating = $postResult[0]['averageRating'];
+          
+      if($rating == ''){
+          $rating = 0;
+      }
+
+        return $rating;
+
+}
      
 }
